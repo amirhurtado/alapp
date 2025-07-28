@@ -1,16 +1,13 @@
 "use client";
 
-import { Image } from "@imagekit/next";
+import Post from "./Post";
 
 const Feed = () => {
   return (
     <div className="mt-10">
-      <Image
-        src="/default-image.jpg"
-        width={500}
-        height={500}
-        alt="Picture of the author"
-      />
+
+      <Post />
+      
     </div>
   );
 };

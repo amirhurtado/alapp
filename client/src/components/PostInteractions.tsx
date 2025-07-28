@@ -1,0 +1,62 @@
+import {
+  MessageSquare,
+  Repeat2,
+  Heart,
+  ChartNoAxesColumn,
+  Star,
+  Upload,
+} from "lucide-react";
+import React from "react";
+
+const PostInteractions = () => {
+  return (
+    <div className="flex justify-between text-xs mt-6 ">
+      <div className="flex gap-1 items-center rounded-2xl  group cursor-pointer ">
+        <MessageSquare
+          size={18}
+          className="text-icon-blue group-hover:scale-[1.05] transition-transform ease-in duration-200"
+        />
+        <p className="text-text-gray ">127</p>
+      </div>
+
+      <div className="flex gap-1 items-center group cursor-pointer ">
+        {" "}
+        <Repeat2
+          size={18}
+          className="text-icon-green group-hover:scale-[1.05] transition-transform ease-in duration-200"
+        />
+        <p className="text-text-gray  ">127</p>
+      </div>
+
+      <div className="flex gap-1 items-center group cursor-pointer ">
+        <Heart
+          size={18}
+          className="text-icon-pink group-hover:scale-[1.05] transition-transform ease-in duration-200"
+        />
+        <p className="text-text-gray ">127</p>
+      </div>
+
+      <div className="hidden md:flex gap-1 items-center group cursor-pointer ">
+        {" "}
+        <ChartNoAxesColumn
+          size={18}
+          className="text-icon-orange group-hover:scale-[1.05] transition-transform ease-in duration-200"
+        />
+        <p className="text-text-gray  ">127</p>
+      </div>
+
+      <div className="flex gap-4 items-center  ">
+        <Star
+          size={18}
+          className="text-text-gray hover:text-icon-yellow cursor-pointer transition-colors duration-200 ease-in"
+        />
+        <Upload
+          size={18}
+          className=" text-text-gray hover:text-icon-blue cursor-pointer transition-colors duration-200 ease-in"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default PostInteractions;
