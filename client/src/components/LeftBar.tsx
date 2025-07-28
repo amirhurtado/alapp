@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { menuItems } from "@/constants";
-import { Ellipsis, Feather } from "lucide-react";
+import { Ellipsis, Plus } from "lucide-react";
 
 const LeftBar = () => {
   return (
@@ -32,10 +32,10 @@ const LeftBar = () => {
 
         <Link
           href={"/"}
-          className="bg-primary text-center rounded-full w-[2.3rem] h-[2.3rem] xxl:w-full  xxl:h-auto flex items-center justify-center xxl:justify-start gap-4 xxl:px-3 xxl:py-2 xxl:rounded-xl"
+          className="bg-icon-green text-black text-center rounded-full w-[2.3rem] h-[2.3rem] xxl:w-full  xxl:h-auto flex items-center justify-center xxl:justify-start gap-4 xxl:px-3 xxl:py-2 xxl:rounded-xl"
         >
-          <Feather size={19} />
-          <p className="hidden xxl:block">Publicaciones</p>
+          <Plus size={19} />
+          <p className="hidden xxl:block ">Publicar</p>
           
         </Link>
       </div>

@@ -7,7 +7,7 @@ import PostInteractions from "./PostInteractions";
 
 const Post = () => {
   return (
-    <div className="p-4 border-y-1 border-border hover:bg-[#0a0a0a]">
+    <div className="p-4 border-y-1 border-border hover:bg-[#121212] transition-colors duration-200 ease-in">
       {/*reposted*/}
       <div className="flex items-center gap-2 text-sm mb-2 text-text-gray">
         <Repeat2 size={16} />

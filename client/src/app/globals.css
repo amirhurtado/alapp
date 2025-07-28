@@ -27,7 +27,8 @@
 
 }
 
-body {
+html, body {
   color: #ededed;
   background-color: black;
+  height: 100%;
 }
