@@ -89,7 +89,7 @@ const Share = () => {
                 <Smile  size={20}/>
               </div>
 
-              <button type="submit" className="text-black bg-icon-green py-1 px-3 rounded-xl  text-md">Publicar</button>
+              <button type="submit" className="text-black cursor-pointer bg-icon-green py-1 px-3 rounded-xl  text-md">Publicar</button>
             </div>
           </div>
         </form>
