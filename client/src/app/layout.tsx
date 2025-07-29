@@ -42,7 +42,7 @@ export default function RootLayout({
             </div>
             <div
               className=" h-screen px-2
-           hidden lg:flex ml-2  lg:ml-6 max-w-[350px]"
+           hidden lg:flex ml-2  lg:ml-6 max-w-[370px]"
             >
               <RightBar />
             </div>
