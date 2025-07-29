@@ -19,8 +19,9 @@
   --color-icon-blue: #1d9bf0;
   --color-icon-green: #00ba7c;
   --color-icon-pink: #f91888;
-  --color-icon-orange: #f57c00;  /* naranja cálido y vibrante */
---color-icon-yellow: #fdd835;  /* amarillo fuerte pero legible */
+  --color-icon-orange: #f57c00;  
+--color-icon-yellow: #fdd835; 
+--color-hover: #0f0f0f;
 --color-icon-purple: #9b51e0;
 
 

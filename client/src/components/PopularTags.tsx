@@ -26,7 +26,7 @@ const PopularTags = () => {
           </div>
         </div>
         <div className="flex justify-between items-center">
-            <p className="text-sm">Trending en España</p>
+            <p className="text-text-gray text-xs">Trending en España <span>- 1.3k posts</span></p>
             <Ellipsis size={20} className='text-text-gray' />
 
         </div>

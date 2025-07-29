@@ -7,7 +7,7 @@ import { Ellipsis, Plus } from "lucide-react";
 const LeftBar = () => {
   return (
     <div className="h-screen  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
-      <div className="relative left-[-.4rem]">
+      <div className="relative left-[-.4rem] mt-1">
         <Link href="/">
           <Image
             src={"/logo.svg"}

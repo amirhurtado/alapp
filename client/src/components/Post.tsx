@@ -7,7 +7,7 @@ import PostInteractions from "./PostInteractions";
 
 const Post = () => {
   return (
-    <div className="p-4 border-y-1 border-border hover:bg-[#121212] transition-colors duration-200 ease-in">
+    <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
       {/*reposted*/}
       <div className="flex items-center gap-2 text-sm mb-2 text-text-gray">
         <Repeat2 size={16} />
@@ -29,7 +29,7 @@ const Post = () => {
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
-              <p className=" font-medium text-[.92rem] cursor-pointer hover:underline">
+              <p className=" font-semibold text-[.92rem] cursor-pointer hover:underline">
                 Username
               </p>
               <p className="text-text-gray text-[.83rem]">@username</p>
