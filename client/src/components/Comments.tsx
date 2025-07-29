@@ -3,11 +3,10 @@ import { Image } from "@imagekit/next";
 import { Dot } from "lucide-react";
 import PostInteractions from "./PostInteractions";
 
-const Comment = () => {
-  return (
-    <div className="flex w-full gap-3 p-4 hover:bg-hover transition-colors duration-200 ease-in">
-      {/* AVATAR */}
-      <div className="w-10 h-10 relative overflow-hidden rounded-full">
+
+const ImageProfile = () => {
+    return (
+        <div className="w-10 h-10 relative overflow-hidden rounded-full">
         <Image
           src="/default-image.jpg"
           alt="Picture of the author"
@@ -15,6 +14,15 @@ const Comment = () => {
           className="object-cover"
         />
       </div>
+
+    )
+}
+
+const Comment = () => {
+  return (
+    <div className="flex w-full gap-3 p-4 hover:bg-hover transition-colors duration-200 ease-in border-y-1 border-border">
+      {/* AVATAR */}
+      <ImageProfile />
 
       <div className="w-full">
         {/* POST HEADER */}
@@ -44,9 +52,26 @@ const Comment = () => {
 const Comments = () => {
   return (
     <div className="mt-3">
-      {Array.from({ length: 10 }).map((_, index) => (
+        <div className="flex flex-col gap-4">
+
+            <div className="p-4 flex justify-between gap-3">
+                <div className="flex gap-3 w-full">
+                <ImageProfile />
+                <input type="text" className="outline-none  placeholder:font-poppins w-full border-none " placeholder="Deja tu comentario" />
+
+
+                </div>
+                <button className="text-icon-blue font-semibold text-sm cursor-pointer">Enviar</button>
+            </div>
+
+            
+
+            {Array.from({ length: 10 }).map((_, index) => (
         <Comment key={index} />
       ))}
+
+        </div>
+      
     </div>
   );
 };

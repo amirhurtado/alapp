@@ -15,7 +15,7 @@ const LeftBar = () => {
             alt="logo"
             width={50}
             height={50}
-            className="w-[3rem] h-[3rem]"
+            className="w-[2.5rem] h-[2.5rem] md:w-[3rem] md:h-[3rem]"
           />
         </Link>
       </div>
