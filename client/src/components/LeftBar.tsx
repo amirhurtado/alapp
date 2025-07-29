@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { menuItems } from "@/constants";
-import { Ellipsis, Plus } from "lucide-react";
+import { Ellipsis } from "lucide-react";
+import ModalCreatePost from "./ModalCreatePost";
 
 const LeftBar = () => {
   return (
@@ -30,14 +31,7 @@ const LeftBar = () => {
           ))}
         </div>
 
-        <Link
-          href={"/"}
-          className="bg-icon-green text-black text-center rounded-full w-[2.3rem] h-[2.3rem] xxl:w-full  xxl:h-auto flex items-center justify-center xxl:justify-start gap-4 xxl:px-3 xxl:py-2 xxl:rounded-xl"
-        >
-          <Plus size={19} />
-          <p className="hidden xxl:block ">Publicar</p>
-          
-        </Link>
+        <ModalCreatePost />
       </div>
 
       <div className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
