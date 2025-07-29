@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-full overflow-hidden px-2">
       <div className="flex w-full justify-between items-end font-sans text-[.9rem] pt-[1rem] border-b-1 border-border font-semibold">
         <Link href={"/"} className="w-full flex flex-col">
           <p className="text-center border-b-3 border-icon-blue pb-2">Para tí</p>

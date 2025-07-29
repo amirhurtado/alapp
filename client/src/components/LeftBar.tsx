@@ -6,7 +6,7 @@ import { Ellipsis, Plus } from "lucide-react";
 
 const LeftBar = () => {
   return (
-    <div className="h-screen  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
+    <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
       <div className="relative left-[-.4rem] mt-1">
         <Link href="/">
           <Image
@@ -19,10 +19,10 @@ const LeftBar = () => {
         </Link>
       </div>
       <div className=" font-poppins flex flex-col gap-3 justify-between flex-1">
-        <div className="flex flex-col gap-5 ">
+        <div className="flex flex-col gap-2 ">
           {menuItems.map((item) => (
             <Link key={item.id} href={item.link}>
-              <div className="flex gap-4 px-3 py-2 rounded-xl hover:bg-[#181818]">
+              <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
                 <item.icon strokeWidth={1} />
                 <span className="ml-2 hidden xxl:block ">{item.name}</span>
               </div>
