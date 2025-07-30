@@ -1,5 +1,8 @@
 "use server";
 
+import { prisma } from "@/prisma";
+
+
 import ImageKit from "imagekit";
 
 const imagekit = new ImageKit({
@@ -35,3 +38,12 @@ export const shareAction = async (formData: FormData) => {
     }
   );
 };
+
+
+export const pruebaAction = async () => {
+
+  console.log("Puebra", await prisma.user.findMany())
+
+
+
+}

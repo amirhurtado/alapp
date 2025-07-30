@@ -113,7 +113,7 @@ model Follow {
 
 }
 
-model Profile {
+model Profile { 
   id       Int     @id @default(autoincrement())
   bio      String?
   location String?
@@ -131,7 +131,7 @@ model User {
   createdAt   DateTime      @default(now())
 
   profile      Profile?
-  
+
   reposts      Repost[]
   posts        Post[]
   likesPost    LikePost[]

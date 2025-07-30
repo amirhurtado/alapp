@@ -1,6 +1,10 @@
 "use client";
 
+import { pruebaAction } from "@/actions";
 import Post from "./Post";
+
+  await pruebaAction();  
+
 
 const Feed = () => {
   return (
