@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+}
+
+model LikeComment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  commentId Int
+  comment   Comment @relation(fields: [commentId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id]) 
+
+  @@unique ([commentId, userId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content String @db.VarChar(255)
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  likesComment LikeComment[]
+
+  parentId Int?
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  comments Comment[] @relation("CommentReplies")
+}
+
+model LikePost {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id]) 
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique ([postId, userId])
+}
+
+
+model Repost {
+  id  Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  description     String?   @db.VarChar(255)
+  content   String?
+  imageUrl  String?
+
+  likesPost LikePost[]
+  favorites Favorite[]
+  comments  Comment[]
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  reposts Repost[]
+}
+
+model Profile {
+  id       Int     @id @default(autoincrement())
+  bio      String?
+  location String?
+  website  String?
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String?       @unique
+  displayName  String?
+  reposts      Repost[]
+  posts        Post[]
+  likesPost    LikePost[]
+  likesComment LikeComment[]
+  favorites    Favorite[]
+  comments     Comment[]
+  profile      Profile?
+}

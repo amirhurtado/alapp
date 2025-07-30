@@ -13,7 +13,6 @@ export const shareAction = async (formData: FormData) => {
   const image = formData.get("image") as File;
 
   //console.log("Text:", text);
-  console.log("Image:", image);
 
   const bytes = await image?.arrayBuffer();
   const buffer = Buffer.from(bytes);
