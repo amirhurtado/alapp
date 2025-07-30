@@ -11,7 +11,7 @@ import {
   Smile,
   Trash,
 } from "lucide-react";
-import { shareAction } from "@/actions";
+import { shareAction } from "@/actions/post";
 
 const ImageProfile = () => {
   return (

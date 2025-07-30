@@ -40,10 +40,17 @@ export const shareAction = async (formData: FormData) => {
 };
 
 
-export const pruebaAction = async () => {
-
-  console.log("Prueba action called PRISMA:", prisma);
-
-
-
+export const getPosts = async () => {
+  return await prisma.post.findMany({
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+          displayName: true,
+          imageUrl: true,
+        }
+      },
+    }
+  });
 }

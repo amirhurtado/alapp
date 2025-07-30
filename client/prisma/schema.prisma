@@ -85,7 +85,6 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   description     String?   @db.VarChar(255)
-  content   String?
   imageUrl  String?
 
   likesPost LikePost[]
@@ -126,8 +125,9 @@ model Profile {
 model User {
   id           Int           @id @default(autoincrement())
   email        String        @unique
-  name         String?       @unique
-  displayName  String?
+  name         String       @unique
+  displayName  String
+  imageUrl     String       @default("/default-image.jpg")
   createdAt   DateTime      @default(now())
 
   profile      Profile?

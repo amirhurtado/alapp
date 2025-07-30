@@ -1,20 +1,18 @@
-"use client";
-
-import { pruebaAction } from "@/actions";
+import { getPosts } from "@/actions/post";
 import Post from "./Post";
 
-  await pruebaAction();  
+const Feed = async () => {
+  const posts = await getPosts();
 
+  console.log("Posts fetched:", posts);
 
-const Feed = () => {
   return (
-    <div className="">
-
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      
+    <div>
+      {posts.map((post) => (
+        <div key={post.id}>
+          <Post post={post}/>
+        </div>
+      ))}
     </div>
   );
 };
