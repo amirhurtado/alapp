@@ -6,6 +6,7 @@ import { Repeat2, Dot } from "lucide-react";
 import PostInteractions from "./PostInteractions";
 
 import { Post as PostType } from "@/generated/prisma";
+import Avatar from "./Avatar";
 
 interface PostProps {
   post: PostType & {author: { id: number; name: string; displayName: string; imageUrl: string } };
@@ -22,14 +23,7 @@ const Post = ({ post }: PostProps) => {
       {/*Post content*/}
       <div className="flex w-full gap-3">
         {/* AVATAR */}
-        <div className="w-10 h-10 relative overflow-hidden rounded-full">
-          <Image
-            src={post.author.imageUrl || "/default-avatar.png"}
-            alt="Picture of the author"
-            fill
-            className="object-cover"
-          />
-        </div>
+        <Avatar src={post.author.imageUrl} />
 
         <div className="w-full">
           {/* POST HEADER */}
