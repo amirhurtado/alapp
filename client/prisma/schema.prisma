@@ -98,6 +98,21 @@ model Post {
   reposts Repost[]
 }
 
+
+model Follow {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  followerId Int
+  follower User @relation("Following", fields: [followerId], references: [id])
+
+  followingId Int
+  following User @relation("Follower", fields: [followingId], references: [id])
+
+
+}
+
 model Profile {
   id       Int     @id @default(autoincrement())
   bio      String?
@@ -113,11 +128,18 @@ model User {
   email        String        @unique
   name         String?       @unique
   displayName  String?
+  createdAt   DateTime      @default(now())
+
+  profile      Profile?
+  
   reposts      Repost[]
   posts        Post[]
   likesPost    LikePost[]
   likesComment LikeComment[]
   favorites    Favorite[]
   comments     Comment[]
-  profile      Profile?
+  
+
+  followers    Follow[] @relation("Following")
+  following    Follow[] @relation("Follower")
 }
