@@ -5,6 +5,11 @@ const isProtectedRoutes = createRouteMatcher("/")
 
 export default clerkMiddleware(async(auth, req) => {
   if(isProtectedRoutes(req)) await auth.protect();
+},{
+  signInUrl: '/sign-in',
+  afterSignInUrl: '/',
+  signUpUrl: '/sign-up',
+  afterSignUpUrl: '/',
 });
 
 
