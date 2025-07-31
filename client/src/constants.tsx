@@ -1,4 +1,4 @@
-import { House, Telescope, Bell, MessageSquare, User} from 'lucide-react';
+import { House, Telescope, Bell, MessageSquare} from 'lucide-react';
 
 export const menuItems = [
     {
@@ -25,12 +25,6 @@ export const menuItems = [
         name: "Mensajes",
         link: "/messages",
         icon: MessageSquare
-    },
-    {
-        id: 5,
-        name: "Perfil",
-        link: "/profile",
-        icon: User
     }
 ]
 

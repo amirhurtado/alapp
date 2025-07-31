@@ -26,7 +26,13 @@ export const userExists = async (user : ClerkUser) => {
     });
 
     return dbUser;
-
-  
   }
+};
+
+export const getUserbyName = async (username: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      name: username,
+    },
+  });
 };

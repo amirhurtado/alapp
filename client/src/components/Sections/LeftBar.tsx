@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { menuItems } from "@/constants";
-import { Ellipsis } from "lucide-react";
-import ModalCreatePost from "./ModalCreatePost";
+import { Ellipsis, User } from "lucide-react";
+import ModalCreatePost from "./CreatePost/ModalCreatePost";
 
 import { useUser } from "@/store/useUser";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 
 const LeftBar = () => {
   const { currentUser } = useUser();
@@ -36,6 +36,12 @@ const LeftBar = () => {
               </div>
             </Link>
           ))}
+          <Link href={`/${currentUser?.name}`} >
+              <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
+                <User strokeWidth={1} />
+                <span className="ml-2 hidden xxl:block ">Perfil</span>
+              </div>
+            </Link>
         </div>
 
         <ModalCreatePost />
