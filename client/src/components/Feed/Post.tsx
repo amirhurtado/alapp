@@ -1,15 +1,13 @@
-"use client";
-
 import { Image } from "@imagekit/next";
 import PostInfo from "./PostInfo";
 import { Repeat2, Dot } from "lucide-react";
 import PostInteractions from "./PostInteractions";
 
-import { Post as PostType } from "@/generated/prisma";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
+import { FullPostType } from "@/types";
 
 interface PostProps {
-  post: PostType & {author: { id: number; name: string; displayName: string; imageUrl: string } };
+  post: FullPostType;
 }
 
 const Post = ({ post }: PostProps) => {
@@ -23,16 +21,18 @@ const Post = ({ post }: PostProps) => {
       {/*Post content*/}
       <div className="flex w-full gap-3">
         {/* AVATAR */}
-        <Avatar src={post.author.imageUrl} />
+        <Avatar src={post.author?.imageUrl || "user-default"} />
 
         <div className="w-full">
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
               <p className=" font-semibold text-[.92rem] cursor-pointer hover:underline">
-                {post.author.name}
+                {post.author?.name}
               </p>
-              <p className="text-text-gray text-[.83rem]">@{post.author.displayName}</p>
+              <p className="text-text-gray text-[.83rem]">
+                @{post.author?.displayName}
+              </p>
               <Dot size={10} className="text-text-gray" />
               <p className="text-text-gray text-[.83rem]">2h</p>
             </div>

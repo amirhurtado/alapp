@@ -2,7 +2,6 @@
 
 import { prisma } from "@/prisma";
 
-
 import ImageKit from "imagekit";
 
 const imagekit = new ImageKit({
@@ -39,9 +38,30 @@ export const shareAction = async (formData: FormData) => {
   );
 };
 
+export const getPosts = async (id: string, feed: boolean) => {
+  const users = [id];
 
-export const getPosts = async () => {
+  if (feed) {
+    const following = await prisma.follow.findMany({
+      where: {
+        followerId: id,
+      },
+      select: {
+        followingId: true,
+      },
+    });
+
+    const followingIds = following.map((f) => f.followingId);
+
+    users.push(...followingIds);
+  }
+
   return await prisma.post.findMany({
+    where: {
+      authorId: {
+        in: users,
+      },
+    },
     include: {
       author: {
         select: {
@@ -49,8 +69,11 @@ export const getPosts = async () => {
           name: true,
           displayName: true,
           imageUrl: true,
-        }
+        },
       },
-    }
-  });
-}
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  }) ;
+};

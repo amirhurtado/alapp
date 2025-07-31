@@ -41,7 +41,7 @@ const LeftBar = () => {
         <ModalCreatePost />
       </div>
 
-      <div className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
+      <Link href={`/${currentUser?.name}`} className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
         <Avatar src={currentUser?.imageUrl || 'user-default'} />
         <div className="flex-1 hidden xxl:flex flex-col ml-3 justify-center">
           <p className="text-[.8rem] font-bold">{currentUser?.name}</p>
@@ -52,7 +52,7 @@ const LeftBar = () => {
         <div className="hidden xxl:flex items-center cursor-pointer ml-7">
           <Ellipsis size={18} />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

@@ -1,20 +1,24 @@
-import Feed from "@/components/Feed";
-import Share from "@/components/Share";
+import Feed from "@/components/Feed/Feed";
+import Share from "@/components/Sections/CreatePost/CreatePost";
 import Link from "next/link";
 
-import {  currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { userExists } from "@/actions/user";
 import SetUserClient from "@/components/SetUserClient";
+import { getPosts } from "@/actions/post";
+
+import { FullPostType } from "@/types";
 
 export default async function Home() {
   const user = await currentUser();
 
   let dbUser = null;
+  let posts = Array<FullPostType>();
 
-  if(user) { 
-    dbUser = await userExists(user)
+  if (user) {
+    dbUser = await userExists(user);
+    posts = await getPosts(user.id, true);
   }
-
 
   return (
     <div className="h-full overflow-hidden px-2">
@@ -31,8 +35,8 @@ export default async function Home() {
       </div>
 
       <div className="flex flex-col h-full  overflow-y-scroll">
-        <Share />
-        <Feed />
+        <CreatePost />
+        <Feed posts={posts} />
       </div>
     </div>
   );

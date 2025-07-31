@@ -5,8 +5,8 @@ import * as SignUp from "@clerk/elements/sign-up";
 import { GoogleIcon } from "@/constants";
 import { Mail, User, Lock, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import SeparatorForm from "@/components/SeparatorForm";
-import LogoForm from "@/components/LogoForm";
+import SeparatorForm from "@/components/Form/SeparatorForm";
+import LogoForm from "@/components/Form/LogoForm";
 
 const SignUpPage = () => {
   return (

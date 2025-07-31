@@ -2,7 +2,7 @@ import React from 'react'
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Post from '@/components/Post';
-import Comments from '@/components/Comments';
+import Comments from '@/components/Feed/Comments';
 
 const page = () => {
   return (

@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Share from "@/components/Share";
+import CreatePost from "@/components/Sections/CreatePost/CreatePost";
 
 const ModalCreatePost = () => {
   return (
@@ -19,7 +19,7 @@ const ModalCreatePost = () => {
         </div>
       </DialogTrigger>
       <DialogContent>
-        <Share modal={true}/>
+        <CreatePost modal={true}/>
       </DialogContent>
     </Dialog>
   );

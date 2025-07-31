@@ -2,7 +2,7 @@
 
 import React, { useState, useId } from "react";
 import Image from "next/image";
-import Avatar from "./Avatar";
+import Avatar from "../../Avatar";
 import {
   BadgeAlert,
   ImagePlus,
@@ -14,7 +14,7 @@ import {
 import { shareAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
 
-const Share = ({ modal = false }: { modal?: boolean }) => {
+const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   const { currentUser } = useUser();
 
 
@@ -111,4 +111,4 @@ const Share = ({ modal = false }: { modal?: boolean }) => {
   );
 };
 
-export default Share;
+export default CreatePost;

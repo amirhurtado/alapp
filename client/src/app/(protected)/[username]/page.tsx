@@ -1,12 +1,19 @@
 import Link from "next/link";
 import { ArrowLeft, CalendarX, MapPin, MessageSquare } from "lucide-react";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Image as Imagekit } from "@imagekit/next";
-import Feed from "@/components/Feed";
+import Feed from "@/components/Feed/Feed";
+
 
 const myProfile = false;
 
 const UserPage = () => {
+
+  const { username} = useParams();
+
+  console.log("Username:", username);
+
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">

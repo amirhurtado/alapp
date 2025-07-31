@@ -1,16 +1,17 @@
-import { getPosts } from "@/actions/post";
+import { FullPostType } from "@/types";
 import Post from "./Post";
 
-const Feed = async () => {
-  const posts = await getPosts();
+interface FeedProps {
+  posts: Array<FullPostType>;
+}
 
-  console.log("Posts fetched:", posts);
+const Feed = async ({ posts }: FeedProps) => {
 
   return (
     <div>
       {posts.map((post) => (
         <div key={post.id}>
-          <Post post={post}/>
+          <Post post={post} />
         </div>
       ))}
     </div>

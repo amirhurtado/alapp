@@ -1,5 +1,5 @@
-import LeftBar from "@/components/LeftBar";
-import RightBar from "@/components/RightBar";
+import LeftBar from "@/components/Sections/LeftBar";
+import RightBar from "@/components/Sections/RightBar";
 import { ImageKitProvider } from "@imagekit/next";
 
 export default function ProtectedLayout({
