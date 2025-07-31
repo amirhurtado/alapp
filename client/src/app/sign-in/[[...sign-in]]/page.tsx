@@ -1,21 +1,17 @@
 "use client";
 
-import Image from "next/image";
-
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
 import { GoogleIcon } from "@/constants";
-import { AtSign, Lock } from "lucide-react";
+import { AtSign, LoaderCircle, Lock } from "lucide-react";
 import Link from "next/link";
+import SeparatorForm from "@/components/SeparatorForm";
+import LogoForm from "@/components/LogoForm";
 
 const SignInPage = () => {
   return (
     <div className="h-screen  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
-      <div className="w-full flex justify-center">
-        <div className="flex justify-center items-center relative  w-[4rem] h-[4rem] md:w-[20rem] md:h-[20rem]">
-          <Image src="/logo.svg" alt="Logo" fill className="" />
-        </div>
-      </div>
+      <LogoForm />
 
       <div className="w-full flex flex-col gap-8 md:gap-13 justify-center items-center md:items-start">
         <div className="flex flex-col gap-3 md:gap-5 items-center md:items-start ">
@@ -38,7 +34,7 @@ const SignInPage = () => {
                 name="google"
                 className="md:w-full flex items-center justify-center md:justify-start"
               >
-                <div className="max-w-min overflow-hidden md:max-w-max cursor-pointer flex items-center gap-5 py-3 md:py-3 px-3 md:px-11 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
+                <div className="max-w-min md:max-w-max cursor-pointer flex items-center gap-5 py-3 md:py-3 px-3 md:px-11 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
                   <GoogleIcon />
                   <p className="hidden md:block font-semibold text-sm md:text-lg">
                     Inicia sesion con google
@@ -46,58 +42,78 @@ const SignInPage = () => {
                 </div>
               </Clerk.Connection>
 
-              <div className="flex items-center gap-4">
-                <div className="border-1 border-border w-[9.1rem]"></div>
-                <p className="text-xs md:text-md">O</p>
-                <div className="border-1 border-border w-[9.1rem]"></div>
-              </div>
+              <SeparatorForm />
 
               <div className="flex flex-col gap-6  md:gap-7 w-full  md:w-[21rem]">
                 <Clerk.Field
                   name="identifier"
-                  className="relative w-full md:w-[21rem] md:p-0 "
+                  className="w-full md:w-[21rem] md:p-0 "
                 >
-                  <AtSign
+
+
+                  <div className="relative w-full">
+                    <AtSign
                     strokeWidth={1}
                     size={20}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green "
                   />
                   <Clerk.Input
                     className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
-                    placeholder="Email "
+                    placeholder="Email o nombre de usuario"
                   />
-                  <Clerk.FieldError />
+
+                  </div>
+                  
+                  <Clerk.FieldError  className="text-red-500 text-xs mt-1" />
                 </Clerk.Field>
 
-                <div>
-                  <Clerk.Field
-                    name="password"
-                    className="relative w-full md:w-[21rem]  md:p-0 "
-                  >
+
+                <Clerk.Field
+                  name="password"
+                  className=" w-full md:w-[21rem]  md:p-0 "
+                >
+
+                  <div className="relative w-full">
                     <Lock
-                      strokeWidth={1}
-                      size={20}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green"
-                    />
-                    <Clerk.Input
-                      className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
-                      placeholder="Contraseña "
-                    />
-                    <Clerk.FieldError />
-                  </Clerk.Field>
-                </div>
+                    strokeWidth={1}
+                    size={20}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green"
+                  />
+                  <Clerk.Input
+                    className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
+                    placeholder="Contraseña "
+                  />
+
+                  </div>
+                  
+                  <Clerk.FieldError className="text-red-500 text-xs mt-1" />
+                </Clerk.Field>
               </div>
 
-              <div className=" w-full md:w-[21rem] mt-4 rounded-xl   bg-icon-green font-bold py-2  md:py-4  hover:bg-icon-blue transition-all duration-300 ease-in">
-              <SignIn.Action className=" w-full  cursor-pointer" submit>Iniciar sesión</SignIn.Action>
-
-              </div>
+              <SignIn.Action
+                className=" w-full  cursor-pointer md:w-[21rem] mt-4 rounded-xl   bg-icon-green font-bold py-2  md:py-4  hover:bg-icon-blue transition-all duration-300 ease-in"
+                submit
+              >
+                <Clerk.Loading>
+                  {(isLoading) =>
+                    isLoading ? (
+                      <LoaderCircle className="animate-spin w-full" />
+                    ) : (
+                      "Inicia sesión"
+                    )
+                  }
+                </Clerk.Loading>
+              </SignIn.Action>
             </SignIn.Step>
           </div>
         </SignIn.Root>
 
-       
-        <p className="text-sm">¿Primera vez? <span className="underline text-icon-blue"><Link href={'/sign-up'}>Crea una cuenta</Link></span></p>
+        <p className="text-sm">
+          ¿Primera vez?{" "}
+          <span className="underline text-icon-blue">
+            <Link href={"/sign-up"}>Crea una cuenta</Link>
+          </span>
+        </p>
       </div>
     </div>
   );

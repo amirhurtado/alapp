@@ -2,7 +2,19 @@ import Feed from "@/components/Feed";
 import Share from "@/components/Share";
 import Link from "next/link";
 
+import {  currentUser } from "@clerk/nextjs/server";
+import { userExists } from "@/actions/user";
+
 export default async function Home() {
+  const user = await currentUser();
+
+  console.log("Current User:", user);
+
+  if(user) {
+    userExists(user)
+  }
+
+
   return (
     <div className="h-full overflow-hidden px-2">
       <div className="flex w-full justify-between items-end font-sans text-[.9rem] pt-[1rem] border-b-1 border-border font-semibold">

@@ -12,8 +12,8 @@ model Favorite {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   postId Int
   post   Post @relation(fields: [postId], references: [id])
@@ -27,10 +27,10 @@ model LikeComment {
   commentId Int
   comment   Comment @relation(fields: [commentId], references: [id])
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id]) 
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-  @@unique ([commentId, userId])
+  @@unique([commentId, userId])
 }
 
 model Comment {
@@ -43,8 +43,8 @@ model Comment {
   postId Int
   post   Post @relation(fields: [postId], references: [id])
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   likesComment LikeComment[]
 
@@ -59,78 +59,74 @@ model LikePost {
   updatedAt DateTime @updatedAt
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id]) 
+  post   Post @relation(fields: [postId], references: [id])
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-  @@unique ([postId, userId])
+  @@unique([postId, userId])
 }
 
-
 model Repost {
-  id  Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   postId Int
   post   Post @relation(fields: [postId], references: [id])
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  description     String?   @db.VarChar(255)
-  imageUrl  String?
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?  @db.VarChar(255)
+  imageUrl    String?
 
   likesPost LikePost[]
   favorites Favorite[]
   comments  Comment[]
 
-  authorId Int
-  author   User @relation(fields: [authorId], references: [id])
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
 
   reposts Repost[]
 }
 
-
 model Follow {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  followerId Int
-  follower User @relation("Following", fields: [followerId], references: [id])
+  followerId String
+  follower   User   @relation("Following", fields: [followerId], references: [id])
 
-  followingId Int
-  following User @relation("Follower", fields: [followingId], references: [id])
-
-
+  followingId String
+  following   User   @relation("Follower", fields: [followingId], references: [id])
 }
 
-model Profile { 
+model Profile {
   id       Int     @id @default(autoincrement())
   bio      String?
   location String?
   website  String?
 
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  name         String       @unique
-  displayName  String
-  imageUrl     String       @default("/default-image.jpg")
-  createdAt   DateTime      @default(now())
+  id          String   @id
+  email       String   @unique
+  name        String   @unique
+  displayName String
+  imageUrl    String   @default("/user-default")
+  createdAt   DateTime @default(now())
 
-  profile      Profile?
+  profile Profile?
 
   reposts      Repost[]
   posts        Post[]
@@ -138,8 +134,7 @@ model User {
   likesComment LikeComment[]
   favorites    Favorite[]
   comments     Comment[]
-  
 
-  followers    Follow[] @relation("Following")
-  following    Follow[] @relation("Follower")
+  followers Follow[] @relation("Following")
+  following Follow[] @relation("Follower")
 }
