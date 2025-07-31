@@ -13,15 +13,20 @@ export const userExists = async (user : ClerkUser) => {
   });
 
   if (response) {
-    return;
+    return response;
   } else {
-    await prisma.user.create({
+    const dbUser = await prisma.user.create({
       data: {
         id: user.id,
         name: user.username || '',
         displayName: user.username || '',
         email: user.emailAddresses[0].emailAddress,
+        imageUrl: "/user-default", 
       },
     });
+
+    return dbUser;
+
+  
   }
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,7 +7,12 @@ import { menuItems } from "@/constants";
 import { Ellipsis } from "lucide-react";
 import ModalCreatePost from "./ModalCreatePost";
 
+import { useUser } from "@/store/useUser";
+import Avatar from "./Avatar";
+
 const LeftBar = () => {
+  const { currentUser } = useUser();
+
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
       <div className="relative left-[-.4rem] mt-1">
@@ -35,11 +42,11 @@ const LeftBar = () => {
       </div>
 
       <div className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
-        <div className="w-[2.2rem] h-[2.2rem]  rounded-full bg-white">.</div>
+        <Avatar src={currentUser?.imageUrl || 'user-default'} />
         <div className="flex-1 hidden xxl:flex flex-col ml-3 justify-center">
-          <p className="text-[.8rem] font-bold">Amir Hurtado</p>
+          <p className="text-[.8rem] font-bold">{currentUser?.name}</p>
           <p className="text-text-gray-light text-[.75rem] text-gray-400">
-            @amirhurtado
+            @{currentUser?.displayName}
           </p>
         </div>
         <div className="hidden xxl:flex items-center cursor-pointer ml-7">

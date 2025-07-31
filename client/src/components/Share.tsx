@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useId } from "react"; 
+import React, { useState, useId } from "react";
 import Image from "next/image";
-import { Image as ImageKit } from "@imagekit/next";
+import Avatar from "./Avatar";
 import {
   BadgeAlert,
   ImagePlus,
@@ -12,23 +12,14 @@ import {
   Trash,
 } from "lucide-react";
 import { shareAction } from "@/actions/post";
-
-const ImageProfile = () => {
-  return (
-    <div className="w-10 h-10 relative overflow-hidden rounded-full">
-      <ImageKit
-        src="/default-image.jpg"
-        alt="Picture of the author"
-        fill
-        className="object-cover"
-      />
-    </div>
-  );
-};
+import { useUser } from "@/store/useUser";
 
 const Share = ({ modal = false }: { modal?: boolean }) => {
+  const { currentUser } = useUser();
+
+
   const [media, setMedia] = useState<File | null>(null);
-  const fileInputId = useId(); 
+  const fileInputId = useId();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -41,12 +32,12 @@ const Share = ({ modal = false }: { modal?: boolean }) => {
   return (
     <div className={`${!modal && "p-4"}`}>
       <div className="flex w-full gap-3">
-        {!modal && <ImageProfile />}
+        {!modal && <Avatar src={currentUser?.imageUrl || 'user-default'} />}
 
         <form className="w-full" action={shareAction}>
           <div>
             <div className="flex gap-4">
-              {modal && <ImageProfile />}
+              {modal && <Avatar src={currentUser?.imageUrl  || 'user-default'} />}
 
               <input
                 className={`text-md md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${

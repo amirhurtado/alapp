@@ -69,7 +69,7 @@ const SignUpPage = () => {
                       placeholder="Nombre de usuario "
                     />
                   </div>
-                  <Clerk.FieldError />
+                  <Clerk.FieldError  className="text-red-500 text-xs mt-1" />
                 </Clerk.Field>
 
                 <Clerk.Field
@@ -87,7 +87,7 @@ const SignUpPage = () => {
                       placeholder="Contraseña "
                     />
                   </div>
-                  <Clerk.FieldError />
+                  <Clerk.FieldError  className="text-red-500 text-xs mt-1" />
                 </Clerk.Field>
               </div>
 

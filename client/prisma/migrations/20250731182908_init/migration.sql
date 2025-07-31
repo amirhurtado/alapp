@@ -2,7 +2,7 @@
 CREATE TABLE `Favorite` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
     `postId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -14,7 +14,7 @@ CREATE TABLE `LikeComment` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `commentId` INTEGER NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `LikeComment_commentId_userId_key`(`commentId`, `userId`),
     PRIMARY KEY (`id`)
@@ -27,7 +27,7 @@ CREATE TABLE `Comment` (
     `updatedAt` DATETIME(3) NOT NULL,
     `content` VARCHAR(255) NOT NULL,
     `postId` INTEGER NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
     `parentId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
@@ -39,7 +39,7 @@ CREATE TABLE `LikePost` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `postId` INTEGER NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `LikePost_postId_userId_key`(`postId`, `userId`),
     PRIMARY KEY (`id`)
@@ -51,7 +51,7 @@ CREATE TABLE `Repost` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `postId` INTEGER NOT NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -62,9 +62,8 @@ CREATE TABLE `Post` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `description` VARCHAR(255) NULL,
-    `content` VARCHAR(191) NULL,
     `imageUrl` VARCHAR(191) NULL,
-    `authorId` INTEGER NOT NULL,
+    `authorId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -74,8 +73,8 @@ CREATE TABLE `Follow` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `followerId` INTEGER NOT NULL,
-    `followingId` INTEGER NOT NULL,
+    `followerId` VARCHAR(191) NOT NULL,
+    `followingId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -86,7 +85,7 @@ CREATE TABLE `Profile` (
     `bio` VARCHAR(191) NULL,
     `location` VARCHAR(191) NULL,
     `website` VARCHAR(191) NULL,
-    `userId` INTEGER NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Profile_userId_key`(`userId`),
     PRIMARY KEY (`id`)
@@ -94,10 +93,11 @@ CREATE TABLE `Profile` (
 
 -- CreateTable
 CREATE TABLE `User` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NULL,
-    `displayName` VARCHAR(191) NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `displayName` VARCHAR(191) NOT NULL,
+    `imageUrl` VARCHAR(191) NOT NULL DEFAULT '/user-default',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),
