@@ -14,7 +14,7 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
       <div className="relative left-[-.4rem] mt-1">
-        <Link href="/">
+        <Link href="/" aria-label="ir a principal">
           <Image
             src={"/logo.svg"}
             alt="logo"
@@ -27,14 +27,14 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
       <div className=" font-poppins flex flex-col gap-3 justify-between flex-1">
         <div className="flex flex-col gap-2 ">
           {menuItems.map((item) => (
-            <Link key={item.id} href={item.link}>
+            <Link key={item.id} href={item.link} aria-label={item.arialLaberl}>
               <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
                 <item.icon strokeWidth={1} />
                 <span className="ml-2 hidden xxl:block ">{item.name}</span>
               </div>
             </Link>
           ))}
-          <Link href={`/${currentUser?.name}`} >
+          <Link href={`/${currentUser?.name}`} aria-label="ir a perfil">
               <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
                 <User strokeWidth={1} />
                 <span className="ml-2 hidden xxl:block ">Perfil</span>
@@ -45,7 +45,7 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
         <ModalCreatePost />
       </div>
 
-      <Link href={`/${currentUser?.name}`} className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
+      <Link href={`/${currentUser?.name}`} arial-label="Ir al perfil" className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
         <Avatar src={currentUser?.imageUrl || 'user-default'} />
         <div className="flex-1 hidden xxl:flex flex-col ml-3 justify-center">
           <p className="text-[.8rem] font-bold">{currentUser?.name}</p>

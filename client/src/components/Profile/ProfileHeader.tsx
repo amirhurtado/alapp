@@ -22,7 +22,7 @@ const ProfileHeader = ({
   return (
     <>
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">
-        <Link href="/">
+        <Link href="/" aria-label="volver">
           <ArrowLeft size={20} className="cursor-pointer" />
         </Link>
         <div className="flex flex-col ">

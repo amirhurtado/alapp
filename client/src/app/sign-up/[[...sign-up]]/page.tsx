@@ -114,7 +114,7 @@ const SignUpPage = () => {
         <p className="text-sm">
           ¿Ya tienes cuenta?{" "}
           <span className="underline text-icon-blue">
-            <Link href={"/sign-in"}>Inicia sesión</Link>
+            <Link aria-label="ir a iniciar sesion" href={"/sign-in"}>Inicia sesión</Link>
           </span>
         </p>
       </div>

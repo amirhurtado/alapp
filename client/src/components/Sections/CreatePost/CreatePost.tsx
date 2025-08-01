@@ -69,6 +69,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
                 />
                 <button
                   type="button"
+                  aria-label="Eliminar imagen"
                   onClick={() => setMedia(null)}
                   className="absolute top-3 right-3 bg-red-400 rounded-lg px-2 py-1 cursor-pointer"
                 >

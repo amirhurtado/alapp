@@ -12,7 +12,6 @@ interface PostProps {
 }
 
 const Post = ({ post, currentUserId }: PostProps) => {
-
   const isMyPost = currentUserId === post.author?.id;
 
   return (
@@ -31,7 +30,11 @@ const Post = ({ post, currentUserId }: PostProps) => {
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
-              <p className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${isMyPost && "text-icon-blue"}`}>
+              <p
+                className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${
+                  isMyPost && "text-icon-blue"
+                }`}
+              >
                 {isMyPost ? "Tú" : post.author?.name}
               </p>
               <p className="text-text-gray text-[.83rem]">
@@ -49,17 +52,21 @@ const Post = ({ post, currentUserId }: PostProps) => {
             </p>
 
             {post.imageUrl && (
-              <Image
-                src={post.imageUrl}
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                className="object-cover mt-4 border-1 border-border rounded-xl"
-              />
+              <div className="relative w-full max-w-[500px] h-[300px] mt-4 border border-border rounded-xl overflow-hidden">
+                <Image
+                  src={post.imageUrl}
+                  alt="Post image"
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
             )}
           </div>
 
-          <PostInteractions favorites={post.favorites.map((fav) => fav.userId)}  />
+          <PostInteractions
+            favorites={post.favorites.map((fav) => fav.userId)}
+          />
         </div>
       </div>
     </div>

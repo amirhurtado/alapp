@@ -4,12 +4,14 @@ export const menuItems = [
     {
         id: 1,
         name: "Principal",
+        arialLaberl: "ir a principal",
         link: "/",
         icon: House
     },
     {
         id: 2,
         name: "Explorar",
+        arialLaberl: "ir a explorar",
         link: "/explore",
         icon: Telescope
 
@@ -17,12 +19,14 @@ export const menuItems = [
     {
         id: 3,
         name: "Notificaciones",
+        arialLaberl: "ir a notificaciones",
         link: "/notifications",
         icon: Bell
     },
     {
         id: 4,
         name: "Mensajes",
+        arialLaberl: "ir a mensajes",
         link: "/messages",
         icon: MessageSquare
     }

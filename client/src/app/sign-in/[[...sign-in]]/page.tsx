@@ -111,7 +111,7 @@ const SignInPage = () => {
         <p className="text-sm">
           ¿Primera vez?{" "}
           <span className="underline text-icon-blue">
-            <Link href={"/sign-up"}>Crea una cuenta</Link>
+            <Link aria-label="ir a crear cuenta" href={"/sign-up"}>Crea una cuenta</Link>
           </span>
         </p>
       </div>

@@ -61,7 +61,7 @@ const Comments = () => {
 
 
                 </div>
-                <button className="text-icon-blue font-semibold text-sm cursor-pointer">Enviar</button>
+                <button aria-label="enviar comentario" className="text-icon-blue font-semibold text-sm cursor-pointer">Enviar</button>
             </div>
 
             
