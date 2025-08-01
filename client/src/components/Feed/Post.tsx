@@ -1,4 +1,3 @@
-'use client'
 import { Image } from "@imagekit/next";
 import PostInfo from "./PostInfo";
 import { Repeat2, Dot } from "lucide-react";
@@ -6,17 +5,16 @@ import PostInteractions from "./PostInteractions";
 
 import Avatar from "../Avatar";
 import { FullPostType } from "@/types";
-import { useUser } from "@/store/useUser";
 
 interface PostProps {
   post: FullPostType;
+  currentUserId?: string;
 }
 
-const Post = ({ post }: PostProps) => {
+const Post = ({ post, currentUserId }: PostProps) => {
   console.log("Post component rendered with post:", post);
-  const {currentUser} = useUser();
 
-  const isMyPost = currentUser?.id === post.author?.id;
+  const isMyPost = currentUserId === post.author?.id;
 
   return (
     <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">

@@ -3,15 +3,16 @@ import Post from "./Post";
 
 interface FeedProps {
   posts: Array<FullPostType>;
+  currentUserId?: string; 
 }
 
-const Feed = async ({ posts }: FeedProps) => {
+const Feed = ({ posts, currentUserId }: FeedProps) => {
 
   return (
     <div>
       {posts.map((post) => (
         <div key={post.id}>
-          <Post post={post} />
+          <Post post={post} currentUserId={currentUserId} />
         </div>
       ))}
     </div>
