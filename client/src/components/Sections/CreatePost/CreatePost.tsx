@@ -11,13 +11,14 @@ import {
   Smile,
   Trash,
 } from "lucide-react";
-import { shareAction } from "@/actions/post";
+import { createPostAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
+import { SubmitButton } from "./SubmitButton";
 
 const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   const { currentUser } = useUser();
 
-
+  const [description, setDescription] = useState<string>("");
   const [media, setMedia] = useState<File | null>(null);
   const fileInputId = useId();
 
@@ -25,7 +26,6 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
     const file = event.target.files?.[0];
     if (file) {
       setMedia(file);
-      event.target.value = "";
     }
   };
 
@@ -34,7 +34,14 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
       <div className="flex w-full gap-3">
         {!modal && <Avatar src={currentUser?.imageUrl || 'user-default'} />}
 
-        <form className="w-full" action={shareAction}>
+        <form className="w-full" action={async (formData) =>{
+
+          await createPostAction(formData);
+          setDescription("");
+          setMedia(null);
+
+        }}>
+          {currentUser?.id && <input type="hidden" name="authorId" value={currentUser?.id} /> }
           <div>
             <div className="flex gap-4">
               {modal && <Avatar src={currentUser?.imageUrl  || 'user-default'} />}
@@ -43,9 +50,11 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
                 className={`text-md md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${
                   modal && "pb-12 mt-1"
                 }`}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="Cuentanos lo que piensas!"
                 type="text"
-                name="text"
+                name="description"
               />
             </div>
 
@@ -97,12 +106,8 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
                 <Smile size={20} />
               </div>
 
-              <button
-                type="submit"
-                className="text-black cursor-pointer bg-icon-green py-1 px-3 rounded-xl  text-md"
-              >
-                Publicar
-              </button>
+              <SubmitButton disabled={!description && !media} />
+
             </div>
           </div>
         </form>

@@ -10,32 +10,37 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || "",
 });
 
-export const shareAction = async (formData: FormData) => {
-  //const text = formData.get("text") as string;
+export const createPostAction = async (formData: FormData) => {
+  const authorId = formData.get("authorId") as string;
+  const description = formData.get("description") as string;
   const image = formData.get("image") as File;
 
-  //console.log("Text:", text);
+  let urlImage: string | undefined = undefined;
 
-  const bytes = await image?.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+  if (image && image.size > 0) {
+    const bytes = await image?.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
-  imagekit.upload(
-    {
+    const resultImage = await imagekit.upload({
       file: buffer,
       fileName: image.name,
+      useUniqueFileName: true,
       folder: "/posts",
       transformation: {
         pre: "w-600",
       },
+    });
+
+    urlImage = resultImage?.url;
+  }
+
+  await prisma.post.create({
+    data: {
+      authorId,
+      description,
+      imageUrl: urlImage,
     },
-    (error, result) => {
-      if (error) {
-        console.error("Error uploading image:", error);
-      } else {
-        console.log("Image uploaded successfully:", result);
-      }
-    }
-  );
+  });
 };
 
 export const getPosts = async (id: string, feed: boolean) => {
@@ -75,5 +80,5 @@ export const getPosts = async (id: string, feed: boolean) => {
     orderBy: {
       createdAt: "desc",
     },
-  }) ;
+  });
 };
