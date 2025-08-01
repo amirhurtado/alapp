@@ -27,7 +27,7 @@ const UserPage = async ({ params }: Props) => {
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
       <ProfileHeader userInfo={user} currentUserName={currUser!.username!} />
-      <Feed posts={posts} currentUserId={currUser!.id} />{" "}
+      <Feed posts={posts} currentUserId={currUser!.id}  />{" "}
     </div>
   );
 };

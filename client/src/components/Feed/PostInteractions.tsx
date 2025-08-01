@@ -1,12 +1,6 @@
-'use client'
+"use client";
 
-import {
-  MessageSquare,
-  Repeat2,
-  Heart,
-  Star,
-  Upload,
-} from "lucide-react";
+import { MessageSquare, Repeat2, Heart, Star, Upload } from "lucide-react";
 import React from "react";
 
 interface PostInteractionsProps {
@@ -14,13 +8,16 @@ interface PostInteractionsProps {
   favorites?: string[];
 }
 
-
-const PostInteractions = ({ comment = false, favorites }: PostInteractionsProps) => {
-
-  console.log("PostInteractions rendered with favorites:", favorites);
-
+const PostInteractions = ({
+  comment = false,
+  favorites,
+}: PostInteractionsProps) => {
   return (
-    <div className={`flex ${comment ? 'justify-end gap-8' : 'justify-between'} text-xs mt-6 text-text-gray`}>
+    <div
+      className={`flex ${
+        comment ? "justify-end gap-8" : "justify-between"
+      } text-xs mt-6 text-text-gray`}
+    >
       <div className="flex gap-1 items-center rounded-2xl  group cursor-pointer hover:text-icon-blue hover:scale-[1.05] transition-transform ease-in duration-200">
         <MessageSquare size={18} />
         <p>127</p>
@@ -41,8 +38,6 @@ const PostInteractions = ({ comment = false, favorites }: PostInteractionsProps)
 
       {!comment && (
         <>
-          
-
           <div className="flex gap-4 items-center  ">
             <Star
               size={18}

@@ -1,21 +1,28 @@
 import { FullPostType } from "@/types";
 import Post from "./Post";
 import Image from "next/image";
+import InfiniteFeed from "./InfiniteFeed";
 
 interface FeedProps {
   posts: Array<FullPostType>;
   currentUserId: string; 
+  feed?: boolean; // Optional prop to indicate if it's a feed
 }
 
-const Feed = ({ posts, currentUserId  }: FeedProps) => {
+const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
 
   return (
     <div>
       {posts.map((post) => (
+
         <div key={post.id}>
           <Post post={post} currentUserId={currentUserId} />
         </div>
+
       ))}
+
+      <InfiniteFeed currentUserId={currentUserId} feed={feed} />
+
 
       {posts.length === 0 && (
         <div className="flex flex-col items-center justify-center mt-10">
