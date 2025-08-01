@@ -5,6 +5,7 @@ import PostInteractions from "./PostInteractions";
 
 import Avatar from "../Avatar";
 import { FullPostType } from "@/types";
+import Link from "next/link";
 
 interface PostProps {
   post: FullPostType;
@@ -30,13 +31,13 @@ const Post = ({ post, currentUserId }: PostProps) => {
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
-              <p
+              <Link href={`/${post.author?.name}`}
                 className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${
                   isMyPost && "text-icon-blue"
                 }`}
               >
                 {isMyPost ? "Tú" : post.author?.name}
-              </p>
+              </Link>
               <p className="text-text-gray text-[.83rem]">
                 @{post.author?.displayName}
               </p>

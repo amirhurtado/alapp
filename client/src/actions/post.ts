@@ -67,6 +67,7 @@ export const getPosts = async (id: string, feed: boolean) => {
         in: users,
       },
     },
+    take: 10,
     include: {
       author: {
         select: {
