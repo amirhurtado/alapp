@@ -7,8 +7,11 @@ export async function GET(request: Request) {
     const id = searchParams.get("id");
     const feed = searchParams.get("feed") === "true";
 
+    const pageStr = searchParams.get("page");
+    const page = pageStr ? parseInt(pageStr, 10) : 1;
 
-    const posts = await getPosts(id!, feed);
+
+    const posts = await getPosts(id!, feed, page);
     return NextResponse.json(posts);
 
 }

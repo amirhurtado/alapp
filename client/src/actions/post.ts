@@ -43,8 +43,9 @@ export const createPostAction = async (formData: FormData) => {
   });
 };
 
-export const getPosts = async (id: string, feed: boolean) => {
+export const getPosts = async (id: string, feed: boolean, page : number = 1) => {
   const users = [id];
+  const skip = (page - 1) * 10;
 
   if (feed) {
     const following = await prisma.follow.findMany({
@@ -67,6 +68,7 @@ export const getPosts = async (id: string, feed: boolean) => {
         in: users,
       },
     },
+    skip: skip,
     take: 10,
     include: {
       author: {

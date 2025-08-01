@@ -12,7 +12,7 @@ interface FeedProps {
 const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
 
   return (
-    <div>
+    <div className="max-h-full">
       {posts.map((post) => (
 
         <div key={post.id}>
