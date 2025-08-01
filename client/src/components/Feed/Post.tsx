@@ -6,6 +6,7 @@ import PostInteractions from "./PostInteractions";
 import Avatar from "../Avatar";
 import { FullPostType } from "@/types";
 import Link from "next/link";
+import TimeAgo from "../TimeAgo";
 
 interface PostProps {
   post: FullPostType;
@@ -42,7 +43,7 @@ const Post = ({ post, currentUserId }: PostProps) => {
                 @{post.author?.displayName}
               </p>
               <Dot size={10} className="text-text-gray" />
-              <p className="text-text-gray text-[.83rem]">2h</p>
+              <TimeAgo date={post.createdAt} />
             </div>
             <PostInfo />
           </div>
