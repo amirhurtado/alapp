@@ -23,7 +23,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="h-full overflow-hidden px-2">
+    <div className="h-screen flex flex-col overflow-hidden px-2">
       <SetUserClient dbUser={dbUser} />
       <div className="flex w-full justify-between items-end font-sans text-[.9rem] pt-[1rem] border-b-1 border-border font-semibold">
         <Link aria-label="Ir a para tí" href={"/"} className="w-full flex flex-col">
@@ -36,7 +36,7 @@ export default async function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col h-full  overflow-y-scroll">
+      <div className="flex flex-col max-h-screen  overflow-y-scroll">
         <CreatePost />
         <Feed posts={posts} currentUserId={currUser!.id} feed={true}  />
       </div>

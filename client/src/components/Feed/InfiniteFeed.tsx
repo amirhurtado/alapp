@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Post from "./Post";
 import { FullPostType } from "@/types";
+import { LoaderCircle } from "lucide-react";
 
 interface InfiniteFeedProps {
   currentUserId: string;
@@ -16,10 +17,6 @@ const InfiniteFeed = ({ currentUserId, feed = false }: InfiniteFeedProps) => {
 
 
   const loadMoreRef = useRef(null);
-
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
 
   useEffect(() => {
     if (!loadMoreRef.current) return;
@@ -57,7 +54,7 @@ const InfiniteFeed = ({ currentUserId, feed = false }: InfiniteFeedProps) => {
     };
 
     fetchPosts();
-  }, [currentUserId, feed, page]);
+  }, [currentUserId, feed, page, hasMore]);
 
   return (
     <div>
@@ -67,8 +64,13 @@ const InfiniteFeed = ({ currentUserId, feed = false }: InfiniteFeedProps) => {
         </div>
       ))}
 
-      <div ref={loadMoreRef} className="h-[3.5rem]">
-        <p>Cargando</p>
+      <div ref={loadMoreRef} className="h-[2rem] flex items-center justify-center my-8">
+        {hasMore ? (
+        <LoaderCircle className="animate-spin mx-auto text-icon-blue " size={24} />
+            ) : (
+            <p className="text-center text-text-gray text-sm">No hay más publicaciones</p>
+
+        )}
       </div>
     </div>
   );
