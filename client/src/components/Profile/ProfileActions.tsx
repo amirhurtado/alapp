@@ -1,5 +1,6 @@
 "use client";
 import { MessageSquare } from "lucide-react";
+import FollowButton from "../FollowButton";
 
 const ProfileActions = ({ myProfile }: { myProfile: boolean }) => {
   return (
@@ -13,9 +14,7 @@ const ProfileActions = ({ myProfile }: { myProfile: boolean }) => {
           <button  aria-label="Enviar mensaje" className="border-1 border-border rounded-full w-10 h-10 flex items-center justify-center">
             <MessageSquare size={20} className="" />
           </button>
-          <button aria-label="Seguir" className="bg-white px-3 rounded-lg h-8  text-black ">
-            <p className="text-sm">Seguir</p>
-          </button>
+          <FollowButton />
         </div>
       )}
     </div>

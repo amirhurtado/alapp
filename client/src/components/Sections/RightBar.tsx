@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "./Search";
 import PopularTags from "./PopularTags";
-import Recomendations from "./Recomendations";
+import Recomendations from "./Recomendations/Recomendations";
 
 const RightBar = ({currenUserId}: {currenUserId: string}) => {
   return (
