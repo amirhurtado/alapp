@@ -7,8 +7,6 @@ import {
 } from "lucide-react";
 import React from "react";
 
-import { useUser } from "@/store/useUser";
-
 interface PostInteractionsProps {
   comment?: boolean;
   favorites?: string[];
@@ -17,10 +15,7 @@ interface PostInteractionsProps {
 
 const PostInteractions = ({ comment = false, favorites }: PostInteractionsProps) => {
 
-  const { currentUser } = useUser();
-
-  const favorite = currentUser && favorites?.includes(currentUser.id)
-
+  console.log("PostInteractions rendered with favorites:", favorites);
 
   return (
     <div className={`flex ${comment ? 'justify-end gap-8' : 'justify-between'} text-xs mt-6 text-text-gray`}>
@@ -44,11 +39,12 @@ const PostInteractions = ({ comment = false, favorites }: PostInteractionsProps)
 
       {!comment && (
         <>
+          
 
           <div className="flex gap-4 items-center  ">
             <Star
               size={18}
-              className={` ${favorite ? 'text-icon-yellow' : 'text-text-gray'} hover:text-icon-yellow cursor-pointer transition-colors duration-200 ease-in`}
+              className="text-text-gray hover:text-icon-yellow cursor-pointer transition-colors duration-200 ease-in"
             />
             <Upload
               size={18}
