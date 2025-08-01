@@ -3,7 +3,7 @@ import Post from "./Post";
 
 interface FeedProps {
   posts: Array<FullPostType>;
-  currentUserId?: string; 
+  currentUserId: string; 
 }
 
 const Feed = ({ posts, currentUserId }: FeedProps) => {

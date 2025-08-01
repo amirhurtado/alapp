@@ -1,26 +1,27 @@
-'use client'
-import React from 'react'
+import React from "react";
 
 import Link from "next/link";
-import { ArrowLeft, CalendarX, MapPin, MessageSquare } from "lucide-react";
+import { ArrowLeft, CalendarX, MapPin } from "lucide-react";
 import Image from "next/image";
 import { Image as Imagekit } from "@imagekit/next";
 
 import { User as UserType } from "@/generated/prisma";
-import { useUser } from '@/store/useUser';
+import ProfileActions from "./ProfileActions";
 
+interface ProfileHeaderProps {
+  userInfo: UserType;
+  currentUserName: string;
+}
 
+const ProfileHeader = ({
+  userInfo,
+  currentUserName,
+}: ProfileHeaderProps) => {
+  const myProfile = currentUserName === userInfo.name;
 
-const ProfileHeader = ({userInfo} : {userInfo: UserType}) => {
-    const {currentUser} = useUser();
-
-    const myProfile = currentUser?.name === userInfo.name;
-    console.log(currentUser?.name, userInfo.name, myProfile);
-
-    
   return (
     <>
-        <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">
+      <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">
         <Link href="/">
           <ArrowLeft size={20} className="cursor-pointer" />
         </Link>
@@ -49,58 +50,41 @@ const ProfileHeader = ({userInfo} : {userInfo: UserType}) => {
             />
           </div>
 
-          <div className="flex justify-end px-3 pt-4">
-            {myProfile ? (
-              <button className="bg-icon-blue px-3 rounded-lg h-8  text-black ">
-                <p className="text-sm">Editar perfil</p>
-              </button>
-            ) : (
-              <div className="flex gap-4 items-center">
-                <button className="border-1 border-border rounded-full w-10 h-10 flex items-center justify-center">
-                  <MessageSquare size={20} className="" />
-                </button>
-                <button className="bg-white px-3 rounded-lg h-8  text-black ">
-                  <p className="text-sm">Seguir</p>
-                </button>
-              </div>
-            )}
-          </div>
+          <ProfileActions myProfile={myProfile} />
         </div>
 
         {/* Profile Info */}
         <div className="px-4">
-            <h1 className="text-2xl font-semibold">{userInfo.name}</h1>
-            <p className="text-sm text-text-gray">@{userInfo.displayName}</p>
+          <h1 className="text-2xl font-semibold">{userInfo.name}</h1>
+          <p className="text-sm text-text-gray">@{userInfo.displayName}</p>
 
-            <p className="mt-3 text-sm">Descipcion de gustos</p>
+          <p className="mt-3 text-sm">Descipcion de gustos</p>
 
-            <div className="flex gap-5 mt-1 text-text-gray text-sm">
-                <div className="flex items-center gap-1">
-                    <MapPin size={16} className="" />
-                    <span>Pais</span>
-                </div>
-                <div className="flex items-center gap-1">
-                    <CalendarX size={16} className="" />
-                    <span >Se unió en x</span>
-                </div>
+          <div className="flex gap-5 mt-1 text-text-gray text-sm">
+            <div className="flex items-center gap-1">
+              <MapPin size={16} className="" />
+              <span>Pais</span>
             </div>
-
-            <div className="flex gap-5 mt-3">
-                <div className="flex items-end gap-1 hover:underline cursor-pointer">
-                    <p className="text-sm">1011</p>
-                    <span className="text-text-gray text-xs">Siguiendo</span>
-                </div>
-                <div className="flex items-end gap-1 hover:underline cursor-pointer ">
-                    <p className="text-sm">408</p>
-                    <span className="text-text-gray text-xs">Seguidos</span>
-                </div>
+            <div className="flex items-center gap-1">
+              <CalendarX size={16} className="" />
+              <span>Se unió en x</span>
             </div>
+          </div>
 
+          <div className="flex gap-5 mt-3">
+            <div className="flex items-end gap-1 hover:underline cursor-pointer">
+              <p className="text-sm">1011</p>
+              <span className="text-text-gray text-xs">Siguiendo</span>
+            </div>
+            <div className="flex items-end gap-1 hover:underline cursor-pointer ">
+              <p className="text-sm">408</p>
+              <span className="text-text-gray text-xs">Seguidos</span>
+            </div>
+          </div>
         </div>
       </div>
-      
     </>
-  )
-}
+  );
+};
 
-export default ProfileHeader
+export default ProfileHeader;

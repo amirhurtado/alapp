@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,11 +5,11 @@ import { menuItems } from "@/constants";
 import { Ellipsis, User } from "lucide-react";
 import ModalCreatePost from "./CreatePost/ModalCreatePost";
 
-import { useUser } from "@/store/useUser";
+import { User as UserType} from '@/generated/prisma'
+
 import Avatar from "../Avatar";
 
-const LeftBar = () => {
-  const { currentUser } = useUser();
+const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
 
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">

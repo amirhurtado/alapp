@@ -12,7 +12,6 @@ interface PostProps {
 }
 
 const Post = ({ post, currentUserId }: PostProps) => {
-  console.log("Post component rendered with post:", post);
 
   const isMyPost = currentUserId === post.author?.id;
 

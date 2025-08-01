@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import Feed from "@/components/Feed/Feed";
 import CreatePost from "@/components/Sections/CreatePost/CreatePost";
@@ -12,14 +12,14 @@ import { getPosts } from "@/actions/post";
 import { FullPostType } from "@/types";
 
 export default async function Home() {
-  const user = await currentUser();
+  const currUser = await currentUser();
 
   let dbUser = null;
   let posts = Array<FullPostType>();
 
-  if (user) {
-    dbUser = await userExists(user);
-    posts = await getPosts(user.id, true);
+  if (currUser) {
+    dbUser = await userExists(currUser);
+    posts = await getPosts(currUser.id, true);
   }
 
   return (
@@ -38,7 +38,7 @@ export default async function Home() {
 
       <div className="flex flex-col h-full  overflow-y-scroll">
         <CreatePost />
-        <Feed posts={posts} currentUserId={user?.id} />
+        <Feed posts={posts} currentUserId={currUser!.id} />
       </div>
     </div>
   );
