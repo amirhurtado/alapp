@@ -34,5 +34,14 @@ export const getUserbyName = async (username: string) => {
     where: {
       name: username,
     },
+    include: {
+      _count: {
+        select: {
+          posts: true,
+          followers: true,
+          following: true,
+        }
+      }
+    }
   });
 };

@@ -5,7 +5,7 @@ const ProfileActions = ({ myProfile }: { myProfile: boolean }) => {
   return (
     <div className="flex justify-end px-3 pt-4">
       {myProfile ? (
-        <button aria-label="editar perfil" className="bg-icon-blue px-3 rounded-lg h-8  text-black ">
+        <button aria-label="editar perfil" className="cursor-pointer bg-icon-blue px-3 rounded-lg h-8  text-black ">
           <p className="text-sm">Editar perfil</p>
         </button>
       ) : (

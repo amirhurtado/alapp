@@ -9,7 +9,13 @@ import { User as UserType } from "@/generated/prisma";
 import ProfileActions from "./ProfileActions";
 
 interface ProfileHeaderProps {
-  userInfo: UserType;
+  userInfo: UserType & {
+    _count: {
+      posts: number;
+      followers: number;
+      following: number;
+    };
+  };
   currentUserName: string;
 }
 
@@ -19,6 +25,7 @@ const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   const myProfile = currentUserName === userInfo.name;
 
+
   return (
     <>
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">
@@ -27,7 +34,7 @@ const ProfileHeader = ({
         </Link>
         <div className="flex flex-col ">
           <p className="font-semibold text-md">{userInfo.name}</p>
-          <p className="text-xs text-text-gray">42 posts</p>
+          <p className="text-xs text-text-gray">{userInfo._count.posts} posts</p>
         </div>
       </div>
       <div className="relative flex flex-col mb-6">
@@ -73,12 +80,12 @@ const ProfileHeader = ({
 
           <div className="flex gap-5 mt-3">
             <div className="flex items-end gap-1 hover:underline cursor-pointer">
-              <p className="text-sm">1011</p>
+              <p className="text-sm">{userInfo._count.following}</p>
               <span className="text-text-gray text-xs">Siguiendo</span>
             </div>
             <div className="flex items-end gap-1 hover:underline cursor-pointer ">
-              <p className="text-sm">408</p>
-              <span className="text-text-gray text-xs">Seguidos</span>
+              <p className="text-sm">{userInfo._count.followers}</p>
+              <span className="text-text-gray text-xs">Seguidores</span>
             </div>
           </div>
         </div>
