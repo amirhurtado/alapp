@@ -1,3 +1,4 @@
+'use client'
 import { Image } from "@imagekit/next";
 import PostInfo from "./PostInfo";
 import { Repeat2, Dot } from "lucide-react";
@@ -5,12 +6,18 @@ import PostInteractions from "./PostInteractions";
 
 import Avatar from "../Avatar";
 import { FullPostType } from "@/types";
+import { useUser } from "@/store/useUser";
 
 interface PostProps {
   post: FullPostType;
 }
 
 const Post = ({ post }: PostProps) => {
+  console.log("Post component rendered with post:", post);
+  const {currentUser} = useUser();
+
+  const isMyPost = currentUser?.id === post.author?.id;
+
   return (
     <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
       {/*reposted*/}
@@ -27,8 +34,8 @@ const Post = ({ post }: PostProps) => {
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
-              <p className=" font-semibold text-[.92rem] cursor-pointer hover:underline">
-                {post.author?.name}
+              <p className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${isMyPost && "text-icon-blue"}`}>
+                {isMyPost ? "Tú" : post.author?.name}
               </p>
               <p className="text-text-gray text-[.83rem]">
                 @{post.author?.displayName}
@@ -55,7 +62,7 @@ const Post = ({ post }: PostProps) => {
             )}
           </div>
 
-          <PostInteractions />
+          <PostInteractions favorites={post.favorites.map((fav) => fav.userId)}  />
         </div>
       </div>
     </div>

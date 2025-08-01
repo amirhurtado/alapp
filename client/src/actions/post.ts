@@ -75,7 +75,21 @@ export const getPosts = async (id: string, feed: boolean) => {
           displayName: true,
           imageUrl: true,
         },
+
       },
+      likesPost: {
+        select: {
+          userId: true,
+        }
+      },
+
+      favorites: {
+        select: {
+          userId: true,
+        }
+      },
+      comments: true,
+      reposts: true
     },
     orderBy: {
       createdAt: "desc",

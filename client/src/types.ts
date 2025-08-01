@@ -1,4 +1,5 @@
 import { Post as PostType } from "@/generated/prisma";
+import { Comment as CommentType } from "@/generated/prisma";
 
 export type FullPostType = PostType & {
   author: {
@@ -6,5 +7,12 @@ export type FullPostType = PostType & {
     name: string;
     displayName: string;
     imageUrl: string;
-  };
+  },
+  likesPost: {
+    userId: string;
+  }[],
+  favorites: {
+    userId: string;
+  }[],
+  comments : CommentType[];
 };
