@@ -35,7 +35,6 @@ const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
           />
         <p className="text-text-gray font-poppins text-xs md:text-sm">Sigue a personas, o sube tu primer post.</p>
 
-
         </div>
       )}
 

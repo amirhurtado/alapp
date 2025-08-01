@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "@imagekit/next";
 import { Dot } from "lucide-react";
-import PostInteractions from "./PostInteractions";
+import PostInteractions from "./PostInteractions/PostInteractions";
 
 
 const ImageProfile = () => {

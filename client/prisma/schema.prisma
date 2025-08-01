@@ -17,6 +17,8 @@ model Favorite {
 
   postId Int
   post   Post @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
 }
 
 model LikeComment {
@@ -106,6 +108,8 @@ model Follow {
 
   followingId String
   following   User   @relation("Follower", fields: [followingId], references: [id])
+
+  @@unique ([followerId, followingId])
 }
 
 model Profile {

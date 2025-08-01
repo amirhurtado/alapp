@@ -1,15 +1,21 @@
 "use client";
 
-import { MessageSquare, Repeat2, Heart, Star, Upload } from "lucide-react";
+import { MessageSquare, Repeat2, Heart, Upload } from "lucide-react";
 import React from "react";
+import Favorite from "./Favorite";
 
 interface PostInteractionsProps {
   comment?: boolean;
-  favorites?: string[];
+  currentUserId: string;
+  currentPostId: number,
+  favorites: string[];
+
 }
 
 const PostInteractions = ({
   comment = false,
+  currentUserId,
+  currentPostId,
   favorites,
 }: PostInteractionsProps) => {
   return (
@@ -39,10 +45,7 @@ const PostInteractions = ({
       {!comment && (
         <>
           <div className="flex gap-4 items-center  ">
-            <Star
-              size={18}
-              className="text-text-gray hover:text-icon-yellow cursor-pointer transition-colors duration-200 ease-in"
-            />
+            <Favorite favorite={favorites.includes(currentUserId)} currentUserId={currentUserId} currentPostId={currentPostId}   />
             <Upload
               size={18}
               className=" text-text-gray hover:text-icon-blue cursor-pointer transition-colors duration-200 ease-in"

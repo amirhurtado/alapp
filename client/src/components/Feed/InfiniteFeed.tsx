@@ -20,7 +20,7 @@ const InfiniteFeed = ({ currentUserId, feed = false }: InfiniteFeedProps) => {
 
   useEffect(() => {
     if (!loadMoreRef.current) return;
-
+    
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         setPage((prevPage) => {

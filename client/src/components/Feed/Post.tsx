@@ -1,7 +1,7 @@
 import { Image } from "@imagekit/next";
 import PostInfo from "./PostInfo";
 import { Repeat2, Dot } from "lucide-react";
-import PostInteractions from "./PostInteractions";
+import PostInteractions from "./PostInteractions/PostInteractions";
 
 import Avatar from "../Avatar";
 import { FullPostType } from "@/types";
@@ -10,7 +10,7 @@ import TimeAgo from "../TimeAgo";
 
 interface PostProps {
   post: FullPostType;
-  currentUserId?: string;
+  currentUserId: string;
 }
 
 const Post = ({ post, currentUserId }: PostProps) => {
@@ -67,6 +67,8 @@ const Post = ({ post, currentUserId }: PostProps) => {
           </div>
 
           <PostInteractions
+            currentUserId={currentUserId}
+            currentPostId={post.id}
             favorites={post.favorites.map((fav) => fav.userId)}
           />
         </div>

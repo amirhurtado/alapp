@@ -43,7 +43,7 @@ export const createPostAction = async (formData: FormData) => {
   });
 };
 
-export const getPosts = async (id: string, feed: boolean, page : number = 1) => {
+export const getPosts = async (id: string, feed: boolean, page: number = 1) => {
   const users = [id];
   const skip = (page - 1) * 10;
 
@@ -78,24 +78,51 @@ export const getPosts = async (id: string, feed: boolean, page : number = 1) => 
           displayName: true,
           imageUrl: true,
         },
-
       },
       likesPost: {
         select: {
           userId: true,
-        }
+        },
       },
 
       favorites: {
         select: {
           userId: true,
-        }
+        },
       },
       comments: true,
-      reposts: true
+      reposts: true,
     },
     orderBy: {
       createdAt: "desc",
     },
   });
+};
+
+export const handleFavoriteAction = async (postId: number, userId: string) => {
+  const existFavorite = await prisma.favorite.findUnique({
+    where: {
+      userId_postId: {
+        userId,
+        postId,
+      },
+    }
+  });
+
+  if (existFavorite) {
+    await prisma.favorite.delete({
+      where: {
+        id: existFavorite.id,
+      },
+    });
+    return;
+  } else {
+    await prisma.favorite.create({
+      data: {
+        postId,
+        userId,
+      },
+    });
+    return;
+  }
 };
