@@ -34,13 +34,14 @@ const Comment = () => {
 interface CommentsProps {
   userId: string;
   userImageUrl: string;
+  postId: number
 }
 
-const Comments = ({ userId, userImageUrl }: CommentsProps) => {
-  console.log(userId);
+const Comments = async ({ userId, userImageUrl, postId }: CommentsProps) => {
+  
   return (
     <div className="flex flex-col gap-4 mt-3">
-      <CreateComment userImageUrl={userImageUrl} />
+      <CreateComment userImageUrl={userImageUrl} postId={postId} userId={userId} />
 
       {Array.from({ length: 1 }).map((_, index) => (
         <Comment key={index} />

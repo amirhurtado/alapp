@@ -1,0 +1,28 @@
+import { prisma } from "@/prisma";
+
+export const getComments = async () => {
+
+}
+
+export const createCommentAction = async (formData: FormData) => {
+  const content = formData.get("content") as string;
+  const postId = formData.get("postId") as string;
+
+  const userId = formData.get("userId") as string;
+  const parentId = formData.get("parentId") as string;
+
+  const intPostId = parseInt(postId, 10);
+  const intParentId = parentId ? parseInt(parentId, 10) : null;
+
+
+  await prisma.comment.create({
+    data: {
+      content: content,
+      postId: intPostId,
+      userId: userId,
+      parentId: intParentId,
+    },
+  });
+
+  return;
+};
