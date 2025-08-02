@@ -35,7 +35,7 @@ const ProfileHeader = ({
           <ArrowLeft size={20} className="cursor-pointer" />
         </Link>
         <div className="flex flex-col ">
-          <p className="font-semibold text-md">{userProfileInfo.name}</p>
+          <p className="font-semibold text-md">{myProfile ? "Tu perfil" : userProfileInfo.name}</p>
           <p className="text-xs text-text-gray">{userProfileInfo._count.posts} posts</p>
         </div>
       </div>
@@ -63,7 +63,7 @@ const ProfileHeader = ({
         </div>
 
         {/* Profile Info */}
-        <div className="px-4">
+        <div className="px-4 mt-2 ">
           <h1 className="text-2xl font-semibold">{userProfileInfo.name}</h1>
           <p className="text-sm text-text-gray">@{userProfileInfo.displayName}</p>
 
@@ -76,7 +76,11 @@ const ProfileHeader = ({
             </div>
             <div className="flex items-center gap-1">
               <CalendarX size={16} className="" />
-              <span>Se unió en x</span>
+              <span>Se unió en {new Date(userProfileInfo.createdAt.toString()).toLocaleString("es-CO", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+              })}</span>
             </div>
           </div>
 

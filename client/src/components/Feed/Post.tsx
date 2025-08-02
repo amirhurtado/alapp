@@ -16,6 +16,7 @@ interface PostProps {
 const Post = ({ post, currentUserId }: PostProps) => {
   const isMyPost = currentUserId === post.author?.id;
 
+
   return (
     <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
       {/*reposted*/}
@@ -38,11 +39,10 @@ const Post = ({ post, currentUserId }: PostProps) => {
             <div className="flex gap-1 items-center flex-1">
               <Link
                 href={`/${post.author?.name}`}
-                className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${
-                  isMyPost && "text-icon-blue"
-                }`}
+                className={`font-semibold text-[.92rem] cursor-pointer hover:underline $`}
               >
-                {isMyPost ? "Tú" : post.author?.name}
+                {post.author?.name}
+                {isMyPost && <span className="text-[0.6rem] text-icon-blue"> (Tú)</span>}
               </Link>
               <p className="text-text-gray text-[.83rem]">
                 @{post.author?.displayName}
@@ -72,7 +72,8 @@ const Post = ({ post, currentUserId }: PostProps) => {
           </div>
 
           <PostInteractions
-            currentUserId={currentUserId}
+            currenUserName={post.author.name}
+            currentUserId={post.authorId}
             currentPostId={post.id}
             reposts={post.reposts.map((rep) => rep.userId)}
             likes={post.likesPost.map((like) => like.userId)}

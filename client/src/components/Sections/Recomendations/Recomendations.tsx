@@ -1,4 +1,4 @@
-import { getRecomentations } from "@/actions/user";
+import { getRecomentations, isFriendAction } from "@/actions/user";
 import FollowButton from "@/components/FollowButton";
 import { Image } from "@imagekit/next";
 import Link from "next/link";
@@ -7,6 +7,8 @@ import React from "react";
 const Recomendations = async ({ currenUserId }: { currenUserId: string }) => {
   const recomendations = await getRecomentations(currenUserId);
 
+  const isFriendList = await Promise.all (recomendations.map((user) => isFriendAction(currenUserId, user.id)))
+  
   return (
     <div className="flex flex-col gap-4 border-1 border-border rounded-xl p-4">
       <p className="text-md font-bold">Recomendaciones para ti</p>
@@ -36,6 +38,7 @@ const Recomendations = async ({ currenUserId }: { currenUserId: string }) => {
                 </div>
               </div>
               <FollowButton
+                isFriend={isFriendList[index]}
                 currentUserId={currenUserId}
                 otherUserId={user.id}
               />

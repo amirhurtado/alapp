@@ -11,6 +11,7 @@ interface FeedProps {
 
 const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
 
+
   return (
     <div className="">
       {posts.map((post) => (

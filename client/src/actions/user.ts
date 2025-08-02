@@ -46,38 +46,47 @@ export const getUserbyName = async (username: string) => {
   });
 };
 
-
-export const toggleFollowAction = async (userFollowerId : string, userFollowingId : string) =>{
-
-  const existFollowed = await prisma.follow.findUnique({
+export const isFriendAction = async (
+  userFollowerId: string,
+  userFollowingId: string
+) => {
+  const isFriend = await prisma.follow.findUnique({
     where: {
-      followerId_followingId:{
+      followerId_followingId: {
         followerId: userFollowerId,
-        followingId: userFollowingId
-      }
-    }
-  })
+        followingId: userFollowingId,
+      },
+    },
+  });
 
-  if(existFollowed){
+  if (isFriend) {
+    return true;
+  } else return false;
+};
+
+export const toggleFollowAction = async (
+  isFriend: boolean,
+  userFollowerId: string,
+  userFollowingId: string
+) => {
+  if (isFriend) {
     await prisma.follow.delete({
       where: {
-        id: existFollowed.id
-      }
-    })
-  }else{
+        followerId_followingId: {
+          followerId: userFollowerId,
+          followingId: userFollowingId,
+        },
+      },
+    });
+  } else {
     await prisma.follow.create({
       data: {
         followerId: userFollowerId,
-        followingId: userFollowingId
-      }
-    })
+        followingId: userFollowingId,
+      },
+    });
   }
-
-
-}
-
-
-
+};
 
 export const getRecomentations = async (userId: string) => {
   const following = await prisma.follow.findMany({
@@ -103,6 +112,6 @@ export const getRecomentations = async (userId: string) => {
       name: true,
       displayName: true,
       imageUrl: true,
-    }
+    },
   });
 };

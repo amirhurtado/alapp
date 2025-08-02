@@ -43,14 +43,51 @@ export const createPostAction = async (formData: FormData) => {
   });
 };
 
-export const getPosts = async (id: string, feed: boolean, page: number = 1) => {
-  const users = [id];
+
+
+const postIncludes = {
+  author: {
+    select: {
+      id: true,
+      name: true,
+      displayName: true,
+      imageUrl: true,
+    },
+  },
+  likesPost: {
+    select: { userId: true },
+  },
+  favorites: {
+    select: { userId: true },
+  },
+  reposts: {
+    select: { userId: true },
+  },
+  comments: true,
+};
+
+
+export const getPostById = async (postId: number) => {
+  return await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    include: postIncludes
+  });
+};
+
+export const getPosts = async (
+  currentUserId: string,
+  feed: boolean,
+  page: number = 1
+) => {
+  const users = [currentUserId];
   const skip = (page - 1) * 10;
 
   if (feed) {
     const following = await prisma.follow.findMany({
       where: {
-        followerId: id,
+        followerId: currentUserId,
       },
       select: {
         followingId: true,
@@ -70,34 +107,7 @@ export const getPosts = async (id: string, feed: boolean, page: number = 1) => {
     },
     skip: skip,
     take: 10,
-    include: {
-      author: {
-        select: {
-          id: true,
-          name: true,
-          displayName: true,
-          imageUrl: true,
-        },
-      },
-      likesPost: {
-        select: {
-          userId: true,
-        },
-      },
-
-      favorites: {
-        select: {
-          userId: true,
-        },
-      },
-       reposts: {
-        select : {
-          userId: true
-        }
-       },
-      comments: true,
-     
-    },
+    include: postIncludes,
     orderBy: {
       createdAt: "desc",
     },
@@ -159,30 +169,28 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
   return;
 };
 
-
-export const toggleRepostAction = async(postId: number, userId : string) =>{
+export const toggleRepostAction = async (postId: number, userId: string) => {
   const existRepost = await prisma.repost.findUnique({
     where: {
-      userId_postId : {
+      userId_postId: {
         userId,
-        postId
-      }
-    }
-  })
+        postId,
+      },
+    },
+  });
 
-  if(existRepost){
+  if (existRepost) {
     await prisma.repost.delete({
       where: {
-        id : existRepost.id
-      }
-    })
-  }else{
+        id: existRepost.id,
+      },
+    });
+  } else {
     await prisma.repost.create({
       data: {
         userId,
-        postId
-      }
-    })
+        postId,
+      },
+    });
   }
-
-}
+};
