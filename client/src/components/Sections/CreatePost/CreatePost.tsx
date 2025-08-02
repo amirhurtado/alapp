@@ -30,7 +30,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   };
 
   return (
-    <div className={`${!modal && "p-4"}`}>
+    <div className={`${!modal && "p-4 md:mt-2"}`}>
       <div className="flex w-full gap-3">
         {!modal && <Avatar src={currentUser?.imageUrl || 'user-default'} />}
 
@@ -47,7 +47,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
               {modal && <Avatar src={currentUser?.imageUrl  || 'user-default'} />}
 
               <input
-                className={`text-md md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${
+                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg  placeholder-text-gray font-poppins w-full outline-none border-none ${
                   modal && "pb-12 mt-1"
                 }`}
                 value={description}
@@ -80,7 +80,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
           </div>
 
           <div className="flex flex-col">
-            <div className="text-icon-blue flex items-center gap-1 mt-2 pl-1 border-b-2 border-border pb-4">
+            <div className="text-icon-blue flex items-center gap-1 mt-4 pl-1 border-b-2 border-border pb-4">
               <BadgeAlert size={16} />
               <p className="text-[.8rem] font-bold">Todos pueden responder</p>
             </div>
