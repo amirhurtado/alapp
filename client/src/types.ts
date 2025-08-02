@@ -14,5 +14,8 @@ export type FullPostType = PostType & {
   favorites: {
     userId: string;
   }[],
+  reposts: {
+    userId: string,
+  }[],
   comments : CommentType[];
 };

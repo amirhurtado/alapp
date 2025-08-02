@@ -90,13 +90,46 @@ export const getPosts = async (id: string, feed: boolean, page: number = 1) => {
           userId: true,
         },
       },
+       reposts: {
+        select : {
+          userId: true
+        }
+       },
       comments: true,
-      reposts: true,
+     
     },
     orderBy: {
       createdAt: "desc",
     },
   });
+};
+
+export const handleLikeAction = async (postId: number, userId: string) => {
+  const existLike = await prisma.likePost.findUnique({
+    where: {
+      userId_postId: {
+        userId,
+        postId,
+      },
+    },
+  });
+
+  if (existLike) {
+    await prisma.likePost.delete({
+      where: {
+        id: existLike.id,
+      },
+    });
+  } else {
+    await prisma.likePost.create({
+      data: {
+        postId,
+        userId,
+      },
+    });
+  }
+
+  return;
 };
 
 export const handleFavoriteAction = async (postId: number, userId: string) => {
@@ -106,7 +139,7 @@ export const handleFavoriteAction = async (postId: number, userId: string) => {
         userId,
         postId,
       },
-    }
+    },
   });
 
   if (existFavorite) {
@@ -115,7 +148,6 @@ export const handleFavoriteAction = async (postId: number, userId: string) => {
         id: existFavorite.id,
       },
     });
-    return;
   } else {
     await prisma.favorite.create({
       data: {
@@ -123,6 +155,34 @@ export const handleFavoriteAction = async (postId: number, userId: string) => {
         userId,
       },
     });
-    return;
   }
+  return;
 };
+
+
+export const repostAction = async(postId: number, userId : string) =>{
+  const existRepost = await prisma.repost.findUnique({
+    where: {
+      userId_postId : {
+        userId,
+        postId
+      }
+    }
+  })
+
+  if(existRepost){
+    await prisma.repost.delete({
+      where: {
+        id : existRepost.id
+      }
+    })
+  }else{
+    await prisma.repost.create({
+      data: {
+        userId,
+        postId
+      }
+    })
+  }
+
+}

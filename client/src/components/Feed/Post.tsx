@@ -19,10 +19,14 @@ const Post = ({ post, currentUserId }: PostProps) => {
   return (
     <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
       {/*reposted*/}
-      <div className="flex items-center gap-2 text-sm mb-2 text-text-gray">
-        <Repeat2 size={16} />
-        <p className="text-xs">Username ha reposteado</p>
-      </div>
+
+      {post.reposts.map((rep) => rep.userId).includes(currentUserId) && (
+        <div className="flex items-center gap-2 text-sm mb-2 text-text-gray">
+          <Repeat2 size={16} />
+          <p className="text-xs">Has reposteado</p>
+        </div>
+      )}
+
       {/*Post content*/}
       <div className="flex w-full gap-3">
         {/* AVATAR */}
@@ -32,7 +36,8 @@ const Post = ({ post, currentUserId }: PostProps) => {
           {/* POST HEADER */}
           <div className="flex justify-between items-top">
             <div className="flex gap-1 items-center flex-1">
-              <Link href={`/${post.author?.name}`}
+              <Link
+                href={`/${post.author?.name}`}
                 className={`font-semibold text-[.92rem] cursor-pointer hover:underline ${
                   isMyPost && "text-icon-blue"
                 }`}
@@ -69,6 +74,8 @@ const Post = ({ post, currentUserId }: PostProps) => {
           <PostInteractions
             currentUserId={currentUserId}
             currentPostId={post.id}
+            reposts={post.reposts.map((rep) => rep.userId)}
+            likes={post.likesPost.map((like) => like.userId)}
             favorites={post.favorites.map((fav) => fav.userId)}
           />
         </div>

@@ -1,21 +1,26 @@
 "use client";
 
-import { MessageSquare, Repeat2, Heart, Upload } from "lucide-react";
+import { MessageSquare, Upload } from "lucide-react";
 import React from "react";
 import Favorite from "./Favorite";
+import Like from "./Like";
+import Repost from "./Repost";
 
 interface PostInteractionsProps {
   comment?: boolean;
   currentUserId: string;
-  currentPostId: number,
+  currentPostId: number;
+  reposts: string[];
+  likes: string[];
   favorites: string[];
-
 }
 
 const PostInteractions = ({
   comment = false,
   currentUserId,
   currentPostId,
+  reposts,
+  likes,
   favorites,
 }: PostInteractionsProps) => {
   return (
@@ -30,22 +35,24 @@ const PostInteractions = ({
       </div>
 
       {!comment && (
-        <div className="flex gap-1 items-center group cursor-pointer  hover:text-icon-green hover:scale-[1.05] transition-transform ease-in duration-200">
-          {" "}
-          <Repeat2 size={18} />
-          <p>127</p>
-        </div>
+        <Repost repost={reposts.includes(currentUserId)} reposts={reposts.length} currentUserId={currentUserId} currentPostId={currentPostId} />
       )}
 
-      <div className="flex gap-1 items-center group cursor-pointer hover:text-icon-pink hover:scale-[1.05] transition-transform ease-in duration-200">
-        <Heart size={18} />
-        <p>127</p>
-      </div>
+      <Like
+        like={likes.includes(currentUserId)}
+        likesNumber={likes.length}
+        currentUserId={currentUserId}
+        currentPostId={currentPostId}
+      />
 
       {!comment && (
         <>
           <div className="flex gap-4 items-center  ">
-            <Favorite favorite={favorites.includes(currentUserId)} currentUserId={currentUserId} currentPostId={currentPostId}   />
+            <Favorite
+              favorite={favorites.includes(currentUserId)}
+              currentUserId={currentUserId}
+              currentPostId={currentPostId}
+            />
             <Upload
               size={18}
               className=" text-text-gray hover:text-icon-blue cursor-pointer transition-colors duration-200 ease-in"

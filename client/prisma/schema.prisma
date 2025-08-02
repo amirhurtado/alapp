@@ -66,7 +66,7 @@ model LikePost {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  @@unique([postId, userId])
+  @@unique([userId, postId])
 }
 
 model Repost {
@@ -79,6 +79,8 @@ model Repost {
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, postId])
 }
 
 model Post {

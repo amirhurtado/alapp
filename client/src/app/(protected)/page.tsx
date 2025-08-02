@@ -32,7 +32,7 @@ export default async function Home() {
           </p>
         </Link>
         <Link  aria-label="Ir a siguiendo" href={"/"} className="w-full">
-          <p className="text-center text-text-gray pb-2">Siguiendo</p>
+          <p className="text-center text-text-gray pb-2">Reposteados</p>
         </Link>
       </div>
 

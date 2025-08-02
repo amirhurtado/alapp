@@ -5,6 +5,7 @@ CREATE TABLE `Favorite` (
     `userId` VARCHAR(191) NOT NULL,
     `postId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Favorite_userId_postId_key`(`userId`, `postId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -41,7 +42,7 @@ CREATE TABLE `LikePost` (
     `postId` INTEGER NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `LikePost_postId_userId_key`(`postId`, `userId`),
+    UNIQUE INDEX `LikePost_userId_postId_key`(`userId`, `postId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -76,6 +77,7 @@ CREATE TABLE `Follow` (
     `followerId` VARCHAR(191) NOT NULL,
     `followingId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Follow_followerId_followingId_key`(`followerId`, `followingId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
