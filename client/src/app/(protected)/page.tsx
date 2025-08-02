@@ -12,7 +12,10 @@ import { getPosts } from "@/actions/post";
 import { FullPostType } from "@/types";
 
 export default async function Home() {
+
   const currUser = await currentUser();
+
+  if(!currUser) return
 
   let dbUser = null;
   let posts = Array<FullPostType>();
@@ -38,7 +41,7 @@ export default async function Home() {
 
       <div className="flex flex-col max-h-screen  overflow-y-scroll">
         <CreatePost />
-        <Feed posts={posts} currentUserId={currUser!.id} feed={true}  />
+        <Feed posts={posts} currentUserId={currUser.id} feed={true}  />
       </div>
     </div>
   );

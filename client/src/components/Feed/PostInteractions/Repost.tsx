@@ -1,4 +1,4 @@
-import { repostAction } from "@/actions/post";
+import { toggleRepostAction } from "@/actions/post";
 import { Repeat2 } from "lucide-react";
 
 interface RepostProps {
@@ -15,7 +15,7 @@ const Repost = ({
   currentPostId,
 }: RepostProps) => {
   const handleRepostClick = async () => {
-    await repostAction(currentPostId, currentUserId);
+    await toggleRepostAction(currentPostId, currentUserId);
   };
 
   return (

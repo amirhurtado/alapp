@@ -1,4 +1,4 @@
-import { handleLikeAction } from "@/actions/post";
+import { toggleLikeAction } from "@/actions/post";
 import { Heart } from "lucide-react";
 
 interface LikeProps {
@@ -15,7 +15,7 @@ const Like = ({
   currentPostId,
 }: LikeProps) => {
   const handleLikeClick = async () => {
-    await handleLikeAction(currentPostId, currentUserId);
+    await toggleLikeAction(currentPostId, currentUserId);
   };
 
   return (

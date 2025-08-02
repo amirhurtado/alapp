@@ -104,7 +104,7 @@ export const getPosts = async (id: string, feed: boolean, page: number = 1) => {
   });
 };
 
-export const handleLikeAction = async (postId: number, userId: string) => {
+export const toggleLikeAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
     where: {
       userId_postId: {
@@ -132,7 +132,7 @@ export const handleLikeAction = async (postId: number, userId: string) => {
   return;
 };
 
-export const handleFavoriteAction = async (postId: number, userId: string) => {
+export const toggleFavoriteAction = async (postId: number, userId: string) => {
   const existFavorite = await prisma.favorite.findUnique({
     where: {
       userId_postId: {
@@ -160,7 +160,7 @@ export const handleFavoriteAction = async (postId: number, userId: string) => {
 };
 
 
-export const repostAction = async(postId: number, userId : string) =>{
+export const toggleRepostAction = async(postId: number, userId : string) =>{
   const existRepost = await prisma.repost.findUnique({
     where: {
       userId_postId : {

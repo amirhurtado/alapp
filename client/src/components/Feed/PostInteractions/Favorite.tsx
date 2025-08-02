@@ -1,6 +1,6 @@
 "use client";
 
-import { handleFavoriteAction } from "@/actions/post";
+import { toggleFavoriteAction } from "@/actions/post";
 import { Star } from "lucide-react";
 
 interface FavoriteProps {
@@ -15,7 +15,7 @@ const Favorite = ({
   currentPostId,
 }: FavoriteProps) => {
   const handleFavoriteClick = async () => {
-    handleFavoriteAction(currentPostId, currentUserId);
+    toggleFavoriteAction(currentPostId, currentUserId);
   };
 
   return (

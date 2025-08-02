@@ -46,6 +46,39 @@ export const getUserbyName = async (username: string) => {
   });
 };
 
+
+export const toggleFollowAction = async (userFollowerId : string, userFollowingId : string) =>{
+
+  const existFollowed = await prisma.follow.findUnique({
+    where: {
+      followerId_followingId:{
+        followerId: userFollowerId,
+        followingId: userFollowingId
+      }
+    }
+  })
+
+  if(existFollowed){
+    await prisma.follow.delete({
+      where: {
+        id: existFollowed.id
+      }
+    })
+  }else{
+    await prisma.follow.create({
+      data: {
+        followerId: userFollowerId,
+        followingId: userFollowingId
+      }
+    })
+  }
+
+
+}
+
+
+
+
 export const getRecomentations = async (userId: string) => {
   const following = await prisma.follow.findMany({
     where: {

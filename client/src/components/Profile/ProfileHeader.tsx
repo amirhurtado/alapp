@@ -9,21 +9,23 @@ import { User as UserType } from "@/generated/prisma";
 import ProfileActions from "./ProfileActions";
 
 interface ProfileHeaderProps {
-  userInfo: UserType & {
+  userProfileInfo: UserType & {
     _count: {
       posts: number;
       followers: number;
       following: number;
     };
   };
+  currentUserId: string;
   currentUserName: string;
 }
 
 const ProfileHeader = ({
-  userInfo,
+  userProfileInfo,
+  currentUserId,
   currentUserName,
 }: ProfileHeaderProps) => {
-  const myProfile = currentUserName === userInfo.name;
+  const myProfile = currentUserName === userProfileInfo.name;
 
 
   return (
@@ -33,8 +35,8 @@ const ProfileHeader = ({
           <ArrowLeft size={20} className="cursor-pointer" />
         </Link>
         <div className="flex flex-col ">
-          <p className="font-semibold text-md">{userInfo.name}</p>
-          <p className="text-xs text-text-gray">{userInfo._count.posts} posts</p>
+          <p className="font-semibold text-md">{userProfileInfo.name}</p>
+          <p className="text-xs text-text-gray">{userProfileInfo._count.posts} posts</p>
         </div>
       </div>
       <div className="relative flex flex-col mb-6">
@@ -57,13 +59,13 @@ const ProfileHeader = ({
             />
           </div>
 
-          <ProfileActions myProfile={myProfile} />
+          <ProfileActions myProfile={myProfile} currentUserId={currentUserId} userProfileInfoId={userProfileInfo.id} />
         </div>
 
         {/* Profile Info */}
         <div className="px-4">
-          <h1 className="text-2xl font-semibold">{userInfo.name}</h1>
-          <p className="text-sm text-text-gray">@{userInfo.displayName}</p>
+          <h1 className="text-2xl font-semibold">{userProfileInfo.name}</h1>
+          <p className="text-sm text-text-gray">@{userProfileInfo.displayName}</p>
 
           <p className="mt-3 text-sm">Descipcion de gustos</p>
 
@@ -80,11 +82,11 @@ const ProfileHeader = ({
 
           <div className="flex gap-5 mt-3">
             <div className="flex items-end gap-1 hover:underline cursor-pointer">
-              <p className="text-sm">{userInfo._count.following}</p>
+              <p className="text-sm">{userProfileInfo._count.following}</p>
               <span className="text-text-gray text-xs">Siguiendo</span>
             </div>
             <div className="flex items-end gap-1 hover:underline cursor-pointer ">
-              <p className="text-sm">{userInfo._count.followers}</p>
+              <p className="text-sm">{userProfileInfo._count.followers}</p>
               <span className="text-text-gray text-xs">Seguidores</span>
             </div>
           </div>
