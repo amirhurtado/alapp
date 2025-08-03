@@ -22,7 +22,7 @@ const Feed = ({ posts, currentUserIdLog, feed = false  }: FeedProps) => {
 
       ))}
 
-      <InfiniteFeed currentUserIdLog={currentUserIdLog} feed={feed} />
+      <InfiniteFeed currentUserIdLog={currentUserIdLog} feed={feed}  postsLength={posts.length}  />
 
 
       {posts.length === 0 && (
