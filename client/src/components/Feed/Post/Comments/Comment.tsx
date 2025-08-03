@@ -16,6 +16,7 @@ export const Comment = ({
   isMyComment,
   currentUserIdLog,
 }: CommentProps) => {
+
   return (
     <div className="flex flex-col gap-2 hover:bg-hover p-4 transition-colors duration-200 ease-in border-y-1 border-border ">
       <div className="flex w-full gap-3  ">
@@ -56,7 +57,7 @@ export const Comment = ({
         
       </div>
 
-      <ReplyToComment comment={{id:comment.id, authorName:comment.user.name, responses:comment._count.comments}}  currentUserIdLog={currentUserIdLog} />
+      <ReplyToComment comment={{id:comment.id, authorName:comment.user.name, responses:comment._count.comments}}  postId={comment.postId} currentUserIdLog={currentUserIdLog} />
     </div>
   );
 };

@@ -5,6 +5,7 @@ export const getCommentsAction = async (postId: number) => {
   return await prisma.comment.findMany({
     where: {
       postId: postId,
+      parentId: null,
     },
     include: {
       user: {
