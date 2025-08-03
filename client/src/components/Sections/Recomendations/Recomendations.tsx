@@ -1,11 +1,11 @@
-import { getRecomentations, isFriendAction } from "@/actions/user";
+import { getRecomentationsAction, isFriendAction } from "@/actions/user";
 import FollowButton from "@/components/FollowButton";
 import { Image } from "@imagekit/next";
 import Link from "next/link";
 import React from "react";
 
 const Recomendations = async ({ currentUserIdLog }: { currentUserIdLog: string }) => {
-  const recomendations = await getRecomentations(currentUserIdLog);
+  const recomendations = await getRecomentationsAction(currentUserIdLog);
 
   const isFriendList = await Promise.all (recomendations.map((user) => isFriendAction(currentUserIdLog, user.id)))
   

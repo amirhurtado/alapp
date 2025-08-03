@@ -1,7 +1,7 @@
 "use server";
 import { prisma } from "@/prisma";
 
-export const getComments = async (postId: number) => {
+export const getCommentsAction = async (postId: number) => {
   return await prisma.comment.findMany({
     where: {
       postId: postId,

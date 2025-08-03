@@ -99,7 +99,7 @@ export const toggleFollowAction = async (
   }
 };
 
-export const getRecomentations = async (userId: string) => {
+export const getRecomentationsAction = async (userId: string) => {
   const following = await prisma.follow.findMany({
     where: {
       followerId: userId,

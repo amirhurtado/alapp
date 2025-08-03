@@ -71,7 +71,7 @@ const postIncludes = {
 };
 
 
-export const getPostById = async (postId: number) => {
+export const getPostByIdAction = async (postId: number) => {
   return await prisma.post.findUnique({
     where: {
       id: postId,
@@ -80,7 +80,7 @@ export const getPostById = async (postId: number) => {
   });
 };
 
-export const getPosts = async (
+export const getPostsAction = async (
   currentUserId: string,
   feed: boolean,
   page: number = 1

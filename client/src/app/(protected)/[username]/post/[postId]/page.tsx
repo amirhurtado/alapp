@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Comments from "@/components/Feed/Post/Comments/Comments";
 import Post from "@/components/Feed/Post/Post";
-import { getPostById } from "@/actions/post";
+import { getPostByIdAction } from "@/actions/post";
 import { currentUser } from "@clerk/nextjs/server";
 import { getImgUrlAction } from "@/actions/user";
 
@@ -16,7 +16,7 @@ type Props = {
 const page = async ({ params }: Props) => {
   const { postId } = await params;
 
-  const post = await getPostById(parseInt(postId));
+  const post = await getPostByIdAction(parseInt(postId));
 
   const currUser = await currentUser();
 

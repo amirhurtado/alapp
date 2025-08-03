@@ -1,7 +1,7 @@
 // app/[username]/page.tsx
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user";
-import { getPosts } from "@/actions/post";
+import { getPostsAction } from "@/actions/post";
 import ProfileHeader from "@/components/Profile/ProfileHeader";
 import Feed from "@/components/Feed/Feed";
 
@@ -21,7 +21,7 @@ export default async function UserPage({ params }: Props) {
     return <h1>No encontrado</h1>;
   }
 
-  const posts = await getPosts(user.id, false);
+  const posts = await getPostsAction(user.id, false);
 
   const ismyProfile = currUser.id === user.id
 

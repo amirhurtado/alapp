@@ -7,7 +7,7 @@ import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { userExistsAction } from "@/actions/user";
 import SetUserClient from "@/components/SetUserClient";
-import { getPosts } from "@/actions/post";
+import { getPostsAction } from "@/actions/post";
 
 import { FullPostType } from "@/types";
 
@@ -22,7 +22,7 @@ export default async function Home() {
 
   if (currUser) {
     dbUser = await userExistsAction(currUser);
-    posts = await getPosts(currUser.id, true);
+    posts = await getPostsAction(currUser.id, true);
   }
 
   return (

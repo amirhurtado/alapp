@@ -1,7 +1,7 @@
 import React from "react";
 
 import CreateComment from "./CreateComment";
-import { getComments } from "@/actions/comment";
+import { getCommentsAction } from "@/actions/comment";
 import { Comment } from "./Comment";
 
 interface CommentsProps {
@@ -14,7 +14,7 @@ interface CommentsProps {
 }
 
 const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
-  const comments = await getComments(postId);
+  const comments = await getCommentsAction(postId);
 
   return (
     <div className="flex flex-col gap-4 mt-3">

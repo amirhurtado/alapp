@@ -1,4 +1,4 @@
-import { getPosts } from "@/actions/post";
+import { getPostsAction } from "@/actions/post";
 import { NextResponse } from "next/server";
 
 
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const page = pageStr ? parseInt(pageStr, 10) : 1;
 
 
-    const posts = await getPosts(id!, feed, page);
+    const posts = await getPostsAction(id!, feed, page);
     return NextResponse.json(posts);
 
 }
