@@ -4,18 +4,18 @@ import { toggleFavoriteAction } from "@/actions/post";
 import { Star } from "lucide-react";
 
 interface FavoriteProps {
-  favorite: boolean; // Indicates if the post is favorited by the current user
-  currentUserId: string; // ID of the current user
-  currentPostId: number; // ID of the post being favorited
+  inFavorite: boolean; // Indicates if the post is favorited by the current user
+  currentUserIdLog: string; // ID of the current user
+  postId: number; // ID of the post being favorited
 }
 
 const Favorite = ({
-  favorite,
-  currentUserId,
-  currentPostId,
+  inFavorite,
+  currentUserIdLog,
+  postId,
 }: FavoriteProps) => {
   const handleFavoriteClick = async () => {
-    toggleFavoriteAction(currentPostId, currentUserId);
+    toggleFavoriteAction(postId, currentUserIdLog);
   };
 
   return (
@@ -23,7 +23,7 @@ const Favorite = ({
       onClick={handleFavoriteClick}
       size={18}
       className={` ${
-        favorite ? "text-icon-yellow" : "text-text-gray"
+        inFavorite ? "text-icon-yellow" : "text-text-gray"
       } hover:text-icon-yellow cursor-pointer transition-colors duration-200 ease-in`}
     />
   );

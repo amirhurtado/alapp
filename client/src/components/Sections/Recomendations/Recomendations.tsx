@@ -4,10 +4,10 @@ import { Image } from "@imagekit/next";
 import Link from "next/link";
 import React from "react";
 
-const Recomendations = async ({ currenUserId }: { currenUserId: string }) => {
-  const recomendations = await getRecomentations(currenUserId);
+const Recomendations = async ({ currentUserIdLog }: { currentUserIdLog: string }) => {
+  const recomendations = await getRecomentations(currentUserIdLog);
 
-  const isFriendList = await Promise.all (recomendations.map((user) => isFriendAction(currenUserId, user.id)))
+  const isFriendList = await Promise.all (recomendations.map((user) => isFriendAction(currentUserIdLog, user.id)))
   
   return (
     <div className="flex flex-col gap-4 border-1 border-border rounded-xl p-4">
@@ -39,7 +39,7 @@ const Recomendations = async ({ currenUserId }: { currenUserId: string }) => {
               </div>
               <FollowButton
                 isFriend={isFriendList[index]}
-                currentUserId={currenUserId}
+                currentUserIdLog={currentUserIdLog}
                 otherUserId={user.id}
               />
             </div>

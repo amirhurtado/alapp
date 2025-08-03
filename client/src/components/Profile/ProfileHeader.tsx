@@ -5,29 +5,20 @@ import { ArrowLeft, CalendarX, MapPin } from "lucide-react";
 import Image from "next/image";
 import { Image as Imagekit } from "@imagekit/next";
 
-import { User as UserType } from "@/generated/prisma";
 import ProfileActions from "./ProfileActions";
+import { FullUserType } from "@/types";
 
 interface ProfileHeaderProps {
-  userProfileInfo: UserType & {
-    _count: {
-      posts: number;
-      followers: number;
-      following: number;
-    };
-  };
-  currentUserId: string;
-  currentUserName: string;
+  userProfileInfo: FullUserType;
+  currentUserIdLog: string;
+  isMyProfile: boolean;
 }
 
 const ProfileHeader = ({
   userProfileInfo,
-  currentUserId,
-  currentUserName,
+  currentUserIdLog,
+  isMyProfile,
 }: ProfileHeaderProps) => {
-  const myProfile = currentUserName === userProfileInfo.name;
-
-
   return (
     <>
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0">
@@ -35,8 +26,12 @@ const ProfileHeader = ({
           <ArrowLeft size={20} className="cursor-pointer" />
         </Link>
         <div className="flex flex-col ">
-          <p className="font-semibold text-md">{myProfile ? "Tu perfil" : userProfileInfo.name}</p>
-          <p className="text-xs text-text-gray">{userProfileInfo._count.posts} posts</p>
+          <p className="font-semibold text-md">
+            {isMyProfile ? "Tu perfil" : userProfileInfo.name}
+          </p>
+          <p className="text-xs text-text-gray">
+            {userProfileInfo._count.posts} posts
+          </p>
         </div>
       </div>
       <div className="relative flex flex-col mb-6">
@@ -59,13 +54,19 @@ const ProfileHeader = ({
             />
           </div>
 
-          <ProfileActions myProfile={myProfile} currentUserId={currentUserId} userProfileInfoId={userProfileInfo.id} />
+          <ProfileActions
+            isMyProfile={isMyProfile}
+            currentUserIdLog={currentUserIdLog}
+            userProfileInfoId={userProfileInfo.id}
+          />
         </div>
 
         {/* Profile Info */}
         <div className="px-4 mt-2 ">
           <h1 className="text-2xl font-semibold">{userProfileInfo.name}</h1>
-          <p className="text-sm text-text-gray">@{userProfileInfo.displayName}</p>
+          <p className="text-sm text-text-gray">
+            @{userProfileInfo.displayName}
+          </p>
 
           <p className="mt-3 text-sm">Descipcion de gustos</p>
 
@@ -76,11 +77,17 @@ const ProfileHeader = ({
             </div>
             <div className="flex items-center gap-1">
               <CalendarX size={16} className="" />
-              <span>Se unió en {new Date(userProfileInfo.createdAt.toString()).toLocaleString("es-CO", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              })}</span>
+              <span>
+                Se unió en{" "}
+                {new Date(userProfileInfo.createdAt.toString()).toLocaleString(
+                  "es-CO",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}
+              </span>
             </div>
           </div>
 

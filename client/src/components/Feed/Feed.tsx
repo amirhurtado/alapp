@@ -5,11 +5,11 @@ import InfiniteFeed from "./InfiniteFeed";
 
 interface FeedProps {
   posts: Array<FullPostType>;
-  currentUserId: string; 
+  currentUserIdLog: string; 
   feed?: boolean; // Optional prop to indicate if it's a feed
 }
 
-const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
+const Feed = ({ posts, currentUserIdLog, feed = false  }: FeedProps) => {
 
 
   return (
@@ -17,12 +17,12 @@ const Feed = ({ posts, currentUserId, feed = false  }: FeedProps) => {
       {posts.map((post) => (
 
         <div key={post.id}>
-          <Post post={post} currentUserId={currentUserId} />
+          <Post post={post} currentUserIdLog={currentUserIdLog} />
         </div>
 
       ))}
 
-      <InfiniteFeed currentUserId={currentUserId} feed={feed} />
+      <InfiniteFeed currentUserIdLog={currentUserIdLog} feed={feed} />
 
 
       {posts.length === 0 && (

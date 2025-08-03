@@ -9,7 +9,7 @@ import { User as UserType} from '@/generated/prisma'
 
 import Avatar from "../Avatar";
 
-const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
+const LeftBar = ({currentUserLog} : {currentUserLog : UserType} ) => {
 
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
@@ -34,7 +34,7 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
               </div>
             </Link>
           ))}
-          <Link href={`/${currentUser?.name}`} aria-label="ir a perfil">
+          <Link href={`/${currentUserLog?.name}`} aria-label="ir a perfil">
               <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
                 <User strokeWidth={1} />
                 <span className="ml-2 hidden xxl:block ">Perfil</span>
@@ -45,12 +45,12 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
         <ModalCreatePost />
       </div>
 
-      <Link href={`/${currentUser?.name}`} arial-label="Ir al perfil" className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
-        <Avatar src={currentUser?.imageUrl || 'user-default'} />
+      <Link href={`/${currentUserLog?.name}`} arial-label="Ir al perfil" className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
+        <Avatar src={currentUserLog?.imageUrl || 'user-default'} />
         <div className="flex-1 hidden xxl:flex flex-col ml-3 justify-center">
-          <p className="text-[.8rem] font-bold">{currentUser?.name}</p>
+          <p className="text-[.8rem] font-bold">{currentUserLog?.name}</p>
           <p className="text-text-gray-light text-[.75rem] text-gray-400">
-            @{currentUser?.displayName}
+            @{currentUserLog?.displayName}
           </p>
         </div>
         <div className="hidden xxl:flex items-center cursor-pointer ml-7">

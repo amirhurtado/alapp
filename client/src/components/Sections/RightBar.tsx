@@ -3,13 +3,13 @@ import Search from "./Search";
 import PopularTags from "./PopularTags";
 import Recomendations from "./Recomendations/Recomendations";
 
-const RightBar = ({currenUserId}: {currenUserId: string}) => {
+const RightBar = ({currentUserIdLog}: {currentUserIdLog: string}) => {
   return (
     <div className="flex flex-col justify-between gap-4 h-screen py-10">
       <div className="flex flex-col gap-4">
         <Search />
         <PopularTags />
-        <Recomendations currenUserId={currenUserId} />
+        <Recomendations currentUserIdLog={currentUserIdLog} />
       </div>
 
       <div className="flex flex-wrap gap-4 text-text-gray text-xs">

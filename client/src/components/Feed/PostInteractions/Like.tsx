@@ -3,31 +3,31 @@ import { toggleLikeAction } from "@/actions/post";
 import { Heart } from "lucide-react";
 
 interface LikeProps {
-  like: boolean;
-  likesNumber: number;
-  currentUserId: string;
-  currentPostId: number;
+  liked: boolean;
+  likes: number;
+  currentUserIdLog: string;
+  postId: number;
 }
 
 const Like = ({
-  like,
-  likesNumber,
-  currentUserId,
-  currentPostId,
+  liked,
+  likes,
+  currentUserIdLog,
+  postId,
 }: LikeProps) => {
   const handleLikeClick = async () => {
-    await toggleLikeAction(currentPostId, currentUserId);
+    await toggleLikeAction(postId, currentUserIdLog);
   };
 
   return (
     <div
       className={`flex ${
-        like ? "text-icon-pink" : "text-text-gray"
+        liked ? "text-icon-pink" : "text-text-gray"
       } gap-1 items-center group cursor-pointer hover:text-icon-pink hover:scale-[1.05] transition-transform ease-in duration-200`}
       onClick={handleLikeClick}
     >
       <Heart size={18} />
-      <p>{likesNumber}</p>
+      <p>{likes}</p>
     </div>
   );
 };

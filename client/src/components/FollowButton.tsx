@@ -5,17 +5,17 @@ import { Trash, UserRoundCheck } from "lucide-react";
 
 interface FollowButtonProps {
   isFriend: boolean;
-  currentUserId: string;
+  currentUserIdLog: string;
   otherUserId: string;
 }
 
 const FollowButton = ({
   isFriend,
-  currentUserId,
+  currentUserIdLog,
   otherUserId,
 }: FollowButtonProps) => {
   const handleFollowClick = async () => {
-    await toggleFollowAction(isFriend, currentUserId, otherUserId);
+    await toggleFollowAction(isFriend, currentUserIdLog, otherUserId);
   };
   return (
     <>

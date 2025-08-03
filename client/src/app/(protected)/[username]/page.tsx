@@ -23,14 +23,16 @@ export default async function UserPage({ params }: Props) {
 
   const posts = await getPosts(user.id, false);
 
+  const ismyProfile = currUser.id === user.id
+
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
       <ProfileHeader
         userProfileInfo={user}
-        currentUserId={currUser.id}
-        currentUserName={currUser.username as string}
+        currentUserIdLog={currUser.id}
+        isMyProfile={ismyProfile}
       />
-      <Feed posts={posts} currentUserId={currUser.id} />
+      <Feed posts={posts} currentUserIdLog={currUser.id} />
     </div>
   );
 }
