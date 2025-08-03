@@ -1,3 +1,4 @@
+'use client'
 import { toggleLikeAction } from "@/actions/post";
 import { Heart } from "lucide-react";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Post from "./Post";
+import Post from "./Post/Post";
 import { FullPostType } from "@/types";
 import { LoaderCircle } from "lucide-react";
 

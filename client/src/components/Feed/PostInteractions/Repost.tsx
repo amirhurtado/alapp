@@ -1,3 +1,4 @@
+'use client'
 import { toggleRepostAction } from "@/actions/post";
 import { Repeat2 } from "lucide-react";
 

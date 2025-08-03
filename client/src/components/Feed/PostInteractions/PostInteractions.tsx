@@ -1,4 +1,3 @@
-"use client";
 
 import { MessageSquare, Upload } from "lucide-react";
 import React from "react";
@@ -8,7 +7,7 @@ import Repost from "./Repost";
 import Link from "next/link";
 
 interface PostInteractionsProps {
-  currenUserName: string
+  currentUserName: string
   currentUserId: string;
   currentPostId: number;
   commentsNumber: number,
@@ -18,7 +17,7 @@ interface PostInteractionsProps {
 }
 
 const PostInteractions = ({
-  currenUserName, 
+  currentUserName, 
   currentUserId,
   currentPostId,
   commentsNumber,
@@ -30,7 +29,7 @@ const PostInteractions = ({
     <div
       className={`flex justify-between text-xs mt-6 text-text-gray`}
     >
-      <Link href={`/${currenUserName}/post/${currentPostId}`} className="flex gap-1 items-center rounded-2xl  group cursor-pointer hover:text-icon-blue hover:scale-[1.05] transition-transform ease-in duration-200">
+      <Link href={`/${currentUserName}/post/${currentPostId}`} className="flex gap-1 items-center rounded-2xl  group cursor-pointer hover:text-icon-blue hover:scale-[1.05] transition-transform ease-in duration-200">
         <MessageSquare size={18} />
         <p>{commentsNumber}</p>
       </Link >

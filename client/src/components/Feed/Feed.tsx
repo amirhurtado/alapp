@@ -1,5 +1,5 @@
 import { FullPostType } from "@/types";
-import Post from "./Post";
+import Post from "./Post/Post";
 import Image from "next/image";
 import InfiniteFeed from "./InfiniteFeed";
 
