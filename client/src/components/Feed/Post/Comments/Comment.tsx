@@ -3,7 +3,7 @@ import TimeAgo from "@/components/TimeAgo";
 import { FullCommentType } from "@/types";
 import { Dot } from "lucide-react";
 import Like from "./Like";
-import ReplyToComment from "./ReplyToComment";
+import CommentRepliesSection from "./CommentRepliesSection/CommentRepliesSection";
 
 interface CommentProps {
   comment: FullCommentType;
@@ -57,7 +57,7 @@ export const Comment = ({
         
       </div>
 
-      <ReplyToComment comment={{id:comment.id, authorName:comment.user.name, responses:comment._count.comments}}  postId={comment.postId} currentUserIdLog={currentUserIdLog} />
+      <CommentRepliesSection comment={{id:comment.id, authorName:comment.user.name, responses:comment._count.comments}}  postId={comment.postId} currentUserIdLog={currentUserIdLog} />
     </div>
   );
 };

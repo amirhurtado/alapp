@@ -52,7 +52,7 @@ const InfiniteFeed = ({
     if (page === null || !hasMore) return;
     const fetchPosts = async () => {
       const res = await fetch(
-        `/api/posts?id=${currentUserIdLog}&feed=${feed}&page=${page}`
+        `/api/posts?useridlog=${currentUserIdLog}&feed=${feed}&page=${page}`
       );
       const posts = await res.json();
 

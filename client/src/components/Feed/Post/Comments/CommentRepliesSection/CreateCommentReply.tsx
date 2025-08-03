@@ -1,46 +1,23 @@
-"use client";
+'use client'
 import { createCommentAction } from "@/actions/comment";
-import { ChevronDown, CornerDownRight, Minus } from "lucide-react";
-import React, { useState } from "react";
+import { CornerDownRight } from "lucide-react";
+import { useState } from "react";
 
-interface ReplyToCommentProps {
+
+interface CreateCommentReplyProps {
   comment: {
     id: number;
     authorName: string;
-    responses: number;
   };
   postId: number;
   currentUserIdLog: string;
 }
 
-const ReplyToComment = ({
-  comment,
-  currentUserIdLog,
-  postId,
-}: ReplyToCommentProps) => {
+const CreateCommentReply = ({comment, postId, currentUserIdLog}: CreateCommentReplyProps) => {
   const [content, setContent] = useState("");
-  const [commentWatched, setCommentWatched] = useState(0);
 
   return (
-    <div className="flex flex-col w-full gap-3">
-      <div className="flex items-center gap-1 text-xs text-text-gray ">
-        <Minus size={20} className="" />
-        {comment.responses === 0 ? (
-          <p>No hay respuestas</p>
-        ) : (
-          <button
-            className=" hover:text-icon-blue flex items-center gap-1 text-xs cursor-pointer"
-            onClick={() => console.log("Quiero ver respuestas")}
-          >
-            <p className=" transition-colors duration-200 ease-in">
-              Ver {comment.responses} respuestas
-            </p>
-            <ChevronDown size={20} />
-          </button>
-        )}
-      </div>
-
-      <form
+     <form
         className="flex items-center gap-3 ml-[.4rem] w-full justify-between"
         action={async (formData) => {
           await createCommentAction(formData);
@@ -70,8 +47,7 @@ const ReplyToComment = ({
           Responder
         </button>
       </form>
-    </div>
-  );
-};
+  )
+}
 
-export default ReplyToComment;
+export default CreateCommentReply

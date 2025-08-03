@@ -38,6 +38,24 @@ export const getCommentsAction = async (postId: number, page: number = 1) => {
   });
 };
 
+export const getCommentsByParentIdAction = async(parentId: number) => {
+
+  return await prisma.comment.findMany({
+    where: {
+      parentId
+    },
+    include: includeFullComment,
+    take: 3,
+     orderBy: {
+      createdAt: "desc",
+    },
+  })
+
+}
+
+
+
+
 export const createCommentAction = async (formData: FormData) => {
   const content = formData.get("content") as string;
   const postId = formData.get("postId") as string;

@@ -4,14 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
+    const userIdLog = searchParams.get("useridlog");
     const feed = searchParams.get("feed") === "true";
 
     const pageStr = searchParams.get("page");
     const page = pageStr ? parseInt(pageStr, 10) : 1;
 
 
-    const posts = await getPostsAction(id!, feed, page);
+    const posts = await getPostsAction(userIdLog!, feed, page);
     return NextResponse.json(posts);
 
 }
