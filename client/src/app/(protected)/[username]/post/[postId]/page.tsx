@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import Comments from "@/components/Feed/Comments/Comments";
+import Comments from "@/components/Feed/Post/Comments/Comments";
 import Post from "@/components/Feed/Post/Post";
 import { getPostById } from "@/actions/post";
 import { currentUser } from "@clerk/nextjs/server";

@@ -1,5 +1,5 @@
 import { Repeat2 } from "lucide-react";
-import PostInteractions from "../PostInteractions/PostInteractions";
+import PostInteractions from "./PostInteractions/PostInteractions";
 
 import Avatar from "../../Avatar";
 import { FullPostType } from "@/types";
