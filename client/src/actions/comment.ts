@@ -27,6 +27,10 @@ export const getCommentsAction = async (postId: number) => {
         }
       }
     },
+    take: 6,
+    orderBy : {
+      createdAt: 'desc'
+    }
   });
 };
 

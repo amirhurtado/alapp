@@ -18,7 +18,7 @@ export const Comment = ({
 }: CommentProps) => {
 
   return (
-    <div className="flex flex-col gap-2 hover:bg-hover p-4 transition-colors duration-200 ease-in border-y-1 border-border ">
+    <div className="flex  py-3 flex-col gap-2 hover:bg-hover p-4 transition-colors duration-200 ease-in border-y-1 border-border ">
       <div className="flex w-full gap-3  ">
         {/* AVATAR */}
         <Avatar src={comment.user.imageUrl} />

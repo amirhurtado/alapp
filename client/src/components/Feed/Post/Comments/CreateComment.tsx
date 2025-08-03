@@ -17,7 +17,7 @@ const CreateComment = ({ currentUserLog, postId }: CreateCommentType) => {
 
   return (
     <form
-      className="p-4 flex justify-between gap-3"
+      className="pt-4 pb-6 px-4 flex justify-between gap-3"
       action={async (formData) => {
         await createCommentAction(formData);
         setContent("")
