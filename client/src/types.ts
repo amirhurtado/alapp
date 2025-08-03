@@ -38,4 +38,7 @@ export type FullCommentType = CommentType & {
     displayName: string;
     imageUrl: string;
   };
+  likesComment: {
+    userId: string
+  }[]
 };

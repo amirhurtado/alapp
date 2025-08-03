@@ -2,15 +2,17 @@ import Avatar from "@/components/Avatar";
 import TimeAgo from "@/components/TimeAgo";
 import { FullCommentType } from "@/types";
 import { Dot } from "lucide-react";
+import Like from "./Like";
 
 
 interface CommentProps  {
     comment: FullCommentType
     isMyComment: boolean
+    currentUserIdLog: string
 
 }
 
-export const Comment = ({comment, isMyComment} : CommentProps ) => {
+export const Comment = ({comment, isMyComment, currentUserIdLog} : CommentProps ) => {
   return (
     <div className="flex w-full gap-3 p-4 hover:bg-hover transition-colors duration-200 ease-in border-y-1 border-border">
       {/* AVATAR */}
@@ -35,6 +37,9 @@ export const Comment = ({comment, isMyComment} : CommentProps ) => {
           {comment.content}
         </p>
       </div>
+
+
+      <Like liked={comment.likesComment.some((like) => like.userId === currentUserIdLog)} likes={comment.likesComment.length} currentUserIdLog={currentUserIdLog}  commentId={comment.id}/>
     </div>
   );
 };

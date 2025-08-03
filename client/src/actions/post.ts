@@ -118,7 +118,7 @@ export const getPosts = async (
   });
 };
 
-export const toggleLikeAction = async (postId: number, userId: string) => {
+export const toggleLikePostAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
     where: {
       userId_postId: {

@@ -1,22 +1,22 @@
 'use client'
-import { toggleLikePostAction } from "@/actions/post";
+import { toggleLikeCommentAction } from "@/actions/comment";
 import { Heart } from "lucide-react";
 
 interface LikeProps {
   liked: boolean;
   likes: number;
   currentUserIdLog: string;
-  postId: number;
+  commentId: number;
 }
 
 const Like = ({
   liked,
   likes,
   currentUserIdLog,
-  postId,
+  commentId,
 }: LikeProps) => {
   const handleLikeClick = async () => {
-    await toggleLikePostAction(postId, currentUserIdLog);
+    await toggleLikeCommentAction(currentUserIdLog, commentId);
   };
 
   return (

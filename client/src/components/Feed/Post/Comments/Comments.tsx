@@ -31,6 +31,7 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
           <Comment
             comment={comment}
             isMyComment={currentUserLog.id === comment.userId}
+            currentUserIdLog={currentUserLog.id}
           />
         </div>
       ))}
