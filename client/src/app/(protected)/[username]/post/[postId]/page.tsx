@@ -16,15 +16,16 @@ type Props = {
 const page = async ({ params }: Props) => {
   const { postId } = await params;
 
-  const post = await getPostByIdAction(parseInt(postId));
-
-  const currUser = await currentUser();
+  const [currUser, post] = await Promise.all([
+    currentUser(),
+    getPostByIdAction(parseInt(postId)),
+  ]);
 
   if (!post || !currUser) return;
 
-  const imgUrlCurrentUser = await getImgUrlAction(currUser.id)
+  const imgUrlCurrentUser = await getImgUrlAction(currUser.id);
 
-  if(!imgUrlCurrentUser) return
+  if (!imgUrlCurrentUser) return;
 
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
@@ -38,7 +39,10 @@ const page = async ({ params }: Props) => {
       </div>
 
       <Post post={post} currentUserIdLog={currUser.id} />
-      <Comments currentUserLog={{id: currUser.id, imgUrl:imgUrlCurrentUser.imageUrl}}   postId={parseInt(postId)} />
+      <Comments
+        currentUserLog={{ id: currUser.id, imgUrl: imgUrlCurrentUser.imageUrl }}
+        postId={parseInt(postId)}
+      />
     </div>
   );
 };
