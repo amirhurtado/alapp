@@ -9,7 +9,6 @@ import { userExistsAction } from "@/actions/user";
 import SetUserClient from "@/components/SetUserClient";
 import { getPostsAction } from "@/actions/post";
 
-import { FullPostType } from "@/types";
 
 export default async function Home() {
 
@@ -17,13 +16,13 @@ export default async function Home() {
 
   if(!currUser) return
 
-  let dbUser = null;
-  let posts = Array<FullPostType>();
 
-  if (currUser) {
-    dbUser = await userExistsAction(currUser);
-    posts = await getPostsAction(currUser.id, true);
-  }
+  const [dbUser, posts] = await Promise.all([
+     userExistsAction(currUser),
+     getPostsAction(currUser.id, true)
+  ])
+
+  
 
   return (
     <div className="h-screen flex flex-col overflow-hidden px-2">
