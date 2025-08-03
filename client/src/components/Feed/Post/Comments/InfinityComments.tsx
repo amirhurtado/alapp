@@ -76,7 +76,7 @@ const InfinityComments = ({ commentsLength, postId, currentUserIdLog }: Infinity
       ))}
       <div
         ref={loadMoreRef}
-        className="h-[2rem] flex items-center justify-center my-8"
+        className="h-[2rem] flex items-center justify-center py-8"
       >
         {hasMore ? (
           <LoaderCircle
