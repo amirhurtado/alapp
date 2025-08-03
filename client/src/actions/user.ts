@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 
 type ClerkUser = NonNullable<Awaited<ReturnType<typeof currentUser>>>;
 
-export const userExists = async (user: ClerkUser) => {
+export const userExistsAction = async (user: ClerkUser) => {
   const response = await prisma.user.findUnique({
     where: {
       id: user.id,
@@ -29,7 +29,7 @@ export const userExists = async (user: ClerkUser) => {
   }
 };
 
-export const getUserbyName = async (username: string) => {
+export const getUserbyNameAction = async (username: string) => {
   return await prisma.user.findUnique({
     where: {
       name: username,
@@ -42,6 +42,17 @@ export const getUserbyName = async (username: string) => {
           following: true,
         },
       },
+    },
+  });
+};
+
+export const getImgUrlAction = async (id: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      imageUrl: true,
     },
   });
 };

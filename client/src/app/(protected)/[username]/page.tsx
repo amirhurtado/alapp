@@ -1,6 +1,6 @@
 // app/[username]/page.tsx
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserbyName } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user";
 import { getPosts } from "@/actions/post";
 import ProfileHeader from "@/components/Profile/ProfileHeader";
 import Feed from "@/components/Feed/Feed";
@@ -15,7 +15,7 @@ export default async function UserPage({ params }: Props) {
   const { username } = await params;
 
   const currUser = await currentUser();
-  const user = await getUserbyName(username);
+  const user = await getUserbyNameAction(username);
 
   if (!user || !currUser) {
     return <h1>No encontrado</h1>;

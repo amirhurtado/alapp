@@ -1,15 +1,18 @@
 "use client";
 import { createCommentAction } from "@/actions/comment";
-import Avatar from "../../Avatar";
+import Avatar from "@/components/Avatar";
 import { useState } from "react";
 
 interface CreateCommentType {
-  userImageUrl: string;
-  postId: number;
-  userId: string;
+  currentUserLog: {
+     id : string,
+    imgUrl: string;
+  }
+ 
+  postId: number
 }
 
-const CreateComment = ({ userImageUrl, postId, userId }: CreateCommentType) => {
+const CreateComment = ({ currentUserLog, postId }: CreateCommentType) => {
   const [content, setContent] = useState<string>("");
 
   return (
@@ -20,9 +23,9 @@ const CreateComment = ({ userImageUrl, postId, userId }: CreateCommentType) => {
       }}
     >
       <div className="flex gap-3 w-full">
-        <Avatar src={userImageUrl} />
+        <Avatar src={currentUserLog.imgUrl} />
         <input type="hidden" value={postId} name="postId" />
-        <input type="hidden" value={userId} name="userId" />
+        <input type="hidden" value={currentUserLog.id} name="userId" />
         <input
           type="text"
           className="outline-none  placeholder:font-poppins w-full border-none "

@@ -5,6 +5,7 @@ import Comments from "@/components/Feed/Post/Comments/Comments";
 import Post from "@/components/Feed/Post/Post";
 import { getPostById } from "@/actions/post";
 import { currentUser } from "@clerk/nextjs/server";
+import { getImgUrlAction } from "@/actions/user";
 
 type Props = {
   params: {
@@ -21,6 +22,10 @@ const page = async ({ params }: Props) => {
 
   if (!post || !currUser) return;
 
+  const imgUrlCurrentUser = await getImgUrlAction(currUser.id)
+
+  if(!imgUrlCurrentUser) return
+
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0 border-b-1 border-border">
@@ -33,7 +38,7 @@ const page = async ({ params }: Props) => {
       </div>
 
       <Post post={post} currentUserIdLog={currUser.id} />
-      <Comments currentUserId={currUser.id} userImageUrl={post.author.imageUrl} userId={post.authorId}  postId={parseInt(postId)} />
+      <Comments currentUserLog={{id: currUser.id, imgUrl:imgUrlCurrentUser.imageUrl}}   postId={parseInt(postId)} />
     </div>
   );
 };

@@ -32,7 +32,7 @@ model LikeComment {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  @@unique([commentId, userId])
+  @@unique([userId, commentId])
 }
 
 model Comment {

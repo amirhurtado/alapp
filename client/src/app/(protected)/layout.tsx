@@ -3,7 +3,7 @@ import RightBar from "@/components/Sections/RightBar";
 import { ImageKitProvider } from "@imagekit/next";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserbyName } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user";
 
 export default async function ProtectedLayout({
   children,
@@ -14,7 +14,7 @@ export default async function ProtectedLayout({
 
   if (!currUser) return;
 
-  const infoUserDb = await getUserbyName(currUser.username as string);
+  const infoUserDb = await getUserbyNameAction(currUser.username as string);
 
   if (!infoUserDb) return;
 
