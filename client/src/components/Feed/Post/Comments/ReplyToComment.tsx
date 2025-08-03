@@ -18,23 +18,25 @@ const ReplyToComment = ({
   currentUserIdLog,
   postId,
 }: ReplyToCommentProps) => {
-
-    const [content, setContent] = useState("")
-
-
+  const [content, setContent] = useState("");
+  const [commentWatched, setCommentWatched] = useState(0);
 
   return (
     <div className="flex flex-col w-full gap-3">
-      <div className="flex items-center gap-1 text-xs text-text-gray">
+      <div className="flex items-center gap-1 text-xs text-text-gray ">
         <Minus size={20} className="" />
         {comment.responses === 0 ? (
           <p>No hay respuestas</p>
         ) : (
-          <p>Ver {comment.responses} respuestas</p>
-        )}
-
-        {comment.responses !== 0 && (
-          <ChevronDown className="text-icon-blue" size={20} />
+          <button
+            className=" hover:text-icon-blue flex items-center gap-1 text-xs cursor-pointer"
+            onClick={() => console.log("Quiero ver respuestas")}
+          >
+            <p className=" transition-colors duration-200 ease-in">
+              Ver {comment.responses} respuestas
+            </p>
+            <ChevronDown size={20} />
+          </button>
         )}
       </div>
 
@@ -42,9 +44,8 @@ const ReplyToComment = ({
         className="flex items-center gap-3 ml-[.4rem] w-full justify-between"
         action={async (formData) => {
           await createCommentAction(formData);
-          setContent("")
+          setContent("");
         }}
-
       >
         <input type="hidden" name="parentId" value={comment.id} />
         <input type="hidden" name="postId" value={postId} />
@@ -62,7 +63,10 @@ const ReplyToComment = ({
           />
         </div>
 
-        <button className="font-semibold cursor-pointer text-xs text-icon-blue active:scale-[0.95] transition-transform duration-200 ease-in" disabled={content===""}>
+        <button
+          className="font-semibold cursor-pointer text-xs text-icon-green active:scale-[0.95] transition-transform duration-200 ease-in"
+          disabled={content === ""}
+        >
           Responder
         </button>
       </form>

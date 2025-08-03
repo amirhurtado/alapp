@@ -39,7 +39,7 @@ const CreateComment = ({ currentUserLog, postId }: CreateCommentType) => {
       <button
         disabled={content === ""}
         aria-label="enviar comentario"
-        className="text-icon-blue font-semibold text-sm cursor-pointer active:scale-[0.95] transition-transform duration-200 ease-in"
+        className="text-icon-green font-semibold text-sm cursor-pointer active:scale-[0.95] transition-transform duration-200 ease-in"
       >
         Enviar
       </button>

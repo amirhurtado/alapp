@@ -1,39 +1,40 @@
 "use server";
 import { prisma } from "@/prisma";
 
-export const getCommentsAction = async (postId: number, page : number = 1) => {
+const includeFullComment = {
+  user: {
+    select: {
+      id: true,
+      name: true,
+      displayName: true,
+      imageUrl: true,
+    },
+  },
+  _count: {
+    select: {
+      comments: true,
+    },
+  },
+  likesComment: {
+    select: {
+      userId: true,
+    },
+  },
+};
 
-  const skip = (page - 1 ) * 6
+export const getCommentsAction = async (postId: number, page: number = 1) => {
+  const skip = (page - 1) * 6;
   return await prisma.comment.findMany({
     where: {
       postId: postId,
       parentId: null,
     },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          displayName: true,
-          imageUrl: true,
-        },
-      },
-     _count : {
-      select : {
-        comments: true
-      }
-     },
-      likesComment: {
-        select : {
-          userId: true
-        }
-      }
-    },
+    include: includeFullComment,
+    skip,
     take: 6,
-    orderBy : {
-      createdAt: 'desc'
+    orderBy: {
+      createdAt: "desc",
     },
-    skip
   });
 };
 
