@@ -41,4 +41,7 @@ export type FullCommentType = CommentType & {
   likesComment: {
     userId: string
   }[]
+  _count: {
+    comments: number
+  }
 };

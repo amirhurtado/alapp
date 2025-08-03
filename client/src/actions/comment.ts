@@ -15,6 +15,11 @@ export const getCommentsAction = async (postId: number) => {
           imageUrl: true,
         },
       },
+     _count : {
+      select : {
+        comments: true
+      }
+     },
       likesComment: {
         select : {
           userId: true
