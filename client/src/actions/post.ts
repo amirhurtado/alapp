@@ -63,7 +63,11 @@ const postIncludes = {
   reposts: {
     select: { userId: true },
   },
-  comments: true,
+  _count : {
+    select : {
+      comments : true
+    }
+  }
 };
 
 

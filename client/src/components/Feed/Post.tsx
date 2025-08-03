@@ -75,6 +75,7 @@ const Post = ({ post, currentUserId }: PostProps) => {
             currenUserName={post.author.name}
             currentUserId={post.authorId}
             currentPostId={post.id}
+            commentsNumber = {post._count.comments}
             reposts={post.reposts.map((rep) => rep.userId)}
             likes={post.likesPost.map((like) => like.userId)}
             favorites={post.favorites.map((fav) => fav.userId)}

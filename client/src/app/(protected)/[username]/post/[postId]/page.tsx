@@ -33,7 +33,7 @@ const page = async ({ params }: Props) => {
       </div>
 
       <Post post={post} currentUserId={currUser.id} />
-      <Comments userImageUrl={post.author.imageUrl} userId={post.authorId}  postId={parseInt(postId)} />
+      <Comments currentUserId={currUser.id} userImageUrl={post.author.imageUrl} userId={post.authorId}  postId={parseInt(postId)} />
     </div>
   );
 };

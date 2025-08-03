@@ -7,15 +7,26 @@ export type FullPostType = PostType & {
     name: string;
     displayName: string;
     imageUrl: string;
-  },
+  };
   likesPost: {
     userId: string;
-  }[],
+  }[];
   favorites: {
     userId: string;
-  }[],
+  }[];
   reposts: {
-    userId: string,
-  }[],
-  comments : CommentType[];
+    userId: string;
+  }[];
+  _count: {
+    comments: number
+  }
+};
+
+export type FullCommentType = CommentType & {
+  user: {
+    id: string;
+    name: string;
+    displayName: string;
+    imageUrl: string;
+  };
 };

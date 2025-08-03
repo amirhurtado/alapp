@@ -11,6 +11,7 @@ interface PostInteractionsProps {
   currenUserName: string
   currentUserId: string;
   currentPostId: number;
+  commentsNumber: number,
   reposts: string[];
   likes: string[];
   favorites: string[];
@@ -20,6 +21,7 @@ const PostInteractions = ({
   currenUserName, 
   currentUserId,
   currentPostId,
+  commentsNumber,
   reposts,
   likes,
   favorites,
@@ -30,7 +32,7 @@ const PostInteractions = ({
     >
       <Link href={`/${currenUserName}/post/${currentPostId}`} className="flex gap-1 items-center rounded-2xl  group cursor-pointer hover:text-icon-blue hover:scale-[1.05] transition-transform ease-in duration-200">
         <MessageSquare size={18} />
-        <p>127</p>
+        <p>{commentsNumber}</p>
       </Link >
 
         <Repost repost={reposts.includes(currentUserId)} reposts={reposts.length} currentUserId={currentUserId} currentPostId={currentPostId} />
