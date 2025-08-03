@@ -27,7 +27,10 @@ const InfiniteFeed = ({
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        if (postsLength < 10) setHasMore(false); return;
+        if (postsLength < 10) {
+          setHasMore(false); 
+          return;
+        }
 
         setPage((prevPage) => {
           if (prevPage === null) return 2;
