@@ -23,12 +23,14 @@ const InfiniteFeed = ({
   const loadMoreRef = useRef(null);
 
   useEffect(() => {
-    if (!loadMoreRef.current) return;
+    if (!loadMoreRef.current || !hasMore) return;
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         if (postsLength < 10) {
-          setHasMore(false); 
+          setHasMore(false);
+          observer.disconnect();
+
           return;
         }
 
@@ -44,23 +46,22 @@ const InfiniteFeed = ({
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [postsLength, hasMore]);
 
   useEffect(() => {
     if (page === null || !hasMore) return;
-    console.log("VA A HACER EL FETCH")
     const fetchPosts = async () => {
       const res = await fetch(
         `/api/posts?id=${currentUserIdLog}&feed=${feed}&page=${page}`
       );
       const posts = await res.json();
 
-      if (posts.length === 0) {
+      setData((prevData) => [...prevData, ...posts]);
+
+      if (posts.length < 10) {
         setHasMore(false);
         return;
       }
-
-      setData((prevData) => [...prevData, ...posts]);
     };
 
     fetchPosts();

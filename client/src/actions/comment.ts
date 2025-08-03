@@ -1,7 +1,9 @@
 "use server";
 import { prisma } from "@/prisma";
 
-export const getCommentsAction = async (postId: number) => {
+export const getCommentsAction = async (postId: number, page : number = 1) => {
+
+  const skip = (page - 1 ) * 6
   return await prisma.comment.findMany({
     where: {
       postId: postId,
@@ -30,7 +32,8 @@ export const getCommentsAction = async (postId: number) => {
     take: 6,
     orderBy : {
       createdAt: 'desc'
-    }
+    },
+    skip
   });
 };
 

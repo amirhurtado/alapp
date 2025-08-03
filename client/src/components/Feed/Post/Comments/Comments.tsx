@@ -3,6 +3,7 @@ import React from "react";
 import CreateComment from "./CreateComment";
 import { getCommentsAction } from "@/actions/comment";
 import { Comment } from "./Comment";
+import InfinityComments from "./InfinityComments";
 
 interface CommentsProps {
   currentUserLog: {
@@ -36,13 +37,8 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
         </div>
       ))}
 
-      {comments.length === 0 && (
-        <div className="border-t-1 border-border w-full">
-          <p className="text-sm text-text-gray mt-5 text-center">
-            Se el primero en comentar!
-          </p>
-        </div>
-      )}
+      <InfinityComments commentsLength={comments.length} postId={postId} currentUserIdLog={currentUserLog.id} />
+
     </div>
   );
 };
