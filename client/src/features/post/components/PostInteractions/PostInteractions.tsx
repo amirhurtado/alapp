@@ -33,8 +33,7 @@ const PostInteractions = ({
       />
 
       <Like
-        liked={interactionPost.likes.includes(currentUserIdLog)}
-        likes={interactionPost.likes.length}
+        likes={post.likesPost}
         currentUserIdLog={currentUserIdLog}
         postId={post.id}
       />
@@ -42,7 +41,7 @@ const PostInteractions = ({
       <>
         <div className="flex gap-4 items-center  ">
           <Favorite
-            inFavorite={interactionPost.favorites.includes(currentUserIdLog)}
+            favorites={post.favorites}
             currentUserIdLog={currentUserIdLog}
             postId={post.id}
           />
