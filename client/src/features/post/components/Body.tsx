@@ -6,13 +6,14 @@ interface PostBodyProps {
 }
 
 const Body = ({ postDescription, postImageUrl }: PostBodyProps) => {
+  if(postImageUrl)
   return (
     <div className="mt-1">
       <p className="text-[0.85rem] text-gray-300">{postDescription || ""}</p>
 
       <div className="relative w-full max-w-[500px] h-[300px] mt-4 border border-border rounded-xl overflow-hidden">
       <Image
-        src={postImageUrl || ''}
+        src={postImageUrl}
         alt="Post image"
         fill
         priority

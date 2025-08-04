@@ -55,10 +55,7 @@ const PostCard = ({ post, currentUserId }: PostProps) => {
             postImageUrl={post.imageUrl}
           />
 
-          <PostInteractions
-            currentUserId={currentUserId}
-            post={post}
-          />
+          <PostInteractions currentUserId={currentUserId} post={post} />
         </div>
       </div>
     </div>
