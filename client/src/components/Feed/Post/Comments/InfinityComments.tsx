@@ -69,8 +69,8 @@ const InfinityComments = ({ commentsLength, postId, currentUserIdLog }: Infinity
         <div key={index}>
           <Comment
             comment={comment}
-            isMyComment={currentUserIdLog === comment.userId}
             currentUserIdLog={currentUserIdLog}
+            commentReply={true}
           />
         </div>
       ))}

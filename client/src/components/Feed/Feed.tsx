@@ -5,40 +5,39 @@ import InfiniteFeed from "./InfiniteFeed";
 
 interface FeedProps {
   posts: Array<FullPostType>;
-  currentUserIdLog: string; 
+  currentUserIdLog: string;
   feed?: boolean; // Optional prop to indicate if it's a feed
 }
 
-const Feed = ({ posts, currentUserIdLog, feed = false  }: FeedProps) => {
-
-
+const Feed = ({ posts, currentUserIdLog, feed = false }: FeedProps) => {
   return (
     <div className="">
       {posts.map((post) => (
-
         <div key={post.id}>
           <Post post={post} currentUserIdLog={currentUserIdLog} />
         </div>
-
       ))}
 
-      <InfiniteFeed currentUserIdLog={currentUserIdLog} feed={feed}  postsLength={posts.length}  />
-
+      <InfiniteFeed
+        currentUserIdLog={currentUserIdLog}
+        feed={feed}
+        postsLength={posts.length}
+      />
 
       {posts.length === 0 && (
         <div className="flex flex-col items-center justify-center mt-10">
           <Image
-          src={'/ghost.webp'}
-          alt="No posts"
-          width={150}
-          height={150}
-          className="mx-auto mb-4"
+            src={"/ghost.webp"}
+            alt="No posts"
+            width={150}
+            height={150}
+            className="mx-auto mb-4"
           />
-        <p className="text-text-gray font-poppins text-xs md:text-sm">Sigue a personas, o sube tu primer post.</p>
-
+          <p className="text-text-gray font-poppins text-xs md:text-sm">
+            Sigue a personas, o sube tu primer post.
+          </p>
         </div>
       )}
-
     </div>
   );
 };
