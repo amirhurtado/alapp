@@ -31,12 +31,12 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
         <div key={index}>
           <Comment
             comment={comment}
-            currentUserIdLog={currentUserLog.id}
+            currentUserId={currentUserLog.id}
           />
         </div>
       ))}
 
-      <InfinityComments commentsLength={comments.length} postId={postId} currentUserIdLog={currentUserLog.id} />
+      <InfinityComments commentsLength={comments.length} postId={postId} currentUserId={currentUserLog.id} />
 
     </div>
   );

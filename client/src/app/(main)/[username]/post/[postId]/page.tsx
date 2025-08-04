@@ -38,7 +38,7 @@ const page = async ({ params }: Props) => {
         </div>
       </div>
 
-      <Post post={post} currentUserIdLog={currUser.id} />
+      <Post post={post} currentUserId={currUser.id} />
       <Comments
         currentUserLog={{ id: currUser.id, imgUrl: imgUrlCurrentUser.imageUrl }}
         postId={parseInt(postId)}

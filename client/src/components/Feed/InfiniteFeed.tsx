@@ -6,13 +6,13 @@ import { FullPostType } from "@/types";
 import { LoaderCircle } from "lucide-react";
 
 interface InfiniteFeedProps {
-  currentUserIdLog: string;
+  currentUserId: string;
   feed?: boolean; // Optional prop to indicate if it's a feed
   postsLength: number;
 }
 
 const InfiniteFeed = ({
-  currentUserIdLog,
+  currentUserId,
   feed = false,
   postsLength,
 }: InfiniteFeedProps) => {
@@ -52,7 +52,7 @@ const InfiniteFeed = ({
     if (page === null || !hasMore) return;
     const fetchPosts = async () => {
       const res = await fetch(
-        `/api/posts?useridlog=${currentUserIdLog}&feed=${feed}&page=${page}`
+        `/api/posts?useridlog=${currentUserId}&feed=${feed}&page=${page}`
       );
       const posts = await res.json();
 
@@ -65,13 +65,13 @@ const InfiniteFeed = ({
     };
 
     fetchPosts();
-  }, [currentUserIdLog, feed, page, hasMore]);
+  }, [currentUserId, feed, page, hasMore]);
 
   return (
     <div>
       {data.map((post) => (
         <div key={post.id}>
-          <PostCard post={post} currentUserIdLog={currentUserIdLog} />
+          <PostCard post={post} currentUserId={currentUserId} />
         </div>
       ))}
 

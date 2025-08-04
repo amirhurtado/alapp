@@ -5,21 +5,21 @@ import InfiniteFeed from "./InfiniteFeed";
 
 interface FeedProps {
   posts: Array<FullPostType>;
-  currentUserIdLog: string;
+  currentUserId: string;
   feed?: boolean; // Optional prop to indicate if it's a feed
 }
 
-const Feed = ({ posts, currentUserIdLog, feed = false }: FeedProps) => {
+const Feed = ({ posts, currentUserId, feed = false }: FeedProps) => {
   return (
     <div className="">
       {posts.map((post) => (
         <div key={post.id}>
-          <PostCard post={post} currentUserIdLog={currentUserIdLog} />
+          <PostCard post={post} currentUserId={currentUserId} />
         </div>
       ))}
 
       <InfiniteFeed
-        currentUserIdLog={currentUserIdLog}
+        currentUserId={currentUserId}
         feed={feed}
         postsLength={posts.length}
       />

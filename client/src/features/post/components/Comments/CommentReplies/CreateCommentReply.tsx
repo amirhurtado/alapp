@@ -10,10 +10,10 @@ interface CreateCommentReplyProps {
     authorName: string;
   };
   postId: number;
-  currentUserIdLog: string;
+  currentUserId: string;
 }
 
-const CreateCommentReply = ({comment, postId, currentUserIdLog}: CreateCommentReplyProps) => {
+const CreateCommentReply = ({comment, postId, currentUserId}: CreateCommentReplyProps) => {
   const [content, setContent] = useState("");
 
   return (
@@ -27,7 +27,7 @@ const CreateCommentReply = ({comment, postId, currentUserIdLog}: CreateCommentRe
         <input type="hidden" name="parentId" value={comment.id} />
         <input type="hidden" name="postId" value={postId} />
 
-        <input type="hidden" name="userId" value={currentUserIdLog} />
+        <input type="hidden" name="userId" value={currentUserId} />
         <div className="flex gap-7 items-center w-full">
           <CornerDownRight size={18} />
           <input

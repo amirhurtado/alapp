@@ -5,18 +5,18 @@ import { Heart } from "lucide-react";
 interface LikeProps {
   liked: boolean;
   likes: number;
-  currentUserIdLog: string;
+  currentUserId: string;
   commentId: number;
 }
 
 const Like = ({
   liked,
   likes,
-  currentUserIdLog,
+  currentUserId,
   commentId,
 }: LikeProps) => {
   const handleLikeClick = async () => {
-    await toggleLikeCommentAction(currentUserIdLog, commentId);
+    await toggleLikeCommentAction(currentUserId, commentId);
   };
 
   return (

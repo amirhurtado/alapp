@@ -8,10 +8,10 @@ import { Comment } from "./Comment/Comment";
 interface InfinityComments {
   commentsLength: number;
   postId: number;
-  currentUserIdLog: string
+  currentUserId: string
 }
 
-const InfinityComments = ({ commentsLength, postId, currentUserIdLog }: InfinityComments) => {
+const InfinityComments = ({ commentsLength, postId, currentUserId }: InfinityComments) => {
   const [page, setPage] = useState<number | null>(null);
   const [data, setData] = useState<Array<FullCommentType>>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -69,7 +69,7 @@ const InfinityComments = ({ commentsLength, postId, currentUserIdLog }: Infinity
         <div key={index}>
           <Comment
             comment={comment}
-            currentUserIdLog={currentUserIdLog}
+            currentUserId={currentUserId}
             commentReply={true}
           />
         </div>

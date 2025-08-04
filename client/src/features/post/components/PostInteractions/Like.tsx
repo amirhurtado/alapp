@@ -4,20 +4,20 @@ import { Heart } from "lucide-react";
 
 interface LikeProps {
   likes : Array<{userId: string}>
-  currentUserIdLog: string;
+  currentUserId: string;
   postId: number;
 }
 
 const Like = ({
   likes,
-  currentUserIdLog,
+  currentUserId,
   postId,
 }: LikeProps) => {
   const handleLikeClick = async () => {
-    await toggleLikePostAction(postId, currentUserIdLog);
+    await toggleLikePostAction(postId, currentUserId);
   };
 
-  const liked = likes.some((like) => like.userId === currentUserIdLog)
+  const liked = likes.some((like) => like.userId === currentUserId)
 
   return (
     <div

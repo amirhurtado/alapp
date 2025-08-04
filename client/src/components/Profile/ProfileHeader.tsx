@@ -10,13 +10,13 @@ import { FullUserType } from "@/types";
 
 interface ProfileHeaderProps {
   userProfileInfo: FullUserType;
-  currentUserIdLog: string;
+  currentUserId: string;
   isMyProfile: boolean;
 }
 
 const ProfileHeader = ({
   userProfileInfo,
-  currentUserIdLog,
+  currentUserId,
   isMyProfile,
 }: ProfileHeaderProps) => {
   return (
@@ -56,7 +56,7 @@ const ProfileHeader = ({
 
           <ProfileActions
             isMyProfile={isMyProfile}
-            currentUserIdLog={currentUserIdLog}
+            currentUserId={currentUserId}
             userProfileInfoId={userProfileInfo.id}
           />
         </div>

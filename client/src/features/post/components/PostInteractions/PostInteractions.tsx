@@ -8,12 +8,12 @@ import Repost from "./Repost";
 import Link from "next/link";
 
 interface PostInteractionsProps {
-  currentUserIdLog: string;
+  currentUserId: string;
   post: FullPostType
 }
 
 const PostInteractions = ({
-  currentUserIdLog,
+  currentUserId,
   post
 }: PostInteractionsProps) => {
   return (
@@ -28,13 +28,13 @@ const PostInteractions = ({
 
       <Repost
         reposts={post.reposts}
-        currentUserIdLog={currentUserIdLog}
+        currentUserId={currentUserId}
         postId={post.id}
       />
 
       <Like
         likes={post.likesPost}
-        currentUserIdLog={currentUserIdLog}
+        currentUserId={currentUserId}
         postId={post.id}
       />
 
@@ -42,7 +42,7 @@ const PostInteractions = ({
         <div className="flex gap-4 items-center  ">
           <Favorite
             favorites={post.favorites}
-            currentUserIdLog={currentUserIdLog}
+            currentUserId={currentUserId}
             postId={post.id}
           />
           <Upload

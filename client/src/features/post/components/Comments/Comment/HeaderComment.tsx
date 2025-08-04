@@ -6,13 +6,13 @@ import TimeAgo from "@/components/ui/TimeAgo";
 interface HeaderComponentProps {
   comment: FullCommentType;
   isMyComment: boolean;
-  currentUserIdLog: string;
+  currentUserId: string;
 }
 
 const HeaderComment = ({
   comment,
   isMyComment,
-  currentUserIdLog,
+  currentUserId,
 }: HeaderComponentProps) => {
   return (
     <div className="flex w-full gap-3 ">
@@ -45,10 +45,10 @@ const HeaderComment = ({
 
       <Like
         liked={comment.likesComment.some(
-          (like) => like.userId === currentUserIdLog
+          (like) => like.userId === currentUserId
         )}
         likes={comment.likesComment.length}
-        currentUserIdLog={currentUserIdLog}
+        currentUserId={currentUserId}
         commentId={comment.id}
       />
     </div>

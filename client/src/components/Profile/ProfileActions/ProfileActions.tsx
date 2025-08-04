@@ -5,13 +5,13 @@ import Link from "next/link";
 
 interface ProfileActionsProps {
   isMyProfile : boolean,
-  currentUserIdLog: string,
+  currentUserId: string,
   userProfileInfoId: string
 }
 
-const ProfileActions =  async ({ isMyProfile, currentUserIdLog, userProfileInfoId }: ProfileActionsProps) => {
+const ProfileActions =  async ({ isMyProfile, currentUserId, userProfileInfoId }: ProfileActionsProps) => {
 
-  const isFriend = await isFriendAction(currentUserIdLog, userProfileInfoId )
+  const isFriend = await isFriendAction(currentUserId, userProfileInfoId )
 
 
   return (
@@ -28,7 +28,7 @@ const ProfileActions =  async ({ isMyProfile, currentUserIdLog, userProfileInfoI
           <button  aria-label="Enviar mensaje" className="border-1 border-border rounded-full w-10 h-10 flex items-center justify-center">
             <MessageSquare size={20} className="" />
           </button>
-          <FollowButton isFriend={isFriend}  currentUserIdLog={currentUserIdLog} otherUserId={userProfileInfoId}/>
+          <FollowButton isFriend={isFriend}  currentUserId={currentUserId} otherUserId={userProfileInfoId}/>
         </div>
       )}
     </div>

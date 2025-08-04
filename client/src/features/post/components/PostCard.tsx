@@ -12,15 +12,15 @@ import RepostIndicator from "./RepostIndicator";
 
 interface PostProps {
   post: FullPostType;
-  currentUserIdLog: string;
+  currentUserId: string;
 }
 
-const PostCard = ({ post, currentUserIdLog }: PostProps) => {
-  const isMyPost = currentUserIdLog === post.author.id;
+const PostCard = ({ post, currentUserId }: PostProps) => {
+  const isMyPost = currentUserId === post.author.id;
 
   return (
     <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
-      <RepostIndicator post={post} currentUserIdLog={currentUserIdLog} />
+      <RepostIndicator post={post} currentUserId={currentUserId} />
 
       <div className="flex w-full gap-3">
         <Avatar src={post.author.imageUrl || "user-default"} />
@@ -56,7 +56,7 @@ const PostCard = ({ post, currentUserIdLog }: PostProps) => {
           />
 
           <PostInteractions
-            currentUserIdLog={currentUserIdLog}
+            currentUserId={currentUserId}
             post={post}
           />
         </div>

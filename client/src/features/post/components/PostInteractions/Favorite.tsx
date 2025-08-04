@@ -5,20 +5,20 @@ import { Star } from "lucide-react";
 
 interface FavoriteProps {
   favorites: Array<{userId: string}>
-  currentUserIdLog: string; // ID of the current user
+  currentUserId: string; // ID of the current user
   postId: number; // ID of the post being favorited
 }
 
 const Favorite = ({
   favorites,
-  currentUserIdLog,
+  currentUserId,
   postId,
 }: FavoriteProps) => {
   const handleFavoriteClick = async () => {
-    toggleFavoriteAction(postId, currentUserIdLog);
+    toggleFavoriteAction(postId, currentUserId);
   };
 
-  const inFavorites = favorites.some((favorite) => favorite.userId === currentUserIdLog)
+  const inFavorites = favorites.some((favorite) => favorite.userId === currentUserId)
 
   return (
     <Star

@@ -31,10 +31,10 @@ export default async function UserPage({ params }: Props) {
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll ">
       <ProfileHeader
         userProfileInfo={userCurrentLog}
-        currentUserIdLog={currUser.id}
+        currentUserId={currUser.id}
         isMyProfile={ismyProfile}
       />
-      <Feed posts={posts} currentUserIdLog={currUser.id} />
+      <Feed posts={posts} currentUserId={currUser.id} />
     </div>
   );
 }

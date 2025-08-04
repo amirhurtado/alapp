@@ -13,13 +13,13 @@ interface CommentRepliesProps {
     responses: number;
   };
   postId: number;
-  currentUserIdLog: string;
+  currentUserId: string;
 }
 
 const CommentReplies = ({
   comment,
   postId,
-  currentUserIdLog,
+  currentUserId,
 }: CommentRepliesProps) => {
   const [request, setrequest] = useState(1);
   const [data, setData] = useState<Array<FullCommentType>>([]);
@@ -56,7 +56,7 @@ const CommentReplies = ({
             <div key={comment.id} className="w-full">
               <Comment
                 comment={comment}
-                currentUserIdLog={currentUserIdLog}
+                currentUserId={currentUserId}
                 commentReply={true}
               />
             </div>
@@ -95,7 +95,7 @@ const CommentReplies = ({
       <CreateCommentReply
         comment={{ id: comment.id, authorName: comment.authorName }}
         postId={postId}
-        currentUserIdLog={currentUserIdLog}
+        currentUserId={currentUserId}
       />
     </div>
   );

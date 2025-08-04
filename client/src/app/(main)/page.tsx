@@ -39,7 +39,7 @@ export default async function Home() {
 
       <div className="flex flex-col max-h-screen  overflow-y-scroll">
         <CreatePost />
-        <Feed posts={posts} currentUserIdLog={currUser.id} feed={true} />
+        <Feed posts={posts} currentUserId={currUser.id} feed={true} />
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export default async function ProtectedLayout({
           className=" h-screen px-2
            hidden lg:flex ml-2  lg:ml-6 max-w-[370px]"
         >
-          <RightBar currentUserIdLog={infoUserDb.id} />
+          <RightBar currentUserId={infoUserDb.id} />
         </div>
       </div>
     </ImageKitProvider>

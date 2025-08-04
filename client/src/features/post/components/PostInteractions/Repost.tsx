@@ -4,20 +4,20 @@ import { Repeat2 } from "lucide-react";
 
 interface RepostProps {
   reposts: Array<{ userId: string }>;
-  currentUserIdLog: string;
+  currentUserId: string;
   postId: number;
 }
 
 const Repost = ({
   reposts,
-  currentUserIdLog,
+  currentUserId,
   postId,
 }: RepostProps) => {
   const handleRepostClick = async () => {
-    await toggleRepostAction(postId, currentUserIdLog);
+    await toggleRepostAction(postId, currentUserId);
   };
 
-  const reposted = reposts.some((repost) => repost.userId === currentUserIdLog )
+  const reposted = reposts.some((repost) => repost.userId === currentUserId )
 
   return (
     <div
