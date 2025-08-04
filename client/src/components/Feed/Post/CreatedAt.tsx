@@ -9,12 +9,11 @@ dayjs.locale("es");
 
 const CreatedAt = ({ createdAt }: { createdAt: Date }) => {
   return (
-    <div className="flex gap-2 items-center ">
+    <div className="flex gap-2 items-cente ">
       <Dot size={10} className="text-text-gray hidden md:block" />
       <span className="text-text-gray text-[.83rem]">
         {dayjs(createdAt).fromNow()}
       </span>
-      ;
     </div>
   );
 };
