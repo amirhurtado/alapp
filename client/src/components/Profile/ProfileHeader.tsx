@@ -47,10 +47,10 @@ const ProfileHeader = ({
           </div>
           <div className="absolute -translate-y-1/2 left-4 w-[4.5rem] h-[4.5rem] md:w-[6rem] md:h-[6rem]">
             <Imagekit
-              src="/user-default"
+              src={userProfileInfo.imageUrl}
               alt="User Avatar"
               fill
-              className="object-cover rounded-full border-2 border-black"
+              className="object-cover rounded-full"
             />
           </div>
 
@@ -70,15 +70,15 @@ const ProfileHeader = ({
 
           <p className="mt-3 text-sm">Descipcion de gustos</p>
 
-          <div className="flex gap-5 mt-1 text-text-gray text-sm">
+          <div className="flex gap-5 mt-1 text-text-gray text-xs">
             <div className="flex items-center gap-1">
               <MapPin size={16} className="" />
               <span>Pais</span>
             </div>
             <div className="flex items-center gap-1">
               <CalendarX size={16} className="" />
-              <span>
-                Se unió en{" "}
+              <span >
+                Se unió e{" "}
                 {new Date(userProfileInfo.createdAt.toString()).toLocaleString(
                   "es-CO",
                   {

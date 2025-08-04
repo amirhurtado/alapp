@@ -1,5 +1,5 @@
 import { userExistsAction } from "@/actions/user";
-import EditImageProfile from "@/components/Profile/EditProfile/EditImageProfile";
+import FormEditProfile from "@/components/Profile/EditProfile/FormEditProfile";
 import { currentUser } from "@clerk/nextjs/server";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -18,11 +18,7 @@ const page = async () => {
         <p className="font-semibold text-md">Editar información de perfil</p>
       </div>
 
-      <div className="flex flex-col p-4 ">
-        <EditImageProfile imageUrl={userCurrentLog.imageUrl} />
-        
-
-      </div>
+    <FormEditProfile userCurrentLog={userCurrentLog}  />
 
     </div>
   );
