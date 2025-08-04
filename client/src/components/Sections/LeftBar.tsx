@@ -3,11 +3,11 @@ import Link from "next/link";
 
 import { menuItems } from "@/constants";
 import { Ellipsis, User } from "lucide-react";
-import ModalCreatePost from "../Feed/Post/CreatePost/ModalCreatePost";
+import ModalCreatePost from "@/features/post/components/CreatePost/ModalCreatePost";
 
 import { User as UserType} from '@/generated/prisma'
 
-import Avatar from "../Profile/Avatar";
+import Avatar from "../ui/Avatar";
 
 const LeftBar = ({currentUserLog} : {currentUserLog : UserType} ) => {
 

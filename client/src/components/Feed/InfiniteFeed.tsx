@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Post from "./Post/Post";
+import PostCard from "@/features/post/components/PostCard";
 import { FullPostType } from "@/types";
 import { LoaderCircle } from "lucide-react";
 
@@ -71,7 +71,7 @@ const InfiniteFeed = ({
     <div>
       {data.map((post) => (
         <div key={post.id}>
-          <Post post={post} currentUserIdLog={currentUserIdLog} />
+          <PostCard post={post} currentUserIdLog={currentUserIdLog} />
         </div>
       ))}
 

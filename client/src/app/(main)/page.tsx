@@ -1,7 +1,7 @@
 "use server";
 
 import Feed from "@/components/Feed/Feed";
-import CreatePost from "@/components/Feed/Post/CreatePost/CreatePost";
+import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import Link from "next/link";
 
 import { currentUser } from "@clerk/nextjs/server";

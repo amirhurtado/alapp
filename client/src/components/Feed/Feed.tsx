@@ -1,5 +1,5 @@
 import { FullPostType } from "@/types";
-import Post from "./Post/Post";
+import PostCard from "@/features/post/components/PostCard";
 import Image from "next/image";
 import InfiniteFeed from "./InfiniteFeed";
 
@@ -14,7 +14,7 @@ const Feed = ({ posts, currentUserIdLog, feed = false }: FeedProps) => {
     <div className="">
       {posts.map((post) => (
         <div key={post.id}>
-          <Post post={post} currentUserIdLog={currentUserIdLog} />
+          <PostCard post={post} currentUserIdLog={currentUserIdLog} />
         </div>
       ))}
 

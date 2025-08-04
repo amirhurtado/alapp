@@ -1,0 +1,74 @@
+import PostInteractions from "./PostInteractions/PostInteractions";
+
+import Avatar from "@/components/ui/Avatar";
+import { FullPostType } from "@/types";
+
+import AuthorInfo from "./AuthorInfo";
+import CreatedAt from "./CreatedAt";
+import PostOptions from "./PostOptions";
+import Body from "./Body";
+import RepostIndicator from "./RepostIndicator";
+
+interface PostProps {
+  post: FullPostType;
+  currentUserIdLog: string;
+}
+
+const PostCard = ({ post, currentUserIdLog }: PostProps) => {
+  const isMyPost = currentUserIdLog === post.author.id;
+
+  return (
+    <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
+      <RepostIndicator post={post} currentUserIdLog={currentUserIdLog} />
+
+      <div className="flex w-full gap-3">
+        <Avatar src={post.author.imageUrl || "user-default"} />
+
+        <div className="w-full">
+          <div className="flex flex-col ">
+            <div className="flex justify-between items-top  ">
+              <div className="flex gap-1 items-center flex-1">
+                <AuthorInfo
+                  isMyPost={isMyPost}
+                  author={{
+                    name: post.author.name,
+                    displayName: post.author.name,
+                  }}
+                />
+
+                <div className="hidden md:block ">
+                  <CreatedAt createdAt={post.createdAt} />
+                </div>
+              </div>
+
+              <PostOptions />
+            </div>
+
+            <div className="block md:hidden ">
+              <CreatedAt createdAt={post.createdAt} />
+            </div>
+          </div>
+
+          <Body
+            postDescription={post.description}
+            postImageUrl={post.imageUrl}
+          />
+
+          <PostInteractions
+            currentUserIdLog={currentUserIdLog}
+            nameAuthorPost={post.author.name}
+            postId={post.id}
+            interactionPost={{
+              commentsNumber: post._count.comments,
+              reposts: post.reposts.map((rep) => rep.userId),
+              likes: post.likesPost.map((like) => like.userId),
+              favorites: post.favorites.map((fav) => fav.userId),
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PostCard;

@@ -1,7 +1,7 @@
 import { Ellipsis } from 'lucide-react'
 import React from 'react'
 
-const PostInfo = () => {
+const PostOptions = () => {
   return (
     <div>
       <Ellipsis size={20} className='text-text-gray' />
@@ -9,4 +9,4 @@ const PostInfo = () => {
   )
 }
 
-export default PostInfo
+export default PostOptions
