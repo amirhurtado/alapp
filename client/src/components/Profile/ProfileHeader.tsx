@@ -5,7 +5,7 @@ import { ArrowLeft, CalendarX, MapPin } from "lucide-react";
 import Image from "next/image";
 import { Image as Imagekit } from "@imagekit/next";
 
-import ProfileActions from "./ProfileActions";
+import ProfileActions from "./ProfileActions/ProfileActions";
 import { FullUserType } from "@/types";
 
 interface ProfileHeaderProps {

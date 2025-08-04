@@ -5,8 +5,8 @@ import * as SignIn from "@clerk/elements/sign-in";
 import { GoogleIcon } from "@/constants";
 import { AtSign, LoaderCircle, Lock } from "lucide-react";
 import Link from "next/link";
-import SeparatorForm from "@/components/Form/SeparatorForm";
-import LogoForm from "@/components/Form/LogoForm";
+import SeparatorForm from "@/components/Log/SeparatorForm";
+import LogoForm from "@/components/Log/LogoForm";
 
 const SignInPage = () => {
   return (

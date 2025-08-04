@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import CreatePost from "@/components/Sections/CreatePost/CreatePost";
+import CreatePost from "./CreatePost";
 
 const ModalCreatePost = () => {
   return (

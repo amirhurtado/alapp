@@ -1,5 +1,5 @@
 import { MessageSquare, SquarePen } from "lucide-react";
-import FollowButton from "../FollowButton";
+import FollowButton from "./FollowButton";
 import { isFriendAction } from "@/actions/user";
 import Link from "next/link";
 

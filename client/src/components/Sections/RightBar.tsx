@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "./Search";
 import PopularTags from "./PopularTags";
-import Recomendations from "./Recomendations/Recomendations";
+import Recomendations from "../Profile/Recomendations/Recomendations";
 
 const RightBar = ({currentUserIdLog}: {currentUserIdLog: string}) => {
   return (

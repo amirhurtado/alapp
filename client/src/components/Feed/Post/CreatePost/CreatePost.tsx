@@ -2,7 +2,7 @@
 
 import React, { useState, useId } from "react";
 import Image from "next/image";
-import Avatar from "../../Avatar";
+import Avatar from "@/components/Avatar";
 import {
   BadgeAlert,
   ImagePlus,

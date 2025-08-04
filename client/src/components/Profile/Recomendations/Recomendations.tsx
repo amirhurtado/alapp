@@ -1,5 +1,5 @@
 import { getRecomentationsAction, isFriendAction } from "@/actions/user";
-import FollowButton from "@/components/FollowButton";
+import FollowButton from "@/components/Profile/ProfileActions/FollowButton";
 import { Image } from "@imagekit/next";
 import Link from "next/link";
 import React from "react";

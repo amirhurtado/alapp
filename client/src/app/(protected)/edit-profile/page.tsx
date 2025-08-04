@@ -1,5 +1,5 @@
 import { userExistsAction } from "@/actions/user";
-import FormEditProfile from "@/components/Profile/EditProfile/FormEditProfile";
+import FormEditProfile from "@/components/Profile/ProfileActions/EditProfile/FormEditProfile";
 import { currentUser } from "@clerk/nextjs/server";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
