@@ -18,7 +18,7 @@ const CreateCommentReply = ({comment, postId, currentUserIdLog}: CreateCommentRe
 
   return (
      <form
-        className="flex items-center gap-3 ml-[.4rem] w-full justify-between"
+        className="flex items-center gap-3 ml-[.4rem] max-w-full justify-between"
         action={async (formData) => {
           await createCommentAction(formData);
           setContent("");

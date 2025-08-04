@@ -27,7 +27,7 @@ const Like = ({
       onClick={handleLikeClick}
     >
       <Heart size={18} />
-      <p>{likes}</p>
+      <p className="text-sm">{likes}</p>
     </div>
   );
 };

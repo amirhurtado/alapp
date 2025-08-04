@@ -2,7 +2,7 @@ import React from "react";
 
 import CreateComment from "./CreateComment";
 import { getCommentsAction } from "@/actions/comment";
-import { Comment } from "./Comment";
+import { Comment } from "./Comment/Comment";
 import InfinityComments from "./InfinityComments";
 
 interface CommentsProps {
@@ -31,7 +31,6 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
         <div key={index}>
           <Comment
             comment={comment}
-            isMyComment={currentUserLog.id === comment.userId}
             currentUserIdLog={currentUserLog.id}
           />
         </div>

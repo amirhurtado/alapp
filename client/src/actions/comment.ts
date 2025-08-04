@@ -38,7 +38,8 @@ export const getCommentsAction = async (postId: number, page: number = 1) => {
   });
 };
 
-export const getCommentsByParentIdAction = async(parentId: number) => {
+export const getCommentsByParentIdAction = async(parentId: number, request: number) => {
+  const skip = (request-1) * 3
 
   return await prisma.comment.findMany({
     where: {
@@ -49,6 +50,7 @@ export const getCommentsByParentIdAction = async(parentId: number) => {
      orderBy: {
       createdAt: "desc",
     },
+    skip
   })
 
 }

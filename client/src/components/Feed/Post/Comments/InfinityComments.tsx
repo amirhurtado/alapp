@@ -3,7 +3,7 @@
 import { FullCommentType } from "@/types";
 import { LoaderCircle } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { Comment } from "./Comment";
+import { Comment } from "./Comment/Comment";
 
 interface InfinityComments {
   commentsLength: number;
