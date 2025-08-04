@@ -7,7 +7,7 @@ import "dayjs/locale/es";
 dayjs.extend(relativeTime);
 dayjs.locale("es");
 
-const CreatedAt = ({ createdAt }: { createdAt: Date }) => {
+const TimeAgo = ({ createdAt }: { createdAt: Date }) => {
   return (
     <div className="flex gap-2 items-center ">
       <Dot size={10} className="text-text-gray hidden md:block" />
@@ -18,4 +18,4 @@ const CreatedAt = ({ createdAt }: { createdAt: Date }) => {
   );
 };
 
-export default CreatedAt;
+export default TimeAgo;

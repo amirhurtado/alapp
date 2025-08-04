@@ -1,7 +1,7 @@
 import Avatar from "@/components/ui/Avatar";
 import Like from "./Like";
 import { FullCommentType } from "@/types";
-import CreatedAt from "../../CreatedAt";
+import TimeAgo from "@/components/ui/TimeAgo";
 
 interface HeaderComponentProps {
   comment: FullCommentType;
@@ -32,13 +32,13 @@ const HeaderComment = ({
               @{comment.user.displayName}
             </p>
             <div className="hidden md:block ">
-              <CreatedAt createdAt={comment.createdAt} />
+              <TimeAgo createdAt={comment.createdAt} />
             </div>
           </div>
         </div>
 
         <div className="block md:hidden ">
-          <CreatedAt createdAt={comment.createdAt} />
+          <TimeAgo createdAt={comment.createdAt} />
         </div>
         <p className="text-[0.85rem] text-gray-300 mt-1 ">{comment.content}</p>
       </div>

@@ -1,10 +1,11 @@
+import { FullPostType } from "@/types";
+
 import PostInteractions from "./PostInteractions/PostInteractions";
 
 import Avatar from "@/components/ui/Avatar";
-import { FullPostType } from "@/types";
 
 import AuthorInfo from "./AuthorInfo";
-import CreatedAt from "./CreatedAt";
+import TimeAgo from "@/components/ui/TimeAgo";
 import PostOptions from "./PostOptions";
 import Body from "./Body";
 import RepostIndicator from "./RepostIndicator";
@@ -37,7 +38,7 @@ const PostCard = ({ post, currentUserIdLog }: PostProps) => {
                 />
 
                 <div className="hidden md:block ">
-                  <CreatedAt createdAt={post.createdAt} />
+                  <TimeAgo createdAt={post.createdAt} />
                 </div>
               </div>
 
@@ -45,7 +46,7 @@ const PostCard = ({ post, currentUserIdLog }: PostProps) => {
             </div>
 
             <div className="block md:hidden ">
-              <CreatedAt createdAt={post.createdAt} />
+              <TimeAgo createdAt={post.createdAt} />
             </div>
           </div>
 
