@@ -95,6 +95,9 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
                     className="hidden"
                     accept="image/*,"
                     onChange={handleFileChange}
+                    onClick={(e) => {
+                        e.currentTarget.value = ""
+                    }}
                     name="image"
                   />
                   <label htmlFor={fileInputId} className="cursor-pointer">
