@@ -1,6 +1,6 @@
 "use client";
 import { ChevronDown } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateCommentReply from "./CreateCommentReply";
 import { getCommentsByParentIdAction } from "@/actions/comment";
 import { FullCommentType } from "@/types";
@@ -23,6 +23,13 @@ const CommentReplies = ({
 }: CommentRepliesProps) => {
   const [request, setrequest] = useState(1);
   const [data, setData] = useState<Array<FullCommentType>>([]);
+  const [hasMore, setHasmore] = useState(true);
+
+  useEffect(() => {
+    if (data.length === comment.responses) {
+      setHasmore(false);
+    }
+  }, [data, comment]);
 
   return (
     <div className="flex flex-col overflow-hidden gap-3">
@@ -41,24 +48,28 @@ const CommentReplies = ({
               ))}
             </div>
 
-            <button
-              className=" text-text-gray hover:text-icon-blue flex  gap-1 text-xs cursor-pointer"
-              onClick={async () => {
-                const comments = await getCommentsByParentIdAction(
-                  comment.id,
-                  request
-                );
-                setData((prev) => {
-                  return [...prev, ...comments];
-                });
-                setrequest((prev) => prev + 1);
-              }}
-            >
-              <p className=" transition-colors duration-200 ease-in ">
-                Ver {comment.responses} respuestas
-              </p>
-              <ChevronDown size={20} />
-            </button>
+            {hasMore && (
+              <button
+                className=" text-text-gray hover:text-icon-blue "
+                onClick={async () => {
+                  const comments = await getCommentsByParentIdAction(
+                    comment.id,
+                    request
+                  );
+                  setData((prev) => {
+                    return [...prev, ...comments];
+                  });
+                  setrequest((prev) => prev + 1);
+                }}
+              >
+                <div className="flex  gap-1 text-xs cursor-pointer">
+                  <p className=" transition-colors duration-200 ease-in ">
+                    Ver {comment.responses - data.length} respuestas
+                  </p>
+                  <ChevronDown size={20} />
+                </div>
+              </button>
+            )}
           </div>
         )}
       </div>
