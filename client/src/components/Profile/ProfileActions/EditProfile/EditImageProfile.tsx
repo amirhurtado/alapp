@@ -52,7 +52,7 @@ const EditImageProfile = ({ imageUrl }: EditImageProfileProps) => {
               src={imageUrl}
               alt="foto de perfil"
               fill
-              className="object-cover rounded-full opacity-65 group-hover:opacity-55 transition-all duration-200 ease-in"
+              className="object-cover rounded-full opacity-45 group-hover:opacity-40 transition-all duration-200 ease-in"
             />
             <SquarePen
               strokeWidth={1}
