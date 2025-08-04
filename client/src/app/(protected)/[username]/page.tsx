@@ -14,23 +14,23 @@ type Props = {
 export default async function UserPage({ params }: Props) {
   const { username } = await params;
 
-  const [currUser, user] = await Promise.all([
+  const [currUser, userCurrentLog] = await Promise.all([
     currentUser(),
     getUserbyNameAction(username),
   ]);
 
-  if (!user || !currUser) {
+  if (!userCurrentLog || !currUser) {
     return <h1>No encontrado</h1>;
   }
 
-  const posts = await getPostsAction(user.id, false);
+  const posts = await getPostsAction(userCurrentLog.id, false);
 
-  const ismyProfile = currUser.id === user.id;
+  const ismyProfile = currUser.id === userCurrentLog.id;
 
   return (
     <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
       <ProfileHeader
-        userProfileInfo={user}
+        userProfileInfo={userCurrentLog}
         currentUserIdLog={currUser.id}
         isMyProfile={ismyProfile}
       />
