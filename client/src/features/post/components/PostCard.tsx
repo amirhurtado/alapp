@@ -57,14 +57,7 @@ const PostCard = ({ post, currentUserIdLog }: PostProps) => {
 
           <PostInteractions
             currentUserIdLog={currentUserIdLog}
-            nameAuthorPost={post.author.name}
-            postId={post.id}
-            interactionPost={{
-              commentsNumber: post._count.comments,
-              reposts: post.reposts.map((rep) => rep.userId),
-              likes: post.likesPost.map((like) => like.userId),
-              favorites: post.favorites.map((fav) => fav.userId),
-            }}
+            post={post}
           />
         </div>
       </div>

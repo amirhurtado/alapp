@@ -3,14 +3,12 @@ import { toggleRepostAction } from "@/actions/post";
 import { Repeat2 } from "lucide-react";
 
 interface RepostProps {
-  reposted: boolean;
-  reposts: number;
+  reposts: Array<{ userId: string }>;
   currentUserIdLog: string;
   postId: number;
 }
 
 const Repost = ({
-  reposted,
   reposts,
   currentUserIdLog,
   postId,
@@ -18,6 +16,8 @@ const Repost = ({
   const handleRepostClick = async () => {
     await toggleRepostAction(postId, currentUserIdLog);
   };
+
+  const reposted = reposts.some((repost) => repost.userId === currentUserIdLog )
 
   return (
     <div
@@ -28,7 +28,7 @@ const Repost = ({
     >
       {" "}
       <Repeat2 size={18} />
-      <p>{reposts}</p>
+      <p>{reposts.length}</p>
     </div>
   );
 };

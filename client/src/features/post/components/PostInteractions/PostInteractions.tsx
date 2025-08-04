@@ -1,3 +1,5 @@
+import { FullPostType } from "@/types";
+
 import { MessageSquare, Upload } from "lucide-react";
 import React from "react";
 import Favorite from "./Favorite";
@@ -7,46 +9,34 @@ import Link from "next/link";
 
 interface PostInteractionsProps {
   currentUserIdLog: string;
-
-  nameAuthorPost: string;
-  postId: number;
-
-  interactionPost: {
-    commentsNumber: number;
-    reposts: string[];
-    likes: string[];
-    favorites: string[];
-  };
+  post: FullPostType
 }
 
 const PostInteractions = ({
   currentUserIdLog,
-  nameAuthorPost,
-  postId,
-  interactionPost,
+  post
 }: PostInteractionsProps) => {
   return (
     <div className={`flex justify-between text-xs mt-6 text-text-gray`}>
       <Link
-        href={`/${nameAuthorPost}/post/${postId}`}
+        href={`/${post.author.name}/post/${post.id}`}
         className="flex gap-1 items-center rounded-2xl  group cursor-pointer hover:text-icon-blue hover:scale-[1.05] transition-transform ease-in duration-200"
       >
         <MessageSquare size={18} />
-        <p>{interactionPost.commentsNumber}</p>
+        <p>{post._count.comments}</p>
       </Link>
 
       <Repost
-        reposted={interactionPost.reposts.includes(currentUserIdLog)}
-        reposts={interactionPost.reposts.length}
+        reposts={post.reposts}
         currentUserIdLog={currentUserIdLog}
-        postId={postId}
+        postId={post.id}
       />
 
       <Like
         liked={interactionPost.likes.includes(currentUserIdLog)}
         likes={interactionPost.likes.length}
         currentUserIdLog={currentUserIdLog}
-        postId={postId}
+        postId={post.id}
       />
 
       <>
@@ -54,7 +44,7 @@ const PostInteractions = ({
           <Favorite
             inFavorite={interactionPost.favorites.includes(currentUserIdLog)}
             currentUserIdLog={currentUserIdLog}
-            postId={postId}
+            postId={post.id}
           />
           <Upload
             size={18}
