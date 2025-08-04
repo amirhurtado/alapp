@@ -1,6 +1,6 @@
 "use client";
 import { createCommentAction } from "@/actions/comment";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/Profile/Avatar";
 import { useState } from "react";
 
 interface CreateCommentType {

@@ -1,4 +1,4 @@
-import Avatar from "@/components/Avatar";
+import Avatar from "@/components/Profile/Avatar";
 import Like from "./Like";
 import { FullCommentType } from "@/types";
 import CreatedAt from "../../CreatedAt";

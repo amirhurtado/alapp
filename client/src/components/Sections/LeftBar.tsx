@@ -7,7 +7,7 @@ import ModalCreatePost from "../Feed/Post/CreatePost/ModalCreatePost";
 
 import { User as UserType} from '@/generated/prisma'
 
-import Avatar from "../Avatar";
+import Avatar from "../Profile/Avatar";
 
 const LeftBar = ({currentUserLog} : {currentUserLog : UserType} ) => {
 

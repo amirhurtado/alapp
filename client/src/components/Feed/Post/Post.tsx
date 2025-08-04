@@ -1,7 +1,7 @@
 import { Repeat2 } from "lucide-react";
 import PostInteractions from "./PostInteractions/PostInteractions";
 
-import Avatar from "../../Avatar";
+import Avatar from "../../Profile/Avatar";
 import { FullPostType } from "@/types";
 
 import ImagePost from "./ImagePost";
@@ -26,7 +26,6 @@ const Post = ({ post, currentUserIdLog }: PostProps) => {
         </div>
       )}
 
-      {/*Post content*/}
       <div className="flex w-full gap-3">
         {/* AVATAR */}
         <Avatar src={post.author.imageUrl || "user-default"} />
@@ -40,7 +39,6 @@ const Post = ({ post, currentUserIdLog }: PostProps) => {
               displayName: post.author.name,
             }}
             createdAt={post.createdAt}
-
           />
 
           {/* POST TEXT & MEDIA */}
