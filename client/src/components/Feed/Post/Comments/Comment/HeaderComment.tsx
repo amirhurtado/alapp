@@ -1,8 +1,7 @@
 import Avatar from "@/components/Avatar";
-import TimeAgo from "@/components/TimeAgo";
-import { Dot } from "lucide-react";
 import Like from "./Like";
 import { FullCommentType } from "@/types";
+import CreatedAt from "../../CreatedAt";
 
 interface HeaderComponentProps {
   comment: FullCommentType;
@@ -19,7 +18,7 @@ const HeaderComment = ({
     <div className="flex w-full gap-3 ">
       <Avatar src={comment.user.imageUrl} />
 
-      <div className="w-full flex flex-col gap-2">
+      <div className="w-full flex flex-col gap-1">
         {/* POST HEADER */}
         <div className="flex justify-between items-top">
           <div className="flex gap-1 items-center flex-1">
@@ -32,13 +31,16 @@ const HeaderComment = ({
             <p className="text-text-gray text-[.83rem]">
               @{comment.user.displayName}
             </p>
-            <Dot size={10} className="text-text-gray" />
-            <TimeAgo date={comment.createdAt} />
+            <div className="hidden md:block ">
+              <CreatedAt createdAt={comment.createdAt} />
+            </div>
           </div>
-          {/*<PostInfo />*/}
         </div>
-        {/* POST TEXT & MEDIA */}
-        <p className="text-[0.85rem] text-gray-300 ">{comment.content}</p>
+
+        <div className="block md:hidden ">
+          <CreatedAt createdAt={comment.createdAt} />
+        </div>
+        <p className="text-[0.85rem] text-gray-300 mt-1 ">{comment.content}</p>
       </div>
 
       <Like

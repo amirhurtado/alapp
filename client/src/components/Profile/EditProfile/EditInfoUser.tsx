@@ -17,9 +17,10 @@ const EditInfoUser = ({ basicInfoUserCurrent }: EditInfoUserProps) => {
       <NonEditableInput label="Username" value={basicInfoUserCurrent.name} />
 
       <div className="flex flex-col">
-        <label className="text-xs text-text-gray" htmlFor="">
+        <label className="text-xs text-text-gray" htmlFor="alias">
           Editar alias
         </label>
+        <input id="alias" type="text" value={basicInfoUserCurrent.displayName} />
       </div>
     </div>
   );
