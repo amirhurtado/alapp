@@ -123,6 +123,3 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
 export default CreatePost;
 
 
-estoy haciendo una red social clon de x
-pero hasta ahora a medida que el proyecto crece no se cuando subdividir componentes ni done colocarlos en la carpetas, es decir estoy teniendo problemas en la organización de carpetas nombres y componentes, asi que apartir de una imagen puedes ayudarme a organizar todo? si tienes preguntas de que contiene alguna carpeta o carpetas dime, la idea es crear algo escaladle
-
