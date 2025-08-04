@@ -1,8 +1,8 @@
 import { getRecomentationsAction, isFriendAction } from "@/actions/user";
 import FollowButton from "@/components/Profile/ProfileActions/FollowButton";
-import { Image } from "@imagekit/next";
 import Link from "next/link";
 import React from "react";
+import Avatar from "../Avatar";
 
 const Recomendations = async ({ currentUserIdLog }: { currentUserIdLog: string }) => {
   const recomendations = await getRecomentationsAction(currentUserIdLog);
@@ -20,13 +20,7 @@ const Recomendations = async ({ currentUserIdLog }: { currentUserIdLog: string }
               className="flex justify-between p-2 hover:bg-hover rounded-lg  border-1 border-border transition-colors duration-200 ease-in"
             >
               <div className="flex gap-3 items-center">
-                <div className="w-10 h-10 relative overflow-hidden rounded-full">
-                  <Image
-                    src={user.imageUrl || "/user-default"}
-                    alt="User Avatar"
-                    fill
-                  />
-                </div>
+                <Avatar src={user.imageUrl} />
 
                 <div className="flex flex-col">
                   <Link href={`/${user.name}`}>
