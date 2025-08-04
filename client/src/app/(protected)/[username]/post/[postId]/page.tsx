@@ -28,7 +28,7 @@ const page = async ({ params }: Props) => {
   if (!imgUrlCurrentUser) return;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
+    <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll">
       <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0 border-b-1 border-border">
         <Link aria-label="Ir a principal" href="/">
           <ArrowLeft size={20} className="cursor-pointer" />

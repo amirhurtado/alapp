@@ -18,7 +18,7 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
   const comments = await getCommentsAction(postId);
 
   return (
-    <div className="flex flex-col mt-3">
+    <div className="flex flex-col mt-3 ">
       <CreateComment
         currentUserLog={{
           id: currentUserLog.id,

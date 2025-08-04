@@ -28,7 +28,7 @@ export default async function UserPage({ params }: Props) {
   const ismyProfile = currUser.id === userCurrentLog.id;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden overflow-y-scroll">
+    <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll ">
       <ProfileHeader
         userProfileInfo={userCurrentLog}
         currentUserIdLog={currUser.id}
