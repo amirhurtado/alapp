@@ -14,7 +14,7 @@ interface PostHeaderProps {
 
 const PostHeader = ({ isMyPost, author, createdAt }: PostHeaderProps) => {
   return (
-    <div className="flex flex-col border-3 ">
+    <div className="flex flex-col ">
       <div className="flex justify-between items-top  ">
         <div className="flex gap-1 items-center flex-1">
           <Link

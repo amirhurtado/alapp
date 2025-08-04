@@ -3,10 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, CalendarX, MapPin } from "lucide-react";
 import Image from "next/image";
+import { Image as Imagekit } from "@imagekit/next";
 
 import ProfileActions from "./ProfileActions/ProfileActions";
 import { FullUserType } from "@/types";
-import Avatar from "./Avatar";
 
 interface ProfileHeaderProps {
   userProfileInfo: FullUserType;
@@ -46,7 +46,12 @@ const ProfileHeader = ({
             />
           </div>
           <div className="absolute -translate-y-1/2 left-4 w-[4.5rem] h-[4.5rem] md:w-[6rem] md:h-[6rem]">
-            <Avatar src={userProfileInfo.imageUrl} />
+            <Imagekit
+              src={userProfileInfo.imageUrl}
+              alt="User Avatar"
+              fill
+              className="object-cover rounded-full"
+            />
           </div>
 
           <ProfileActions
