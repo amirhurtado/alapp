@@ -1,18 +1,21 @@
 import { Image as ImageKit } from "@imagekit/next";
 import { SquarePen, Trash } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 
 interface EditImageProfileProps {
   imageUrl: string;
+  media: File | null;
+  setMedia: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-const EditImageProfile = ({ imageUrl }: EditImageProfileProps) => {
-  const [media, setMedia] = useState<null | File>(null);
-
+const EditImageProfile = ({
+  imageUrl,
+  media,
+  setMedia,
+}: EditImageProfileProps) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
 
     if (file) {
       setMedia(file);
@@ -26,6 +29,7 @@ const EditImageProfile = ({ imageUrl }: EditImageProfileProps) => {
         onClick={(e) => {
           e.currentTarget.value = "";
         }}
+        name="newImageUrl"
         type="file"
         accept="image/*"
         id={"newImage"}
@@ -43,7 +47,9 @@ const EditImageProfile = ({ imageUrl }: EditImageProfileProps) => {
             />
             <Trash
               className="absolute right-0 z-10 cursor-pointer bg-red-400 rounded-full p-2 w-[2rem] h-[2rem]"
-              onClick={() => setMedia(null)}
+              onClick={() => {
+                setMedia(null);
+              }}
             />
           </div>
         ) : (

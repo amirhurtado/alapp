@@ -2,7 +2,6 @@
 
 import { AtSign } from "lucide-react";
 import NonEditableInput from "./NonEditableInput";
-import { useState } from "react";
 
 interface EditInfoUserProps {
   basicInfoUserCurrent: {
@@ -10,14 +9,15 @@ interface EditInfoUserProps {
     displayName: string;
     email: string;
   };
+  newDisplayName: string;
+  setNewDisplayName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const EditInfoUser = ({ basicInfoUserCurrent }: EditInfoUserProps) => {
-
-  const [newDisplayName, setNewDisplayName] = useState(basicInfoUserCurrent.displayName)
-
-
-
+const EditInfoUser = ({
+  basicInfoUserCurrent,
+  newDisplayName,
+  setNewDisplayName,
+}: EditInfoUserProps) => {
   return (
     <div className="flex flex-col gap-6">
       <NonEditableInput label="Email" value={basicInfoUserCurrent.email} />
@@ -32,9 +32,12 @@ const EditInfoUser = ({ basicInfoUserCurrent }: EditInfoUserProps) => {
           <input
             id="alias"
             type="text"
+            name="newDisplayName"
             value={`${newDisplayName}`}
             placeholder={basicInfoUserCurrent.displayName}
-            onChange={(e) => {setNewDisplayName(e.target.value)}}
+            onChange={(e) => {
+              setNewDisplayName(e.target.value);
+            }}
             className="w-full  border-b rounded-lg bg-input py-2 pr-3 pl-10 font-poppins text-sm text-text-gray"
           />
           <AtSign

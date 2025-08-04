@@ -75,6 +75,12 @@ export const isFriendAction = async (
   } else return false;
 };
 
+
+export const updateInfoUserAction =  async (formData: FormData) => {
+   const newDisplayName = formData.get('newDisplayName') as string
+   console.log("NUEVO NOMBRE", newDisplayName)
+}
+
 export const toggleFollowAction = async (
   isFriend: boolean,
   userFollowerId: string,

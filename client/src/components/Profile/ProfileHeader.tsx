@@ -34,7 +34,7 @@ const ProfileHeader = ({
           </p>
         </div>
       </div>
-      <div className="relative flex flex-col mb-6">
+      <div className="relative flex flex-col mb-6 ">
         {/* Profile Header */}
         <div>
           <div className="relative w-full h-[120px] md:h-[200px] border-y-1 border-border">
