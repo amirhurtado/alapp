@@ -30,7 +30,7 @@ const NonEditableInput = ({ label, value }: NonEditableInputProps) => {
         <Lock
           strokeWidth={1}
           size={20}
-          className="absolute right-2 top-1/2 -translate-y-[50%] text-icon-green"
+          className="absolute right-3 top-1/2 -translate-y-[50%] text-icon-green"
         />
       </div>
     </div>

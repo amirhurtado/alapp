@@ -15,6 +15,7 @@ const FormEditProfile = ({userCurrentLog} : FormEditProfile) => {
     }}>
         <EditImageProfile imageUrl={userCurrentLog.imageUrl} />
         <EditInfoUser  basicInfoUserCurrent={{name: userCurrentLog.name, displayName: userCurrentLog.displayName, email:userCurrentLog.email}}  />
+        <button type="submit">Submit</button>
 
       
     </form>
