@@ -4,9 +4,10 @@ import { ImagePlus, Video, MapPinPlus, Smile } from "lucide-react";
 interface MediaOptionsProps {
     fileInputId: string
     handleFileChange: (e : React.ChangeEvent<HTMLInputElement>) => void
+    inputImageRef: React.RefObject<HTMLInputElement | null>
 }
 
-const MediaOptions = ({fileInputId, handleFileChange} : MediaOptionsProps) => {
+const MediaOptions = ({fileInputId, handleFileChange, inputImageRef} : MediaOptionsProps) => {
   return (
     <div className="flex gap-3 text-icon-blue">
       <div>
@@ -15,10 +16,8 @@ const MediaOptions = ({fileInputId, handleFileChange} : MediaOptionsProps) => {
           id={fileInputId}
           className="hidden"
           accept="image/*,"
+          ref={inputImageRef}
           onChange={handleFileChange}
-          onClick={(e) => {
-            e.currentTarget.value = "";
-          }}
           name="image"
         />
         <label htmlFor={fileInputId} className="cursor-pointer">

@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useState, useId, useRef } from "react";
 import Avatar from "@/components/ui/Avatar";
-import {
-  BadgeAlert,
-} from "lucide-react";
+import { BadgeAlert } from "lucide-react";
 import { createPostAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
 import { SubmitButton } from "./SubmitButton";
@@ -17,6 +15,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   const [description, setDescription] = useState<string>("");
   const [media, setMedia] = useState<File | null>(null);
   const fileInputId = useId();
+  const inputImageRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -28,19 +27,24 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   return (
     <div className={`${!modal && "p-4 md:mt-2"}`}>
       <div className="flex w-full gap-3">
-        {!modal && <Avatar src={currentUser?.imageUrl || 'user-default'} />}
+        {!modal && <Avatar src={currentUser?.imageUrl || "user-default"} />}
 
-        <form className="w-full" action={async (formData) =>{
-
-          await createPostAction(formData);
-          setDescription("");
-          setMedia(null);
-
-        }}>
-          {currentUser?.id && <input type="hidden" name="authorId" value={currentUser?.id} /> }
+        <form
+          className="w-full"
+          action={async (formData) => {
+            await createPostAction(formData);
+            setDescription("");
+            setMedia(null);
+          }}
+        >
+          {currentUser?.id && (
+            <input type="hidden" name="authorId" value={currentUser?.id} />
+          )}
           <div>
             <div className="flex gap-4">
-              {modal && <Avatar src={currentUser?.imageUrl  || 'user-default'} />}
+              {modal && (
+                <Avatar src={currentUser?.imageUrl || "user-default"} />
+              )}
 
               <input
                 className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg  placeholder-text-gray font-poppins w-full outline-none border-none ${
@@ -54,9 +58,11 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
               />
             </div>
 
-          
-              <PreviewImage media={media} setMedia={setMedia} />
-       
+            <PreviewImage
+              media={media}
+              inputImageRef={inputImageRef}
+              setMedia={setMedia}
+            />
           </div>
 
           <div className="flex flex-col">
@@ -67,10 +73,13 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
 
             <div className="flex justify-between items-center mt-6">
               {/* post options */}
-              <MediaOptions fileInputId={fileInputId} handleFileChange={handleFileChange} />
+              <MediaOptions
+                fileInputId={fileInputId}
+                handleFileChange={handleFileChange}
+                inputImageRef={inputImageRef}
+              />
 
               <SubmitButton disabled={!description && !media} />
-
             </div>
           </div>
         </form>
@@ -80,5 +89,3 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
 };
 
 export default CreatePost;
-
-

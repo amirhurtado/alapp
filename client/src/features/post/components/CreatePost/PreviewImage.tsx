@@ -5,10 +5,11 @@ import React from "react";
 
 interface PreviewImageProps {
   media: File | null;
-  setMedia: React.Dispatch<React.SetStateAction<File | null>>;
+  inputImageRef: React.RefObject<HTMLInputElement | null>;
+  setMedia: React.Dispatch<React.SetStateAction<File | null>>
 }
 
-const PreviewImage = ({ media, setMedia }: PreviewImageProps) => {
+const PreviewImage = ({ media, inputImageRef, setMedia }: PreviewImageProps) => {
   return (
     <>
       {media && (
@@ -23,7 +24,12 @@ const PreviewImage = ({ media, setMedia }: PreviewImageProps) => {
           <button
             type="button"
             aria-label="Eliminar imagen"
-            onClick={() => setMedia(null)}
+            onClick={() => {
+              if (inputImageRef.current) {
+                inputImageRef.current.value = "";
+              }
+              setMedia(null)
+            }}
             className="absolute top-3 right-3 bg-red-400 rounded-lg px-2 py-1 cursor-pointer"
           >
             <Trash size={20} className="text-white" />
