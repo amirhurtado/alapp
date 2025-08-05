@@ -2,15 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { menuItems } from "@/constants";
-import { Ellipsis, User } from "lucide-react";
 import ModalCreatePost from "@/features/post/components/CreatePost/ModalCreatePost";
 
-import { User as UserType} from '@/generated/prisma'
+import { User as UserType } from "@/generated/prisma";
 
-import Avatar from "../ui/Avatar";
+import UserProfiletab from "./UserProfiletab";
+import { User } from "lucide-react";
 
-const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
-
+const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8 ">
       <div className="relative left-[-.4rem] mt-1">
@@ -35,28 +34,17 @@ const LeftBar = ({currentUser} : {currentUser : UserType} ) => {
             </Link>
           ))}
           <Link href={`/${currentUser?.name}`} aria-label="ir a perfil">
-              <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
-                <User strokeWidth={1} />
-                <span className="ml-2 hidden xxl:block ">Perfil</span>
-              </div>
-            </Link>
+            <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
+              <User strokeWidth={1} />
+              <span className="ml-2 hidden xxl:block ">Perfil</span>
+            </div>
+          </Link>
         </div>
 
         <ModalCreatePost />
       </div>
 
-      <Link href={`/${currentUser?.name}`} arial-label="Ir al perfil" className="flex xxl:px-3 xxl:py-2 rounded-xl xxl:bg-[#181818] cursor-pointer">
-        <Avatar src={currentUser?.imageUrl || 'user-default'} />
-        <div className="flex-1 hidden xxl:flex flex-col ml-3 justify-center">
-          <p className="text-[.8rem] font-bold">{currentUser?.name}</p>
-          <p className="text-text-gray-light text-[.75rem] text-gray-400">
-            @{currentUser?.displayName}
-          </p>
-        </div>
-        <div className="hidden xxl:flex items-center cursor-pointer ml-7">
-          <Ellipsis size={18} />
-        </div>
-      </Link>
+      <UserProfiletab currentUser={currentUser} />
     </div>
   );
 };

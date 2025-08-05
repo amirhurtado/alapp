@@ -1,8 +1,8 @@
 import { getRecomentationsAction, isFriendAction } from "@/actions/user";
-import FollowButton from "@/components/Profile/ProfileActions/FollowButton";
+import FollowButton from "@/features/profile/components/FollowButton";
 import Link from "next/link";
 import React from "react";
-import Avatar from "../../ui/Avatar";
+import Avatar from "../../../components/ui/Avatar";
 
 const Recomendations = async ({ currentUserId }: { currentUserId: string }) => {
   const recomendations = await getRecomentationsAction(currentUserId);

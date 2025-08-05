@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import ProfileActions from "@/components/Profile/ProfileActions/ProfileActions";
+import ProfileActions from "@/features/profile/components/ProfileActions";
 import { FullUserType } from "@/types";
 import HeroProfile from "./Hero";
 import UserInfo from "./UserInfo";

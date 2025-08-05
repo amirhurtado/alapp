@@ -1,4 +1,4 @@
-import LeftBar from "@/components/layout/LeftBar";
+import LeftBar from "@/components/layout/LeftBar/LeftBar";
 import RightBar from "@/components/layout/RightBar";
 import { ImageKitProvider } from "@imagekit/next";
 
