@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { FullCommentType } from "@/types";
 
-export const useInfinityComments = (commentsLength: number, postId: number) => {
+export const useInfinityComments = (comments: Array<FullCommentType>, postId: number) => {
 
   const [page, setPage] = useState<number | null>(null);
-  const [data, setData] = useState<Array<FullCommentType>>([]);
+  const [data, setData] = useState<Array<FullCommentType>>(comments);
   const [hasMore, setHasMore] = useState(true);
   const loadMoreRef = useRef(null);
 
@@ -15,7 +15,7 @@ export const useInfinityComments = (commentsLength: number, postId: number) => {
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        if (commentsLength < 6) {
+        if (comments.length < 6) {
           setHasMore(false);
           observer.disconnect();
           return;
@@ -32,7 +32,7 @@ export const useInfinityComments = (commentsLength: number, postId: number) => {
     return () => {
       observer.disconnect();
     };
-  }, [commentsLength, hasMore]);
+  }, [comments.length, hasMore]);
 
   useEffect(() => {
     if (!page || !hasMore) return;

@@ -4,31 +4,31 @@ import { LoaderCircle } from "lucide-react";
 import React from "react";
 import { Comment } from "./Comment/Comment";
 import { useInfinityComments } from "../../hooks/useInfiniteComments"; 
+import { FullCommentType } from "@/types";
 
 interface InfinityCommentsProps { 
-  commentsLength: number;
+  comments : Array<FullCommentType>
   postId: number;
   currentUserId: string;
 }
 
 const InfinityComments = ({
-  commentsLength,
+  comments,
   postId,
   currentUserId,
 }: InfinityCommentsProps) => {
   const { data, hasMore, loadMoreRef } = useInfinityComments(
-    commentsLength,
+    comments,
     postId
   );
 
   return (
-    <div className="h-8">
+    <div>
       {data.map((comment, index) => (
         <div key={index}>
           <Comment
             comment={comment}
             currentUserId={currentUserId}
-            commentReply={true}
           />
         </div>
       ))}
