@@ -1,11 +1,10 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import CommentList from "@/features/post/components/Comments/CommentList";
 import PostCard from "@/features/post/components/PostCard";
 import { getPostByIdAction } from "@/actions/post";
 import { currentUser } from "@clerk/nextjs/server";
 import { getImgUrlAction } from "@/actions/user";
+import BackNavigation from "@/components/ui/BackNavigation";
 
 type Props = {
   params: {
@@ -19,6 +18,7 @@ const page = async ({ params }: Props) => {
   const [currUser, post] = await Promise.all([
     currentUser(),
     getPostByIdAction(parseInt(postId)),
+
   ]);
 
   if (!post || !currUser) return;
@@ -29,14 +29,7 @@ const page = async ({ params }: Props) => {
 
   return (
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll">
-      <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0 border-b-1 border-border">
-        <Link aria-label="Ir a principal" href="/">
-          <ArrowLeft size={20} className="cursor-pointer" />
-        </Link>
-        <div className="flex flex-col ">
-          <p className="font-semibold text-md">Post</p>
-        </div>
-      </div>
+      <BackNavigation title="Post" />
 
       <PostCard post={post} currentUserId={currUser.id} />
       <CommentList
