@@ -7,19 +7,19 @@ import { updateInfoUserAction } from "@/actions/user";
 import { useEffect, useState } from "react";
 
 interface FormEditProfile {
-  userCurrentLog: UserType;
+  userCurrent: UserType;
 }
 
-const FormEditProfile = ({ userCurrentLog }: FormEditProfile) => {
+const FormEditProfile = ({ userCurrent }: FormEditProfile) => {
   const [media, setMedia] = useState<null | File>(null);
   const [newDisplayName, setNewDisplayName] = useState(
-    userCurrentLog.displayName
+    userCurrent.displayName
   );
   const [disabledSubmit, setDisabledSubmit] = useState(false);
 
   useEffect(() => {
     if (
-      (newDisplayName === userCurrentLog.displayName ||
+      (newDisplayName === userCurrent.displayName ||
         newDisplayName === "") &&
       !media
     ) {
@@ -27,7 +27,7 @@ const FormEditProfile = ({ userCurrentLog }: FormEditProfile) => {
     } else {
       setDisabledSubmit(false);
     }
-  }, [newDisplayName, media, userCurrentLog.displayName]);
+  }, [newDisplayName, media, userCurrent.displayName]);
 
   return (
     <form
@@ -37,16 +37,16 @@ const FormEditProfile = ({ userCurrentLog }: FormEditProfile) => {
       }}
     >
       <EditImageProfile
-        imageUrl={userCurrentLog.imageUrl}
+        imageUrl={userCurrent.imageUrl}
         media={media}
         setMedia={setMedia}
       />
 
       <EditInfoUser
         basicInfoUserCurrent={{
-          name: userCurrentLog.name,
-          displayName: userCurrentLog.displayName,
-          email: userCurrentLog.email,
+          name: userCurrent.name,
+          displayName: userCurrent.displayName,
+          email: userCurrent.email,
         }}
         newDisplayName={newDisplayName}
         setNewDisplayName={setNewDisplayName}

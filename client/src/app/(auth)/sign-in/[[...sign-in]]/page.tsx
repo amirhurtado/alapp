@@ -6,12 +6,12 @@ import { GoogleIcon } from "@/constants";
 import { AtSign, LoaderCircle, Lock } from "lucide-react";
 import Link from "next/link";
 import Separator from "@/components/ui/Separator";
-import LogoForm from "@/components/Log/LogoForm";
+import Logo from "@/components/ui/Logo";
 
 const SignInPage = () => {
   return (
     <div className="h-screen  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
-      <LogoForm />
+      <Logo />
 
       <div className="w-full flex flex-col gap-8 md:gap-13 justify-center items-center md:items-start">
         <div className="flex flex-col gap-3 md:gap-5 items-center md:items-start ">

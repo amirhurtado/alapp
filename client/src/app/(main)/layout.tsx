@@ -1,5 +1,5 @@
-import LeftBar from "@/components/Sections/LeftBar";
-import RightBar from "@/components/Sections/RightBar";
+import LeftBar from "@/components/layout/LeftBar";
+import RightBar from "@/components/layout/RightBar";
 import { ImageKitProvider } from "@imagekit/next";
 
 import { currentUser } from "@clerk/nextjs/server";

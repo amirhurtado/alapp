@@ -7,7 +7,7 @@ import Link from "next/link";
 const page = async () => {
   const currUser = await currentUser();
   if (!currUser) return;
-  const userCurrentLog = await userExistsAction(currUser);
+  const userCurrent = await userExistsAction(currUser);
 
   return (
     <div className="h-screen overflow-y-scroll">
@@ -18,7 +18,7 @@ const page = async () => {
         <p className="font-semibold text-md">Editar información de perfil</p>
       </div>
 
-    <FormEditProfile userCurrentLog={userCurrentLog}  />
+    <FormEditProfile userCurrent={userCurrent}  />
 
     </div>
   );
