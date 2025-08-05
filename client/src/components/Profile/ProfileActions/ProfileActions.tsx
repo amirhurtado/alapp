@@ -4,15 +4,14 @@ import { isFriendAction } from "@/actions/user";
 import Link from "next/link";
 
 interface ProfileActionsProps {
-  isMyProfile : boolean,
   currentUserId: string,
   userProfileInfoId: string
 }
 
-const ProfileActions =  async ({ isMyProfile, currentUserId, userProfileInfoId }: ProfileActionsProps) => {
+const ProfileActions =  async ({  currentUserId, userProfileInfoId }: ProfileActionsProps) => {
 
+  const isMyProfile = currentUserId === userProfileInfoId
   const isFriend = await isFriendAction(currentUserId, userProfileInfoId )
-
 
   return (
     <div className="flex justify-end px-3 pt-4">

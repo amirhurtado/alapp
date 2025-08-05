@@ -1,9 +1,9 @@
-// app/[username]/page.tsx
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user";
 import { getPostsAction } from "@/actions/post";
-import ProfileHeader from "@/components/Profile/ProfileHeader";
+import HeaderProfiler from "@/features/profile/components/HeaderProfile";
 import Feed from "@/components/Feed/Feed";
+import BackNavigation from "@/components/ui/BackNavigation";
 
 type Props = {
   params: {
@@ -25,14 +25,20 @@ export default async function UserPage({ params }: Props) {
 
   const posts = await getPostsAction(userCurrentLog.id, false);
 
-  const ismyProfile = currUser.id === userCurrentLog.id;
+  const nameProfile = () => {
+    if(currUser.id === userCurrentLog.id){
+      return "Tu perfil"
+    }else{
+       return userCurrentLog.name
+    }
+  }
 
   return (
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll ">
-      <ProfileHeader
+      <BackNavigation title={nameProfile()} subtitle={`${posts.length} posts`} />
+      <HeaderProfiler
         userProfileInfo={userCurrentLog}
         currentUserId={currUser.id}
-        isMyProfile={ismyProfile}
       />
       <Feed posts={posts} currentUserId={currUser.id} />
     </div>

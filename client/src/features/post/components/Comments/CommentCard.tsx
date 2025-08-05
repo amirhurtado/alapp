@@ -2,7 +2,7 @@ import { FullCommentType } from "@/types";
 
 import CommentReplies from "./CommentReplies/CommentReplies";
 import Content from "./Content";
-import Like from "./Comment/Like";
+import Like from "./Like";
 
 interface CommentCardProps {
   comment: FullCommentType;
