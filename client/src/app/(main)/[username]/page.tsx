@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user";
 import { getPostsAction } from "@/actions/post";
 import HeaderProfiler from "@/features/profile/components/HeaderProfile";
-import Feed from "@/components/Feed/Feed";
+import Feed from "@/features/post/components/InfinitePosts";
 import BackNavigation from "@/components/ui/BackNavigation";
 
 type Props = {

@@ -1,6 +1,6 @@
 "use server";
 
-import Feed from "@/components/Feed/Feed";
+import Feed from "@/features/post/components/InfinitePosts";
 import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import Link from "next/link";
 
