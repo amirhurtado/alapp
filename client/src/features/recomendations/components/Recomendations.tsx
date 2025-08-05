@@ -1,4 +1,4 @@
-import { getRecomentationsAction, isFriendAction } from "@/actions/user";
+import { getRecomentationsAction } from "@/actions/user";
 import FollowButton from "@/features/profile/components/FollowButton";
 import Link from "next/link";
 import React from "react";
@@ -7,7 +7,6 @@ import Avatar from "../../../components/ui/Avatar";
 const Recomendations = async ({ currentUserId }: { currentUserId: string }) => {
   const recomendations = await getRecomentationsAction(currentUserId);
 
-  const isFriendList = await Promise.all (recomendations.map((user) => isFriendAction(currentUserId, user.id)))
   
   return (
     <div className="flex flex-col gap-4 border-1 border-border rounded-xl p-4">
@@ -32,7 +31,7 @@ const Recomendations = async ({ currentUserId }: { currentUserId: string }) => {
                 </div>
               </div>
               <FollowButton
-                isFriend={isFriendList[index]}
+                isFriend={false}
                 currentUserId={currentUserId}
                 otherUserId={user.id}
               />

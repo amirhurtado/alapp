@@ -4,7 +4,7 @@ import { User as UserType } from "@/generated/prisma";
 import EditImageProfile from "./EditImageProfile";
 import EditInfoUser from "./EditInfoUser";
 import { updateInfoUserAction } from "@/actions/user";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 interface FormEditProfile {
   userCurrent: UserType;
@@ -15,19 +15,9 @@ const FormEditProfile = ({ userCurrent }: FormEditProfile) => {
   const [newDisplayName, setNewDisplayName] = useState(
     userCurrent.displayName
   );
-  const [disabledSubmit, setDisabledSubmit] = useState(false);
 
-  useEffect(() => {
-    if (
-      (newDisplayName === userCurrent.displayName ||
-        newDisplayName === "") &&
-      !media
-    ) {
-      setDisabledSubmit(true);
-    } else {
-      setDisabledSubmit(false);
-    }
-  }, [newDisplayName, media, userCurrent.displayName]);
+  const disabledSubmit = 
+    (newDisplayName === userCurrent.displayName || newDisplayName.trim() === "") && !media;
 
   return (
     <form

@@ -113,13 +113,13 @@ export const getRecomentationsAction = async (userId: string) => {
   });
 
   const followingIds = following.map((follow) => follow.followingId);
-  const noFind = [...followingIds, userId];
+  const exclusion = [...followingIds, userId];
 
   return await prisma.user.findMany({
     where: {
       NOT: {
         id: {
-          in: noFind,
+          in: exclusion,
         },
       },
     },
