@@ -2,7 +2,7 @@
 
 import { LoaderCircle } from "lucide-react";
 import React from "react";
-import { Comment } from "./Comment/Comment";
+import CommentCard from "./CommentCard";
 import { useInfinityComments } from "../../hooks/useInfiniteComments"; 
 import { FullCommentType } from "@/types";
 
@@ -26,7 +26,7 @@ const InfinityComments = ({
     <div>
       {data.map((comment, index) => (
         <div key={index}>
-          <Comment
+          <CommentCard
             comment={comment}
             currentUserId={currentUserId}
           />

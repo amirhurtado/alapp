@@ -3,14 +3,12 @@ import { toggleLikeCommentAction } from "@/actions/comment";
 import { Heart } from "lucide-react";
 
 interface LikeProps {
-  liked: boolean;
-  likes: number;
+  likes: Array<{userId: string}>;
   currentUserId: string;
   commentId: number;
 }
 
 const Like = ({
-  liked,
   likes,
   currentUserId,
   commentId,
@@ -18,6 +16,8 @@ const Like = ({
   const handleLikeClick = async () => {
     await toggleLikeCommentAction(currentUserId, commentId);
   };
+
+  const liked = likes.some((like) => like.userId === currentUserId)
 
   return (
     <div
@@ -27,7 +27,7 @@ const Like = ({
       onClick={handleLikeClick}
     >
       <Heart size={18} />
-      <p className="text-sm">{likes}</p>
+      <p className="text-sm">{likes.length}</p>
     </div>
   );
 };

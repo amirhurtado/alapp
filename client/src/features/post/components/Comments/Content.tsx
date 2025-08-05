@@ -1,19 +1,18 @@
 import Avatar from "@/components/ui/Avatar";
-import Like from "./Like";
 import { FullCommentType } from "@/types";
 import TimeAgo from "@/components/ui/TimeAgo";
 
-interface HeaderComponentProps {
+interface ContentCommentProps {
   comment: FullCommentType;
-  isMyComment: boolean;
   currentUserId: string;
 }
 
-const HeaderComment = ({
+const Content = ({
   comment,
-  isMyComment,
   currentUserId,
-}: HeaderComponentProps) => {
+}: ContentCommentProps) => {
+  const isMyComment = currentUserId === comment.userId;
+
   return (
     <div className="flex w-full gap-3 ">
       <Avatar src={comment.user.imageUrl} />
@@ -43,16 +42,9 @@ const HeaderComment = ({
         <p className="text-[0.85rem] text-gray-300 mt-1 ">{comment.content}</p>
       </div>
 
-      <Like
-        liked={comment.likesComment.some(
-          (like) => like.userId === currentUserId
-        )}
-        likes={comment.likesComment.length}
-        currentUserId={currentUserId}
-        commentId={comment.id}
-      />
+      
     </div>
   );
 };
 
-export default HeaderComment;
+export default Content;

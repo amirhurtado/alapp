@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import CreateCommentReply from "./CreateCommentReply";
 import { getCommentsByParentIdAction } from "@/actions/comment";
 import { FullCommentType } from "@/types";
-import Comment from "../Comment/Comment";
+import Comment from "../CommentCard";
 
 interface CommentRepliesProps {
   comment: {

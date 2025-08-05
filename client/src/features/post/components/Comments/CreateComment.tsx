@@ -5,11 +5,11 @@ import { useState } from "react";
 
 interface CreateCommentType {
   currentUser: {
-     id : string,
+    id: string;
     imgUrl: string;
-  }
- 
-  postId: number
+  };
+
+  postId: number;
 }
 
 const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
@@ -20,7 +20,7 @@ const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
       className="pt-4 pb-6 px-4 flex justify-between gap-3"
       action={async (formData) => {
         await createCommentAction(formData);
-        setContent("")
+        setContent("");
       }}
     >
       <div className="flex gap-3 w-full">
