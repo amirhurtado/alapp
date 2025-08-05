@@ -5,7 +5,7 @@ import * as SignUp from "@clerk/elements/sign-up";
 import { GoogleIcon } from "@/constants";
 import { Mail, User, Lock, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import SeparatorForm from "@/components/Log/SeparatorForm";
+import Separator from "@/components/ui/Separator";
 import LogoForm from "@/components/Log/LogoForm";
 
 const SignUpPage = () => {
@@ -32,7 +32,7 @@ const SignUpPage = () => {
                 </div>
               </Clerk.Connection>
 
-              <SeparatorForm />
+              <Separator />
 
               <div className="flex flex-col gap-6  md:gap-7 w-full  md:w-[21rem]">
                 <Clerk.Field

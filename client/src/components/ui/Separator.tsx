@@ -1,6 +1,6 @@
 import React from "react";
 
-const SeparatorForm = () => {
+const Separator = () => {
   return (
     <div className="flex items-center gap-4">
       <div className="border-1 border-border  w-[4rem] md:w-[6rem]"></div>
@@ -10,4 +10,4 @@ const SeparatorForm = () => {
   );
 };
 
-export default SeparatorForm;
+export default Separator;
