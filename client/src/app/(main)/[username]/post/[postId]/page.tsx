@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import Comments from "@/components/Feed/Post/Comments/Comments";
-import Post from "@/components/Feed/Post/Post";
+import CommentList from "@/features/post/components/Comments/CommentList";
+import PostCard from "@/features/post/components/PostCard";
 import { getPostByIdAction } from "@/actions/post";
 import { currentUser } from "@clerk/nextjs/server";
 import { getImgUrlAction } from "@/actions/user";
@@ -38,9 +38,9 @@ const page = async ({ params }: Props) => {
         </div>
       </div>
 
-      <Post post={post} currentUserId={currUser.id} />
-      <Comments
-        currentUserLog={{ id: currUser.id, imgUrl: imgUrlCurrentUser.imageUrl }}
+      <PostCard post={post} currentUserId={currUser.id} />
+      <CommentList
+        currentUser={{ id: currUser.id, imgUrl: imgUrlCurrentUser.imageUrl }}
         postId={parseInt(postId)}
       />
     </div>

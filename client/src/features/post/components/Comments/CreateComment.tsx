@@ -4,7 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import { useState } from "react";
 
 interface CreateCommentType {
-  currentUserLog: {
+  currentUser: {
      id : string,
     imgUrl: string;
   }
@@ -12,7 +12,7 @@ interface CreateCommentType {
   postId: number
 }
 
-const CreateComment = ({ currentUserLog, postId }: CreateCommentType) => {
+const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
   const [content, setContent] = useState<string>("");
 
   return (
@@ -24,9 +24,9 @@ const CreateComment = ({ currentUserLog, postId }: CreateCommentType) => {
       }}
     >
       <div className="flex gap-3 w-full">
-        <Avatar src={currentUserLog.imgUrl} />
+        <Avatar src={currentUser.imgUrl} />
         <input type="hidden" value={postId} name="postId" />
-        <input type="hidden" value={currentUserLog.id} name="userId" />
+        <input type="hidden" value={currentUser.id} name="userId" />
         <input
           type="text"
           className="outline-none  placeholder:font-poppins w-full border-none "

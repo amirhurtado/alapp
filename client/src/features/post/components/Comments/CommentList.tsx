@@ -1,12 +1,10 @@
-import React from "react";
-
 import CreateComment from "./CreateComment";
 import { getCommentsAction } from "@/actions/comment";
 import { Comment } from "./Comment/Comment";
 import InfinityComments from "./InfinityComments";
 
 interface CommentsProps {
-  currentUserLog: {
+  currentUser: {
     id: string;
     imgUrl: string;
   };
@@ -14,15 +12,15 @@ interface CommentsProps {
   postId: number;
 }
 
-const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
+const CommentList = async ({ currentUser, postId }: CommentsProps) => {
   const comments = await getCommentsAction(postId);
 
   return (
     <div className="flex flex-col mt-3 ">
       <CreateComment
-        currentUserLog={{
-          id: currentUserLog.id,
-          imgUrl: currentUserLog.imgUrl,
+        currentUser={{
+          id: currentUser.id,
+          imgUrl: currentUser.imgUrl,
         }}
         postId={postId}
       />
@@ -31,15 +29,15 @@ const Comments = async ({ currentUserLog, postId }: CommentsProps) => {
         <div key={index}>
           <Comment
             comment={comment}
-            currentUserId={currentUserLog.id}
+            currentUserId={currentUser.id}
           />
         </div>
       ))}
 
-      <InfinityComments commentsLength={comments.length} postId={postId} currentUserId={currentUserLog.id} />
+      <InfinityComments commentsLength={comments.length} postId={postId} currentUserId={currentUser.id} />
 
     </div>
   );
 };
 
-export default Comments;
+export default CommentList;
