@@ -1,10 +1,8 @@
 "use client";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import CreateCommentReply from "./CreateCommentReply";
-import { getCommentsByParentIdAction } from "@/actions/comment";
-import { FullCommentType } from "@/types";
 import Comment from "../CommentCard";
+import { useInfinityRepliesComments } from "@/features/post/hooks/useInfiniteRepliesComents";
+import ReplyControls from "./ReplyControls";
 
 interface CommentRepliesProps {
   comment: {
@@ -21,32 +19,8 @@ const CommentReplies = ({
   postId,
   currentUserId,
 }: CommentRepliesProps) => {
-  const [request, setrequest] = useState(1);
-  const [data, setData] = useState<Array<FullCommentType>>([]);
-  const [hasMore, setHasmore] = useState(true);
-  const [ocult, setOcult] = useState(false);
-
-  useEffect(() => {
-    if (data.length === comment.responses) {
-      setHasmore(false);
-    }
-  }, [data, comment]);
-
-   const handleResponsesLength = async () => {
-    if (ocult && data.length > 0) {
-      setOcult(false);
-      return; 
-    }
-
-    if (hasMore) {
-      const comments = await getCommentsByParentIdAction(
-        comment.id,
-        request
-      );
-      setData((prev) => [...prev, ...comments]);
-      setrequest((prev) => prev + 1);
-    }
-  };
+  const { data, hasMore, ocult, handleOcult, showResponses } =
+    useInfinityRepliesComments(comment.responses, comment.id);
 
   return (
     <div className="flex flex-col overflow-hidden gap-3">
@@ -64,33 +38,15 @@ const CommentReplies = ({
         </div>
       )}
 
-      <div className="flex gap-4 items-center text-text-gray max-w-max text-xs ">
-        {(hasMore || ocult) && (
-          <button
-            onClick={handleResponsesLength}
-          >
-            <div className="flex  gap-1 cursor-pointer hover:text-icon-blue ">
-              <p className="transition-colors duration-200 ease-in">
-                {ocult
-                  ? `Ver ${comment.responses } respuestas`
-                  : `Ver ${comment.responses - data.length} respuestas`} 
-              </p>
-              <ChevronDown size={20} />
-            </div>
-          </button>
-        )}
+      <ReplyControls
+        hasMore={hasMore}
+        ocult={ocult}
+        handleOcult={handleOcult}
+        showResponses={showResponses}
 
-        {data.length > 0 && !ocult && (
-          <button onClick={() => setOcult(true)}>
-            <div className="flex  gap-1 cursor-pointer hover:text-icon-blue ">
-              <p className=" transition-colors duration-200 ease-in ">
-                Ocultar Todo
-              </p>
-              <ChevronUp size={20} />
-            </div>
-          </button>
-        )}
-      </div>
+        commentReponses={comment.responses}
+        dataLength={data.length}
+      />
 
       <CreateCommentReply
         comment={{ id: comment.id, authorName: comment.authorName }}
