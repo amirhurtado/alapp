@@ -1,19 +1,15 @@
 "use client";
 
 import React, { useState, useId } from "react";
-import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
 import {
   BadgeAlert,
-  ImagePlus,
-  Video,
-  MapPinPlus,
-  Smile,
-  Trash,
 } from "lucide-react";
 import { createPostAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
 import { SubmitButton } from "./SubmitButton";
+import PreviewImage from "./PreviewImage";
+import MediaOptions from "./MediaOptions";
 
 const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   const { currentUser } = useUser();
@@ -58,25 +54,9 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
               />
             </div>
 
-            {media && (
-              <div className="relative">
-                <Image
-                  src={URL.createObjectURL(media)}
-                  alt="Preview"
-                  width={500}
-                  height={500}
-                  className="object-cover mt-4 border-1 border-border rounded-xl"
-                />
-                <button
-                  type="button"
-                  aria-label="Eliminar imagen"
-                  onClick={() => setMedia(null)}
-                  className="absolute top-3 right-3 bg-red-400 rounded-lg px-2 py-1 cursor-pointer"
-                >
-                  <Trash size={20} className="text-white" />
-                </button>
-              </div>
-            )}
+          
+              <PreviewImage media={media} setMedia={setMedia} />
+       
           </div>
 
           <div className="flex flex-col">
@@ -87,28 +67,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
 
             <div className="flex justify-between items-center mt-6">
               {/* post options */}
-              <div className="flex gap-3 text-icon-blue">
-                <div>
-                  <input
-                    type="file"
-                    id={fileInputId}
-                    className="hidden"
-                    accept="image/*,"
-                    onChange={handleFileChange}
-                    onClick={(e) => {
-                        e.currentTarget.value = ""
-                    }}
-                    name="image"
-                  />
-                  <label htmlFor={fileInputId} className="cursor-pointer">
-                    <ImagePlus size={20} />
-                  </label>
-                </div>
-
-                <Video size={20} />
-                <MapPinPlus size={20} />
-                <Smile size={20} />
-              </div>
+              <MediaOptions fileInputId={fileInputId} handleFileChange={handleFileChange} />
 
               <SubmitButton disabled={!description && !media} />
 
