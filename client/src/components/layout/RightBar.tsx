@@ -15,7 +15,7 @@ const RightBar = ({currentUserId}: {currentUserId: string}) => {
       <div className="flex flex-wrap gap-4 text-text-gray text-xs">
         <p>Accesibilidad</p>
         <p>Politicas</p>
-        <p>&copy; Amir Hurtado 2025 (basado en red social X)</p>
+        <p>&copy; Amir Hurtado -Santiago Rudas - Santiago Ramirez 2025 </p>
       </div>
     </div>
   );
