@@ -91,7 +91,7 @@ const SignInPage = () => {
               </div>
 
               <SignIn.Action
-                className=" w-full  cursor-pointer md:w-[21rem] mt-4 rounded-xl   bg-icon-green font-bold py-2  md:py-4  hover:bg-icon-blue transition-all duration-300 ease-in"
+                className=" w-full  cursor-pointer md:w-[21rem] mt-4 rounded-xl   bg-icon-green font-bold py-2  md:py-4  hover:bg-primary-color transition-all duration-300 ease-in"
                 submit
               >
                 <Clerk.Loading>
@@ -110,7 +110,7 @@ const SignInPage = () => {
 
         <p className="text-sm">
           ¿Primera vez?{" "}
-          <span className="underline text-icon-blue">
+          <span className="underline text-primary-color">
             <Link aria-label="ir a crear cuenta" href={"/sign-up"}>Crea una cuenta</Link>
           </span>
         </p>

@@ -24,7 +24,7 @@ const Content = ({
             <p className=" font-semibold text-[.92rem] cursor-pointer hover:underline">
               {comment.user.name}
               {isMyComment && (
-                <span className="text-[0.6rem] text-icon-blue"> (Tú)</span>
+                <span className="text-[0.6rem] text-primary-color"> (Tú)</span>
               )}
             </p>
             <p className="text-text-gray text-[.83rem]">

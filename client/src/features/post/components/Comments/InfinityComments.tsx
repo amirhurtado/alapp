@@ -38,7 +38,7 @@ const InfinityComments = ({
       >
         {hasMore ? (
           <LoaderCircle
-            className="animate-spin mx-auto text-icon-blue "
+            className="animate-spin mx-auto text-primary-color "
             size={24}
           />
         ) : (

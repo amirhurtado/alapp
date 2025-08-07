@@ -18,7 +18,7 @@ const ReplyControls = ({hasMore, ocult, handleOcult, showResponses, commentRepon
     <div className="flex gap-4 items-center text-text-gray max-w-max text-xs ">
         {(hasMore || ocult) && (
           <button onClick={showResponses}>
-            <div className="flex  gap-1 cursor-pointer hover:text-icon-blue ">
+            <div className="flex  gap-1 cursor-pointer hover:text-primary-color ">
               <p className="transition-colors duration-200 ease-in">
                 {ocult
                   ? `Ver ${commentReponses} respuestas`
@@ -31,7 +31,7 @@ const ReplyControls = ({hasMore, ocult, handleOcult, showResponses, commentRepon
 
         {dataLength > 0 && !ocult && (
           <button onClick={handleOcult}>
-            <div className="flex  gap-1 cursor-pointer hover:text-icon-blue ">
+            <div className="flex  gap-1 cursor-pointer hover:text-primary-color ">
               <p className=" transition-colors duration-200 ease-in ">
                 Ocultar Todo
               </p>

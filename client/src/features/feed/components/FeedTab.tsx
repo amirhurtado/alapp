@@ -8,7 +8,7 @@ const FeedTab = () => {
         href={"/"}
         className="w-full flex flex-col"
       >
-        <p className="text-center border-b-3 border-icon-blue pb-2">
+        <p className="text-center border-b-3 border-primary-color pb-2">
           Principal
         </p>
       </Link>

@@ -17,7 +17,7 @@ const AuthorInfo = ({ isMyPost, author }: AuthorInfoProps) => {
       >
         {author.name}
         {isMyPost && (
-          <span className="text-[0.6rem] text-icon-blue"> (Tú)</span>
+          <span className="text-[0.6rem] text-primary-color"> (Tú)</span>
         )}
       </Link>
       <p className="text-text-gray text-[.83rem]">@{author.displayName}</p>

@@ -17,7 +17,7 @@ const ProfileActions =  async ({  currentUserId, userProfileInfoId }: ProfileAct
     <div className="flex justify-end px-3 pt-4">
       {isMyProfile ? (
         <Link href={`/edit-profile`}
-            className="flex gap-2 cursor-pointer  border-1 border-border items-center justify-center rounded-lg px-2 py-2 active:scale-[0.95] hover:bg-icon-blue transition-all duration-200 ease-in"
+            className="flex gap-2 cursor-pointer  border-1 border-border items-center justify-center rounded-lg px-2 py-2 active:scale-[0.95] hover:bg-primary-color transition-all duration-200 ease-in"
           >
             <SquarePen size={20} strokeWidth={1} />
             <p className="text-xs">Editar perfil</p>

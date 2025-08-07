@@ -21,7 +21,7 @@ const FollowButton = ({
     <>
       {isFriend ? (
         <div className="flex gap-2">
-          <div className="border-1 border-border rounded-full w-8 h-8 flex items-center justify-center bg-icon-blue">
+          <div className="border-1 border-border rounded-full w-8 h-8 flex items-center justify-center bg-primary-color">
             <UserRoundCheck size={20} className="ml-1" />
           </div>
 

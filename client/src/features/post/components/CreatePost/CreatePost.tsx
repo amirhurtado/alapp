@@ -66,7 +66,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
           </div>
 
           <div className="flex flex-col">
-            <div className="text-icon-blue flex items-center gap-1 mt-4 pl-1 border-b-2 border-border pb-4">
+            <div className="text-primary-color flex items-center gap-1 mt-4 pl-1 border-b-2 border-border pb-4">
               <BadgeAlert size={16} />
               <p className="text-[.8rem] font-bold">Todos pueden responder</p>
             </div>

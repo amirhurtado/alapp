@@ -9,7 +9,7 @@ interface MediaOptionsProps {
 
 const MediaOptions = ({fileInputId, handleFileChange, inputImageRef} : MediaOptionsProps) => {
   return (
-    <div className="flex gap-3 text-icon-blue">
+    <div className="flex gap-3 text-primary-color">
       <div>
         <input
           type="file"

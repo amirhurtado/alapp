@@ -39,7 +39,7 @@ const Recomendations = async ({ currentUserId }: { currentUserId: string }) => {
           ))}
       </div>
       {recomendations.length === 3 && (
-        <p className="text-icon-blue text-sm cursor-pointer">Ver más</p>
+        <p className="text-primary-color text-sm cursor-pointer">Ver más</p>
       )}
     </div>
   );

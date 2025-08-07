@@ -25,11 +25,11 @@ const InfinitePosts = ({ posts, currentUserId, feed = false }: InfinitePostsProp
 
       <div
         ref={loadMoreRef}
-        className="h-[2rem] flex items-center justify-center my-8"
+        className="h-[2rem] flex items-center justify-center mb-15 py-10"
       >
         {hasMore ? (
           <LoaderCircle
-            className="animate-spin mx-auto text-icon-blue "
+            className="animate-spin mx-auto text-primary-color "
             size={24}
           />
         ) : (
