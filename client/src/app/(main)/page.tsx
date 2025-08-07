@@ -17,7 +17,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden px-2">
+    <div className="h-screen flex flex-col overflow-hidden">
       <SetUserClient dbUser={userCurrent} />
 
       <FeedSection posts={posts} userCurrentId={userCurrent.id} />

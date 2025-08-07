@@ -16,7 +16,7 @@ const InfinitePosts = ({ posts, currentUserId, feed = false }: InfinitePostsProp
   const {data, hasMore, loadMoreRef} = useInfinitePost(currentUserId, posts, feed)
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col  max-h-screen">
       {data.map((post) => (
         <div key={post.id}>
           <PostCard post={post} currentUserId={currentUserId} />
@@ -25,7 +25,7 @@ const InfinitePosts = ({ posts, currentUserId, feed = false }: InfinitePostsProp
 
       <div
         ref={loadMoreRef}
-        className="h-[2rem] flex items-center justify-center mb-15 py-10"
+        className="h-[2rem] flex items-center justify-center py-10"
       >
         {hasMore ? (
           <LoaderCircle

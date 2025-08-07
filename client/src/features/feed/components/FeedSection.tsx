@@ -10,9 +10,9 @@ interface FeedSectionProps {
 
 const FeedSection = ({ posts, userCurrentId }: FeedSectionProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen ">
       <FeedTab />
-      <div className="flex flex-col max-h-screen  overflow-y-scroll">
+      <div className="flex flex-col max-h-screen  overflow-y-scroll ">
         <CreatePost />
         <InfinitePosts
           posts={posts}
