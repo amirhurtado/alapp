@@ -8,6 +8,7 @@ import { useState } from "react";
 import EditBasicInfoUser from "./EditBasicInfoUser";
 import { InfoProfile } from "@/types";
 import { SubmitButton } from "@/components/ui/SubmitButton";
+import CancelButton from "@/components/ui/CancelButton";
 interface FormEditProfileProps {
   userCurrent: UserType;
   infoProfile: InfoProfile | null;
@@ -52,9 +53,8 @@ const FormEditProfile = ({
 
       <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
 
-      <div className="flex w-[22rem] justify-end">
-
-        
+      <div className="flex w-[22rem] justify-end gap-3">
+        <CancelButton />
         <SubmitButton disabled={disabledSubmit} text="Guardar" />
       </div>
     </form>

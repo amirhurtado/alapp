@@ -11,8 +11,6 @@ const page = async () => {
      userExistsAction(currUser),
     getInfoProfileAction(currUser.id)
   ])
-
-
   return (
     <div className="h-screen overflow-y-scroll">
       <BackNavigation title="Editar información de perfil" />

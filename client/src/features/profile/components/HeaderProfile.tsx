@@ -7,7 +7,7 @@ import HeroProfile from "./Hero";
 import UserInfo from "./UserInfo";
 
 interface HeaderProfilerProps {
-  userProfileInfo: FullUserType;
+  userProfileInfo: FullUserType
   currentUserId: string;
 }
 

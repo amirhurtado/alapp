@@ -14,22 +14,25 @@ type Props = {
 export default async function UserPage({ params }: Props) {
   const { username } = await params;
 
-  const [currUser, userCurrent] = await Promise.all([
+  const [currUser, userProfile] = await Promise.all([
     currentUser(),
     getUserbyNameAction(username),
+
   ]);
 
-  if (!userCurrent || !currUser) {
+  if (!userProfile || !currUser) {
     return <h1>No encontrado</h1>;
   }
 
-  const posts = await getPostsAction(userCurrent.id, false);
+
+  
+  const posts = await getPostsAction(userProfile.id, false);
 
   const nameProfile = () => {
-    if(currUser.id === userCurrent.id){
+    if(currUser.id === userProfile.id){
       return "Tu perfil"
     }else{
-       return userCurrent.name
+       return userProfile.name
     }
   }
 
@@ -37,7 +40,7 @@ export default async function UserPage({ params }: Props) {
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll ">
       <BackNavigation title={nameProfile()} subtitle={`${posts.length} posts`} />
       <HeaderProfiler
-        userProfileInfo={userCurrent}
+        userProfileInfo={userProfile}
         currentUserId={currUser.id}
       />
       <InfinitePosts posts={posts} currentUserId={currUser.id} />

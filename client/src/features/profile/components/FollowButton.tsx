@@ -34,7 +34,7 @@ const FollowButton = ({
           </button>
         </div>
       ) : (
-        <div className="text-black bg-white px-3 rounded-lg h-8 flex items-center cursor-pointer hover:bg-primary-color active:scale-[0.95] transition-all duration-200 ease-in">
+        <div className="text-black hover:text-white px-3 rounded-lg h-8 flex items-center cursor-pointer bg-primary-color active:scale-[0.95] transition-all duration-200 ease-in">
           <button
             onClick={handleFollowClick}
             aria-label="Seguir"
