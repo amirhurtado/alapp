@@ -1,5 +1,6 @@
-import Link from "next/link";
+'use client'
 import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface BackNavigationProps{
     title: string
@@ -7,11 +8,12 @@ interface BackNavigationProps{
 }
 
 const BackNavigation = ({title, subtitle} : BackNavigationProps) => {
+  const router = useRouter();
   return (
     <div className="bg-[#00000084] p-3 flex gap-9 items-center backdrop-blur-md z-10 sticky top-0 border-b-1 border-border">
-        <Link aria-label="Ir a principal" href="/">
+        <div aria-label="Ir a principal" onClick={() => router.back()}>
           <ArrowLeft size={20} className="cursor-pointer" />
-        </Link>
+        </div>
          <div className="flex flex-col ">
           <p className="font-semibold text-md">
             {title}
