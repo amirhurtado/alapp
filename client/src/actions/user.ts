@@ -29,6 +29,19 @@ export const userExistsAction = async (user: ClerkUser) => {
   }
 };
 
+export const getInfoProfileAction = async (userId: string) => {
+  return await prisma.profile.findUnique({
+    where: {
+      userId,
+    },
+    select: {
+      bio: true,
+      location: true,
+      website: true,
+    },
+  });
+};
+
 export const getUserbyNameAction = async (username: string) => {
   return await prisma.user.findUnique({
     where: {
@@ -75,11 +88,58 @@ export const isFriendAction = async (
   } else return false;
 };
 
+export const updateInfoUserAction = async (
+  formData: FormData,
+  userId: string
+) => {
+  const userData = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      displayName: true,
+      profile: {
+        select: {
+          bio: true,
+        },
+      },
+    },
+  });
 
-export const updateInfoUserAction =  async (formData: FormData) => {
-   const newDisplayName = formData.get('newDisplayName') as string
-   console.log("NUEVO NOMBRE", newDisplayName)
-}
+  if (!userData) return;
+  const newDisplayName = formData.get("newDisplayName") as string;
+  const file = formData.get("newImageUrl") as File;
+  const newBio = formData.get("bio") as string;
+
+  const userDataToUpdate: { displayName?: string } = {};
+  const profileDataToUpdate: { bio?: string } = {};
+
+  if (userData.displayName !== newDisplayName) {
+    userDataToUpdate.displayName = newDisplayName;
+  }
+
+  if ((userData.profile?.bio ?? "") !== newBio) {
+    profileDataToUpdate.bio = newBio;
+  }
+
+  if (Object.keys(userDataToUpdate).length > 0) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: userDataToUpdate,
+    });
+  }
+  if (Object.keys(profileDataToUpdate).length > 0) {
+    await prisma.profile.upsert({
+      where: { userId },
+      update: profileDataToUpdate,
+
+      create: {
+        userId,
+        bio: profileDataToUpdate.bio
+      }
+    });
+  }
+};
 
 export const toggleFollowAction = async (
   isFriend: boolean,

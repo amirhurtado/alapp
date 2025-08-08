@@ -19,7 +19,7 @@ const PostCard = ({ post, currentUserId }: PostProps) => {
   const isMyPost = currentUserId === post.author.id;
 
   return (
-    <div className="p-4 border-y-1 border-border hover:bg-hover transition-colors duration-200 ease-in">
+    <div className="p-4 border-y-1 border-border bg-[#0d0d0d] hover:bg-hover transition-colors duration-200 ease-in ">
       <RepostIndicator post={post} currentUserId={currentUserId} />
 
       <div className="flex w-full gap-3">

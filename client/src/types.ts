@@ -45,3 +45,11 @@ export type FullCommentType = CommentType & {
     comments: number
   }
 };
+
+export type InfoProfile = {
+
+  bio: string | null;
+  location: string | null;
+  website: string | null;
+
+}
