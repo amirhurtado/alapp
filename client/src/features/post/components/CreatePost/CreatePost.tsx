@@ -5,7 +5,7 @@ import Avatar from "@/components/ui/Avatar";
 import { BadgeAlert } from "lucide-react";
 import { createPostAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
-import { SubmitButton } from "./SubmitButton";
+import { SubmitButton } from "@/components/ui/SubmitButton"
 import PreviewImage from "./PreviewImage";
 import MediaOptions from "./MediaOptions";
 
@@ -79,7 +79,7 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
                 inputImageRef={inputImageRef}
               />
 
-              <SubmitButton disabled={!description && !media} />
+              <SubmitButton disabled={!description && !media} text={"Publicar"} />
             </div>
           </div>
         </form>

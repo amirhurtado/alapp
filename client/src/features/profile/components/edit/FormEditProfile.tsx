@@ -4,24 +4,28 @@ import { User as UserType } from "@/generated/prisma";
 import EditImageProfile from "./EditImageProfile";
 import EditInfoUser from "./EditInfoUser";
 import { updateInfoUserAction } from "@/actions/user";
-import {  useState } from "react";
+import { useState } from "react";
 import EditBasicInfoUser from "./EditBasicInfoUser";
 import { InfoProfile } from "@/types";
-
+import { SubmitButton } from "@/components/ui/SubmitButton";
 interface FormEditProfileProps {
-  userCurrent: UserType 
-  infoProfile: InfoProfile | null
+  userCurrent: UserType;
+  infoProfile: InfoProfile | null;
 }
 
-const FormEditProfile = ({ userCurrent, infoProfile  }: FormEditProfileProps) => {
+const FormEditProfile = ({
+  userCurrent,
+  infoProfile,
+}: FormEditProfileProps) => {
   const [media, setMedia] = useState<null | File>(null);
-  const [newDisplayName, setNewDisplayName] = useState(
-    userCurrent.displayName
-  );
-  const [newBio, setNewBio] = useState(infoProfile?.bio ?? "")
+  const [newDisplayName, setNewDisplayName] = useState(userCurrent.displayName);
+  const [newBio, setNewBio] = useState(infoProfile?.bio ?? "");
 
-  const disabledSubmit = 
-    (newDisplayName === userCurrent.displayName || newDisplayName.trim() === "") && (newBio === (infoProfile?.bio ?? "")) && !media;
+  const disabledSubmit =
+    (newDisplayName === userCurrent.displayName ||
+      newDisplayName.trim() === "") &&
+    newBio === (infoProfile?.bio ?? "") &&
+    !media;
 
   return (
     <form
@@ -48,9 +52,9 @@ const FormEditProfile = ({ userCurrent, infoProfile  }: FormEditProfileProps) =>
 
       <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
 
-      <button type="submit" disabled={disabledSubmit} className={`mt-5 cursor-pointer text-start bg-icon-green py-1 px-3 max-w-max rounded-lg ${disabledSubmit && 'opacity-50'}`}>
-        <p className="text-black">Guardar</p>
-      </button>
+      <div className="flex w-[22rem] justify-end">
+        <SubmitButton disabled={disabledSubmit} text="Guardar" />
+      </div>
     </form>
   );
 };
