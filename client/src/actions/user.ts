@@ -46,8 +46,9 @@ export const getUserbyNameAction = async (username: string) => {
   return await prisma.user.findUnique({
     where: {
       name: username,
-    },
+    }, 
     include: {
+      profile: true,
       _count: {
         select: {
           posts: true,
@@ -55,7 +56,7 @@ export const getUserbyNameAction = async (username: string) => {
           following: true,
         },
       },
-    },
+    }
   });
 };
 

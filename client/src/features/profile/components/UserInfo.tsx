@@ -20,7 +20,7 @@ const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
       <h1 className="text-2xl font-semibold">{userProfileInfo.name}</h1>
       <p className="text-sm text-text-gray">@{userProfileInfo.displayName}</p>
 
-      <p className="mt-3 text-xs text-text-gray">Descipcion de gustos</p>
+      <p className="mt-3 text-xs text-text-gray">{userProfileInfo.profile?.bio}</p>
 
       <div className="flex gap-5 mt-4 text-text-gray text-xs ">
         <div className="flex items-center gap-1">

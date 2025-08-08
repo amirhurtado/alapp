@@ -3,13 +3,13 @@ import { Post as PostType } from "@/generated/prisma";
 import { Comment as CommentType } from "@/generated/prisma";
 
 export type FullUserType = UserType & {
+  profile: InfoProfile | null;
   _count: {
-      posts: number;
-      followers: number;
-      following: number;
-    };
-}
-
+    posts: number;
+    followers: number;
+    following: number;
+  };
+};
 export type FullPostType = PostType & {
   author: {
     id: string;
@@ -47,7 +47,6 @@ export type FullCommentType = CommentType & {
 };
 
 export type InfoProfile = {
-
   bio: string | null;
   location: string | null;
   website: string | null;
