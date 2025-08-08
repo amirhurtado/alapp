@@ -53,6 +53,8 @@ const FormEditProfile = ({
       <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
 
       <div className="flex w-[22rem] justify-end">
+
+        
         <SubmitButton disabled={disabledSubmit} text="Guardar" />
       </div>
     </form>
