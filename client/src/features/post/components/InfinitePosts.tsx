@@ -7,6 +7,7 @@ import { LoaderCircle } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useLikeMutation } from "../hooks/useLikeMutation";
+import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
 
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
@@ -19,9 +20,7 @@ const InfinitePosts = ({
   currentUserId,
   feed = false,
 }: InfinitePostsProps) => {
-
-      
-  const queryKey = ["posts", currentUserId, feed]
+  const queryKey = ["posts", currentUserId, feed];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -45,6 +44,7 @@ const InfinitePosts = ({
   const posts = data?.pages.flatMap((pages) => pages) ?? initialPosts;
 
   const likeMutation = useLikeMutation(queryKey);
+  const favoriteMutation = useFavoriteMutation(queryKey);
 
   const loadMoreRef = useRef(null);
 
@@ -68,7 +68,16 @@ const InfinitePosts = ({
     <div className="flex flex-col  max-h-screen">
       {posts.map((post) => (
         <div key={post.id}>
-          <PostCard post={post} currentUserId={currentUserId} onLike={() => likeMutation.mutate({postId : post.id, userId : currentUserId})} />
+          <PostCard
+            post={post}
+            currentUserId={currentUserId}
+            interactions={{
+              onLike: () =>
+                likeMutation.mutate({ postId: post.id, userId: currentUserId }),
+              onFavorite: () => 
+                favoriteMutation.mutate({postId: post.id, userId: currentUserId})
+            }}
+          />
         </div>
       ))}
 

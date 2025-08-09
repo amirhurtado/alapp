@@ -1,28 +1,21 @@
 "use client";
 
-import { toggleFavoriteAction } from "@/actions/post";
 import { Star } from "lucide-react";
 
 interface FavoriteProps {
-  favorites: Array<{userId: string}>
+  favorites: Array<{ userId: string }>;
   currentUserId: string; // ID of the current user
-  postId: number; // ID of the post being favorited
+  onFavorites: () => void;
 }
 
-const Favorite = ({
-  favorites,
-  currentUserId,
-  postId,
-}: FavoriteProps) => {
-  const handleFavoriteClick = async () => {
-    toggleFavoriteAction(postId, currentUserId);
-  };
-
-  const inFavorites = favorites.some((favorite) => favorite.userId === currentUserId)
+const Favorite = ({ favorites, currentUserId, onFavorites }: FavoriteProps) => {
+  const inFavorites = favorites.some(
+    (favorite) => favorite.userId === currentUserId
+  );
 
   return (
     <Star
-      onClick={handleFavoriteClick}
+      onClick={onFavorites}
       size={18}
       className={` ${
         inFavorites ? "text-icon-yellow" : "text-text-gray"
