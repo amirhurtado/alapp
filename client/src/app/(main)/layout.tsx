@@ -1,9 +1,9 @@
 import LeftBar from "@/components/layout/LeftBar/LeftBar";
 import RightBar from "@/components/layout/RightBar";
-import { ImageKitProvider } from "@imagekit/next";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user";
+import Providers from "./Providers";
 
 export default async function ProtectedLayout({
   children,
@@ -19,9 +19,7 @@ export default async function ProtectedLayout({
   if (!infoUserDb) return;
 
   return (
-    <ImageKitProvider
-      urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
-    >
+    <Providers>
       <div className="flex justify-between lg:justify-center h-[100%] mx-auto max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl xxl:max-w-screen-xxl">
         <div className="px-2 xsm:px-4 xxl:px-8 h-full">
           <LeftBar currentUser={infoUserDb} />
@@ -36,6 +34,6 @@ export default async function ProtectedLayout({
           <RightBar currentUserId={infoUserDb.id} />
         </div>
       </div>
-    </ImageKitProvider>
+    </Providers>
   );
 }
