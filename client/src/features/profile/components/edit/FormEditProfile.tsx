@@ -1,0 +1,61 @@
+"use client";
+
+import EditImageProfile from "./EditImageProfile";
+import EditInfoUser from "./EditInfoUser";
+import { updateInfoUserAction } from "@/actions/user";
+import { useState } from "react";
+import EditBasicInfoUser from "./EditBasicInfoUser";
+import { FullUserType } from "@/types";
+import { SubmitButton } from "@/components/ui/SubmitButton";
+import CancelButton from "@/components/ui/CancelButton";
+interface FormEditProfileProps {
+  infoUser: FullUserType;
+  
+}
+
+const FormEditProfile = ({infoUser
+}: FormEditProfileProps) => {
+  const [media, setMedia] = useState<null | File>(null);
+  const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
+  const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
+
+  const disabledSubmit =
+    (newDisplayName === infoUser.displayName ||
+      newDisplayName.trim() === "") &&
+    newBio === (infoUser.profile?.bio ?? "") &&
+    !media;
+
+  return (
+    <form
+      className="flex flex-col p-4 gap-8 "
+      action={async (formData) => {
+        await updateInfoUserAction(formData, infoUser.id);
+      }}
+    >
+      <EditImageProfile
+        imageUrl={infoUser.imageUrl}
+        media={media}
+        setMedia={setMedia}
+      />
+
+      <EditInfoUser
+        basicInfoUserCurrent={{
+          name: infoUser.name,
+          displayName: infoUser.displayName,
+          email: infoUser.email,
+        }}
+        newDisplayName={newDisplayName}
+        setNewDisplayName={setNewDisplayName}
+      />
+
+      <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
+
+      <div className="flex w-[22rem] justify-end gap-3">
+        <CancelButton />
+        <SubmitButton disabled={disabledSubmit} text="Guardar" />
+      </div>
+    </form>
+  );
+};
+
+export default FormEditProfile;

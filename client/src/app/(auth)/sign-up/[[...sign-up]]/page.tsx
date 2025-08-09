@@ -94,7 +94,7 @@ const SignUpPage = () => {
               <SignUp.Captcha />
 
               <SignUp.Action
-                className="  cursor-pointer  w-full md:w-[21rem] mt-4 rounded-xl    bg-icon-blue font-bold py-2  md:py-4  hover:bg-icon-green transition-all duration-300 ease-in"
+                className="  cursor-pointer  w-full md:w-[21rem] mt-4 rounded-xl    bg-primary-color font-bold py-2  md:py-4  hover:bg-icon-green transition-all duration-300 ease-in"
                 submit
               >
                 <Clerk.Loading>
@@ -113,7 +113,7 @@ const SignUpPage = () => {
 
         <p className="text-sm">
           ¿Ya tienes cuenta?{" "}
-          <span className="underline text-icon-blue">
+          <span className="underline text-primary-color">
             <Link aria-label="ir a iniciar sesion" href={"/sign-in"}>Inicia sesión</Link>
           </span>
         </p>
