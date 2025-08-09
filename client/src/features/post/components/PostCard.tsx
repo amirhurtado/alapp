@@ -13,9 +13,11 @@ import RepostIndicator from "./RepostIndicator";
 interface PostProps {
   post: FullPostType;
   currentUserId: string;
+  onLike: () => void
+
 }
 
-const PostCard = ({ post, currentUserId }: PostProps) => {
+const PostCard = ({ post, currentUserId, onLike }: PostProps) => {
   const isMyPost = currentUserId === post.author.id;
 
   return (
@@ -55,7 +57,7 @@ const PostCard = ({ post, currentUserId }: PostProps) => {
             postImageUrl={post.imageUrl}
           />
 
-          <PostInteractions currentUserId={currentUserId} post={post} />
+          <PostInteractions currentUserId={currentUserId} post={post} onLike={onLike} />
         </div>
       </div>
     </div>

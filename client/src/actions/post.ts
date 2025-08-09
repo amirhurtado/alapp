@@ -143,7 +143,14 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
     });
   }
 
-  return;
+  const updatePost = await prisma.post.findUnique({
+    where : {
+      id: postId
+    },
+    include : postIncludes
+  })
+
+  return updatePost;
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {
