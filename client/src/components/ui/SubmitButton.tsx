@@ -9,7 +9,7 @@ interface SubmitButtonProps {
   className?: string; 
 }
 
-export function SubmitButton({ disabled, text, className  }: SubmitButtonProps) {
+export function SubmitButton({ disabled, text, className }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (

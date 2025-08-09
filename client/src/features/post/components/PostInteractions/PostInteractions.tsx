@@ -12,7 +12,8 @@ interface PostInteractionsProps {
   post: FullPostType;
   interactions: {
     onLike: () => void;
-    onFavorite: () => void
+    onFavorite: () => void;
+    onRepost: () => void;
   };
 }
 
@@ -34,7 +35,7 @@ const PostInteractions = ({
       <Repost
         reposts={post.reposts}
         currentUserId={currentUserId}
-        postId={post.id}
+        onRepost={interactions.onRepost}
       />
 
       <Like
@@ -49,7 +50,6 @@ const PostInteractions = ({
             favorites={post.favorites}
             currentUserId={currentUserId}
             onFavorites={interactions.onFavorite}
-          
           />
           <Upload
             size={18}

@@ -8,6 +8,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useLikeMutation } from "../hooks/useLikeMutation";
 import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
+import { useRepostMutation } from "../hooks/useRepostMutation";
 
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
@@ -45,6 +46,7 @@ const InfinitePosts = ({
 
   const likeMutation = useLikeMutation(queryKey);
   const favoriteMutation = useFavoriteMutation(queryKey);
+  const repostMutation = useRepostMutation(queryKey);
 
   const loadMoreRef = useRef(null);
 
@@ -74,8 +76,16 @@ const InfinitePosts = ({
             interactions={{
               onLike: () =>
                 likeMutation.mutate({ postId: post.id, userId: currentUserId }),
-              onFavorite: () => 
-                favoriteMutation.mutate({postId: post.id, userId: currentUserId})
+              onFavorite: () =>
+                favoriteMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
+              onRepost: () =>
+                repostMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
             }}
           />
         </div>

@@ -8,6 +8,7 @@ import EditBasicInfoUser from "./EditBasicInfoUser";
 import { FullUserType } from "@/types";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import CancelButton from "@/components/ui/CancelButton";
+import { useRouter } from "next/navigation";
 interface FormEditProfileProps {
   infoUser: FullUserType;
   
@@ -18,6 +19,8 @@ const FormEditProfile = ({infoUser
   const [media, setMedia] = useState<null | File>(null);
   const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
   const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
+
+  const router = useRouter()
 
   const disabledSubmit =
     (newDisplayName === infoUser.displayName ||
@@ -30,6 +33,8 @@ const FormEditProfile = ({infoUser
       className="flex flex-col p-4 gap-8 "
       action={async (formData) => {
         await updateInfoUserAction(formData, infoUser.id);
+        router.back()
+
       }}
     >
       <EditImageProfile
