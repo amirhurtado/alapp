@@ -23,8 +23,6 @@ export default async function UserPage({ params }: Props) {
   if (!userProfile || !currUser) {
     return <h1>No encontrado</h1>;
   }
-
-
   
   const posts = await getPostsAction(userProfile.id, false);
 

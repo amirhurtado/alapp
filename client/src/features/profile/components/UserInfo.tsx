@@ -29,7 +29,7 @@ const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
         </div>
         <div className="flex items-center gap-1">
           <CalendarX size={16} className="" />
-          <span>Se unió e {getDate(userProfileInfo.createdAt)}</span>
+          <span>Se unió el {getDate(userProfileInfo.createdAt)}</span>
         </div>
       </div>
 
