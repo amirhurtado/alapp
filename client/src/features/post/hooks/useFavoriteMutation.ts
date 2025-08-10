@@ -1,6 +1,7 @@
 import { toggleFavoriteAction } from "@/actions/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toggleFavoriteLogic } from "../helpers";
 
 export const useFavoriteMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
@@ -22,33 +23,22 @@ export const useFavoriteMutation = (queryKey: any[]) => {
       queryClient.setQueryData(queryKey, (oldData: any) => {
         if (!oldData) return;
 
-        return {
+        if(oldData.pages){
+           return {
           ...oldData,
           pages: oldData.pages.map((page: FullPostType[]) =>
             page.map((post) => {
               if (post.id === postId) {
-                const inFavorite = post.favorites.some(
-                  (fav) => fav.userId === userId
-                );
-
-                if (inFavorite) {
-                  return {
-                    ...post,
-                    favorites: post.favorites.filter(
-                      (fav) => fav.userId !== userId
-                    ),
-                  };
-                } else {
-                  return {
-                    ...post,
-                    favorites: [...post.favorites, { userId: userId }],
-                  };
-                }
+                return toggleFavoriteLogic(post, userId)
               }
               return post;
             })
           ),
         };
+        }else{
+          return toggleFavoriteLogic(oldData, userId);
+        }
+       
       });
 
       return { previousData };

@@ -1,12 +1,12 @@
 import React from "react";
-import CommentSection from "@/features/post/components/Comments/CommentSection";
-import PostCard from "@/features/post/components/PostCard";
+
 import { getPostByIdAction } from "@/actions/post";
 import { getCommentsAction } from "@/actions/comment";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { getImgUrlAction } from "@/actions/user";
 import BackNavigation from "@/components/ui/BackNavigation";
+import FullPostView from "@/features/post/components/FullPostView";
 
 type Props = {
   params: {
@@ -32,12 +32,8 @@ const page = async ({ params }: Props) => {
   return (
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll">
       <BackNavigation title="Post" />
-      <PostCard post={post} currentUserId={currUser.id} />
-      <CommentSection
-        comments={comments}
-        currentUser={{ id: currUser.id, imgUrl: imgUrlCurrentUser.imageUrl }}
-        postId={parseInt(postId)}
-      />
+      <FullPostView  currentUser={{ id: currUser.id, imageUrl: imgUrlCurrentUser.imageUrl }} post={post} comments={comments} />
+      
     </div>
   );
 };
