@@ -4,6 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getRecomentationsAction } from "@/actions/user";
 import UserCardRecommendation from "./components/UserCardRecommendation";
 import { LoaderCircle } from "lucide-react";
+import { useFollowMutation } from "../profile/hooks/useFollowMutation";
 
 type InfoUser = {
   id: string;
@@ -22,7 +23,7 @@ const InfiniteRecommendations = ({
   initialRecommendations,
   currentUserId,
 }: InfiniteRecommendationsProps) => {
-  const queryKey = ["recommendations"];
+  const queryKey = ["recommendations", currentUserId];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -45,13 +46,15 @@ const InfiniteRecommendations = ({
 
   const recomendations =
     data.pages?.flatMap((page) => page) ?? initialRecommendations;
+  
+    const followMutation = useFollowMutation();
 
   return (
     <div className="flex flex-col gap-2">
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>
-                <UserCardRecommendation user={user} currentUserId={currentUserId}  />
+                <UserCardRecommendation user={user}  onFollow={() => followMutation.mutate({currentUserId, otherUserId: user.id})}  />
             </div>
         ))}
 

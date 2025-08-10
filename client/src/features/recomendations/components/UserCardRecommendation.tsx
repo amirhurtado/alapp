@@ -12,10 +12,10 @@ interface UserCardRecommendationProps {
   imageUrl: string;
   isFriend: boolean
   }
-  currentUserId: string
+  onFollow: () => void
 }
 
-const UserCardRecommendation = ({user, currentUserId} : UserCardRecommendationProps) => {
+const UserCardRecommendation = ({user, onFollow} : UserCardRecommendationProps) => {
   
   return (
     <div
@@ -35,8 +35,8 @@ const UserCardRecommendation = ({user, currentUserId} : UserCardRecommendationPr
       </div>
       <FollowButton
         isFriend={user.isFriend}
-        currentUserId={currentUserId}
-        otherUserId={user.id}
+        onFollow={onFollow}
+        fromProfile={false}
       />
     </div>
   );

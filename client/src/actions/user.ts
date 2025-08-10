@@ -128,7 +128,7 @@ export const updateInfoUserAction = async (
 };
 
 
-const isFriendAction = async (
+export const isFriendAction = async (
   userFollowerId: string,
   userFollowingId: string
 ) => {

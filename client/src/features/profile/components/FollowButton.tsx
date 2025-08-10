@@ -1,39 +1,34 @@
 "use client";
 
-import { useFollowMutation } from "@/features/recomendations/hooks/useFollowMutation";
 import { Trash, UserRoundCheck } from "lucide-react";
 
 interface FollowButtonProps {
   isFriend: boolean;
-  currentUserId: string;
-  otherUserId: string;
+  onFollow: () => void;
+  fromProfile: boolean;
 }
 
 const FollowButton = ({
   isFriend,
-  currentUserId,
-  otherUserId,
+  onFollow,
+  fromProfile,
 }: FollowButtonProps) => {
-  const { mutate } = useFollowMutation(["recommendations"]);
-
-  const onFollow = () => {
-    mutate({ currentUserId, otherUserId });
-  };
-
   return (
     <>
       {isFriend ? (
         <div className="flex gap-2">
-          <div className="border-1 border-border rounded-full w-8 h-8 flex items-center justify-center bg-primary-color">
-            <UserRoundCheck size={20} className="ml-1" />
-          </div>
+          {fromProfile && (
+            <div className="border-1 border-border rounded-full w-8 h-8 flex items-center justify-center bg-primary-color">
+              <UserRoundCheck size={20} className="ml-1" />
+            </div>
+          )}
 
           <button
             onClick={onFollow}
             className="flex gap-2 cursor-pointer  bg-red-500 items-center justify-center rounded-lg px-2 py-1 active:scale-[0.95] hover:bg-red-400 transition-all duration-200 ease-in"
           >
             <Trash size={20} />
-            <p className="text-xs">Dejar de seguir</p>
+            {fromProfile && <p className="text-xs">Dejar de seguir</p>}
           </button>
         </div>
       ) : (
