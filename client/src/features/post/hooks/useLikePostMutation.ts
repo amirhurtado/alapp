@@ -3,9 +3,9 @@
 import { toggleLikePostAction } from "@/actions/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleLikeLogic } from "../helpers";
+import { toggleLikePostLogic } from "../helpers";
 
-export const useLikeMutation = (queryKey: any[]) => {
+export const useLikePostMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -26,7 +26,7 @@ export const useLikeMutation = (queryKey: any[]) => {
           pages: oldData.pages.map((page: FullPostType[]) =>
             page.map((post) => {
               if (post.id === postId) {
-                return toggleLikeLogic(post, userId);
+                return toggleLikePostLogic(post, userId);
               }
               return post;
             })
@@ -34,7 +34,7 @@ export const useLikeMutation = (queryKey: any[]) => {
         };
 
         }else{
-          return toggleLikeLogic(oldData, userId)
+          return toggleLikePostLogic(oldData, userId)
         }
 
         

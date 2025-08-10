@@ -5,10 +5,10 @@ import FeedTab from "./FeedTab";
 
 interface FeedSectionProps {
   posts: Array<FullPostType>;
-  userCurrentId: string;
+  currentUserId: string;
 }
 
-const FeedSection = ({ posts, userCurrentId }: FeedSectionProps) => {
+const FeedSection = ({ posts, currentUserId }: FeedSectionProps) => {
   return (
     <div className="flex flex-col h-screen ">
       <FeedTab />
@@ -16,9 +16,9 @@ const FeedSection = ({ posts, userCurrentId }: FeedSectionProps) => {
         <CreatePost />
         <InfinitePosts
           posts={posts}
-          currentUserId={userCurrentId}
+          currentUserId={currentUserId}
           feed={true}
-          userProfileId={userCurrentId}
+          userProfileId={currentUserId}
         />
       </div>
     </div>

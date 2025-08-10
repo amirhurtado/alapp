@@ -10,7 +10,7 @@ import PostOptions from "./PostOptions";
 import Body from "./Body";
 import RepostIndicator from "./RepostIndicator";
 
-import { useLikeMutation } from "../hooks/useLikeMutation";
+import { useLikePostMutation } from "../hooks/useLikePostMutation";
 import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
 import { useRepostMutation } from "../hooks/useRepostMutation";
 
@@ -23,7 +23,7 @@ interface PostProps {
 const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {
   const isMyPost = currentUserId === post.author.id;
 
-  const likeMutation = useLikeMutation(queryKey);
+  const likeMutation = useLikePostMutation(queryKey);
     const favoriteMutation = useFavoriteMutation(queryKey);
     const repostMutation = useRepostMutation(queryKey);
 

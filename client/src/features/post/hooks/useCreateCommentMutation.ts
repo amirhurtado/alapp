@@ -1,7 +1,7 @@
 import { createCommentAction } from "@/actions/comment";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useCreateCommentMutation = (postId) => {
+export const useCreateCommentMutation = (postId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({

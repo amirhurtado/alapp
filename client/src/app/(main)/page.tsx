@@ -20,7 +20,7 @@ export default async function Home() {
     <div className="h-screen flex flex-col overflow-hidden">
       <SetUserClient dbUser={userCurrent} />
 
-      <FeedSection posts={posts} userCurrentId={userCurrent.id}  />
+      <FeedSection posts={posts} currentUserId={userCurrent.id}  />
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { FullPostType } from "@/types";
+import { FullCommentType, FullPostType } from "@/types";
 
-export const toggleLikeLogic = (post: FullPostType, userId: string) => {
+export const toggleLikePostLogic = (post: FullPostType, userId: string) => {
   const liked = post.likesPost.some((like) => like.userId === userId);
 
   if (liked) {
@@ -44,6 +44,27 @@ export const toggleRepostLogic = (post: FullPostType, userId: string) => {
     return {
       ...post,
       reposts: [...post.reposts, { userId: userId, postId: post.id }],
+    };
+  }
+};
+
+export const toggleLikeCommentLogic = (
+  comment: FullCommentType,
+  userId: string
+) => {
+  const liked = comment.likesComment.some((like) => like.userId === userId);
+
+  if (liked) {
+    return {
+      ...comment,
+      likesComment: comment.likesComment.filter(
+        (like) => like.userId !== userId
+      ),
+    };
+  } else {
+    return {
+      ...comment,
+      likesComment: [...comment.likesComment, { userId }],
     };
   }
 };

@@ -3,6 +3,7 @@ import { FullCommentType } from "@/types";
 import CommentReplies from "./CommentReplies/CommentReplies";
 import Content from "./Content";
 import Like from "./Like";
+import { useLikeCommentMutation } from "../../hooks/useLikeCommentMutation";
 
 interface CommentCardProps {
   comment: FullCommentType;
@@ -15,6 +16,8 @@ export const CommentCard = ({
   currentUserId,
   commentReply,
 }: CommentCardProps) => {
+
+  const onLike = useLikeCommentMutation(comment.postId);
   return (
     <div
       className={`flex  flex-col gap-2 hover:bg-hover ${
@@ -26,7 +29,7 @@ export const CommentCard = ({
         <Like
           likes={comment.likesComment}
           currentUserId={currentUserId}
-          commentId={comment.id}
+          onLike={() => onLike.mutate({commentId: comment.id, currentUserId: currentUserId})}
         />
       </div>
 
