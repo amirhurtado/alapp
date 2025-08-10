@@ -46,7 +46,7 @@ export const getUserbyNameAction = async (username: string) => {
   return await prisma.user.findUnique({
     where: {
       name: username,
-    }, 
+    },
     include: {
       profile: true,
       _count: {
@@ -56,7 +56,7 @@ export const getUserbyNameAction = async (username: string) => {
           following: true,
         },
       },
-    }
+    },
   });
 };
 
@@ -71,23 +71,7 @@ export const getImgUrlAction = async (id: string) => {
   });
 };
 
-export const isFriendAction = async (
-  userFollowerId: string,
-  userFollowingId: string
-) => {
-  const isFriend = await prisma.follow.findUnique({
-    where: {
-      followerId_followingId: {
-        followerId: userFollowerId,
-        followingId: userFollowingId,
-      },
-    },
-  });
 
-  if (isFriend) {
-    return true;
-  } else return false;
-};
 
 export const updateInfoUserAction = async (
   formData: FormData,
@@ -110,6 +94,7 @@ export const updateInfoUserAction = async (
   if (!userData) return;
   const newDisplayName = formData.get("newDisplayName") as string;
   const file = formData.get("newImageUrl") as File;
+  console.log(file)
   const newBio = formData.get("bio") as string;
 
   const userDataToUpdate: { displayName?: string } = {};
@@ -136,17 +121,36 @@ export const updateInfoUserAction = async (
 
       create: {
         userId,
-        bio: profileDataToUpdate.bio
-      }
+        bio: profileDataToUpdate.bio,
+      },
     });
   }
 };
 
-export const toggleFollowAction = async (
-  isFriend: boolean,
+
+const isFriendAction = async (
   userFollowerId: string,
   userFollowingId: string
 ) => {
+  const isFriend = await prisma.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId: userFollowerId,
+        followingId: userFollowingId,
+      },
+    },
+  });
+
+  if (isFriend) {
+    return true;
+  } else return false;
+};
+
+export const toggleFollowAction = async (
+  userFollowerId: string,
+  userFollowingId: string
+) => {
+  const isFriend = await isFriendAction(userFollowerId, userFollowingId )
   if (isFriend) {
     await prisma.follow.delete({
       where: {
@@ -166,7 +170,10 @@ export const toggleFollowAction = async (
   }
 };
 
-export const getRecomentationsAction = async (userId: string) => {
+export const getRecomentationsAction = async (
+  userId: string,
+  alreadyFetchedIds: string[]
+) => {
   const following = await prisma.follow.findMany({
     where: {
       followerId: userId,
@@ -174,9 +181,9 @@ export const getRecomentationsAction = async (userId: string) => {
   });
 
   const followingIds = following.map((follow) => follow.followingId);
-  const exclusion = [...followingIds, userId];
+  const exclusion = Array.from(new Set([...followingIds, userId, ...alreadyFetchedIds ?? []]));
 
-  return await prisma.user.findMany({
+  const recommendations = await prisma.user.findMany({
     where: {
       NOT: {
         id: {
@@ -184,7 +191,7 @@ export const getRecomentationsAction = async (userId: string) => {
         },
       },
     },
-    take: 5,
+    take: 3,
     select: {
       id: true,
       name: true,
@@ -192,4 +199,13 @@ export const getRecomentationsAction = async (userId: string) => {
       imageUrl: true,
     },
   });
+
+  const usersWithFriendStatus = recommendations.map(user => ({
+    ...user,
+    isFriend: followingIds.includes(user.id),
+  }));
+
+  console.log(usersWithFriendStatus)
+
+  return usersWithFriendStatus
 };

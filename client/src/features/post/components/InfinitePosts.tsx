@@ -2,13 +2,10 @@
 
 import { FullPostType } from "@/types";
 import PostCard from "@/features/post/components/PostCard";
-import Image from "next/image";
 import { LoaderCircle } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { useLikeMutation } from "../hooks/useLikeMutation";
-import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
-import { useRepostMutation } from "../hooks/useRepostMutation";
+import NoPost from "./NoPost";
 
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
@@ -21,7 +18,7 @@ const InfinitePosts = ({
   currentUserId,
   feed = false,
 }: InfinitePostsProps) => {
-  const queryKey = ["posts", currentUserId, feed];
+  const queryKey = ["posts"];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -40,18 +37,15 @@ const InfinitePosts = ({
         pages: [initialPosts],
         pageParams: [1],
       },
+       staleTime: Infinity,
     });
 
   const posts = data?.pages.flatMap((pages) => pages) ?? initialPosts;
 
-  const likeMutation = useLikeMutation(queryKey);
-  const favoriteMutation = useFavoriteMutation(queryKey);
-  const repostMutation = useRepostMutation(queryKey);
-
   const loadMoreRef = useRef(null);
 
   useEffect(() => {
-    if (!loadMoreRef.current) return;
+    if (!loadMoreRef.current || !hasNextPage) return;
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -64,7 +58,7 @@ const InfinitePosts = ({
     return () => {
       observer.disconnect();
     };
-  });
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <div className="flex flex-col  max-h-screen">
@@ -73,20 +67,6 @@ const InfinitePosts = ({
           <PostCard
             post={post}
             currentUserId={currentUserId}
-            interactions={{
-              onLike: () =>
-                likeMutation.mutate({ postId: post.id, userId: currentUserId }),
-              onFavorite: () =>
-                favoriteMutation.mutate({
-                  postId: post.id,
-                  userId: currentUserId,
-                }),
-              onRepost: () =>
-                repostMutation.mutate({
-                  postId: post.id,
-                  userId: currentUserId,
-                }),
-            }}
           />
         </div>
       ))}
@@ -108,20 +88,7 @@ const InfinitePosts = ({
         )}
       </div>
 
-      {posts.length === 0 && (
-        <div className="flex flex-col items-center justify-center mt-10">
-          <Image
-            src={"/ghost.webp"}
-            alt="No posts"
-            width={150}
-            height={150}
-            className="mx-auto mb-4"
-          />
-          <p className="text-text-gray font-poppins text-xs md:text-sm">
-            Sigue a personas, o sube tu primer post.
-          </p>
-        </div>
-      )}
+      <NoPost postLength={posts.length} />
     </div>
   );
 };

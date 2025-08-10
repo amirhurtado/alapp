@@ -3,7 +3,9 @@ import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 
-export const useRepostMutation = (queryKey: any[]) => {
+
+
+export const useRepostMutation = (queryKey: string[]) => {
     const queryClient = useQueryClient();
 
     return useMutation({

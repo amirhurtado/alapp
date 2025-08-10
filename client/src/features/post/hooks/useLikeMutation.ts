@@ -4,7 +4,7 @@ import { toggleLikePostAction } from "@/actions/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useLikeMutation = (queryKey: any[]) => {
+export const useLikeMutation = (queryKey: string[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({

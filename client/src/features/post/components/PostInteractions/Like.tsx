@@ -1,19 +1,21 @@
-'use client'
+"use client";
 import { Heart } from "lucide-react";
+import { useLikeMutation } from "../../hooks/useLikeMutation";
 
 interface LikeProps {
-  likes : Array<{userId: string}>
+  likes: Array<{ userId: string }>;
   currentUserId: string;
-  onLike: () => void
+  postId: number;
 }
 
-const Like = ({
-  likes,
-  currentUserId,
-  onLike,
-}: LikeProps) => {
- 
-  const liked = likes.some((like) => like.userId === currentUserId)
+const Like = ({ likes, currentUserId, postId }: LikeProps) => {
+  const { mutate } = useLikeMutation(["posts"]);
+
+  const liked = likes.some((like) => like.userId === currentUserId);
+
+  const onLike = () => {
+    mutate({ postId, userId: currentUserId });
+  };
 
   return (
     <div

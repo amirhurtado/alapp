@@ -1,14 +1,20 @@
 "use client";
 import { Repeat2 } from "lucide-react";
+import { useRepostMutation } from "../../hooks/useRepostMutation";
 
 interface RepostProps {
   reposts: Array<{ userId: string }>;
   currentUserId: string;
-  onRepost: () => void;
+  postId: number;
 }
 
-const Repost = ({ reposts, currentUserId, onRepost }: RepostProps) => {
+const Repost = ({ reposts, currentUserId, postId }: RepostProps) => {
+  const { mutate } = useRepostMutation(["posts"]);
   const reposted = reposts.some((repost) => repost.userId === currentUserId);
+
+  const onRepost = () => {
+    mutate({ postId, userId: currentUserId });
+  };
 
   return (
     <div

@@ -1,6 +1,5 @@
 import { MessageSquare, SquarePen } from "lucide-react";
 import FollowButton from "./FollowButton";
-import { isFriendAction } from "@/actions/user";
 import Link from "next/link";
 
 interface ProfileActionsProps {
@@ -11,7 +10,6 @@ interface ProfileActionsProps {
 const ProfileActions =  async ({  currentUserId, userProfileInfoId }: ProfileActionsProps) => {
 
   const isMyProfile = currentUserId === userProfileInfoId
-  const isFriend = await isFriendAction(currentUserId, userProfileInfoId )
 
   return (
     <div className="flex justify-end px-3 pt-4">
@@ -27,7 +25,7 @@ const ProfileActions =  async ({  currentUserId, userProfileInfoId }: ProfileAct
           <button  aria-label="Enviar mensaje" className="border-1 border-border rounded-full w-10 h-10 flex items-center justify-center">
             <MessageSquare size={20} className="" />
           </button>
-          <FollowButton isFriend={isFriend}  currentUserId={currentUserId} otherUserId={userProfileInfoId}/>
+          <FollowButton isFriend={false}  currentUserId={currentUserId} otherUserId={userProfileInfoId}/>
         </div>
       )}
     </div>
