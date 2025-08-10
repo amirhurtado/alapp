@@ -56,8 +56,6 @@ export const getCommentsByParentIdAction = async(parentId: number, request: numb
 }
 
 
-
-
 export const createCommentAction = async (formData: FormData) => {
   const content = formData.get("content") as string;
   const postId = formData.get("postId") as string;
@@ -68,16 +66,17 @@ export const createCommentAction = async (formData: FormData) => {
   const intPostId = parseInt(postId, 10);
   const intParentId = parentId ? parseInt(parentId, 10) : null;
 
-  await prisma.comment.create({
+  const comment = prisma.comment.create({
     data: {
       content: content,
       postId: intPostId,
       userId: userId,
       parentId: intParentId,
     },
+    include: includeFullComment
   });
 
-  return;
+  return comment;
 };
 
 export const toggleLikeCommentAction = async (

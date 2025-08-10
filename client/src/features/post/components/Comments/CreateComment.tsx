@@ -1,7 +1,8 @@
 "use client";
-import { createCommentAction } from "@/actions/comment";
 import Avatar from "@/components/ui/Avatar";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 import { useState } from "react";
+import { useCreateCommentMutation } from "../../hooks/useCreateCommentMutation";
 
 interface CreateCommentType {
   currentUser: {
@@ -15,11 +16,13 @@ interface CreateCommentType {
 const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
   const [content, setContent] = useState<string>("");
 
+  const onCreateComment = useCreateCommentMutation(postId);
+
   return (
     <form
       className="pt-4 pb-6 px-4 flex justify-between gap-3"
       action={async (formData) => {
-        await createCommentAction(formData);
+        onCreateComment.mutate({ formData });
         setContent("");
       }}
     >
@@ -36,13 +39,11 @@ const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
           value={content}
         />
       </div>
-      <button
+      <SubmitButton
         disabled={content === ""}
-        aria-label="enviar comentario"
-        className="text-icon-green font-semibold text-sm cursor-pointer active:scale-[0.95] transition-transform duration-200 ease-in"
-      >
-        Enviar
-      </button>
+        text="Enviar"
+        className="comment"
+      />
     </form>
   );
 };
