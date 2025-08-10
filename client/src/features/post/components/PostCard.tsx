@@ -10,18 +10,22 @@ import PostOptions from "./PostOptions";
 import Body from "./Body";
 import RepostIndicator from "./RepostIndicator";
 
+import { useLikeMutation } from "../hooks/useLikeMutation";
+import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
+import { useRepostMutation } from "../hooks/useRepostMutation";
+
 interface PostProps {
   post: FullPostType;
   currentUserId: string;
-  interactions: {
-    onLike: () => void,
-    onFavorite: () => void
-    onRepost: () => void
-  }
+  queryKey: any[];
 }
 
-const PostCard = ({ post, currentUserId, interactions }: PostProps) => {
+const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {
   const isMyPost = currentUserId === post.author.id;
+
+  const likeMutation = useLikeMutation(queryKey);
+    const favoriteMutation = useFavoriteMutation(queryKey);
+    const repostMutation = useRepostMutation(queryKey);
 
   return (
     <div className="p-4 border-y-1 border-border bg-[#0d0d0d] hover:bg-hover transition-colors duration-200 ease-in ">
@@ -63,7 +67,20 @@ const PostCard = ({ post, currentUserId, interactions }: PostProps) => {
           <PostInteractions
             currentUserId={currentUserId}
             post={post}
-            interactions={interactions}
+            interactions={{
+              onLike: () =>
+                likeMutation.mutate({ postId: post.id, userId: currentUserId }),
+              onFavorite: () =>
+                favoriteMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
+              onRepost: () =>
+                repostMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
+            }}
           />
         </div>
       </div>
