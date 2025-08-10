@@ -1,5 +1,5 @@
 import CreateComment from "./CreateComment";
-import InfinityComments from "./InfinityComments";
+import InfiniteComments from "./InfiniteComments";
 import { FullCommentType } from "@/types";
 
 interface CommentsProps {
@@ -22,7 +22,7 @@ const CommentSection = ({ comments, currentUser, postId }: CommentsProps) => {
         postId={postId}
       />
       
-      <InfinityComments comments={comments} postId={postId} currentUserId={currentUser.id} />
+      <InfiniteComments comments={comments} postId={postId} currentUserId={currentUser.id} />
     </div>
   );
 };
