@@ -3,14 +3,17 @@
 import React, { useState, useId, useRef } from "react";
 import Avatar from "@/components/ui/Avatar";
 import { BadgeAlert } from "lucide-react";
-import { createPostAction } from "@/actions/post";
 import { useUser } from "@/store/useUser";
 import { SubmitButton } from "@/components/ui/SubmitButton"
 import PreviewImage from "./PreviewImage";
 import MediaOptions from "./MediaOptions";
+import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
 
 const CreatePost = ({ modal = false }: { modal?: boolean }) => {
   const { currentUser } = useUser();
+
+  
+  const onCreate = useCreatePostMutation(currentUser?.id);
 
   const [description, setDescription] = useState<string>("");
   const [media, setMedia] = useState<File | null>(null);
@@ -31,8 +34,8 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
 
         <form
           className="w-full"
-          action={async (formData) => {
-            await createPostAction(formData);
+          action={async (formData, ) => {
+            onCreate.mutate({formData})
             setDescription("");
             setMedia(null);
           }}

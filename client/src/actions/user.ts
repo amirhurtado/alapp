@@ -219,7 +219,6 @@ export const getFollowsActions = async (userId: string) => {
     }),
   ]);
 
-  console.log("FOLLOWING, FOLLOWINGS", following, followers)
 
   return { following, followers}
 };

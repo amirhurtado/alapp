@@ -10,6 +10,32 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || "",
 });
 
+const postIncludes = {
+  author: {
+    select: {
+      id: true,
+      name: true,
+      displayName: true,
+      imageUrl: true,
+    },
+  },
+  likesPost: {
+    select: { userId: true },
+  },
+  favorites: {
+    select: { userId: true },
+  },
+  reposts: {
+    select: { userId: true },
+  },
+  _count : {
+    select : {
+      comments : true
+    }
+  }
+};
+
+
 export const createPostAction = async (formData: FormData) => {
   const authorId = formData.get("authorId") as string;
   const description = formData.get("description") as string;
@@ -34,40 +60,17 @@ export const createPostAction = async (formData: FormData) => {
     urlImage = resultImage?.url;
   }
 
-  await prisma.post.create({
+  const post = await  prisma.post.create({
     data: {
       authorId,
       description,
       imageUrl: urlImage,
     },
+    include: postIncludes
   });
-};
 
 
-
-const postIncludes = {
-  author: {
-    select: {
-      id: true,
-      name: true,
-      displayName: true,
-      imageUrl: true,
-    },
-  },
-  likesPost: {
-    select: { userId: true },
-  },
-  favorites: {
-    select: { userId: true },
-  },
-  reposts: {
-    select: { userId: true },
-  },
-  _count : {
-    select : {
-      comments : true
-    }
-  }
+  return post
 };
 
 
@@ -143,14 +146,13 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
     });
   }
 
-  const updatePost = await prisma.post.findUnique({
+  return  await prisma.post.findUnique({
     where : {
       id: postId
     },
     include : postIncludes
   })
 
-  return updatePost;
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {

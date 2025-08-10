@@ -23,6 +23,7 @@ const InfinitePosts = ({
   feed = false,
   userProfileId,
 }: InfinitePostsProps) => {
+
   const queryKey = ["posts", userProfileId, feed];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
