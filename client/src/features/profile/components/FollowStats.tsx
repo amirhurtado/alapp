@@ -1,9 +1,9 @@
 interface FollowStastsProps {
   followings: number;
-  folowers: number;
+  followers: number;
 }
 
-const FollowStats = ({ followings, folowers }: FollowStastsProps) => {
+const FollowStats = ({ followings, followers }: FollowStastsProps) => {
   return (
     <div className="flex gap-5 mt-3">
       <div className="flex items-end gap-1 hover:underline cursor-pointer">
@@ -11,7 +11,7 @@ const FollowStats = ({ followings, folowers }: FollowStastsProps) => {
         <span className="text-text-gray text-xs">Siguiendo</span>
       </div>
       <div className="flex items-end gap-1 hover:underline cursor-pointer ">
-        <p className="text-sm">{folowers}</p>
+        <p className="text-sm">{followers}</p>
         <span className="text-text-gray text-xs">Seguidores</span>
       </div>
     </div>

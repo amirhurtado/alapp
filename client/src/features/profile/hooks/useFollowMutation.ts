@@ -15,26 +15,37 @@ export const useFollowMutation = () => {
   return useMutation({
     mutationFn: ({
       currentUserId,
-      otherUserId,
+      userProfileId,
     }: {
       currentUserId: string;
-      otherUserId: string;
+      userProfileId: string;
     }) => {
-      return toggleFollowAction(currentUserId, otherUserId);
+      return toggleFollowAction(currentUserId, userProfileId);
     },
-    onMutate: async ({ currentUserId, otherUserId }) => {
+    onMutate: async ({ currentUserId, userProfileId }) => {
+
+      console.log("CUURENT USER", currentUserId)
+      console.log("EL OTRO", userProfileId)
+
       const recommendationQueryKey = ["recommendations", currentUserId];
-      const fromProfileQueryKey = ["isFriendProfile", otherUserId];
+      const isFriendKey = ["isFriendProfile", userProfileId];
+      const countFollowKey = ["InfoFollowUser", userProfileId];
 
       await queryClient.cancelQueries({ queryKey: recommendationQueryKey });
-      await queryClient.cancelQueries({ queryKey: fromProfileQueryKey });
+      await queryClient.cancelQueries({ queryKey: isFriendKey });
+      await queryClient.cancelQueries({ queryKey: countFollowKey });
 
       const previousRecommendationData = queryClient.getQueryData(
         recommendationQueryKey
       );
-      const previousDatafromProfile = queryClient.getQueryData(
-        fromProfileQueryKey
+      const previousIsFriend = queryClient.getQueryData(
+        isFriendKey
       );
+
+       const previousCountFollow = queryClient.getQueryData(
+        countFollowKey
+      );
+
 
       if (previousRecommendationData) {
         queryClient.setQueryData(recommendationQueryKey, (oldData: any) => {
@@ -42,7 +53,7 @@ export const useFollowMutation = () => {
             ...oldData,
             pages: oldData.pages.map((page: InfoUser[]) =>
               page.map((user) => {
-                if (user.id === otherUserId) {
+                if (user.id === userProfileId) {
                   return {
                     ...user,
                     isFriend: !user.isFriend,
@@ -55,19 +66,37 @@ export const useFollowMutation = () => {
         });
        }
 
-       if(typeof previousDatafromProfile === 'boolean' ){
-        queryClient.setQueryData(fromProfileQueryKey, !previousDatafromProfile);
+
+       if(typeof previousIsFriend === 'boolean' ){
+        queryClient.setQueryData(isFriendKey, !previousIsFriend);
+       }
+
+       if(previousCountFollow){
+        queryClient.setQueryData(countFollowKey, (oldData: any) => {
+          if(previousIsFriend){
+           return {
+            ...oldData,
+            followers: oldData.followers -1
+           }
+          }else{
+            return {
+              ...oldData,
+            followers: oldData.followers + 1
+            }
+          }
+        })
        }
 
 
-      return {recommendationQueryKey,  previousRecommendationData,fromProfileQueryKey ,  previousDatafromProfile };
+
+      return {recommendationQueryKey,  previousRecommendationData,isFriendKey ,  previousIsFriend };
     },
     onError: (err, variables, context) => {
     if (context?.previousRecommendationData) {
         queryClient.setQueryData(context.recommendationQueryKey, context.previousRecommendationData);
     }
-    if (context?.previousDatafromProfile) {
-        queryClient.setQueryData(context.fromProfileQueryKey, context.previousDatafromProfile);
+    if (context?.previousIsFriend) {
+        queryClient.setQueryData(context.isFriendKey, context.previousIsFriend);
     }
 },
   });

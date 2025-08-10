@@ -6,8 +6,6 @@ export type FullUserType = UserType & {
   profile: InfoProfile | null;
   _count: {
     posts: number;
-    followers: number;
-    following: number;
   };
 };
 export type FullPostType = PostType & {

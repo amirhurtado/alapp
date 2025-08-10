@@ -15,6 +15,8 @@ const HeaderProfiler = ({
   userProfileInfo,
   currentUserId,
 }: HeaderProfilerProps) => {
+
+
   return (
     <>
       <div className="relative flex flex-col mb-6 ">

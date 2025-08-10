@@ -45,7 +45,7 @@ const ProfileActions = ({
           >
             <MessageSquare size={20} className="" />
           </button>
-           <FollowButton isFriend={isFriend ?? false}  onFollow={() => followMutation.mutate({currentUserId, otherUserId: userProfileInfoId})} fromProfile={true}  />
+           <FollowButton isFriend={isFriend ?? false}  onFollow={() => followMutation.mutate({currentUserId, userProfileId: userProfileInfoId})} fromProfile={true}  />
         </div>
       )}
     </div>

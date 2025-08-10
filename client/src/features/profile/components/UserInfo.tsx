@@ -1,12 +1,24 @@
+"use client";
+
 import { CalendarX, MapPin } from "lucide-react";
 import FollowStats from "./FollowStats";
 import { FullUserType } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { getFollowsActions } from "@/actions/user";
 
 interface UserInfoProps {
   userProfileInfo: FullUserType;
 }
 
 const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
+  const queryKey = ["InfoFollowUser", userProfileInfo.id];
+
+  const { data: follows } = useQuery({
+    queryKey,
+    queryFn: () => getFollowsActions(userProfileInfo.id),
+  });
+
+
   const getDate = (createdAt: Date) => {
     return new Date(createdAt.toString()).toLocaleString("es-CO", {
       year: "numeric",
@@ -20,7 +32,9 @@ const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
       <h1 className="text-2xl font-semibold">{userProfileInfo.name}</h1>
       <p className="text-sm text-text-gray">@{userProfileInfo.displayName}</p>
 
-      <p className="mt-3 text-xs text-text-gray">{userProfileInfo.profile?.bio}</p>
+      <p className="mt-3 text-xs text-text-gray">
+        {userProfileInfo.profile?.bio}
+      </p>
 
       <div className="flex gap-5 mt-4 text-text-gray text-xs ">
         <div className="flex items-center gap-1">
@@ -34,8 +48,8 @@ const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
       </div>
 
       <FollowStats
-        followings={userProfileInfo._count.following}
-        folowers={userProfileInfo._count.followers}
+        followings={follows?.following ?? 0}
+        followers={follows?.followers ?? 0}
       />
     </div>
   );

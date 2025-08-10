@@ -54,7 +54,7 @@ const InfiniteRecommendations = ({
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>
-                <UserCardRecommendation user={user}  onFollow={() => followMutation.mutate({currentUserId, otherUserId: user.id})}  />
+                <UserCardRecommendation user={user}  onFollow={() => followMutation.mutate({currentUserId, userProfileId: user.id})}  />
             </div>
         ))}
 

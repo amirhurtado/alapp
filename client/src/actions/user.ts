@@ -52,8 +52,6 @@ export const getUserbyNameAction = async (username: string) => {
       _count: {
         select: {
           posts: true,
-          followers: true,
-          following: true,
         },
       },
     },
@@ -70,8 +68,6 @@ export const getImgUrlAction = async (id: string) => {
     },
   });
 };
-
-
 
 export const updateInfoUserAction = async (
   formData: FormData,
@@ -94,7 +90,7 @@ export const updateInfoUserAction = async (
   if (!userData) return;
   const newDisplayName = formData.get("newDisplayName") as string;
   const file = formData.get("newImageUrl") as File;
-  console.log(file)
+  console.log(file);
   const newBio = formData.get("bio") as string;
 
   const userDataToUpdate: { displayName?: string } = {};
@@ -127,7 +123,6 @@ export const updateInfoUserAction = async (
   }
 };
 
-
 export const isFriendAction = async (
   userFollowerId: string,
   userFollowingId: string
@@ -150,7 +145,7 @@ export const toggleFollowAction = async (
   userFollowerId: string,
   userFollowingId: string
 ) => {
-  const isFriend = await isFriendAction(userFollowerId, userFollowingId )
+  const isFriend = await isFriendAction(userFollowerId, userFollowingId);
   if (isFriend) {
     await prisma.follow.delete({
       where: {
@@ -181,7 +176,9 @@ export const getRecomentationsAction = async (
   });
 
   const followingIds = following.map((follow) => follow.followingId);
-  const exclusion = Array.from(new Set([...followingIds, userId, ...alreadyFetchedIds ?? []]));
+  const exclusion = Array.from(
+    new Set([...followingIds, userId, ...(alreadyFetchedIds ?? [])])
+  );
 
   const recommendations = await prisma.user.findMany({
     where: {
@@ -200,12 +197,29 @@ export const getRecomentationsAction = async (
     },
   });
 
-  const usersWithFriendStatus = recommendations.map(user => ({
+  const usersWithFriendStatus = recommendations.map((user) => ({
     ...user,
     isFriend: followingIds.includes(user.id),
   }));
 
-  console.log(usersWithFriendStatus)
+  return usersWithFriendStatus;
+};
 
-  return usersWithFriendStatus
+export const getFollowsActions = async (userId: string) => {
+  const [following, followers] = await Promise.all([
+    prisma.follow.count({
+      where: {
+        followerId: userId,
+      }
+    }),
+    prisma.follow.count({
+      where: {
+        followingId: userId,
+      },
+    }),
+  ]);
+
+  console.log("FOLLOWING, FOLLOWINGS", following, followers)
+
+  return { following, followers}
 };
