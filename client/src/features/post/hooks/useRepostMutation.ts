@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 
 
-export const useRepostMutation = (queryKey: string[]) => {
+export const useRepostMutation = (queryKey: any[]) => {
     const queryClient = useQueryClient();
 
     return useMutation({

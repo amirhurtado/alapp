@@ -1,28 +1,21 @@
 "use client";
 
 import { Star } from "lucide-react";
-import { useFavoriteMutation } from "../../hooks/useFavoriteMutation";
 
 interface FavoriteProps {
   favorites: Array<{ userId: string }>;
-  currentUserId: string; 
-  postId: number
+  currentUserId: string;
+  onFavorite: () => void;
 }
 
-const Favorite = ({ favorites, currentUserId, postId }: FavoriteProps) => {
-  const {mutate} = useFavoriteMutation(["posts"]);
-
+const Favorite = ({ favorites, currentUserId, onFavorite }: FavoriteProps) => {
   const inFavorites = favorites.some(
     (favorite) => favorite.userId === currentUserId
   );
 
-  const onFavorites = () => {
-    mutate({postId, userId: currentUserId})
-  }
-
   return (
     <Star
-      onClick={onFavorites}
+      onClick={onFavorite}
       size={18}
       className={` ${
         inFavorites ? "text-icon-yellow" : "text-text-gray"

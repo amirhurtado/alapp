@@ -10,11 +10,17 @@ import Link from "next/link";
 interface PostInteractionsProps {
   currentUserId: string;
   post: FullPostType;
+  interactions: {
+    onLike: () => void,
+    onFavorite: () => void
+    onRepost: () => void
+  }
 }
 
 const PostInteractions = ({
   currentUserId,
   post,
+  interactions
 }: PostInteractionsProps) => {
   return (
     <div className={`flex justify-between text-xs mt-6 text-text-gray`}>
@@ -29,13 +35,13 @@ const PostInteractions = ({
       <Repost
         reposts={post.reposts}
         currentUserId={currentUserId}
-        postId={post.id}
+        onPost={interactions.onRepost}
       />
 
       <Like
         likes={post.likesPost}
         currentUserId={currentUserId}
-        postId={post.id}
+        onLike={interactions.onLike}
       />
 
       <>
@@ -43,7 +49,7 @@ const PostInteractions = ({
           <Favorite
             favorites={post.favorites}
             currentUserId={currentUserId}
-            postId={post.id}
+            onFavorite={interactions.onFavorite}
           />
           <Upload
             size={18}

@@ -6,26 +6,31 @@ import { LoaderCircle } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
+import { useLikeMutation } from "../hooks/useLikeMutation";
+import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
+import { useRepostMutation } from "../hooks/useRepostMutation";
 
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
   currentUserId: string;
   feed?: boolean;
+  userProfileId: string;
 }
 
 const InfinitePosts = ({
   posts: initialPosts,
   currentUserId,
   feed = false,
+  userProfileId,
 }: InfinitePostsProps) => {
-  const queryKey = ["posts"];
+  const queryKey = ["posts", userProfileId, feed];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey,
       queryFn: async ({ pageParam = 1 }) => {
         const res = await fetch(
-          `/api/posts?useridlog=${currentUserId}&feed=${feed}&page=${pageParam}`
+          `/api/posts?useridlog=${userProfileId}&feed=${feed}&page=${pageParam}`
         );
         return await res.json();
       },
@@ -37,10 +42,14 @@ const InfinitePosts = ({
         pages: [initialPosts],
         pageParams: [1],
       },
-       staleTime: Infinity,
+      staleTime: Infinity,
     });
 
   const posts = data?.pages.flatMap((pages) => pages) ?? initialPosts;
+
+  const likeMutation = useLikeMutation(queryKey);
+  const favoriteMutation = useFavoriteMutation(queryKey);
+  const repostMutation = useRepostMutation(queryKey);
 
   const loadMoreRef = useRef(null);
 
@@ -67,6 +76,20 @@ const InfinitePosts = ({
           <PostCard
             post={post}
             currentUserId={currentUserId}
+            interactions={{
+              onLike: () =>
+                likeMutation.mutate({ postId: post.id, userId: currentUserId }),
+              onFavorite: () =>
+                favoriteMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
+              onRepost: () =>
+                repostMutation.mutate({
+                  postId: post.id,
+                  userId: currentUserId,
+                }),
+            }}
           />
         </div>
       ))}

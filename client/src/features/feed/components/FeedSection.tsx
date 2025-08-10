@@ -18,6 +18,7 @@ const FeedSection = ({ posts, userCurrentId }: FeedSectionProps) => {
           posts={posts}
           currentUserId={userCurrentId}
           feed={true}
+          userProfileId={userCurrentId}
         />
       </div>
     </div>

@@ -41,7 +41,7 @@ export default async function UserPage({ params }: Props) {
         userProfileInfo={userProfile}
         currentUserId={currUser.id}
       />
-      <InfinitePosts posts={posts} currentUserId={currUser.id} />
+      <InfinitePosts posts={posts} currentUserId={currUser.id} userProfileId={userProfile.id} />
     </div>
   );
 }

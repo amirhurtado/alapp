@@ -2,7 +2,7 @@ import { toggleFavoriteAction } from "@/actions/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useFavoriteMutation = (queryKey: string[]) => {
+export const useFavoriteMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
