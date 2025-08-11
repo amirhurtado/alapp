@@ -18,7 +18,8 @@ const InfiniteComments = ({
   postId,
   currentUserId,
 }: InfiniteCommentsProps) => {
-  const queryKey = ["comments", postId];
+  const queryKey = ["comments",  {postId : postId}];
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey,

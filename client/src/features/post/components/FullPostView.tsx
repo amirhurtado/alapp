@@ -20,11 +20,11 @@ const FullPostView = ({
   post: originalPost,
   comments,
 }: FullPostView) => {
-  const queryKey = ["post", originalPost.authorId, originalPost.id];
+  const queryKey = ["post" , {id: originalPost.id}];
 
   const { data } = useQuery({
     queryKey,
-     queryFn: () => originalPost,
+    queryFn: () => originalPost,
     initialData: originalPost,
     enabled: false
   });

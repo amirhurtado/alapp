@@ -17,7 +17,7 @@ export const CommentCard = ({
   commentReply,
 }: CommentCardProps) => {
 
-  const getQueryKey = commentReply ? ["commentsReply",  comment.parentId] : ["comments", comment.postId]
+  const getQueryKey = commentReply ? ["commentsReply",  {parentId: comment.parentId}] : ["comments", {postId: comment.postId}]
 
   const onLike = useLikeCommentMutation(getQueryKey);
   

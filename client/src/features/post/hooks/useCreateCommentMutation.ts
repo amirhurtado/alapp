@@ -1,5 +1,5 @@
 import { createCommentAction } from "@/actions/comment";
-import { FullCommentType } from "@/types";
+import { FullCommentType, FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateCommentMutation = (postId: number) => {
@@ -10,13 +10,11 @@ export const useCreateCommentMutation = (postId: number) => {
       return createCommentAction(formData);
     },
     onSuccess: (data) => {
+      const postIdQueryKey = ["post", { id: postId }];
+      const commentsQueryKey = ["comments", { postId: postId }];
 
-      const queryKey = ["comments", postId]
-
-
-      queryClient.setQueryData(queryKey, (oldData: any) => {
+      queryClient.setQueryData(commentsQueryKey, (oldData: any) => {
         if (!oldData) return;
-
         return {
           ...oldData,
           pages: oldData.pages.map((page: FullCommentType[], i: number) => {
@@ -25,6 +23,15 @@ export const useCreateCommentMutation = (postId: number) => {
             }
             return page;
           }),
+        };
+      });
+
+      queryClient.setQueryData(postIdQueryKey, (oldData: FullPostType) => {
+        if (!oldData) return;
+
+        return {
+          ...oldData,
+          _count: { comments: oldData._count.comments + 1 },
         };
       });
     },

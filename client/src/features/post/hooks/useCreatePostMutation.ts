@@ -11,31 +11,31 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
     onSuccess: (data) => {
       if (!currenUserId) return;
 
-      const queryKeyFeed = ["posts", currenUserId, true];
+      const queryKeyFeed = ["posts", currenUserId, { feed: true }];
       queryClient.setQueryData(queryKeyFeed, (oldData: any) => {
         if (!oldData) return;
-       return {
-        ...oldData,
-        pages: oldData.pages.map((page : FullPostType[], index : number) => {
-          if (index === 0) {
-            return [data, ...page]; 
-          }
-          return page;
-        })
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: FullPostType[], index: number) => {
+            if (index === 0) {
+              return [data, ...page];
+            }
+            return page;
+          }),
         };
       });
 
-      const queryKeyProfile = ["posts", currenUserId, false];
+      const queryKeyProfile = ["posts", currenUserId, { feed: false }];
       queryClient.setQueryData(queryKeyProfile, (oldData: any) => {
         if (!oldData) return;
-       return {
-        ...oldData,
-        pages: oldData.pages.map((page : FullPostType[], index :number) => {
-          if (index === 0) {
-            return [data, ...page]; 
-          }
-          return page;
-        })
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: FullPostType[], index: number) => {
+            if (index === 0) {
+              return [data, ...page];
+            }
+            return page;
+          }),
         };
       });
     },

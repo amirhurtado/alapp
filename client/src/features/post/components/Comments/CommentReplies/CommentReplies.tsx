@@ -23,7 +23,7 @@ const CommentReplies = ({
   currentUserId,
 }: CommentRepliesProps) => {
 
-  const queryKey = ["commentsReply", comment.id]
+  const queryKey = ["commentsReply", {parentId: comment.id}]
 
   const [ocult, setOcult] = useState(true);
 

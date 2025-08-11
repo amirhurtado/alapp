@@ -1,5 +1,5 @@
 import { createCommentAction } from "@/actions/comment";
-import { FullCommentType } from "@/types";
+import { FullCommentType, FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateReplyCommentMutation = (commentId: number, postId : number) => {
@@ -11,18 +11,12 @@ export const useCreateReplyCommentMutation = (commentId: number, postId : number
     },
     onSuccess: (data) => {
 
-      const queryKeyReplies = ["commentsReply", commentId]
-      const queryKeyCommentsBase = ["comments", postId]
+      const postQueryKey = ["post", {id: postId}]
+      const commentsParentsQueryKey = ["comments", {postId : postId}]
+      const repliesQueryKey = ["commentsReply", {parentId: commentId}]
 
 
-      const dataM = queryClient.getQueryData(queryKeyCommentsBase)
-
-      console.log("ME INTERESA",dataM)
-
-
-
-
-      queryClient.setQueryData(queryKeyReplies, (oldData: any) => {
+      queryClient.setQueryData(repliesQueryKey, (oldData: any) => {
         if (!oldData) return;
 
         return {
@@ -36,7 +30,7 @@ export const useCreateReplyCommentMutation = (commentId: number, postId : number
         };
       });
 
-      queryClient.setQueryData(queryKeyCommentsBase, (oldData: any) => {
+      queryClient.setQueryData(commentsParentsQueryKey, (oldData: any) => {
         if(!oldData) return
 
         return {
@@ -53,6 +47,16 @@ export const useCreateReplyCommentMutation = (commentId: number, postId : number
 
             })
           })
+        }
+      })
+
+      queryClient.setQueryData(postQueryKey, (oldData : FullPostType) => {
+        if(!oldData) return
+
+        return {
+          ...oldData,
+          _count: {comments: oldData._count.comments + 1}
+
         }
       })
     },
