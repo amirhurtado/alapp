@@ -6,12 +6,13 @@ import FeedTab from "./FeedTab";
 interface FeedSectionProps {
   posts: Array<FullPostType>;
   currentUserId: string;
+  site: "main" | "explore"
 }
 
-const FeedSection = ({ posts, currentUserId }: FeedSectionProps) => {
+const FeedSection = ({ posts, currentUserId, site }: FeedSectionProps) => {
   return (
     <div className="flex flex-col h-screen ">
-      <FeedTab />
+      <FeedTab site={site} />
       <div className="flex flex-col max-h-screen  overflow-y-scroll ">
         <CreatePost />
         <InfinitePosts

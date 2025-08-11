@@ -11,16 +11,16 @@ export default async function Home() {
 
   if (!currUser) return;
 
-  const [userCurrent, posts] = await Promise.all([
+  const [userData, posts] = await Promise.all([
     userExistsAction(currUser),
     getPostsAction(currUser.id, true),
   ]);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <SetUserClient dbUser={userCurrent} />
+      <SetUserClient dbUser={userData} />
 
-      <FeedSection posts={posts} currentUserId={userCurrent.id}  />
+      <FeedSection posts={posts} currentUserId={userData.id} site="main"  />
     </div>
   );
 }
