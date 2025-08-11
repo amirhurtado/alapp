@@ -18,7 +18,8 @@ export function SubmitButton({ disabled, text, className = "base"}: SubmitButton
     applyclassName = "text-black bg-icon-green py-1 px-3 rounded-lg text-md "
   }else if(className === "comment"){
     applyclassName = "text-icon-green font-semibold text-sm"
-  }
+  }else if(className === "comment-xs"){
+    applyclassName = "text-icon-green font-semibold text-xs"} 
 
   return (
     <button

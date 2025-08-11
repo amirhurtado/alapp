@@ -22,6 +22,7 @@ const CommentReplies = ({
   postId,
   currentUserId,
 }: CommentRepliesProps) => {
+
   const queryKey = ["commentsReply", comment.id]
 
   const [ocult, setOcult] = useState(true);

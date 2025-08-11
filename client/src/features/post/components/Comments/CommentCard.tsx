@@ -20,6 +20,7 @@ export const CommentCard = ({
   const getQueryKey = commentReply ? ["commentsReply",  comment.parentId] : ["comments", comment.postId]
 
   const onLike = useLikeCommentMutation(getQueryKey);
+  
   return (
     <div
       className={`flex  flex-col gap-2 hover:bg-hover ${

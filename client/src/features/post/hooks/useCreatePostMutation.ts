@@ -1,4 +1,5 @@
 import { createPostAction } from "@/actions/post";
+import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useCreatePostMutation = (currenUserId: string | undefined) => {
@@ -15,7 +16,7 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
         if (!oldData) return;
        return {
         ...oldData,
-        pages: oldData.pages.map((page, index) => {
+        pages: oldData.pages.map((page : FullPostType[], index : number) => {
           if (index === 0) {
             return [data, ...page]; 
           }
@@ -29,7 +30,7 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
         if (!oldData) return;
        return {
         ...oldData,
-        pages: oldData.pages.map((page, index) => {
+        pages: oldData.pages.map((page : FullPostType[], index :number) => {
           if (index === 0) {
             return [data, ...page]; 
           }

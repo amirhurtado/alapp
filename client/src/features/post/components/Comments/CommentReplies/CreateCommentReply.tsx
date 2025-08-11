@@ -1,5 +1,6 @@
 'use client'
-import { createCommentAction } from "@/actions/comment";
+import { SubmitButton } from "@/components/ui/SubmitButton";
+import { useCreateReplyCommentMutation } from "@/features/post/hooks/useCreateReplyCommentMutation"; 
 import { CornerDownRight } from "lucide-react";
 import { useState } from "react";
 
@@ -16,11 +17,15 @@ interface CreateCommentReplyProps {
 const CreateCommentReply = ({comment, postId, currentUserId}: CreateCommentReplyProps) => {
   const [content, setContent] = useState("");
 
+
+  const onCreate = useCreateReplyCommentMutation(comment.id, postId);
+
   return (
      <form
         className="flex items-center gap-3 ml-[.4rem] max-w-full justify-between"
-        action={async (formData) => {
-          await createCommentAction(formData);
+        action={ (formData) => {
+           onCreate.mutate({formData})
+           
           setContent("");
         }}
       >
@@ -40,12 +45,7 @@ const CreateCommentReply = ({comment, postId, currentUserId}: CreateCommentReply
           />
         </div>
 
-        <button
-          className="font-semibold cursor-pointer text-xs text-icon-green active:scale-[0.95] transition-transform duration-200 ease-in"
-          disabled={content === ""}
-        >
-          Responder
-        </button>
+        <SubmitButton disabled={content === ""} text="Responder" className="comment-xs" />
       </form>
   )
 }

@@ -17,7 +17,7 @@ interface ReplyControlsProps {
 const ReplyControls = ({hasMore, ocult, setOcult, showResponses, commentReponses, repliesLength} : ReplyControlsProps) => {
   return (
     <div className="flex gap-4 items-center text-text-gray max-w-max text-xs ">
-        {(hasMore || ocult) && commentReponses>0 && (
+        {(hasMore || ocult)  && (
           <button onClick={showResponses}>
             <div className="flex  gap-1 cursor-pointer hover:text-primary-color ">
               <p className="transition-colors duration-200 ease-in">

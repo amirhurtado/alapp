@@ -21,7 +21,7 @@ const CreateComment = ({ currentUser, postId }: CreateCommentType) => {
   return (
     <form
       className="pt-4 pb-6 px-4 flex justify-between gap-3"
-      action={async (formData) => {
+      action={ (formData) => {
         onCreateComment.mutate({ formData });
         setContent("");
       }}
