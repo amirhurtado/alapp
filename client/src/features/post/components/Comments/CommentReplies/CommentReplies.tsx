@@ -1,8 +1,11 @@
 "use client";
 import CreateCommentReply from "./CreateCommentReply";
 import Comment from "../CommentCard";
-import { useInfinityRepliesComments } from "@/features/post/hooks/useInfiniteRepliesComents";
 import ReplyControls from "./ReplyControls";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getCommentsByParentIdAction } from "@/actions/comment";
+import { useState } from "react";
+import Loader from "@/components/ui/Loader";
 
 interface CommentRepliesProps {
   comment: {
@@ -19,17 +22,47 @@ const CommentReplies = ({
   postId,
   currentUserId,
 }: CommentRepliesProps) => {
-  const { data, hasMore, ocult, handleOcult, showResponses } =
-    useInfinityRepliesComments(comment.responses, comment.id);
+  const queryKey = ["commentReply", comment.id];
+
+  const [ocult, setOcult] = useState(true);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey,
+      queryFn: async ({ pageParam = 1 }) => {
+        return await getCommentsByParentIdAction(comment.id, pageParam);
+      },
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        const fetchedRepliesCount = allPages.flat().length;
+        return fetchedRepliesCount === comment.responses
+          ? undefined
+          : allPages.length + 1;
+      },
+    });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const replies = data?.pages.flatMap((page) => page) ?? [];
+
+  const showResponses = () => {
+    if (ocult) {
+      setOcult(false);
+      return;
+    }
+    fetchNextPage();
+  };
 
   return (
     <div className="flex flex-col overflow-hidden gap-3">
       {!ocult && (
         <div className="ml-7">
-          {data.map((comment) => (
-            <div key={comment.id} className="w-full">
+          {replies.map((replie) => (
+            <div key={replie.id} className="w-full">
               <Comment
-                comment={comment}
+                comment={replie}
                 currentUserId={currentUserId}
                 commentReply={true}
               />
@@ -38,15 +71,18 @@ const CommentReplies = ({
         </div>
       )}
 
-      <ReplyControls
-        hasMore={hasMore}
-        ocult={ocult}
-        handleOcult={handleOcult}
-        showResponses={showResponses}
-
-        commentReponses={comment.responses}
-        dataLength={data.length}
-      />
+      {!isFetchingNextPage ? (
+        <ReplyControls
+          hasMore={hasNextPage}
+          ocult={ocult}
+          setOcult={setOcult}
+          showResponses={showResponses}
+          commentReponses={comment.responses}
+          repliesLength={replies.length}
+        />
+      ) : (
+        <Loader />
+      )}
 
       <CreateCommentReply
         comment={{ id: comment.id, authorName: comment.authorName }}
