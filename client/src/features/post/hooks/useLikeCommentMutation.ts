@@ -3,7 +3,7 @@ import { FullCommentType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikeCommentLogic } from "../helpers";
 
-export const useLikeCommentMutation = (postId: number) => {
+export const useLikeCommentMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -17,10 +17,12 @@ export const useLikeCommentMutation = (postId: number) => {
       return toggleLikeCommentAction(currentUserId, commentId);
     },
     onMutate: async ({ commentId, currentUserId }) => {
-      const queryKey = ["comments", postId];
+
+
       await queryClient.cancelQueries({ queryKey });
 
       const previousData = queryClient.getQueryData(queryKey);
+
 
       queryClient.setQueryData(queryKey, (oldData: any) => {
         if (!oldData) return;
@@ -37,11 +39,11 @@ export const useLikeCommentMutation = (postId: number) => {
         };
       });
 
-      return { previousData, queryKey };
+      return { previousData };
     },
     onError: (err, variables, context) => {
       if (context) {
-        queryClient.setQueryData(context?.queryKey, context?.previousData);
+        queryClient.setQueryData(queryKey, context?.previousData);
       }
     },
   });

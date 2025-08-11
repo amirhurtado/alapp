@@ -1,6 +1,6 @@
 "use client";
 import CreateCommentReply from "./CreateCommentReply";
-import Comment from "../CommentCard";
+import CommentCard from "../CommentCard";
 import ReplyControls from "./ReplyControls";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCommentsByParentIdAction } from "@/actions/comment";
@@ -22,7 +22,7 @@ const CommentReplies = ({
   postId,
   currentUserId,
 }: CommentRepliesProps) => {
-  const queryKey = ["commentReply", comment.id];
+  const queryKey = ["commentsReply", comment.id]
 
   const [ocult, setOcult] = useState(true);
 
@@ -61,7 +61,7 @@ const CommentReplies = ({
         <div className="ml-7">
           {replies.map((replie) => (
             <div key={replie.id} className="w-full">
-              <Comment
+              <CommentCard
                 comment={replie}
                 currentUserId={currentUserId}
                 commentReply={true}
