@@ -15,7 +15,6 @@ export default async function Home() {
     userExistsAction(currUser),
     getPostsAction(currUser.id, true),
   ]);
-
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <SetUserClient dbUser={userData} />

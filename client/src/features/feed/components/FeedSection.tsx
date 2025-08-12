@@ -14,7 +14,8 @@ const FeedSection = ({ posts, currentUserId, site }: FeedSectionProps) => {
     <div className="flex flex-col h-screen ">
       <FeedTab site={site} />
       <div className="flex flex-col max-h-screen  overflow-y-scroll ">
-        <CreatePost />
+        {site === "main" &&   <CreatePost /> }
+       
         <InfinitePosts
           posts={posts}
           currentUserId={currentUserId}
