@@ -12,7 +12,7 @@ interface InfinitePostsProps {
   posts: Array<FullPostType>;
   currentUserId: string;
   userProfileId: string;
-  feedSite : "main" | "explore" | false
+  feedSite : "main" | "explore" | "profile"
 }
 
 const InfinitePosts = ({
@@ -26,11 +26,11 @@ const InfinitePosts = ({
 
   console.log("DESDE AQUI", queryKey);
 
-  let isFeed
+  let isFeedHome
   if(feedSite === "main" || feedSite === "explore"){
-     isFeed = true
+     isFeedHome = true
   }else{
-    isFeed = false
+    isFeedHome = false
   }
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -38,7 +38,7 @@ const InfinitePosts = ({
       queryKey,
       queryFn: async ({ pageParam = 1 }) => {
         const res = await fetch(
-          `/api/posts?useridlog=${userProfileId}&feed=${isFeed}&page=${pageParam}`
+          `/api/posts?useridlog=${userProfileId}&feed=${isFeedHome}&page=${pageParam}`
         );
         return await res.json();
       },
