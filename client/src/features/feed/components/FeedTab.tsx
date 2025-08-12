@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 interface FeedTabInterface {
-  site: "main" | "explore"
+  feedSite: "main" | "explore"
 }
 
-const FeedTab = ({site}: FeedTabInterface) => {
+const FeedTab = ({feedSite}: FeedTabInterface) => {
 
   const classActive = "border-b-3 border-primary-color"
   return (
@@ -14,12 +14,12 @@ const FeedTab = ({site}: FeedTabInterface) => {
         href={"/"}
         className="w-full flex flex-col"
       >
-        <p className={`text-center  ${site === "main" ? classActive : "text-text-gray" } pb-2`}>
+        <p className={`text-center  ${feedSite === "main" ? classActive : "text-text-gray" } pb-2`}>
           Principal
         </p>
       </Link>
       <Link aria-label="Ir a siguiendo" href={"/explore"} className="w-full">
-        <p className={`text-center  ${site === "explore" ? classActive : "text-text-gray" }  pb-2`}>Explorar</p>
+        <p className={`text-center  ${feedSite === "explore" ? classActive : "text-text-gray" }  pb-2`}>Explorar</p>
       </Link>
     </div>
   );

@@ -11,25 +11,34 @@ import NoPost from "./NoPost";
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
   currentUserId: string;
-  feed?: boolean;
   userProfileId: string;
+  feedSite : "main" | "explore" | false
 }
 
 const InfinitePosts = ({
   posts: initialPosts,
   currentUserId,
-  feed = false,
   userProfileId,
+  feedSite,
 }: InfinitePostsProps) => {
 
-  const queryKey = ["posts", userProfileId, {feed: feed}];
+  const queryKey = ["posts", userProfileId, {feedSite: feedSite}];
+
+  console.log("DESDE AQUI", queryKey);
+
+  let isFeed
+  if(feedSite === "main" || feedSite === "explore"){
+     isFeed = true
+  }else{
+    isFeed = false
+  }
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey,
       queryFn: async ({ pageParam = 1 }) => {
         const res = await fetch(
-          `/api/posts?useridlog=${userProfileId}&feed=${feed}&page=${pageParam}`
+          `/api/posts?useridlog=${userProfileId}&feed=${isFeed}&page=${pageParam}`
         );
         return await res.json();
       },

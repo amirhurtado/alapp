@@ -14,7 +14,7 @@ const page = async () => {
 
   return (
     <div>
-      <FeedSection posts={[]} currentUserId={userData.id} site="explore"/>
+      <FeedSection posts={[]} currentUserId={userData.id} feedSite="explore"/>
     </div>
   )
 }
