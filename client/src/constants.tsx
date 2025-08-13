@@ -1,4 +1,4 @@
-import { House, Telescope, Bell, MessageSquare} from 'lucide-react';
+import { House, Bell, MessageSquare, Star} from 'lucide-react';
 
 export const menuItems = [
     {
@@ -10,25 +10,24 @@ export const menuItems = [
     },
     {
         id: 2,
-        name: "Explorar",
-        arialLaberl: "ir a explorar",
-        link: "/explore",
-        icon: Telescope
-
-    },
-    {
-        id: 3,
         name: "Notificaciones",
         arialLaberl: "ir a notificaciones",
         link: "/notifications",
         icon: Bell
     },
     {
-        id: 4,
+        id: 3,
         name: "Mensajes",
         arialLaberl: "ir a mensajes",
         link: "/messages",
         icon: MessageSquare
+    },
+     {
+        id: 4,
+        name: "Favoritos",
+        arialLaberl: "ir a mensajes",
+        link: "/favorites",
+        icon: Star
     }
 ]
 

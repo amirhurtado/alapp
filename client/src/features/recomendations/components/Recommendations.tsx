@@ -8,8 +8,8 @@ interface RecommendationsProps{
   placement: "rightbar" | "explore"
 }
 
-const Recomendations = async ({ currentUserId, placement }: RecommendationsProps) => {
-  const recomendations = await getRecomentationsAction(currentUserId, []);
+const Recommendations = async ({ currentUserId, placement }: RecommendationsProps) => {
+  const recommendations = await getRecomentationsAction(currentUserId, []);
 
 
   return (
@@ -17,7 +17,7 @@ const Recomendations = async ({ currentUserId, placement }: RecommendationsProps
       <p  className={`${placement === "explore" && "mt-3 md:mt-0"} text-md font-bold`}>Recomendaciones para ti</p>
 
       <InfiniteRecommendations
-        initialRecommendations={recomendations}
+        initialRecommendations={recommendations}
         currentUserId={currentUserId}
          placement={placement}
       />
@@ -25,4 +25,4 @@ const Recomendations = async ({ currentUserId, placement }: RecommendationsProps
   );
 };
 
-export default Recomendations;
+export default Recommendations;

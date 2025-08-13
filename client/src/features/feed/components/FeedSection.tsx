@@ -2,7 +2,7 @@ import InfinitePosts from "@/features/post/components/InfinitePosts";
 import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import { FullPostType } from "@/types";
 import FeedTab from "./FeedTab";
-import Recomendations from "@/features/recomendations/components/Recomendations";
+import Recomendations from "@/features/recomendations/components/Recommendations";
 
 interface FeedSectionProps {
   posts: Array<FullPostType>;
