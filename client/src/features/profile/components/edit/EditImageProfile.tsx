@@ -1,4 +1,4 @@
-import { Image as ImageKit } from "@imagekit/next";
+
 import { SquarePen, Trash } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -7,12 +7,14 @@ interface EditImageProfileProps {
   imageUrl: string;
   media: File | null;
   setMedia: React.Dispatch<React.SetStateAction<File | null>>;
+  inputImageRef: React.RefObject<null | HTMLInputElement>;
 }
 
 const EditImageProfile = ({
   imageUrl,
   media,
   setMedia,
+  inputImageRef,
 }: EditImageProfileProps) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -32,6 +34,7 @@ const EditImageProfile = ({
         name="newImageUrl"
         type="file"
         accept="image/*"
+        ref={inputImageRef}
         id={"newImage"}
         className="hidden"
       />
@@ -48,13 +51,16 @@ const EditImageProfile = ({
             <Trash
               className="absolute right-0 z-10 cursor-pointer bg-red-400 rounded-full p-2 w-[2rem] h-[2rem]"
               onClick={() => {
+                if (inputImageRef.current) {
+                  inputImageRef.current.value = "";
+                }
                 setMedia(null);
               }}
             />
           </div>
         ) : (
           <label htmlFor={"newImage"} className="cursor-pointer">
-            <ImageKit
+            <Image
               src={imageUrl}
               alt="foto de perfil"
               fill

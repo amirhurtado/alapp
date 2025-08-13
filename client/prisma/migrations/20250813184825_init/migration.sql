@@ -17,7 +17,7 @@ CREATE TABLE `LikeComment` (
     `commentId` INTEGER NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `LikeComment_commentId_userId_key`(`commentId`, `userId`),
+    UNIQUE INDEX `LikeComment_userId_commentId_key`(`userId`, `commentId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -54,6 +54,7 @@ CREATE TABLE `Repost` (
     `postId` INTEGER NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Repost_userId_postId_key`(`userId`, `postId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -99,7 +100,7 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `displayName` VARCHAR(191) NOT NULL,
-    `imageUrl` VARCHAR(191) NOT NULL DEFAULT '/user-default',
+    `imageUrl` VARCHAR(191) NOT NULL DEFAULT '/user-default.jpg',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),

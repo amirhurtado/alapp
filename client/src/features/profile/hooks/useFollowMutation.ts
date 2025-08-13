@@ -32,6 +32,7 @@ const toggleIsFriendRecommendations = (
   userProfileId: string,
   oldData: PaginatedUserData
 ) => {
+
   if (!oldData) return;
   return {
     ...oldData,

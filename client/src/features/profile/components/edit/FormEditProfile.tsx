@@ -3,7 +3,7 @@
 import EditImageProfile from "./EditImageProfile";
 import EditInfoUser from "./EditInfoUser";
 import { updateInfoUserAction } from "@/actions/user";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import EditBasicInfoUser from "./EditBasicInfoUser";
 import { FullUserType } from "@/types";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -19,6 +19,7 @@ const FormEditProfile = ({infoUser
   const [media, setMedia] = useState<null | File>(null);
   const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
   const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
+  const inputImageRef = useRef<null | HTMLInputElement>(null);
 
   const router = useRouter()
 
@@ -41,6 +42,7 @@ const FormEditProfile = ({infoUser
         imageUrl={infoUser.imageUrl}
         media={media}
         setMedia={setMedia}
+        inputImageRef={inputImageRef}
       />
 
       <EditInfoUser

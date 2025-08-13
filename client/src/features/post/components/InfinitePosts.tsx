@@ -23,7 +23,11 @@ const InfinitePosts = ({
   placement,
 }: InfinitePostsProps) => {
 
+
+
   const queryKey = ["posts", userProfileId, {placement: placement}];
+
+  console.log("QUERY KEY", queryKey)
 
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =

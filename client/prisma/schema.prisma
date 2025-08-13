@@ -129,7 +129,7 @@ model User {
   email       String   @unique
   name        String   @unique
   displayName String
-  imageUrl    String   @default("/user-default")
+  imageUrl    String   @default("/user-default.jpg")
   createdAt   DateTime @default(now())
 
   profile Profile?

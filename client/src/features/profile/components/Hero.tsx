@@ -1,9 +1,11 @@
 import React from "react";
 
 import Image from "next/image";
-import { Image as Imagekit } from "@imagekit/next";
+
 
 const HeroProfile = ({ imgurl }: { imgurl: string }) => {
+  console.log("LA IMAGE URL DEL PERFIL ESS",imgurl)
+
   return (
     <div className="flex relative">
       <div className="relative w-full h-[120px] md:h-[200px] border-y-1 border-border">
@@ -15,10 +17,11 @@ const HeroProfile = ({ imgurl }: { imgurl: string }) => {
         />
       </div>
       <div className="absolute top-1/2 translate-y-1/2 left-4 w-[4.5rem] h-[4.5rem] md:w-[6rem] md:h-[6rem]">
-        <Imagekit
+        <Image
           src={imgurl}
           alt="User Avatar"
           fill
+          priority
           className="object-cover rounded-full"
         />
       </div>

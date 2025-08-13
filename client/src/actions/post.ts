@@ -1,14 +1,9 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { uploadFile } from "./constants";
 
-import ImageKit from "imagekit";
 
-const imagekit = new ImageKit({
-  publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || "",
-  privateKey: process.env.NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY || "",
-  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || "",
-});
 
 const postIncludes = {
   author: {
@@ -44,20 +39,7 @@ export const createPostAction = async (formData: FormData) => {
     let urlImage: string | undefined = undefined;
 
     if (image && image.size > 0) {
-      const bytes = await image.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      const resultImage = await imagekit.upload({
-        file: buffer,
-        fileName: image.name,
-        useUniqueFileName: true,
-        folder: "/posts",
-        transformation: {
-          pre: "w-600",
-        },
-      });
-
-      urlImage = resultImage?.url;
+      urlImage = await  uploadFile(image, "/posts" )
     }
 
     const post = await prisma.post.create({

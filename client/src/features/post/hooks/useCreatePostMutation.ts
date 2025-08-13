@@ -12,7 +12,10 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
 
 
       const queryKeyFeed = ["posts", currenUserId, {placement: "mainFeed"}]
+
       queryClient.setQueryData(queryKeyFeed, (oldData: any) => {
+        console.log("old data querykey", queryKeyFeed)
+
         if (!oldData) return;
         return {
           ...oldData,
@@ -27,7 +30,6 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
 
       const queryKeyProfile = ["posts", currenUserId, {placement: "profile"}];
       queryClient.setQueryData(queryKeyProfile, (oldData: any) => {
-        console.log("old data", oldData)
         if (!oldData) return;
         return {
           ...oldData,

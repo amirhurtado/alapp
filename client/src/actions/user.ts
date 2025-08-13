@@ -2,6 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { currentUser } from "@clerk/nextjs/server";
+import { uploadFile } from "./constants";
 
 type ClerkUser = NonNullable<Awaited<ReturnType<typeof currentUser>>>;
 
@@ -21,7 +22,6 @@ export const userExistsAction = async (user: ClerkUser) => {
         name: user.username || "",
         displayName: user.username || "",
         email: user.emailAddresses[0].emailAddress,
-        imageUrl: "/user-default",
       },
     });
 
@@ -79,6 +79,7 @@ export const updateInfoUserAction = async (
     },
     select: {
       displayName: true,
+      imageUrl: true,
       profile: {
         select: {
           bio: true,
@@ -93,11 +94,20 @@ export const updateInfoUserAction = async (
   console.log(file);
   const newBio = formData.get("bio") as string;
 
-  const userDataToUpdate: { displayName?: string } = {};
+  const userDataToUpdate: { displayName?: string, imageUrl?: string } = {};
   const profileDataToUpdate: { bio?: string } = {};
+  let imgUrl : string | undefined = undefined
+
+  if(file && file.size > 0){
+    imgUrl = await  uploadFile(file, "/imgProfile")
+  }
 
   if (userData.displayName !== newDisplayName) {
     userDataToUpdate.displayName = newDisplayName;
+  }
+
+  if(imgUrl){
+    userDataToUpdate.imageUrl = imgUrl
   }
 
   if ((userData.profile?.bio ?? "") !== newBio) {
@@ -121,6 +131,8 @@ export const updateInfoUserAction = async (
       },
     });
   }
+
+  
 };
 
 export const isFriendAction = async (
