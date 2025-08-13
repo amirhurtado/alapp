@@ -15,7 +15,7 @@ interface UserCardRecommendationProps {
   onFollow: () => void
 }
 
-const UserCardRecommendation = ({user, onFollow} : UserCardRecommendationProps) => {
+const UserCardSidebar = ({user, onFollow} : UserCardRecommendationProps) => {
 
   
   return (
@@ -43,4 +43,4 @@ const UserCardRecommendation = ({user, onFollow} : UserCardRecommendationProps) 
   );
 };
 
-export default UserCardRecommendation;
+export default UserCardSidebar;

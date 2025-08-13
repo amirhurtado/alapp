@@ -6,40 +6,31 @@ import { LoaderCircle } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
+import { getPostsAction } from "@/actions/post";
 
 
 interface InfinitePostsProps {
   posts: Array<FullPostType>;
   currentUserId: string;
   userProfileId: string;
-  feedSite : "main" | "explore" | "profile"
+  placement : "mainFeed" | "exploreFeed" | "profile"
 }
 
 const InfinitePosts = ({
   posts: initialPosts,
   currentUserId,
   userProfileId,
-  feedSite,
+  placement,
 }: InfinitePostsProps) => {
 
-  const queryKey = ["posts", userProfileId, {feedSite: feedSite}];
+  const queryKey = ["posts", userProfileId, {placement: placement}];
 
-
-  let isFeedHome
-  if(feedSite === "main" || feedSite === "explore"){
-     isFeedHome = true
-  }else{
-    isFeedHome = false
-  }
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey,
       queryFn: async ({ pageParam = 1 }) => {
-        const res = await fetch(
-          `/api/posts?useridlog=${userProfileId}&feed=${isFeedHome}&page=${pageParam}`
-        );
-        return await res.json();
+        return getPostsAction(userProfileId, placement, pageParam )
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {

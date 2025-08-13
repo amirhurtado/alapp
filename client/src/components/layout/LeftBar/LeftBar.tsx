@@ -45,7 +45,7 @@ const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
           </Link>
         </div>
 
-        <ModalCreatePost />
+        <ModalCreatePost currentUser={{id: currentUser.id, imgUrl: currentUser.imageUrl}} />
       </div>
 
       <UserProfiletab currentUser={currentUser} />

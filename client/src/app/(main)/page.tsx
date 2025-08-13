@@ -2,7 +2,6 @@
 
 import { currentUser } from "@clerk/nextjs/server";
 import { userExistsAction } from "@/actions/user";
-import SetUserClient from "@/components/SetUserClient";
 import { getPostsAction } from "@/actions/post";
 import FeedSection from "@/features/feed/components/FeedSection";
 
@@ -13,13 +12,12 @@ export default async function Home() {
 
   const [userData, posts] = await Promise.all([
     userExistsAction(currUser),
-    getPostsAction(currUser.id, true),
+    getPostsAction(currUser.id, "mainFeed"),
   ]);
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <SetUserClient dbUser={userData} />
 
-      <FeedSection posts={posts} currentUserId={userData.id} feedSite="main"  />
+      <FeedSection posts={posts} currentUser={{id: userData.id, imgUrl: userData.imageUrl}} placement="mainFeed"  />
     </div>
   );
 }

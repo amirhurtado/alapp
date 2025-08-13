@@ -9,7 +9,15 @@ import {
 } from "@/components/ui/dialog";
 import CreatePost from "./CreatePost";
 
-const ModalCreatePost = () => {
+interface ModalCreatePostProps {
+  currentUser: {
+    id: string;
+    imgUrl: string
+  }
+}
+
+
+const ModalCreatePost = ({currentUser} : ModalCreatePostProps) => {
   return (
     <Dialog >
       <DialogTrigger>
@@ -20,7 +28,7 @@ const ModalCreatePost = () => {
         </div>
       </DialogTrigger>
       <DialogContent>
-        <CreatePost modal={true}/>
+        <CreatePost modal={true} currentUser={currentUser}/>
       </DialogContent>
     </Dialog>
   );

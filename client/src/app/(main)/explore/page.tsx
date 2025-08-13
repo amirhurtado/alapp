@@ -11,7 +11,7 @@ const page = async () => {
 
   return (
     <div>
-      <FeedSection posts={[]} currentUserId={userData.id} feedSite="explore" />
+      <FeedSection posts={[]} currentUser={{id: userData.id, imgUrl: userData.imageUrl}} placement="exploreFeed" />
     </div>
   );
 };

@@ -6,27 +6,31 @@ import Recomendations from "@/features/recomendations/components/Recomendations"
 
 interface FeedSectionProps {
   posts: Array<FullPostType>;
-  currentUserId: string;
-  feedSite: "main" | "explore" 
+  currentUser: {
+    id: string;
+    imgUrl: string
+  }
+  placement: "mainFeed" | "exploreFeed";
 }
 
-const FeedSection = ({ posts, currentUserId, feedSite }: FeedSectionProps) => {
+const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
   return (
     <div className="flex flex-col h-screen ">
-      <FeedTab feedSite={feedSite} />
-      <div className="flex flex-col max-h-screen  overflow-y-scroll ">
-        {feedSite === "main" &&   <CreatePost /> }
+      <FeedTab placement={placement} />
 
-        {feedSite === "explore" && <Recomendations currentUserId={currentUserId} placement="explore" /> }
-       
+      <div className="flex flex-col max-h-screen  overflow-y-scroll ">
+        {placement === "mainFeed" && <CreatePost currentUser={currentUser} />}
+
+        {placement === "exploreFeed" && (
+          <Recomendations currentUserId={currentUser.id} placement="explore" />
+        )}
+
         <InfinitePosts
           posts={posts}
-          currentUserId={currentUserId}
-          userProfileId={currentUserId}
-          feedSite={feedSite}
+          currentUserId={currentUser.id}
+          userProfileId={currentUser.id}
+          placement={placement}
         />
-
-      
       </div>
     </div>
   );

@@ -3,17 +3,23 @@
 import React, { useState, useId, useRef } from "react";
 import Avatar from "@/components/ui/Avatar";
 import { BadgeAlert } from "lucide-react";
-import { useUser } from "@/store/useUser";
 import { SubmitButton } from "@/components/ui/SubmitButton"
 import PreviewImage from "./PreviewImage";
 import MediaOptions from "./MediaOptions";
 import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
 
-const CreatePost = ({ modal = false }: { modal?: boolean }) => {
-  const { currentUser } = useUser();
+interface CreatePostProps {
+  modal?: boolean 
+  currentUser: {
+    id: string;
+    imgUrl: string
+  }
+}
+
+const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
 
   
-  const onCreate = useCreatePostMutation(currentUser?.id);
+  const onCreate = useCreatePostMutation(currentUser.id);
 
   const [description, setDescription] = useState<string>("");
   const [media, setMedia] = useState<File | null>(null);
@@ -27,10 +33,11 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
     }
   };
 
+
   return (
     <div className={`${!modal && "p-4 md:mt-2"}`}>
       <div className="flex w-full gap-3">
-        {!modal && <Avatar src={currentUser?.imageUrl || "user-default"} />}
+        {!modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
 
         <form
           className="w-full"
@@ -40,13 +47,13 @@ const CreatePost = ({ modal = false }: { modal?: boolean }) => {
             setMedia(null);
           }}
         >
-          {currentUser?.id && (
-            <input type="hidden" name="authorId" value={currentUser?.id} />
-          )}
+       
+          <input type="hidden" readOnly name="authorId" value={currentUser.id} />
+    
           <div>
             <div className="flex gap-4">
               {modal && (
-                <Avatar src={currentUser?.imageUrl || "user-default"} />
+                <Avatar src={currentUser.imgUrl || "user-default"} />
               )}
 
               <input

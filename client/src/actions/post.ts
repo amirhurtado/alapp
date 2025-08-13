@@ -28,49 +28,54 @@ const postIncludes = {
   reposts: {
     select: { userId: true },
   },
-  _count : {
-    select : {
-      comments : true
-    }
-  }
+  _count: {
+    select: {
+      comments: true,
+    },
+  },
 };
 
-
 export const createPostAction = async (formData: FormData) => {
-  const authorId = formData.get("authorId") as string;
-  const description = formData.get("description") as string;
-  const image = formData.get("image") as File;
+  try {
+    const authorId = formData.get("authorId") as string;
+    const description = formData.get("description") as string;
+    const image = formData.get("image") as File;
 
-  let urlImage: string | undefined = undefined;
+    let urlImage: string | undefined = undefined;
 
-  if (image && image.size > 0) {
-    const bytes = await image?.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    if (image && image.size > 0) {
+      const bytes = await image.arrayBuffer();
+      const buffer = Buffer.from(bytes);
 
-    const resultImage = await imagekit.upload({
-      file: buffer,
-      fileName: image.name,
-      useUniqueFileName: true,
-      folder: "/posts",
-      transformation: {
-        pre: "w-600",
+      const resultImage = await imagekit.upload({
+        file: buffer,
+        fileName: image.name,
+        useUniqueFileName: true,
+        folder: "/posts",
+        transformation: {
+          pre: "w-600",
+        },
+      });
+
+      urlImage = resultImage?.url;
+    }
+
+    const post = await prisma.post.create({
+      data: {
+        authorId,
+        description,
+        imageUrl: urlImage,
       },
+      include: postIncludes,
     });
 
-    urlImage = resultImage?.url;
+    return post;
+  } catch (error) {
+    console.error("Error en createPostAction:", error);
+    throw new Error(
+      error instanceof Error ? error.message : "Error creando el post"
+    );
   }
-
-  const post = await  prisma.post.create({
-    data: {
-      authorId,
-      description,
-      imageUrl: urlImage,
-    },
-    include: postIncludes
-  });
-
-
-  return post
 };
 
 
@@ -79,47 +84,65 @@ export const getPostByIdAction = async (postId: number) => {
     where: {
       id: postId,
     },
-    include: postIncludes
+    include: postIncludes,
   });
 };
 
 export const getPostsAction = async (
   currentUserId: string,
-  feed: boolean,
+  placement: "mainFeed" | "exploreFeed" | "profile",
   page: number = 1
 ) => {
-  const users = [currentUserId];
   const skip = (page - 1) * 10;
 
-  if (feed) {
-    const following = await prisma.follow.findMany({
-      where: {
-        followerId: currentUserId,
-      },
-      select: {
-        followingId: true,
-      },
+  // Para saber a quién sigo
+  const following = await prisma.follow.findMany({
+    where: { followerId: currentUserId },
+    select: { followingId: true },
+  });
+  const followingIds = following.map(f => f.followingId);
+
+  if (placement === "mainFeed") {
+    // Posts míos y de los que sigo
+    const users = [currentUserId, ...followingIds];
+    return prisma.post.findMany({
+      where: { authorId: { in: users } },
+      skip,
+      take: 10,
+      include: postIncludes,
+      orderBy: { createdAt: "desc" },
     });
-
-    const followingIds = following.map((f) => f.followingId);
-
-    users.push(...followingIds);
   }
 
-  return await prisma.post.findMany({
-    where: {
-      authorId: {
-        in: users,
+  if (placement === "profile") {
+    // Solo posts del perfil específico
+    return prisma.post.findMany({
+      where: { authorId: currentUserId }, // O el perfil que se esté viendo
+      skip,
+      take: 10,
+      include: postIncludes,
+      orderBy: { createdAt: "desc" },
+    });
+  }
+
+  if (placement === "exploreFeed") {
+    // Posts de otros que no sean yo ni los que sigo
+    const excludedUsers = [currentUserId, ...followingIds];
+    return prisma.post.findMany({
+      where: {
+        NOT: { authorId: { in: excludedUsers } },
       },
-    },
-    skip: skip,
-    take: 10,
-    include: postIncludes,
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+      skip,
+      take: 10,
+      include: postIncludes,
+      orderBy: { createdAt: "desc" },
+    });
+  }
+  return []
+
 };
+
+
 
 export const toggleLikePostAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
@@ -146,13 +169,12 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
     });
   }
 
-  return  await prisma.post.findUnique({
-    where : {
-      id: postId
+  return await prisma.post.findUnique({
+    where: {
+      id: postId,
     },
-    include : postIncludes
-  })
-
+    include: postIncludes,
+  });
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {

@@ -24,7 +24,7 @@ export default async function UserPage({ params }: Props) {
     return <h1>No encontrado</h1>;
   }
   
-  const posts = await getPostsAction(userProfile.id, false);
+  const posts = await getPostsAction(userProfile.id, "profile");
 
   const nameProfile = () => {
     if(currUser.id === userProfile.id){
@@ -41,7 +41,7 @@ export default async function UserPage({ params }: Props) {
         userProfileInfo={userProfile}
         currentUserId={currUser.id}
       />
-      <InfinitePosts posts={posts} currentUserId={currUser.id} userProfileId={userProfile.id} feedSite={"profile"} />
+      <InfinitePosts posts={posts} currentUserId={currUser.id} userProfileId={userProfile.id} placement={"profile"} />
     </div>
   );
 }
