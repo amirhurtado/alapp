@@ -9,6 +9,46 @@ type InfoUser = {
   isFriend: boolean;
 };
 
+type PaginatedUserData = {
+  pages: InfoUser[][];
+  pageParams: unknown[];
+};
+
+type Follows = {
+  followers: number;
+  following: number;
+  isFriend: boolean;
+};
+
+const getFollowQueries = (currentUserId: string, userProfileId: string) => ({
+  recommendationsRightbar: ["recommendations", currentUserId, "rightbar"],
+  recommendationsExplore: ["recommendations", currentUserId, "explore"],
+  userProfileFollowCount: ["InfoFollowUser", userProfileId],
+  currentUserFollowCount: ["InfoFollowUser", currentUserId],
+  isFriend: ["isFriend", userProfileId],
+});
+
+const toggleIsFriendRecommendations = (
+  userProfileId: string,
+  oldData: PaginatedUserData
+) => {
+  if (!oldData) return;
+  return {
+    ...oldData,
+    pages: oldData.pages.map((page: InfoUser[]) =>
+      page.map((user) => {
+        if (user.id === userProfileId) {
+          return {
+            ...user,
+            isFriend: !user.isFriend,
+          };
+        }
+        return user;
+      })
+    ),
+  };
+};
+
 export const useFollowMutation = () => {
   const queryClient = useQueryClient();
 
@@ -23,115 +63,86 @@ export const useFollowMutation = () => {
       return toggleFollowAction(currentUserId, userProfileId);
     },
     onMutate: async ({ currentUserId, userProfileId }) => {
-      const recommendationQueryKey = ["recommendations", currentUserId];
-      const isFriendKey = ["isFriendProfile", userProfileId];
-      const countFollowOtherUserKey = ["InfoFollowUser", userProfileId];
-      const countFollowCurrentUserKey = ["InfoFollowUser", currentUserId];
+      const keys = getFollowQueries(currentUserId, userProfileId);
 
-      await queryClient.cancelQueries({ queryKey: recommendationQueryKey });
-      await queryClient.cancelQueries({ queryKey: isFriendKey });
-      await queryClient.cancelQueries({ queryKey: countFollowOtherUserKey });
-      await queryClient.cancelQueries({ queryKey: countFollowCurrentUserKey });
+      queryClient.cancelQueries();
 
-      const previousRecommendationData = queryClient.getQueryData(
-        recommendationQueryKey
-      );
-      const previousIsFriend = queryClient.getQueryData(isFriendKey);
-      const previousCountFollowOtherUser = queryClient.getQueryData(
-        countFollowOtherUserKey
-      );
-      const previousCountFollowCurrentUser = queryClient.getQueryData(
-        countFollowCurrentUserKey
-      );
+      const previousState = {
+        recommendationsRightbar: queryClient.getQueryData<PaginatedUserData>(
+          keys.recommendationsRightbar
+        ),
+        recommendationsExplore: queryClient.getQueryData(
+          keys.recommendationsExplore
+        ),
+        userProfileFollowCount: queryClient.getQueryData(
+          keys.userProfileFollowCount
+        ),
+        currentUserFollowCount: queryClient.getQueryData(
+          keys.currentUserFollowCount
+        ),
+      };
 
-      // Obtener isCurrentlyFriend antes del setQueryData
-      let isCurrentlyFriend = false;
-      if (previousRecommendationData) {
-        for (const page of previousRecommendationData.pages) {
-          const foundUser = page.find(
-            (user: InfoUser) => user.id === userProfileId
-          );
-          if (foundUser) {
-            isCurrentlyFriend = foundUser.isFriend;
-            break;
-          }
+      queryClient.setQueryData(
+        keys.recommendationsRightbar,
+        (oldData: PaginatedUserData) => {
+          return toggleIsFriendRecommendations(userProfileId, oldData);
         }
-      }
+      );
 
-      if (previousRecommendationData) {
-        queryClient.setQueryData(recommendationQueryKey, (oldData: any) => {
+      queryClient.setQueryData(
+        keys.recommendationsExplore,
+        (oldData: PaginatedUserData) => {
+          if (!oldData) return;
+          return toggleIsFriendRecommendations(userProfileId, oldData);
+        }
+      );
+
+      queryClient.setQueryData(keys.isFriend, (oldData: boolean) => {
+        return !oldData;
+      });
+
+      queryClient.setQueryData(
+        keys.userProfileFollowCount,
+        (oldData: Follows) => {
+          if (!oldData) return;
           return {
             ...oldData,
-            pages: oldData.pages.map((page: InfoUser[]) =>
-              page.map((user) => {
-                if (user.id === userProfileId) {
-                  return {
-                    ...user,
-                    isFriend: !user.isFriend,
-                  };
-                }
-                return user;
-              })
-            ),
+            isFriend: !oldData.isFriend,
+            followers: oldData.isFriend
+              ? oldData.followers - 1
+              : oldData.followers + 1,
           };
-        });
-      }
+        }
+      );
 
-      if (typeof previousIsFriend === "boolean") {
-        queryClient.setQueryData(isFriendKey, !previousIsFriend);
-      }
+      const wasFriend =
+        previousState.recommendationsRightbar?.pages
+          .map((page) =>
+            page.map((recommendation) => {
+              if (recommendation.id === userProfileId) {
+                return recommendation.isFriend;
+              }
+              return false;
+            })
+          )
+          .flat() 
+          .some((isFriend) => isFriend) ?? false; 
 
-      if (previousCountFollowOtherUser) {
-        queryClient.setQueryData(countFollowOtherUserKey, (oldData: any) => ({
-          ...oldData,
-          followers: isCurrentlyFriend
-            ? oldData.followers - 1
-            : oldData.followers + 1,
-        }));
-      }
+      queryClient.setQueryData(
+        keys.currentUserFollowCount,
+        (oldData: Follows) => {
+          if (!oldData) return;
 
-      if (previousCountFollowCurrentUser) {
-        queryClient.setQueryData(countFollowCurrentUserKey, (oldData: any) => ({
-          ...oldData,
-          following: isCurrentlyFriend
-            ? oldData.following - 1
-            : oldData.following + 1,
-        }));
-      }
+          return {
+            ...oldData,
+            following: wasFriend
+              ? oldData.following - 1
+              : oldData.following + 1,
+          };
+        }
+      );
 
-      return {
-        recommendationQueryKey,
-        previousRecommendationData,
-        isFriendKey,
-        previousIsFriend,
-        countFollowOtherUserKey,
-        previousCountFollowOtherUser,
-        countFollowCurrentUserKey,
-        previousCountFollowCurrentUser,
-      };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousRecommendationData) {
-        queryClient.setQueryData(
-          context.recommendationQueryKey,
-          context.previousRecommendationData
-        );
-      }
-      if (context?.previousIsFriend) {
-        queryClient.setQueryData(context.isFriendKey, context.previousIsFriend);
-      }
-      if (context?.previousCountFollowOtherUser) {
-        queryClient.setQueryData(
-          context.countFollowOtherUserKey,
-          context.previousCountFollowOtherUser
-        );
-      }
-      if (context?.previousCountFollowCurrentUser) {
-        queryClient.setQueryData(
-          context.countFollowCurrentUserKey,
-          context.previousCountFollowCurrentUser
-        );
-      }
+      return {};
     },
   });
 };

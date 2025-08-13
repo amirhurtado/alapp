@@ -1,22 +1,19 @@
 import { userExistsAction } from "@/actions/user";
-import FeedSection from "@/features/feed/components/FeedSection"
-import { currentUser } from "@clerk/nextjs/server"
+import FeedSection from "@/features/feed/components/FeedSection";
+import { currentUser } from "@clerk/nextjs/server";
 
 const page = async () => {
+  const currUser = await currentUser();
 
-    const currUser = await currentUser();
+  if (!currUser) return;
 
-    if(!currUser) return;
-
-    const [userData] = await Promise.all([
-        userExistsAction(currUser)
-    ])
+  const [userData] = await Promise.all([userExistsAction(currUser)]);
 
   return (
     <div>
-      <FeedSection posts={[]} currentUserId={userData.id} feedSite="explore"/>
+      <FeedSection posts={[]} currentUserId={userData.id} feedSite="explore" />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

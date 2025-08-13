@@ -24,7 +24,6 @@ const InfinitePosts = ({
 
   const queryKey = ["posts", userProfileId, {feedSite: feedSite}];
 
-  console.log("DESDE AQUI", queryKey);
 
   let isFeedHome
   if(feedSite === "main" || feedSite === "explore"){

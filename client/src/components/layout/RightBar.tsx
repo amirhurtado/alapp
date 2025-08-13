@@ -9,7 +9,7 @@ const RightBar = ({currentUserId}: {currentUserId: string}) => {
       <div className="flex flex-col gap-4">
         <Search />
         <PopularTags />
-        <Recomendations currentUserId={currentUserId} />
+        <Recomendations currentUserId={currentUserId} placement={"rightbar"} />
       </div>
 
       <div className="flex flex-wrap gap-4 text-text-gray text-xs">

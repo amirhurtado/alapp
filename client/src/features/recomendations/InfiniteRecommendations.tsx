@@ -17,13 +17,15 @@ type InfoUser = {
 interface InfiniteRecommendationsProps {
   initialRecommendations: InfoUser[];
   currentUserId: string;
+  placement: "rightbar" | "explore"
 }
 
 const InfiniteRecommendations = ({
   initialRecommendations,
   currentUserId,
+  placement
 }: InfiniteRecommendationsProps) => {
-  const queryKey = ["recommendations", currentUserId];
+  const queryKey = ["recommendations", currentUserId, placement];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -49,8 +51,10 @@ const InfiniteRecommendations = ({
   
     const followMutation = useFollowMutation();
 
+
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 overflow-y-scroll">
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>

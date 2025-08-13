@@ -205,7 +205,7 @@ export const getRecomentationsAction = async (
   return usersWithFriendStatus;
 };
 
-export const getFollowsActions = async (userId: string) => {
+export const getFollowsActions = async (userId: string, currentUserId : string) => {
   const [following, followers] = await Promise.all([
     prisma.follow.count({
       where: {
@@ -219,6 +219,23 @@ export const getFollowsActions = async (userId: string) => {
     }),
   ]);
 
+  
+    const isFriend = await prisma.follow.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId: currentUserId,
+          followingId: userId
+        }
+      }
+    })
 
-  return { following, followers}
+  let findIsfriend = false
+  if(isFriend){
+    findIsfriend = true
+  }else{
+    findIsfriend = false
+  }
+
+
+  return { following, followers, findIsfriend}
 };

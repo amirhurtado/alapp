@@ -30,7 +30,7 @@ const HeaderProfiler = ({
         />
 
         {/* Profile Info */}
-        <UserInfo  userProfileInfo={userProfileInfo} />
+        <UserInfo  userProfileInfo={userProfileInfo} currentUserId={currentUserId} />
        
       </div>
     </>

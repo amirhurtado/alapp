@@ -8,14 +8,19 @@ import { getFollowsActions } from "@/actions/user";
 
 interface UserInfoProps {
   userProfileInfo: FullUserType;
+  currentUserId: string
 }
 
-const UserInfo = ({ userProfileInfo }: UserInfoProps) => {
+const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
   const queryKey = ["InfoFollowUser", userProfileInfo.id];
 
   const { data: follows } = useQuery({
     queryKey,
-    queryFn: () => getFollowsActions(userProfileInfo.id),
+    queryFn: () => {
+
+      return getFollowsActions(userProfileInfo.id, currentUserId)
+
+    }
   });
 
 

@@ -16,6 +16,7 @@ interface UserCardRecommendationProps {
 }
 
 const UserCardRecommendation = ({user, onFollow} : UserCardRecommendationProps) => {
+
   
   return (
     <div

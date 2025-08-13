@@ -16,7 +16,7 @@ const ProfileActions = ({
   currentUserId,
   userProfileInfoId,
 }: ProfileActionsProps) => {
-  const queryKey = ["isFriendProfile", userProfileInfoId];
+  const queryKey = ["isFriend", userProfileInfoId];
   const isMyProfile = currentUserId === userProfileInfoId;
 
   const { data: isFriend } = useQuery({
