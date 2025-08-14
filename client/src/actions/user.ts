@@ -91,7 +91,6 @@ export const updateInfoUserAction = async (
   if (!userData) return;
   const newDisplayName = formData.get("newDisplayName") as string;
   const file = formData.get("newImageUrl") as File;
-  console.log(file);
   const newBio = formData.get("bio") as string;
 
   const userDataToUpdate: { displayName?: string, imageUrl?: string } = {};

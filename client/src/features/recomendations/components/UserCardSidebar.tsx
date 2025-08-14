@@ -17,8 +17,6 @@ interface UserCardRecommendationProps {
 
 const UserCardSidebar = ({user, onFollow} : UserCardRecommendationProps) => {
 
-  console.log(user.imageUrl)
-
   
   return (
     <div

@@ -14,7 +14,6 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
       const queryKeyFeed = ["posts", currenUserId, {placement: "mainFeed"}]
 
       queryClient.setQueryData(queryKeyFeed, (oldData: any) => {
-        console.log("old data querykey", queryKeyFeed)
 
         if (!oldData) return;
         return {

@@ -4,7 +4,6 @@ import Image from "next/image";
 
 
 const HeroProfile = ({ imgurl }: { imgurl: string }) => {
-  console.log("LA IMAGE URL DEL PERFIL ESS",imgurl)
 
   return (
     <div className="flex relative">
