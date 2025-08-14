@@ -1,6 +1,6 @@
-import { House, Bell, MessageSquare, Star} from 'lucide-react';
+import { House, Bell, MessageSquare, Pointer, User} from 'lucide-react';
 
-export const menuItems = [
+export const getMenuItems = ( username: string) =>[
     {
         id: 1,
         name: "Principal",
@@ -24,10 +24,17 @@ export const menuItems = [
     },
      {
         id: 4,
-        name: "Favoritos",
-        arialLaberl: "ir a mensajes",
-        link: "/favorites",
-        icon: Star
+        name: "Interacciones",
+        arialLaberl: "ir a interacciones",
+        link: `/${username}/interactions`,
+        icon: Pointer
+    },
+    {
+        id: 5,
+        name: "Perfil",
+        arialLaberl: "ir a perfil",
+        link: `/${username}`,
+        icon: User
     }
 ]
 

@@ -7,7 +7,7 @@ interface FeedTabInterface {
 const FeedTab = ({placement}: FeedTabInterface) => {
 
   const classActive = "border-b-3 border-primary-color mb-3 "
-  const classInactive = "border-b-3 border-transparent mb-3 text-text-gray"
+  const classInactive = "border-b-3 border-transparent mb-3 text-text-gray hover:text-white transition-colors duration-200 ease-in"
 
   return (
     <div className="flex w-full justify-between items-end font-sans text-[.9rem] pt-[1rem]  font-semibold">

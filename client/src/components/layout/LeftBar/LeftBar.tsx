@@ -2,17 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { menuItems } from "@/constants";
+import { getMenuItems } from "@/constants";
 import ModalCreatePost from "@/features/post/components/CreatePost/ModalCreatePost";
 
 import { User as UserType } from "@/generated/prisma";
 
 import UserProfiletab from "./UserProfiletab";
-import { User } from "lucide-react";
 
 const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
 
-
+  const menuItems = getMenuItems( currentUser.name)
+ 
 
   return (
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8  ">
@@ -37,12 +37,6 @@ const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
               </div>
             </Link>
           ))}
-          <Link href={`/${currentUser?.name}`} aria-label="ir a perfil">
-            <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818]">
-              <User strokeWidth={1} />
-              <span className="ml-2 hidden xxl:block ">Perfil</span>
-            </div>
-          </Link>
         </div>
 
         <ModalCreatePost currentUser={{id: currentUser.id, imgUrl: currentUser.imageUrl}} />

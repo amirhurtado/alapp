@@ -5,6 +5,7 @@ import FollowStats from "./FollowStats";
 import { FullUserType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { getFollowsActions } from "@/actions/user";
+import Link from "next/link";
 
 interface UserInfoProps {
   userProfileInfo: FullUserType;
@@ -56,6 +57,12 @@ const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
         followings={follows?.following ?? 0}
         followers={follows?.followers ?? 0}
       />
+
+      <Link href={`/${userProfileInfo.name}/interactions`} className="mt-6 flex w-full justify-end">
+
+      <p className="font-poppins text-xs text-primary-color underline">Ver interacciones</p>
+        
+      </Link>
     </div>
   );
 };

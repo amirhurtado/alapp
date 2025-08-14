@@ -211,3 +211,20 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
     });
   }
 };
+
+
+export const getPostsLikedByUser = async (userId: string, page: number = 1) => {
+  const skip = (page - 1) * 10
+  return await prisma.post.findMany({
+    where: {
+      likesPost: {
+        some : {
+          userId
+        }
+      }
+    },
+    include: postIncludes,
+    take: 10,
+    skip
+  })
+}

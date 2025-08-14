@@ -22,7 +22,11 @@ const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
         {placement === "mainFeed" && <CreatePost currentUser={currentUser} />}
 
         {placement === "exploreFeed" && (
+          <div className="h-full">
           <Recomendations currentUserId={currentUser.id} placement="explore" />
+
+
+          </div>
         )}
 
         <InfinitePosts

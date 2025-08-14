@@ -62,8 +62,11 @@ const InfiniteRecommendations = ({
             </div>
         ))}
 
-      {hasNextPage && (
+      {hasNextPage ? (
         <button onClick={() => fetchNextPage()} className="text-primary-color text-sm cursor-pointer text-start">Ver más</button>
+      ) : 
+      (
+        <p  className="text-text-gray text-sm  text-start">No hay más recomendaciones</p>
       )}
       {isFetchingNextPage && (
           <LoaderCircle
