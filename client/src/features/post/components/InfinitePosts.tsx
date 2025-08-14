@@ -1,12 +1,12 @@
 "use client";
 
 import { FullPostType } from "@/types";
-import PostCard from "@/features/post/components/PostCard";
-import { LoaderCircle } from "lucide-react";
+
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
 import { getPostsAction } from "@/actions/post";
+import ShowInfinitePosts from "@/components/ShowInfinitePosts";
 
 
 interface InfinitePostsProps {
@@ -50,7 +50,7 @@ const InfinitePosts = ({
 
   
 
-  const loadMoreRef = useRef(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!loadMoreRef.current || !hasNextPage) return;
@@ -70,32 +70,7 @@ const InfinitePosts = ({
 
   return (
     <div className="flex flex-col  max-h-screen">
-      {posts.map((post) => (
-        <div key={post.id}>
-          <PostCard
-            post={post}
-            currentUserId={currentUserId}
-            queryKey={queryKey}
-          />
-        </div>
-      ))}
-
-      <div
-        ref={loadMoreRef}
-        className="h-[2rem] flex items-center justify-center py-10"
-      >
-        {isFetchingNextPage && (
-          <LoaderCircle
-            className="animate-spin mx-auto text-primary-color "
-            size={24}
-          />
-        )}
-        {!hasNextPage && (
-          <p className="text-center text-text-gray text-sm">
-            No hay más publicaciones
-          </p>
-        )}
-      </div>
+      <ShowInfinitePosts currentUserId={currentUserId} posts={posts} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef}/>
 
       <NoPost postLength={posts.length} />
     </div>
