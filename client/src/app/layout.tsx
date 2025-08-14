@@ -1,5 +1,3 @@
-//Hola
-
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins, Lato } from "next/font/google";
