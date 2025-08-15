@@ -21,7 +21,7 @@ const page = async ({params} : Props) => {
         currentUser(), getUserbyNameAction(username)
     ])
 
-    if(!userInteractionInfo) return
+    if(!currUser || !userInteractionInfo) return
 
     const likePosts = await getPostsLikedByUser(userInteractionInfo?.id)
 
@@ -30,9 +30,9 @@ const page = async ({params} : Props) => {
     if(!userInteractionInfo) return
 
   return (
-    <div>
+    <div className="flex flex-col h-screen overflow-hidden">
       <BackNavigation title={title} />
-      <FullInteractionView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} />
+      <FullInteractionView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} currentUserId={currUser.id} />
 
     </div>
   )

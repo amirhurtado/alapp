@@ -1,4 +1,4 @@
-import InfinitePosts from "@/features/post/components/InfinitePosts";
+import InfinitePosts from "@/features/feed/components/InfinitePosts";
 import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import { FullPostType } from "@/types";
 import FeedTab from "./FeedTab";

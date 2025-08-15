@@ -5,7 +5,7 @@ import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikePostLogic } from "../helpers";
 
-export const useLikePostMutation = (queryKey: any[]) => {
+export const useLikePostMutation = (queryKey: unknown[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({

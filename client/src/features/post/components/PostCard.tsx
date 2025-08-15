@@ -17,7 +17,7 @@ import { useRepostMutation } from "../hooks/useRepostMutation";
 interface PostProps {
   post: FullPostType;
   currentUserId: string;
-  queryKey: any[];
+  queryKey: unknown[];
 }
 
 const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {

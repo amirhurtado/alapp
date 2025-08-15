@@ -225,6 +225,9 @@ export const getPostsLikedByUser = async (userId: string, page: number = 1) => {
     },
     include: postIncludes,
     take: 10,
-    skip
+    skip,
+    orderBy: {
+      createdAt: "desc"
+    }
   })
 }

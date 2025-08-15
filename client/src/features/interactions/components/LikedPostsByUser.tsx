@@ -1,15 +1,19 @@
 import { getPostsLikedByUser } from "@/actions/post"
+import ShowInfinitePosts from "@/components/ShowInfinitePosts"
 import { FullPostType } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import { useEffect, useRef } from "react"
 
 interface LikedPostsByUserProps{
     likePosts: FullPostType[],
     userIdInteraction : string
+    currentUserId : string
 }
-const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction} : LikedPostsByUserProps) => {
+const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction, currentUserId} : LikedPostsByUserProps) => {
 
-    const queryKey = ["likePosts", userIdInteraction]
+    const queryKey = ["likeInPosts", userIdInteraction]
 
+    const loadMoreRef = useRef<HTMLDivElement | null>(null)
 
     const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery({
         queryKey,
@@ -17,7 +21,7 @@ const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction} : Li
             return getPostsLikedByUser(userIdInteraction, pageParam)
         },
         getNextPageParam: (lastPage, allPages) => {
-            return lastPage.length === 10 ? allPages.length : undefined
+            return lastPage.length === 10 ? allPages.length + 1 : undefined
         },
         initialPageParam: 1,
         initialData: {
@@ -29,10 +33,27 @@ const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction} : Li
 
     const likePost = data.pages?.flatMap(page => page) ?? initialLikePosts
 
+    useEffect(() => {
+
+        if(!loadMoreRef.current || !hasNextPage) return
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting){
+                fetchNextPage()
+            }
+        })
+
+        observer.observe(loadMoreRef.current);
+
+        return () => {
+            observer.disconnect()
+        }
+
+    }, [hasNextPage, fetchNextPage])
+
     
   return (
-    <div>
-      
+    <div className="flex flex-col  overflow-y-scroll">
+        <ShowInfinitePosts  currentUserId={currentUserId} posts={likePost} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef} />
     </div>
   )
 }
