@@ -30,7 +30,7 @@ const page = async ({ params }: Props) => {
   if (!imgUrlCurrentUser) return;
 
   return (
-    <div className="h-screen flex flex-col overflow-x-hidden overflow-y-scroll">
+    <div className="h-screen flex flex-col overflow-x-hidden overflow-y-auto">
       <BackNavigation title="Post" />
       <FullPostView  currentUser={{ id: currUser.id, imageUrl: imgUrlCurrentUser.imageUrl }} post={post} comments={comments} />
       

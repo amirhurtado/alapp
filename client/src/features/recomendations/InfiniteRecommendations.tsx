@@ -54,7 +54,7 @@ const InfiniteRecommendations = ({
 
 
   return (
-    <div className="flex flex-col gap-2 overflow-y-scroll">
+    <div className="flex flex-col gap-2 overflow-y-auto">
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>

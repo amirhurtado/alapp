@@ -52,7 +52,7 @@ const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction, curr
 
     
   return (
-    <div className="flex flex-col  overflow-y-scroll">
+    <div className="flex flex-col  overflow-y-auto">
         <ShowInfinitePosts  currentUserId={currentUserId} posts={likePost} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef} />
     </div>
   )

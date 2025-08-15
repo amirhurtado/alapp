@@ -18,7 +18,7 @@ const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
     <div className="flex flex-col h-screen ">
       <FeedTab placement={placement} />
 
-      <div className="flex flex-col max-h-screen  overflow-y-scroll ">
+      <div className="flex flex-col max-h-screen  overflow-y-auto ">
         {placement === "mainFeed" && <CreatePost currentUser={currentUser} />}
 
         {placement === "exploreFeed" && (
