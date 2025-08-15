@@ -1,10 +1,10 @@
 import React from "react";
 
 interface TabInteractionsProps {
-  selectInteraction: "likes" | "comment" | "reposts" | "favorites";
+  selectInteraction: "likes" | "reposts" | "favorites";
   setSelectInteraction: React.Dispatch<
     React.SetStateAction<
-      "likes" | "comment" | "reposts" | "favorites"
+      "likes"| "reposts" | "favorites"
     >
   >;
 }

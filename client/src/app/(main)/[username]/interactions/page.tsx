@@ -1,4 +1,4 @@
-import { getPostsLikedByUser } from "@/actions/post"
+import { getPostsLikedByUserAction } from "@/actions/post"
 import { getUserbyNameAction } from "@/actions/user"
 import BackNavigation from "@/components/ui/BackNavigation"
 import FullInteractionView from "@/features/interactions/components/FullInteractionView"
@@ -23,7 +23,7 @@ const page = async ({params} : Props) => {
 
     if(!currUser || !userInteractionInfo) return
 
-    const likePosts = await getPostsLikedByUser(userInteractionInfo?.id)
+    const likePosts = await getPostsLikedByUserAction(userInteractionInfo?.id)
 
     const title = currUser?.username === username ? "Tus interacciones" : `Interacciones de ${username}`
 

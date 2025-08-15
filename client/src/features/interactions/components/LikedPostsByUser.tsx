@@ -1,4 +1,4 @@
-import { getPostsLikedByUser } from "@/actions/post"
+import { getPostsLikedByUserAction } from "@/actions/post"
 import ShowInfinitePosts from "@/components/ShowInfinitePosts"
 import { FullPostType } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"
@@ -11,14 +11,14 @@ interface LikedPostsByUserProps{
 }
 const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction, currentUserId} : LikedPostsByUserProps) => {
 
-    const queryKey = ["likeInPosts", userIdInteraction]
+    const queryKey = ["likeInPosts", {userId: userIdInteraction}]
 
     const loadMoreRef = useRef<HTMLDivElement | null>(null)
 
     const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery({
         queryKey,
         queryFn:  async ({pageParam = 1}) => {
-            return getPostsLikedByUser(userIdInteraction, pageParam)
+            return getPostsLikedByUserAction(userIdInteraction, pageParam)
         },
         getNextPageParam: (lastPage, allPages) => {
             return lastPage.length === 10 ? allPages.length + 1 : undefined
@@ -28,7 +28,6 @@ const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction, curr
             pages: [initialLikePosts],
             pageParams: [1]
         },
-        staleTime: Infinity
     })
 
     const likePost = data.pages?.flatMap(page => page) ?? initialLikePosts

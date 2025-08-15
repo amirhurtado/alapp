@@ -3,8 +3,6 @@
 import { prisma } from "@/prisma";
 import { uploadFile } from "./constants";
 
-
-
 const postIncludes = {
   author: {
     select: {
@@ -39,7 +37,7 @@ export const createPostAction = async (formData: FormData) => {
     let urlImage: string | undefined = undefined;
 
     if (image && image.size > 0) {
-      urlImage = await  uploadFile(image, "/posts" )
+      urlImage = await uploadFile(image, "/posts");
     }
 
     const post = await prisma.post.create({
@@ -59,7 +57,6 @@ export const createPostAction = async (formData: FormData) => {
     );
   }
 };
-
 
 export const getPostByIdAction = async (postId: number) => {
   return await prisma.post.findUnique({
@@ -82,7 +79,7 @@ export const getPostsAction = async (
     where: { followerId: currentUserId },
     select: { followingId: true },
   });
-  const followingIds = following.map(f => f.followingId);
+  const followingIds = following.map((f) => f.followingId);
 
   if (placement === "mainFeed") {
     // Posts míos y de los que sigo
@@ -120,11 +117,8 @@ export const getPostsAction = async (
       orderBy: { createdAt: "desc" },
     });
   }
-  return []
-
+  return [];
 };
-
-
 
 export const toggleLikePostAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
@@ -212,22 +206,46 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
   }
 };
 
-
-export const getPostsLikedByUser = async (userId: string, page: number = 1) => {
-  const skip = (page - 1) * 10
+export const getPostsLikedByUserAction = async (
+  userId: string,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 10;
   return await prisma.post.findMany({
     where: {
       likesPost: {
-        some : {
-          userId
-        }
-      }
+        some: {
+          userId,
+        },
+      },
     },
     include: postIncludes,
     take: 10,
     skip,
     orderBy: {
-      createdAt: "desc"
-    }
-  })
-}
+      createdAt: "desc",
+    },
+  });
+};
+
+export const getPostsFavoriteByUserAction = async (
+  userId: string,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 10;
+  return await prisma.post.findMany({
+    where: {
+      favorites: {
+        some: {
+          userId,
+        },
+      },
+    },
+    skip,
+    take: 10,
+    include: postIncludes,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};

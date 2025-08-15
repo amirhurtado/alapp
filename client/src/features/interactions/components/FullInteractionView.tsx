@@ -3,6 +3,7 @@ import { FullPostType } from "@/types";
 import InteractionsTab from "./InteractionsTab";
 import { useState } from "react";
 import LikedPostsByUser from "./LikedPostsByUser";
+import FavoritePostsByUser from "./FavoritePostsByUser";
 
 interface FullInteractionViewProps {
   likePosts: FullPostType[];
@@ -12,7 +13,7 @@ interface FullInteractionViewProps {
 
 const FullInteractionView = ({ likePosts, userIdInteraction, currentUserId }: FullInteractionViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
-    "likes" | "comment" | "reposts" | "favorites"
+    "likes" | "reposts" | "favorites"
   >("likes");
   return (
     <div className="flex flex-col max-h-screen  overflow-hidden ">
@@ -23,6 +24,8 @@ const FullInteractionView = ({ likePosts, userIdInteraction, currentUserId }: Fu
       {selectInteraction === "likes" && (
         <LikedPostsByUser likePosts={likePosts} userIdInteraction={userIdInteraction} currentUserId={currentUserId} />
       )}
+
+      {selectInteraction === "favorites" && <FavoritePostsByUser userIdInteraction={userIdInteraction} currentUserId={currentUserId} /> }
     </div>
   );
 };
