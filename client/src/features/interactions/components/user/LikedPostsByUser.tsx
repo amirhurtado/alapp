@@ -1,4 +1,4 @@
-import { getPostsLikedByUserAction } from "@/actions/post"
+import { getPostsLikedByUserAction } from "@/actions/post/post"
 import ShowInfinitePosts from "@/components/ShowInfinitePosts"
 import { FullPostType } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"

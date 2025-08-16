@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { uploadFile } from "./constants";
+import { uploadFile } from "../constants";
 
 const postIncludes = {
   author: {

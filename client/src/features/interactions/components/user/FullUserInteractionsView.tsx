@@ -1,6 +1,6 @@
 "use client";
 import { FullPostType } from "@/types";
-import InteractionsTab from "./InteractionsTab";
+import InteractionsTab from "../InteractionsTab";
 import { useState } from "react";
 import LikedPostsByUser from "./LikedPostsByUser";
 import FavoritePostsByUser from "./FavoritePostsByUser";

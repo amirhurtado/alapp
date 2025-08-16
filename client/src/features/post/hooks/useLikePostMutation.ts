@@ -1,6 +1,6 @@
 "use client";
 
-import { toggleLikePostAction } from "@/actions/post";
+import { toggleLikePostAction } from "@/actions/post/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikePostLogic } from "../helpers";

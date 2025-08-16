@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getPostByIdAction } from "@/actions/post";
+import { getPostByIdAction } from "@/actions/post/post";
 import { getCommentsAction } from "@/actions/comment";
 
 import { currentUser } from "@clerk/nextjs/server";

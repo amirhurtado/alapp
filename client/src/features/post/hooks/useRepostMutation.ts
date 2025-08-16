@@ -1,4 +1,4 @@
-import { toggleRepostAction } from "@/actions/post";
+import { toggleRepostAction } from "@/actions/post/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleRepostLogic } from "../helpers";

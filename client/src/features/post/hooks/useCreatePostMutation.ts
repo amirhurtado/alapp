@@ -1,4 +1,4 @@
-import { createPostAction } from "@/actions/post";
+import { createPostAction } from "@/actions/post/post";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
