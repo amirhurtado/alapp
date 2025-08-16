@@ -1,5 +1,5 @@
 import { getPostsAction } from "@/actions/post/getPost";
-import { getUserbyNameAction } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import FeedSection from "@/features/feed/components/FeedSection";
 import { currentUser } from "@clerk/nextjs/server";
 

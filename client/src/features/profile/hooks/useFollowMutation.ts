@@ -1,4 +1,4 @@
-import { toggleFollowAction } from "@/actions/user";
+import { toggleFollowAction } from "@/actions/follow/follow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type InfoUser = {

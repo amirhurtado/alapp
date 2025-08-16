@@ -1,5 +1,5 @@
 import { getPostsLikedByUserAction } from "@/actions/post/getPost"
-import { getUserbyNameAction } from "@/actions/user"
+import { getUserbyNameAction } from "@/actions/user/getUser"
 import BackNavigation from "@/components/ui/BackNavigation"
 import FullUserInteractionsView from "@/features/interactions/components/user/FullUserInteractionsView"
 import { currentUser } from "@clerk/nextjs/server"

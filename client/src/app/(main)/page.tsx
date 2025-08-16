@@ -1,7 +1,7 @@
 "use server";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { userExistsAction } from "@/actions/user";
+import { userExistsAction } from "@/actions/user/createUser";
 import { getPostsAction } from "@/actions/post/getPost";
 import FeedSection from "@/features/feed/components/FeedSection";
 

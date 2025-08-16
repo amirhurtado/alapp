@@ -4,7 +4,7 @@ import { MessageSquare, SquarePen } from "lucide-react";
 import FollowButton from "./FollowButton";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { isFriendAction } from "@/actions/user";
+import { isFriendAction } from "@/actions/follow/follow";
 import { useFollowMutation } from "../hooks/useFollowMutation";
 
 interface ProfileActionsProps {

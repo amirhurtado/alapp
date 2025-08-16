@@ -2,7 +2,7 @@ import LeftBar from "@/components/layout/LeftBar/LeftBar";
 import RightBar from "@/components/layout/RightBar";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserbyNameAction } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import Providers from "./Providers";
 
 export default async function ProtectedLayout({

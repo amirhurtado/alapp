@@ -1,4 +1,4 @@
-import { getRecomentationsAction } from "@/actions/user";
+import { getRecomentationsAction } from "@/actions/user/getUser";
 
 import React from "react";
 import InfiniteRecommendations from "../InfiniteRecommendations";

@@ -4,7 +4,7 @@ import { getPostByIdAction } from "@/actions/post/getPost";
 import { getCommentsAction } from "@/actions/comment";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { getImgUrlAction } from "@/actions/user";
+import { getImgUrlAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
 import FullPostView from "@/features/post/components/FullPostView";
 

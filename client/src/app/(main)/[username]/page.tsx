@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserbyNameAction } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import { getPostsAction } from "@/actions/post/getPost";
 import HeaderProfiler from "@/features/profile/components/HeaderProfile";
 import InfinitePosts from "@/features/feed/components/InfinitePosts";

@@ -2,7 +2,7 @@
 
 import EditImageProfile from "./EditImageProfile";
 import EditInfoUser from "./EditInfoUser";
-import { updateInfoUserAction } from "@/actions/user";
+import { updateInfoUserAction } from "@/actions/user/uploadInfo";
 import { useRef, useState } from "react";
 import EditBasicInfoUser from "./EditBasicInfoUser";
 import { FullUserType } from "@/types";

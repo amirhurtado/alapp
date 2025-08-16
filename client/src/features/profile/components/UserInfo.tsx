@@ -4,7 +4,7 @@ import { CalendarX, MapPin } from "lucide-react";
 import FollowStats from "./FollowStats";
 import { FullUserType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { getFollowsActions } from "@/actions/user";
+import { getFollowsActions } from "@/actions/follow/follow";
 import Link from "next/link";
 
 interface UserInfoProps {

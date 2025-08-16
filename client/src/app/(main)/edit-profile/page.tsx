@@ -1,7 +1,7 @@
 import FormEditProfile from "@/features/profile/components/edit/FormEditProfile";
 import BackNavigation from "@/components/ui/BackNavigation";
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserbyNameAction } from "@/actions/user";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import { FullUserType } from "@/types";
 
 const page = async () => {
