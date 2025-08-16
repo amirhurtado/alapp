@@ -1,4 +1,4 @@
-import { getPostsLikedByUserAction } from "@/actions/post/post"
+import { getPostsLikedByUserAction } from "@/actions/post/getPost"
 import { getUserbyNameAction } from "@/actions/user"
 import BackNavigation from "@/components/ui/BackNavigation"
 import FullUserInteractionsView from "@/features/interactions/components/user/FullUserInteractionsView"

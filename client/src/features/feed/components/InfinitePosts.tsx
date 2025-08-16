@@ -5,7 +5,7 @@ import { FullPostType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
-import { getPostsAction } from "@/actions/post/post";
+import { getPostsAction } from "@/actions/post/getPost";
 import ShowInfinitePosts from "@/components/ShowInfinitePosts";
 
 

@@ -1,4 +1,4 @@
-import { getPostsAction } from "@/actions/post/post";
+import { getPostsAction } from "@/actions/post/getPost";
 import { NextResponse } from "next/server";
 
 

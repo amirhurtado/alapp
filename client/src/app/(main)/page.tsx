@@ -2,7 +2,7 @@
 
 import { currentUser } from "@clerk/nextjs/server";
 import { userExistsAction } from "@/actions/user";
-import { getPostsAction } from "@/actions/post/post";
+import { getPostsAction } from "@/actions/post/getPost";
 import FeedSection from "@/features/feed/components/FeedSection";
 
 export default async function Home() {

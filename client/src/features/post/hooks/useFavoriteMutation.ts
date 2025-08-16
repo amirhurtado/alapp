@@ -1,4 +1,4 @@
-import { toggleFavoriteAction } from "@/actions/post/post";
+import { toggleFavoriteAction } from "@/actions/post/interactions";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleFavoriteLogic } from "../helpers";

@@ -1,4 +1,4 @@
-import { getPostsFavoriteByUserAction } from "@/actions/post/post";
+import { getPostsFavoriteByUserAction } from "@/actions/post/interactions";
 import ShowInfinitePosts from "@/components/ShowInfinitePosts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
