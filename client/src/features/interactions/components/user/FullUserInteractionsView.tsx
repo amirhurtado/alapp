@@ -5,13 +5,13 @@ import { useState } from "react";
 import LikedPostsByUser from "./LikedPostsByUser";
 import FavoritePostsByUser from "./FavoritePostsByUser";
 
-interface FullInteractionViewProps {
+interface FullUserInteractionsViewProps {
   likePosts: FullPostType[];
   userIdInteraction: string
   currentUserId: string
 }
 
-const FullInteractionView = ({ likePosts, userIdInteraction, currentUserId }: FullInteractionViewProps) => {
+const FullUserInteractionsView = ({ likePosts, userIdInteraction, currentUserId }: FullUserInteractionsViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
     "likes" | "reposts" | "favorites"
   >("likes");
@@ -30,4 +30,4 @@ const FullInteractionView = ({ likePosts, userIdInteraction, currentUserId }: Fu
   );
 };
 
-export default FullInteractionView;
+export default FullUserInteractionsView;

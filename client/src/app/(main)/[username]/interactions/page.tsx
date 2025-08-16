@@ -1,7 +1,7 @@
 import { getPostsLikedByUserAction } from "@/actions/post"
 import { getUserbyNameAction } from "@/actions/user"
 import BackNavigation from "@/components/ui/BackNavigation"
-import FullInteractionView from "@/features/interactions/components/FullInteractionView"
+import FullUserInteractionsView from "@/features/interactions/components/user/FullUserInteractionsView"
 import { currentUser } from "@clerk/nextjs/server"
 
 
@@ -32,7 +32,7 @@ const page = async ({params} : Props) => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <BackNavigation title={title} />
-      <FullInteractionView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} currentUserId={currUser.id} />
+      <FullUserInteractionsView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} currentUserId={currUser.id} />
 
     </div>
   )

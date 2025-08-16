@@ -6,7 +6,7 @@ import Avatar from "@/components/ui/Avatar";
 
 import AuthorInfo from "./AuthorInfo";
 import TimeAgo from "@/components/ui/TimeAgo";
-import PostOptions from "./PostOptions";
+import PostInfoInteractions from "./PostInfoInteractions";
 import Body from "./Body";
 import RepostIndicator from "./RepostIndicator";
 
@@ -51,7 +51,7 @@ const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {
                 </div>
               </div>
 
-              <PostOptions />
+              <PostInfoInteractions authorName={post.author.name} postId={post.id} />
             </div>
 
             <div className="block md:hidden ">
