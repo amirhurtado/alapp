@@ -11,7 +11,7 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
     onSuccess: (data) => {
 
 
-      const queryKeyFeed = ["posts", currenUserId, {placement: "mainFeed"}]
+      const queryKeyFeed = ["postsFeed", currenUserId, {placement: "mainFeed"}]
 
       queryClient.setQueryData(queryKeyFeed, (oldData: any) => {
 
@@ -27,7 +27,7 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
         };
       });
 
-      const queryKeyProfile = ["posts", currenUserId, {placement: "profile"}];
+      const queryKeyProfile = ["postsFeed", currenUserId, {placement: "profile"}];
       queryClient.setQueryData(queryKeyProfile, (oldData: any) => {
         if (!oldData) return;
         return {

@@ -1,5 +1,5 @@
 import { getPostsFavoriteByUserAction } from "@/actions/post/getPost";
-import ContainerInfinitePosts from "@/features/feed/components/ContainerInfinitePosts";
+import ContainerInfinitePosts from "@/features/post/components/ContainerInfinitePosts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
 

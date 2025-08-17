@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getRecomentationsAction } from "@/actions/user/getUser";
 import UserCardSidebar from "./components/UserCardSidebar";
 import { LoaderCircle } from "lucide-react";
-import { useFollowMutation } from "../profile/hooks/useFollowMutation";
+import { useFollowMutation } from "../user/profile/hooks/useFollowMutation";
 
 type InfoUser = {
   id: string;

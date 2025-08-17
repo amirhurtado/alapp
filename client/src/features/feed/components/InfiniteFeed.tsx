@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
 import { getPostsAction } from "@/actions/post/getPost";
-import ContainerInfinitePosts from "@/features/feed/components/ContainerInfinitePosts";
+import ContainerInfinitePosts from "@/features/post/components/ContainerInfinitePosts";
 
 
 interface InfinitePostsProps {
@@ -23,7 +23,7 @@ const InfiniteFeed = ({
   placement,
 }: InfinitePostsProps) => {
 
-  const queryKey = ["posts", userProfileId, {placement: placement}];
+  const queryKey = ["postsFeed", userProfileId, {placement: placement}];
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({

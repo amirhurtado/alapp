@@ -1,4 +1,4 @@
-import FormEditProfile from "@/features/profile/components/edit/FormEditProfile";
+import FormEditProfile from "@/features/user/profile/components/edit/FormEditProfile";
 import BackNavigation from "@/components/ui/BackNavigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user/getUser";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import FollowButton from "@/features/profile/components/FollowButton";
+import FollowButton from "@/features/user/profile/components/FollowButton";
 import Link from "next/link";
 import Avatar from "@/components/ui/Avatar";
 
