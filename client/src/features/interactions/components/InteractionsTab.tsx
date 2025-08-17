@@ -3,15 +3,15 @@ import React from "react";
 interface TabInteractionsProps {
   selectInteraction: "likes" | "reposts" | "favorites";
   setSelectInteraction: React.Dispatch<
-    React.SetStateAction<
-      "likes"| "reposts" | "favorites"
-    >
+    React.SetStateAction<"likes" | "reposts" | "favorites">
   >;
+  inMyInteractions?: boolean;
 }
 
 const TabInteractions = ({
   selectInteraction,
   setSelectInteraction,
+  inMyInteractions = false,
 }: TabInteractionsProps) => {
   const classActive =
     "border-b-3 border-primary-color text-white font-semibold";
@@ -38,14 +38,16 @@ const TabInteractions = ({
         Reposts
       </button>
 
-      <button
-        onClick={() => setSelectInteraction("favorites")}
-        className={`w-full text-center pb-2 ${
-          selectInteraction === "favorites" ? classActive : classInactive
-        }`}
-      >
-        Favoritos
-      </button>
+      {inMyInteractions && (
+        <button
+          onClick={() => setSelectInteraction("favorites")}
+          className={`w-full text-center pb-2 ${
+            selectInteraction === "favorites" ? classActive : classInactive
+          }`}
+        >
+          Favoritos
+        </button>
+      )}
     </div>
   );
 };

@@ -144,3 +144,65 @@ export const getUserLikesInPostAction = async (
 
   
 };
+
+
+
+export const getUserRepostsInPostAction = async (
+  currentUserId: string,
+  postId: number,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 10;
+  const [repostUsersWithRepost, myFollowings] = await Promise.all ([
+
+    prisma.post.findMany({
+    where: {
+      id: postId,
+    },
+    select: {
+      reposts: {
+        select: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              displayName: true,
+              imageUrl: true,
+            },
+          },
+        },
+        take: 10,
+        skip,
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
+  }),
+
+  prisma.follow.findMany({
+    where: {
+      followerId: currentUserId
+    }
+  })
+  ]) 
+
+  const myfollowingsIds = myFollowings.map((follow) => follow.followingId);
+
+  const users = repostUsersWithRepost.flatMap((post) => post.reposts.map((repost) => repost.user));
+
+  const usersWithFriendStatus = users.map(user => {
+    return {
+      ...user,
+      isFriend: myfollowingsIds.includes(user.id)
+    }
+  })
+
+
+
+  return usersWithFriendStatus
+
+  
+};
+
+

@@ -25,14 +25,15 @@ const page = async ({params} : Props) => {
 
     const likePosts = await getPostsLikedByUserAction(userInteractionInfo?.id)
 
-    const title = currUser?.username === username ? "Tus interacciones" : `Interacciones de ${username}`
+    const inMyInteractions = currUser?.username === username
+    const title =  inMyInteractions ? "Tus interacciones" : `Interacciones de ${username}`
 
     if(!userInteractionInfo) return
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <BackNavigation title={title} />
-      <FullUserInteractionsView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} currentUserId={currUser.id} />
+      <FullUserInteractionsView  likePosts={likePosts} userIdInteraction={userInteractionInfo.id} currentUserId={currUser.id} inMyInteractions={inMyInteractions} />
 
     </div>
   )

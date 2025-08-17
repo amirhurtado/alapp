@@ -9,12 +9,14 @@ interface FullUserInteractionsViewProps {
   likePosts: FullPostType[];
   userIdInteraction: string;
   currentUserId: string;
+  inMyInteractions: boolean
 }
 
 const FullUserInteractionsView = ({
   likePosts,
   userIdInteraction,
   currentUserId,
+  inMyInteractions
 }: FullUserInteractionsViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
     "likes" | "reposts" | "favorites"
@@ -24,6 +26,7 @@ const FullUserInteractionsView = ({
       <InteractionsTab
         selectInteraction={selectInteraction}
         setSelectInteraction={setSelectInteraction}
+        inMyInteractions={inMyInteractions}
       />
       {selectInteraction === "likes" && (
         <LikedPostsByUser
