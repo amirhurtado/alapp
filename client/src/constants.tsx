@@ -11,8 +11,8 @@ export const getMenuItems = ( username: string) =>[
     {
         id: 2,
         name: "Buscar",
-        arialLaberl: "ir a principal",
-        link: "/",
+        arialLaberl: "ir a Buscar",
+        link: `/search?query=`,
         icon: Search
     },
     {

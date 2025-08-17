@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { prisma } from "@/prisma";
 
 export const getUserbyNameAction = async (username: string) => {
@@ -27,9 +27,6 @@ export const getImgUrlAction = async (id: string) => {
     },
   });
 };
-
-
-
 
 export const getRecomentationsAction = async (
   userId: string,
@@ -71,3 +68,42 @@ export const getRecomentationsAction = async (
   return usersWithFriendStatus;
 };
 
+export const getUsersInSearchAction = async (
+  query: string | undefined,
+  currentUserId: string,
+  page: number = 1
+) => {
+  if (!query) return [];
+
+  const skip = (page - 1) * 10;
+  const [users, myFollowings] = await Promise.all([
+    prisma.user.findMany({
+      where: {
+        name: {
+          contains: query,
+        },
+      },
+      take: 10,
+      skip,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+    prisma.follow.findMany({
+      where: {
+        followerId: currentUserId,
+      },
+    }),
+  ]);
+
+  const myFollowingsId = myFollowings.map((following) => following.followingId);
+
+  const usersWithFriendStatus = users.map((user) => {
+    return {
+      ...user,
+      isFriend: myFollowingsId.includes(user.id),
+    };
+  });
+
+  return usersWithFriendStatus;
+};

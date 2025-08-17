@@ -1,13 +1,12 @@
 import React from "react";
-import Search from "@/features/search/components/Search";
 import PopularTags from "@/features/popular/components/PopularTags";
 import Recomendations from "@/features/recomendations/components/Recommendations";
 
 const RightBar = ({currentUserId}: {currentUserId: string}) => {
+
   return (
     <div className="flex flex-col justify-between gap-4 h-screen py-10">
       <div className="flex flex-col gap-4">
-        <Search />
         <PopularTags />
         <Recomendations currentUserId={currentUserId} placement={"rightbar"} />
       </div>
