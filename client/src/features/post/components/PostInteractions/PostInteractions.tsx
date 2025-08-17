@@ -1,6 +1,6 @@
 import { FullPostType } from "@/types";
 
-import { MessageSquare, Upload } from "lucide-react";
+import { MessageSquare, Ellipsis } from "lucide-react";
 import React from "react";
 import Favorite from "./Favorite";
 import Like from "./Like";
@@ -51,7 +51,7 @@ const PostInteractions = ({
             currentUserId={currentUserId}
             onFavorite={interactions.onFavorite}
           />
-          <Upload
+          <Ellipsis
             size={18}
             className=" text-text-gray hover:text-primary-color cursor-pointer transition-colors duration-200 ease-in"
           />

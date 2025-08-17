@@ -28,10 +28,10 @@ const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
         </Link>
       </div>
       <div className=" font-poppins flex flex-col gap-3 justify-between flex-1 ">
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-6 md:gap-2 ">
           {menuItems.map((item) => (
             <Link key={item.id} href={item.link} aria-label={item.arialLaberl}>
-              <div className="flex gap-4 px-3 py-4 rounded-xl hover:bg-[#181818] ">
+              <div className="flex gap-4 p-1 md:px-3 md:py-4 rounded-xl md:hover:bg-[#181818] ">
                 <item.icon strokeWidth={1} />
                 <span className="ml-2 hidden xxl:block ">{item.name}</span>
               </div>
