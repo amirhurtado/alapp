@@ -90,11 +90,14 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
 };
 
 export const getUserLikesInPostAction = async (
+  currentUserId: string,
   postId: number,
   page: number = 1
 ) => {
   const skip = (page - 1) * 10;
-  const postUsers = await prisma.post.findMany({
+  const [postUsersWithLike, myFollowings] = await Promise.all ([
+
+    prisma.post.findMany({
     where: {
       id: postId,
     },
@@ -117,7 +120,27 @@ export const getUserLikesInPostAction = async (
         },
       },
     },
-  });
+  }),
 
-  return postUsers.flatMap((post) => post.likesPost.map((like) => like.user));
+  prisma.follow.findMany({
+    where: {
+      followerId: currentUserId
+    }
+  })
+  ]) 
+
+  const myfollowingsIds = myFollowings.map((follow) => follow.followingId);
+
+  const users = postUsersWithLike.flatMap((post) => post.likesPost.map((like) => like.user));
+
+  const usersWithFriendStatus = users.map(user => {
+    return {
+      ...user,
+      isFriend: myfollowingsIds.includes(user.id)
+    }
+  })
+
+  return usersWithFriendStatus
+
+  
 };

@@ -25,8 +25,8 @@ export type FullPostType = PostType & {
     userId: string;
   }[];
   _count: {
-    comments: number
-  }
+    comments: number;
+  };
 };
 
 export type FullCommentType = CommentType & {
@@ -37,16 +37,23 @@ export type FullCommentType = CommentType & {
     imageUrl: string;
   };
   likesComment: {
-    userId: string
-  }[]
+    userId: string;
+  }[];
   _count: {
-    comments: number
-  }
+    comments: number;
+  };
 };
 
 export type InfoProfile = {
   bio: string | null;
   location: string | null;
   website: string | null;
+};
 
-}
+export type UserCardType = {
+  id: string;
+  name: string;
+  displayName: string;
+  imageUrl: string;
+  isFriend: boolean,
+};

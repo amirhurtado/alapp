@@ -3,25 +3,16 @@ import React from "react";
 import FollowButton from "@/features/user/profile/components/FollowButton";
 import Link from "next/link";
 import Avatar from "@/components/ui/Avatar";
+import { UserCardType } from "@/types";
 
 interface UserCardRecommendationProps {
-  user: {
-    id: string;
-  name: string;
-  displayName: string;
-  imageUrl: string;
-  isFriend: boolean
-  }
-  onFollow: () => void
+  user: UserCardType;
+  onFollow?: () => void;
 }
 
-const UserCardSidebar = ({user, onFollow} : UserCardRecommendationProps) => {
-
-  
+const UserCard = ({ user, onFollow }: UserCardRecommendationProps) => {
   return (
-    <div
-      className="flex justify-between p-2 hover:bg-hover rounded-lg  border-1 border-border transition-colors duration-200 ease-in"
-    >
+    <div className="flex justify-between p-2 hover:bg-hover rounded-lg  border-1 border-border transition-colors duration-200 ease-in">
       <div className="flex gap-3 items-center">
         <Avatar src={user.imageUrl} />
 
@@ -34,13 +25,21 @@ const UserCardSidebar = ({user, onFollow} : UserCardRecommendationProps) => {
           <p className="text-xs text-text-gray">@{user.displayName}</p>
         </div>
       </div>
-      <FollowButton
-        isFriend={user.isFriend}
-        onFollow={onFollow}
-        fromProfile={false}
-      />
+
+      {onFollow ? (
+        <FollowButton
+          isFriend={user.isFriend}
+          onFollow={onFollow}
+          fromProfile={false}
+        />
+      ) : (
+        <>
+        {user.isFriend && (<p className="text-primary-color text-xs flex items-center">Es tu amigo</p>)}
+
+        </>
+      )}
     </div>
   );
 };
 
-export default UserCardSidebar;
+export default UserCard;

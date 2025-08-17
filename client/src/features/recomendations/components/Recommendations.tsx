@@ -1,7 +1,7 @@
 import { getRecomentationsAction } from "@/actions/user/getUser";
 
 import React from "react";
-import InfiniteRecommendations from "../InfiniteRecommendations";
+import InfiniteRecommendations from "./InfiniteRecommendations";
 
 interface RecommendationsProps{
   currentUserId: string

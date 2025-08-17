@@ -2,9 +2,9 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getRecomentationsAction } from "@/actions/user/getUser";
-import UserCardSidebar from "./components/UserCardSidebar";
+import UserCard from "@/features/user/UserCard";
 import { LoaderCircle } from "lucide-react";
-import { useFollowMutation } from "../user/profile/hooks/useFollowMutation";
+import { useFollowMutation } from "@/features/user/profile/hooks/useFollowMutation"; 
 
 type InfoUser = {
   id: string;
@@ -54,11 +54,11 @@ const InfiniteRecommendations = ({
 
 
   return (
-    <div className="flex flex-col gap-2 overflow-y-auto">
+    <div className="flex flex-col gap-3 overflow-y-auto ">
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>
-                <UserCardSidebar user={user}  onFollow={() => followMutation.mutate({currentUserId, userProfileId: user.id})}  />
+                <UserCard user={user}  onFollow={() => followMutation.mutate({currentUserId, userProfileId: user.id})}  />
             </div>
         ))}
 

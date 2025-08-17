@@ -4,7 +4,7 @@ import { Trash, UserRoundCheck } from "lucide-react";
 
 interface FollowButtonProps {
   isFriend: boolean;
-  onFollow: () => void;
+  onFollow?: () => void;
   fromProfile: boolean;
 }
 

@@ -2,20 +2,18 @@
 import { useState } from "react";
 import TabInteractions from "../InteractionsTab";
 import UsersWithLikeInPost from "./UsersWithLikeInPost";
+import { UserCardType } from "@/types";
 
 interface FullPostInteractionsViewProps {
-  userLikesInPost: {
-    id: string;
-    name: string;
-    displayName: string;
-    imageUrl: string;
-  }[];
+  userLikesInPost: UserCardType[],
   postId: number
+  currentUserId: string
 }
 
 const FullPostInteractionsView = ({
   userLikesInPost,
-  postId
+  postId,
+  currentUserId
 }: FullPostInteractionsViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
     "likes" | "reposts" | "favorites"
@@ -28,7 +26,7 @@ const FullPostInteractionsView = ({
         setSelectInteraction={setSelectInteraction}
       />
       <div className="">
-        {selectInteraction === "likes" && <UsersWithLikeInPost  userLikesInPost={userLikesInPost} postId={postId}/>}
+        {selectInteraction === "likes" && <UsersWithLikeInPost  userLikesInPost={userLikesInPost} postId={postId} currentUserId={currentUserId} />}
       </div>
     </div>
   );
