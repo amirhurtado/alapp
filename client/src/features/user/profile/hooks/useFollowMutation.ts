@@ -32,7 +32,6 @@ const toggleIsFriendRecommendations = (
   userProfileId: string,
   oldData: PaginatedUserData
 ) => {
-
   if (!oldData) return;
   return {
     ...oldData,
@@ -83,17 +82,16 @@ export const useFollowMutation = () => {
         ),
       };
 
-      queryClient.setQueryData(
-        keys.recommendationsRightbar,
+      queryClient.setQueriesData(
+        { queryKey: ["recommendations", currentUserId] }, 
         (oldData: PaginatedUserData) => {
           return toggleIsFriendRecommendations(userProfileId, oldData);
         }
       );
 
-      queryClient.setQueryData(
-        keys.recommendationsExplore,
+      queryClient.setQueriesData(
+        { queryKey: ["usersInSearch"] },
         (oldData: PaginatedUserData) => {
-          if (!oldData) return;
           return toggleIsFriendRecommendations(userProfileId, oldData);
         }
       );
@@ -126,8 +124,8 @@ export const useFollowMutation = () => {
               return false;
             })
           )
-          .flat() 
-          .some((isFriend) => isFriend) ?? false; 
+          .flat()
+          .some((isFriend) => isFriend) ?? false;
 
       queryClient.setQueryData(
         keys.currentUserFollowCount,

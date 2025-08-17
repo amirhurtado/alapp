@@ -7,6 +7,7 @@ import UserCard from "@/features/user/UserCard";
 import LoadingAndEndMessage from "@/components/ui/LoadingAndEndMessage";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getUsersInSearchAction } from "@/actions/user/getUser";
+import { useFollowMutation } from "@/features/user/profile/hooks/useFollowMutation";
 
 interface FullSearchViewProps {
     query: string | undefined
@@ -19,6 +20,8 @@ const FullSearchView = ({query, usersFind : initialUsersFind, currentUserId} : F
   const queryKey = ["usersInSearch", {query: query}];
 
   const loadmoreRef = useRef(null);
+
+  const followMutation = useFollowMutation()
 
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -65,6 +68,7 @@ const FullSearchView = ({query, usersFind : initialUsersFind, currentUserId} : F
         <div key={index}>
           <UserCard
             user={user}
+            onFollow={() => followMutation.mutate({currentUserId: currentUserId, userProfileId: user.id})}
           />
         </div>
       ))}
