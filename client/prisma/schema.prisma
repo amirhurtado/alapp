@@ -13,10 +13,10 @@ model Favorite {
   createdAt DateTime @default(now())
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade)
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id],  onDelete: Cascade)
 
   @@unique([userId, postId])
 }
@@ -27,10 +27,10 @@ model LikeComment {
   updatedAt DateTime @updatedAt
 
   commentId Int
-  comment   Comment @relation(fields: [commentId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id],  onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade)
 
   @@unique([userId, commentId])
 }
@@ -51,7 +51,7 @@ model Comment {
   likesComment LikeComment[]
 
   parentId Int?
-  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id],  onDelete: Cascade)
   comments Comment[] @relation("CommentReplies")
 }
 
@@ -61,10 +61,10 @@ model LikePost {
   updatedAt DateTime @updatedAt
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id],  onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade )
 
   @@unique([userId, postId])
 }
@@ -75,10 +75,10 @@ model Repost {
   updatedAt DateTime @updatedAt
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
 }
@@ -95,7 +95,7 @@ model Post {
   comments  Comment[]
 
   authorId String
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   reposts Repost[]
 }
@@ -106,10 +106,10 @@ model Follow {
   updatedAt DateTime @updatedAt
 
   followerId String
-  follower   User   @relation("Following", fields: [followerId], references: [id])
+  follower   User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
 
   followingId String
-  following   User   @relation("Follower", fields: [followingId], references: [id])
+  following   User   @relation("Follower", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique ([followerId, followingId])
 }
@@ -121,7 +121,7 @@ model Profile {
   website  String?
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -144,3 +144,4 @@ model User {
   followers Follow[] @relation("Follower")
   following Follow[] @relation("Following")
 }
+
