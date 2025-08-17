@@ -4,6 +4,7 @@ import InteractionsTab from "../InteractionsTab";
 import { useState } from "react";
 import LikedPostsByUser from "./LikedPostsByUser";
 import FavoritePostsByUser from "./FavoritePostsByUser";
+import RepostedPostsByUser from "./RepostedPostsByUser";
 
 interface FullUserInteractionsViewProps {
   likePosts: FullPostType[];
@@ -31,6 +32,14 @@ const FullUserInteractionsView = ({
       {selectInteraction === "likes" && (
         <LikedPostsByUser
           likePosts={likePosts}
+          userIdInteraction={userIdInteraction}
+          currentUserId={currentUserId}
+        />
+      )}
+
+
+      {selectInteraction === "reposts" && (
+        <RepostedPostsByUser
           userIdInteraction={userIdInteraction}
           currentUserId={currentUserId}
         />

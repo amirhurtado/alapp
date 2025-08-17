@@ -93,6 +93,30 @@ export const getPostsLikedByUserAction = async (
   });
 };
 
+
+export const getPostsRepostedByUserAction = async (
+  userId: string,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 10;
+  return await prisma.post.findMany({
+    where: {
+      reposts : {
+        some: {
+          userId
+        }
+      }
+    },
+    include: postIncludes,
+    take: 10,
+    skip,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+
+
 export const getPostsFavoriteByUserAction = async (
   userId: string,
   page: number = 1

@@ -1,3 +1,4 @@
+import { Lock } from "lucide-react";
 import React from "react";
 
 interface TabInteractionsProps {
@@ -41,11 +42,12 @@ const TabInteractions = ({
       {inMyInteractions && (
         <button
           onClick={() => setSelectInteraction("favorites")}
-          className={`w-full text-center pb-2 ${
+          className={`w-full pb-2 flex items-center gap-2 justify-center ${
             selectInteraction === "favorites" ? classActive : classInactive
           }`}
         >
           Favoritos
+          <Lock size={18}  />
         </button>
       )}
     </div>

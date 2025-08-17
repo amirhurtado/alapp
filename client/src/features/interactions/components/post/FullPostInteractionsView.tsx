@@ -17,7 +17,7 @@ const FullPostInteractionsView = ({
   currentUserId
 }: FullPostInteractionsViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
-    "likes" | "reposts" 
+    "likes" | "reposts" | "favorites"
   >("likes");
 
   return (
