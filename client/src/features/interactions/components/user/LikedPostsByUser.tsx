@@ -1,5 +1,5 @@
 import { getPostsLikedByUserAction } from "@/actions/post/getPost"
-import ContainerInfinitePosts from "@/components/ContainerInfinitePosts"
+import ContainerInfinitePosts from "@/features/feed/components/ContainerInfinitePosts"
 import { FullPostType } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"

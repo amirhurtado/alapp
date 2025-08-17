@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
 import { getPostsAction } from "@/actions/post/getPost";
-import ContainerInfinitePosts from "@/components/ContainerInfinitePosts";
+import ContainerInfinitePosts from "@/features/feed/components/ContainerInfinitePosts";
 
 
 interface InfinitePostsProps {
@@ -16,7 +16,7 @@ interface InfinitePostsProps {
   placement : "mainFeed" | "exploreFeed" | "profile"
 }
 
-const InfinitePosts = ({
+const InfiniteFeed = ({
   posts: initialPosts,
   currentUserId,
   userProfileId,
@@ -73,4 +73,4 @@ const InfinitePosts = ({
   );
 };
 
-export default InfinitePosts;
+export default InfiniteFeed;

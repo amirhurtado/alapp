@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user/getUser";
 import { getPostsAction } from "@/actions/post/getPost";
 import HeaderProfiler from "@/features/profile/components/HeaderProfile";
-import InfinitePosts from "@/features/feed/components/InfinitePosts";
+import InfiniteFeed from "@/features/feed/components/InfiniteFeed";
 import BackNavigation from "@/components/ui/BackNavigation";
 
 type Props = {
@@ -41,7 +41,7 @@ export default async function UserPage({ params }: Props) {
         userProfileInfo={userProfile}
         currentUserId={currUser.id}
       />
-      <InfinitePosts posts={posts} currentUserId={currUser.id} userProfileId={userProfile.id} placement={"profile"} />
+      <InfiniteFeed posts={posts} currentUserId={currUser.id} userProfileId={userProfile.id} placement={"profile"} />
     </div>
   );
 }

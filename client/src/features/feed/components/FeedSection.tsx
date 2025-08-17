@@ -1,4 +1,4 @@
-import InfinitePosts from "@/features/feed/components/InfinitePosts";
+import InfiniteFeed from "@/features/feed/components/InfiniteFeed";
 import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import { FullPostType } from "@/types";
 import FeedTab from "./FeedTab";
@@ -29,7 +29,7 @@ const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
           </div>
         )}
 
-        <InfinitePosts
+        <InfiniteFeed
           posts={posts}
           currentUserId={currentUser.id}
           userProfileId={currentUser.id}
