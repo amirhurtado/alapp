@@ -3,7 +3,7 @@ import React from 'react'
 import { LoaderCircle } from "lucide-react";
 import { FullPostType } from '@/types';
 
-interface ShowInfinitePostsProps {
+interface ContainerInfinitePostsProps {
     currentUserId: string
     posts: FullPostType[]
     isFetchingNextPage: boolean,
@@ -13,7 +13,7 @@ interface ShowInfinitePostsProps {
 }
 
 
-const ShowInfinitePosts = ({currentUserId, posts, isFetchingNextPage, hasNextPage, queryKey, loadMoreRef} : ShowInfinitePostsProps) => {
+const ContainerInfinitePosts = ({currentUserId, posts, isFetchingNextPage, hasNextPage, queryKey, loadMoreRef} : ContainerInfinitePostsProps) => {
   return (
     <div className='flex flex-col'>
         {posts.map((post) => (
@@ -47,4 +47,4 @@ const ShowInfinitePosts = ({currentUserId, posts, isFetchingNextPage, hasNextPag
   )
 }
 
-export default ShowInfinitePosts
+export default ContainerInfinitePosts

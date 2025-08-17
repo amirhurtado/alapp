@@ -7,11 +7,15 @@ import FavoritePostsByUser from "./FavoritePostsByUser";
 
 interface FullUserInteractionsViewProps {
   likePosts: FullPostType[];
-  userIdInteraction: string
-  currentUserId: string
+  userIdInteraction: string;
+  currentUserId: string;
 }
 
-const FullUserInteractionsView = ({ likePosts, userIdInteraction, currentUserId }: FullUserInteractionsViewProps) => {
+const FullUserInteractionsView = ({
+  likePosts,
+  userIdInteraction,
+  currentUserId,
+}: FullUserInteractionsViewProps) => {
   const [selectInteraction, setSelectInteraction] = useState<
     "likes" | "reposts" | "favorites"
   >("likes");
@@ -22,10 +26,19 @@ const FullUserInteractionsView = ({ likePosts, userIdInteraction, currentUserId 
         setSelectInteraction={setSelectInteraction}
       />
       {selectInteraction === "likes" && (
-        <LikedPostsByUser likePosts={likePosts} userIdInteraction={userIdInteraction} currentUserId={currentUserId} />
+        <LikedPostsByUser
+          likePosts={likePosts}
+          userIdInteraction={userIdInteraction}
+          currentUserId={currentUserId}
+        />
       )}
 
-      {selectInteraction === "favorites" && <FavoritePostsByUser userIdInteraction={userIdInteraction} currentUserId={currentUserId} /> }
+      {selectInteraction === "favorites" && (
+        <FavoritePostsByUser
+          userIdInteraction={userIdInteraction}
+          currentUserId={currentUserId}
+        />
+      )}
     </div>
   );
 };

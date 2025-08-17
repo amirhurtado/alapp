@@ -1,5 +1,5 @@
-import { getPostsFavoriteByUserAction } from "@/actions/post/interactions";
-import ShowInfinitePosts from "@/components/ShowInfinitePosts";
+import { getPostsFavoriteByUserAction } from "@/actions/post/getPost";
+import ContainerInfinitePosts from "@/components/ContainerInfinitePosts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
 
@@ -51,7 +51,7 @@ const FavoritePostsByUser = ({
 
   return (
     <div className="flex flex-col  overflow-y-auto">
-      <ShowInfinitePosts
+      <ContainerInfinitePosts
         currentUserId={currentUserId}
         posts={favoritePosts}
         isFetchingNextPage={isFetchingNextPage}

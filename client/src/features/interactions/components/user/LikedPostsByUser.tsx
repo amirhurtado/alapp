@@ -1,5 +1,5 @@
 import { getPostsLikedByUserAction } from "@/actions/post/getPost"
-import ShowInfinitePosts from "@/components/ShowInfinitePosts"
+import ContainerInfinitePosts from "@/components/ContainerInfinitePosts"
 import { FullPostType } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
@@ -52,7 +52,7 @@ const LikedPostsByUser = ({likePosts : initialLikePosts, userIdInteraction, curr
     
   return (
     <div className="flex flex-col  overflow-y-auto">
-        <ShowInfinitePosts  currentUserId={currentUserId} posts={likePost} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef} />
+        <ContainerInfinitePosts  currentUserId={currentUserId} posts={likePost} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef} />
     </div>
   )
 }

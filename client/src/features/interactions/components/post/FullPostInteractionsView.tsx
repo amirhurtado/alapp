@@ -1,17 +1,37 @@
-"use client"
-import { useState } from "react"
-import TabInteractions from "../InteractionsTab"
+"use client";
+import { useState } from "react";
+import TabInteractions from "../InteractionsTab";
+import UsersWithLikeInPost from "./UsersWithLikeInPost";
 
-const FullPostInteractionsView = () => {
-  const [selectInteraction,setSelectInteraction] = useState<"likes" | "reposts" | "favorites">("likes")
-
-
-  return (
-    <div>
-      <TabInteractions selectInteraction={selectInteraction} setSelectInteraction={setSelectInteraction} />
-      
-    </div>
-  )
+interface FullPostInteractionsViewProps {
+  userLikesInPost: {
+    id: string;
+    name: string;
+    displayName: string;
+    imageUrl: string;
+  }[];
+  postId: number
 }
 
-export default FullPostInteractionsView
+const FullPostInteractionsView = ({
+  userLikesInPost,
+  postId
+}: FullPostInteractionsViewProps) => {
+  const [selectInteraction, setSelectInteraction] = useState<
+    "likes" | "reposts" | "favorites"
+  >("likes");
+
+  return (
+    <div className=" max-h-screen overflow-hidden flex flex-col">
+      <TabInteractions
+        selectInteraction={selectInteraction}
+        setSelectInteraction={setSelectInteraction}
+      />
+      <div className="">
+        {selectInteraction === "likes" && <UsersWithLikeInPost  userLikesInPost={userLikesInPost} postId={postId}/>}
+      </div>
+    </div>
+  );
+};
+
+export default FullPostInteractionsView;

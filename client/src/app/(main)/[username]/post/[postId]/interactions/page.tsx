@@ -1,22 +1,24 @@
+import { getUserLikesInPostAction } from "@/actions/post/interactions"
 import BackNavigation from "@/components/ui/BackNavigation"
 import FullPostInteractionsView from "@/features/interactions/components/post/FullPostInteractionsView"
 
 
 type Props = {
     params : {
-        postId: number
+        postId: string
     }
 }
 
 const page = async ({params}: Props) => {
     const {postId} = await params
 
-    console.log("POST ID", postId)
+    const userLikesInPost = await getUserLikesInPostAction(parseInt(postId, 10));
+
 
   return (
-    <div>
+    <div className="flex flex-col h-screen overflow-hidden">
       <BackNavigation title="Información de interacciones" />
-      <FullPostInteractionsView />
+      <FullPostInteractionsView userLikesInPost={userLikesInPost} postId={parseInt(postId, 10)} />
     </div>
   )
 }

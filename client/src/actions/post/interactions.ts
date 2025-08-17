@@ -88,3 +88,36 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
     });
   }
 };
+
+export const getUserLikesInPostAction = async (
+  postId: number,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 10;
+  const postUsers = await prisma.post.findMany({
+    where: {
+      id: postId,
+    },
+    select: {
+      likesPost: {
+        select: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              displayName: true,
+              imageUrl: true,
+            },
+          },
+        },
+        take: 10,
+        skip,
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
+  });
+
+  return postUsers.flatMap((post) => post.likesPost.map((like) => like.user));
+};

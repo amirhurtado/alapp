@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import NoPost from "./NoPost";
 import { getPostsAction } from "@/actions/post/getPost";
-import ShowInfinitePosts from "@/components/ShowInfinitePosts";
+import ContainerInfinitePosts from "@/components/ContainerInfinitePosts";
 
 
 interface InfinitePostsProps {
@@ -66,7 +66,7 @@ const InfinitePosts = ({
 
   return (
     <div className="flex flex-col  max-h-screen">
-      <ShowInfinitePosts currentUserId={currentUserId} posts={posts} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef}/>
+      <ContainerInfinitePosts currentUserId={currentUserId} posts={posts} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef}/>
 
       <NoPost postLength={posts.length} />
     </div>
