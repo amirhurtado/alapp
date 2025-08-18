@@ -1,3 +1,4 @@
+import { getGroupsAsAdmin } from '@/actions/group/getGroup'
 import BackNavigation from '@/components/ui/BackNavigation'
 import FullGroupView from '@/features/groups/components/FullGroupView'
 import { currentUser } from '@clerk/nextjs/server'
@@ -10,8 +11,15 @@ const page = async () => {
     ])
 
     if(!currUser) return
+
+
+    const  [groupsAsAdmin] = await Promise.all([
+        getGroupsAsAdmin(currUser.id)
+    ])
+
+    console.log(groupsAsAdmin)
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col h-screen overflow-hidden'>
       <BackNavigation title='Grupos' />
       <FullGroupView currentUserId={currUser.id}/>
     </div>
