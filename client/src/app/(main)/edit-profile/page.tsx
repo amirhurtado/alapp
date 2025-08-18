@@ -12,7 +12,7 @@ const page = async () => {
   const infoUser = await getUserbyNameAction(currUser.username!)
 
   return (
-    <div className="h-screen overflow-y-auto">
+    <div className="min-h-screen overflow-hidden ">
       <BackNavigation title="Editar información de perfil" />
       <FormEditProfile infoUser={infoUser as FullUserType}  />
     </div>

@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
-
 @theme {
   --font-poppins: var(--font-poppins);
   --font-lato: var(--font-lato-sans);
@@ -14,7 +12,7 @@
   --breakpoint-xl: 1078px;
   --breakpoint-xxl: 1265px;
 
-  --color-primary: #0081A7;
+  --color-primary: #0081a7;
   --color-text-gray: #71767b;
   --color--text-gray-light: #e7e9ea;
   --color-border: #2f3336;
@@ -22,10 +20,10 @@
   --color-primary-color: #a29bfe;
   --color-icon-green: #00ba7c;
   --color-icon-pink: #f91888;
-  --color-icon-orange: #f57c00;  
---color-icon-yellow: #fdd835; 
---color-hover: #0f0f0f;
---color-icon-purple: #9b51e0;
+  --color-icon-orange: #f57c00;
+  --color-icon-yellow: #fdd835;
+  --color-hover: #0f0f0f;
+  --color-icon-purple: #9b51e0;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -58,16 +56,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-
 }
 
-html, body {
+html,
+body {
   color: #ededed;
   background-color: black;
   height: 100%;
 }
-
-
 
 :root {
   --background: oklch(0.145 0 0);
@@ -101,18 +97,13 @@ html, body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-
 }
-
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-
   }
   body {
     @apply bg-background text-foreground;
-
   }
-
 }

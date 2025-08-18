@@ -31,13 +31,14 @@ const FormEditProfile = ({infoUser
 
   return (
     <form
-      className="flex flex-col p-4 gap-8 "
+      className="flex flex-col p-4 gap-8 max-h-screen overflow-y-auto "
       action={async (formData) => {
         await updateInfoUserAction(formData, infoUser.id);
         router.back()
 
       }}
     >
+
       <EditImageProfile
         imageUrl={infoUser.imageUrl}
         media={media}
@@ -57,7 +58,7 @@ const FormEditProfile = ({infoUser
 
       <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
 
-      <div className="flex w-[22rem] justify-end gap-3">
+      <div className="flex w-full md:w-[22rem] justify-end gap-3">
         <CancelButton />
         <SubmitButton disabled={disabledSubmit} text="Guardar" />
       </div>

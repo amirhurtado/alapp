@@ -1,4 +1,4 @@
-import { House, Bell, MessageSquare, Pointer, User, Search} from 'lucide-react';
+import { House, Bell, MessageSquare, Pointer, User, Search, CalendarPlus} from 'lucide-react';
 
 export const getMenuItems = ( username: string) =>[
     {
@@ -38,6 +38,13 @@ export const getMenuItems = ( username: string) =>[
     },
     {
         id: 6,
+        name: "Grupos",
+        arialLaberl: "ir a grupos",
+        link: `/groups`,
+        icon: CalendarPlus
+    },
+    {
+        id: 7,
         name: "Perfil",
         arialLaberl: "ir a perfil",
         link: `/${username}`,
