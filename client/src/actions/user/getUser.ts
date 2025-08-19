@@ -79,8 +79,13 @@ export const getUsersInSearchAction = async (
   const [users, myFollowings] = await Promise.all([
     prisma.user.findMany({
       where: {
-        name: {
-          contains: query,
+        AND: {
+          name: {
+            contains: query,
+          },
+          NOT: {
+            id: currentUserId,
+          },
         },
       },
       take: 10,
