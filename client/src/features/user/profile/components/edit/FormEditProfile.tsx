@@ -9,6 +9,7 @@ import { FullUserType } from "@/types";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import CancelButton from "@/components/ui/CancelButton";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 interface FormEditProfileProps {
   infoUser: FullUserType;
   
@@ -20,6 +21,9 @@ const FormEditProfile = ({infoUser
   const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
   const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
   const inputImageRef = useRef<null | HTMLInputElement>(null);
+
+  const queryKey = ["postsFeed", infoUser.id, {placement: "profile"}];
+  const queryClient = useQueryClient();
 
   const router = useRouter()
 
@@ -34,7 +38,9 @@ const FormEditProfile = ({infoUser
       className="flex flex-col p-4 gap-8 max-h-screen overflow-y-auto "
       action={async (formData) => {
         await updateInfoUserAction(formData, infoUser.id);
-        router.back()
+        queryClient.invalidateQueries({queryKey})
+
+        router.push(`/${infoUser.name}`)
 
       }}
     >

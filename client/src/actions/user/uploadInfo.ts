@@ -2,6 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { uploadFile } from "../constants";
+import { revalidatePath } from "next/cache";
 
 export const updateInfoUserAction = async (
   formData: FormData,
@@ -64,6 +65,8 @@ export const updateInfoUserAction = async (
       },
     });
   }
+
+  revalidatePath("/profile");
 
   
 };

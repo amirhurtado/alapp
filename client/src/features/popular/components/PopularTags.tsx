@@ -11,7 +11,7 @@ const PopularTags = () => {
         <div className="flex gap-4">
           <div className="w-18 h-18 relative overflow-hidden rounded-lg">
             <Image
-              src="/default-image.jpg"
+              src="x"
               alt="default"
               fill
               className="object-cover rounded-lg"
