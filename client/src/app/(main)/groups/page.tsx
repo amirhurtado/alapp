@@ -21,7 +21,7 @@ const page = async () => {
   return (
     <div className='flex flex-col h-screen overflow-hidden'>
       <BackNavigation title='Grupos' />
-      <FullGroupView currentUserId={currUser.id}/>
+      <FullGroupView currentUserId={currUser.id} groupsAsAdmin={groupsAsAdmin}/>
     </div>
   )
 }

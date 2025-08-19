@@ -8,19 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model MemberGroup {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  groupId Int
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
 
 model Group {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  name String
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String
   description String
-  imageUrl String
+  imageUrl    String
 
   adminId String
-  admin User @relation("AdminGroups", fields: [adminId], references: [id], onDelete: Cascade)
+  admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
-  members User[] @relation("GroupMembers")
-
+  members MemberGroup[]
 }
 
 model Favorite {
@@ -28,10 +37,10 @@ model Favorite {
   createdAt DateTime @default(now())
 
   userId String
-  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id],  onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
 }
@@ -42,10 +51,10 @@ model LikeComment {
   updatedAt DateTime @updatedAt
 
   commentId Int
-  comment   Comment @relation(fields: [commentId], references: [id],  onDelete: Cascade)
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, commentId])
 }
@@ -66,7 +75,7 @@ model Comment {
   likesComment LikeComment[]
 
   parentId Int?
-  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id],  onDelete: Cascade)
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
   comments Comment[] @relation("CommentReplies")
 }
 
@@ -76,10 +85,10 @@ model LikePost {
   updatedAt DateTime @updatedAt
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id],  onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id],  onDelete: Cascade )
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
 }
@@ -126,7 +135,7 @@ model Follow {
   followingId String
   following   User   @relation("Follower", fields: [followingId], references: [id], onDelete: Cascade)
 
-  @@unique ([followerId, followingId])
+  @@unique([followerId, followingId])
 }
 
 model Profile {
@@ -156,11 +165,9 @@ model User {
   favorites    Favorite[]
   comments     Comment[]
 
-
-  groups Group[] @relation("GroupMembers")
-  adminOfGroups Group[] @relation("AdminGroups")
+  memberOfGroups MemberGroup[]
+  adminOfGroups  Group[]      
 
   followers Follow[] @relation("Follower")
   following Follow[] @relation("Following")
 }
-

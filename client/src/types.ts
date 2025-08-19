@@ -1,6 +1,8 @@
 import { User as UserType } from "@/generated/prisma";
 import { Post as PostType } from "@/generated/prisma";
 import { Comment as CommentType } from "@/generated/prisma";
+import { Group as GroupType } from "@/generated/prisma";
+
 
 export type FullUserType = UserType & {
   profile: InfoProfile | null;
@@ -57,3 +59,13 @@ export type UserCardType = {
   imageUrl: string;
   isFriend: boolean,
 };
+
+
+export type GroupCardType = GroupType & {
+  admin: {
+    name: string
+  },
+  _count: {
+    members: number
+  }
+}

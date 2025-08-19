@@ -26,9 +26,6 @@ const CreateGroup = ({currentUserId, setSelectSection} : CreateGroupProps ) => {
       setSelectSection("exploreGroups");
      
     }}>
-      <p className="text-sm text-primary-color">
-        Solo basta con información básica:
-      </p>
 
       <input className="hidden" value={currentUserId} name="currentUserId"  readOnly/>
       <BasicInfoGroup name={name} setName={setName} description={description} setDescription={setDescription} />
