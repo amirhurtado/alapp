@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { GroupCardType } from "@/types";
+import Link from "next/link";
 
 interface GroupCardProps {
   group: GroupCardType;
@@ -32,11 +33,11 @@ const GroupCard = ({ group }: GroupCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-end ">
+        <Link href={`/group/${group.id}`}  className="flex items-end ">
         <p className="text-xs ml-5 text-primary-color">Ver más</p>
 
             
-        </div>
+        </Link>
       </div>
     </div>
   );
