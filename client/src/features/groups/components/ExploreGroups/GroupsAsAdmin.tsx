@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GroupCard from "../GroupCard";
+import GroupCard from "../CreateGroup/GroupCard";
 import { GroupCardType } from "@/types";
 import { Search } from "lucide-react";
 
