@@ -1,6 +1,6 @@
-import UserCard from "@/features/user/UserCard";
 import { FullInfoGroup } from "@/types";
 import Image from "next/image";
+import InfoMembers from "./InfoMembers";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
@@ -37,26 +37,10 @@ const InfoGroup = ({ infoGroup }: InfoGroupProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <div className="max-w-max">
-          <p className="text-xs text-text-gray">Administrador:</p>
 
-          <UserCard user={infoGroup.admin} />
-        </div>
-        <div className="max-w-max">
-          <p className="text-xs text-text-gray">Miembros: {infoGroup.members.length}</p>
+      <InfoMembers members={infoGroup.members} admin={infoGroup.admin}/>
 
-          <div className="w-full flex gap-4 overflow-x-auto overflow-y-hidden">
-            {infoGroup.members.map((member, index) => (
-              <div key={index}>
-                <UserCard user={member.user} />
-              </div>
-              
-            ))}
-
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };
