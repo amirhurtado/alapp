@@ -1,0 +1,64 @@
+import UserCard from "@/features/user/UserCard";
+import { FullInfoGroup } from "@/types";
+import Image from "next/image";
+
+interface InfoGroupProps {
+  infoGroup: FullInfoGroup;
+}
+
+const getDate = (createdAt: Date) => {
+  return new Date(createdAt.toString()).toLocaleString("es-CO", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+};
+
+const InfoGroup = ({ infoGroup }: InfoGroupProps) => {
+  return (
+    <div className="max-h-screen overflow-y-scroll w-full p-4 flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-2 relative">
+        <div className="w-[6rem] h-[6rem]  relative">
+          <Image
+            src={infoGroup.imageUrl}
+            alt="image-group"
+            fill
+            className="object-cover rounded-full"
+          />
+        </div>
+        <div className="text-center">
+          <p className="text-sm">{infoGroup.name}</p>
+          <p className="text-xs text-text-gray">{infoGroup.description}</p>
+        </div>
+
+        <div className="text-xs text-text-gray absolute right-0 flex flex-col items-end">
+          <p className="text-icon-green">Creado el:</p>
+          <p>{getDate(infoGroup.createdAt)}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <div className="max-w-max">
+          <p className="text-xs text-text-gray">Administrador:</p>
+
+          <UserCard user={infoGroup.admin} />
+        </div>
+        <div className="max-w-max">
+          <p className="text-xs text-text-gray">Miembros: {infoGroup.members.length}</p>
+
+          <div className="w-full flex gap-4 overflow-x-auto overflow-y-hidden">
+            {infoGroup.members.map((member, index) => (
+              <div key={index}>
+                <UserCard user={member.user} />
+              </div>
+              
+            ))}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InfoGroup;

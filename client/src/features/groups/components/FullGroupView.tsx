@@ -4,7 +4,7 @@ import { useState } from "react"
 import GroupTab from "./GroupTab"
 import CreateGroup from "./CreateGroup/CreateGroup"
 import { GroupCardType } from "@/types"
-import ExploreGroups from "./CreateGroup/ExploreGroups/ExploreGroups"
+import ExploreGroups from "./ExploreGroups/ExploreGroups"
 
 
 interface FullGroupViewProps {

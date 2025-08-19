@@ -1,4 +1,4 @@
-import { getGroupsAsAdmin } from '@/actions/group/getGroup'
+import { getGroupsAsAdminAction } from '@/actions/group/getGroup'
 import BackNavigation from '@/components/ui/BackNavigation'
 import FullGroupView from '@/features/groups/components/FullGroupView'
 import { currentUser } from '@clerk/nextjs/server'
@@ -14,7 +14,7 @@ const page = async () => {
 
 
     const  [groupsAsAdmin] = await Promise.all([
-        getGroupsAsAdmin(currUser.id)
+        getGroupsAsAdminAction(currUser.id)
     ])
 
     console.log(groupsAsAdmin)

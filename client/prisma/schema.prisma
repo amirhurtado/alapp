@@ -30,6 +30,7 @@ model Group {
   admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   members MemberGroup[]
+  posts Post[]
 }
 
 model Favorite {
@@ -113,6 +114,10 @@ model Post {
   updatedAt   DateTime @updatedAt
   description String?  @db.VarChar(255)
   imageUrl    String?
+
+
+  groupId     Int?  
+  group Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
   likesPost LikePost[]
   favorites Favorite[]

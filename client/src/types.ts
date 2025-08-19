@@ -3,7 +3,6 @@ import { Post as PostType } from "@/generated/prisma";
 import { Comment as CommentType } from "@/generated/prisma";
 import { Group as GroupType } from "@/generated/prisma";
 
-
 export type FullUserType = UserType & {
   profile: InfoProfile | null;
   _count: {
@@ -57,15 +56,27 @@ export type UserCardType = {
   name: string;
   displayName: string;
   imageUrl: string;
-  isFriend: boolean,
+  isFriend?: boolean;
 };
-
 
 export type GroupCardType = GroupType & {
   admin: {
-    name: string
-  },
+    name: string;
+  };
   _count: {
-    members: number
-  }
-}
+    members: number;
+  };
+};
+
+export type FullInfoGroup = GroupType & {
+  admin: {
+    id: string
+    name: string;
+    displayName: string;
+    imageUrl: string;
+  };
+  posts: FullPostType[];
+  members: {
+    user: UserCardType
+  }[]
+};
