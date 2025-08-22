@@ -9,10 +9,11 @@ interface InfoMembersProps {
         user: UserCardType
     }[],
     admin: UserCardType
+    currentuserId: string
 
 }
 
-const InfoMembers = ({members, admin} : InfoMembersProps ) => {
+const InfoMembers = ({members, admin, currentuserId} : InfoMembersProps ) => {
     const [filter, setFilter] = useState("")
 
 
@@ -26,7 +27,7 @@ const InfoMembers = ({members, admin} : InfoMembersProps ) => {
         <div className="max-w-max">
           <p className="text-xs text-text-gray">Administrador:</p>
 
-          <UserCard user={admin} />
+          <UserCard user={admin} isMe={currentuserId === admin.id} />
         </div>
         <div className="max-w-max flex flex-col gap-2">
           <p className="text-xs text-text-gray">Miembros: {members.length}</p>
@@ -36,7 +37,7 @@ const InfoMembers = ({members, admin} : InfoMembersProps ) => {
           <div className="w-full flex gap-4 overflow-x-auto overflow-y-hidden mt-2">
             {membersFiltered.map((member, index) => (
               <div key={index}>
-                <UserCard user={member.user} />
+                <UserCard user={member.user} isMe={currentuserId === member.user.id} />
               </div>
             ))}
 

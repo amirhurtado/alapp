@@ -32,7 +32,6 @@ const SearchGroups = ({
         pages: [initialGroupRecommendations],
         pageParams: [1],
       },
-      staleTime: Infinity,
     });
 
   const groupsrecommendations =

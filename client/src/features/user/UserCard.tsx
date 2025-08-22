@@ -8,9 +8,10 @@ import { UserCardType } from "@/types";
 interface UserCardRecommendationProps {
   user: UserCardType;
   onFollow?: () => void;
+  isMe?: boolean
 }
 
-const UserCard = ({ user, onFollow }: UserCardRecommendationProps) => {
+const UserCard = ({ user, onFollow, isMe }: UserCardRecommendationProps) => {
   return (
     <div className="flex justify-between p-2 hover:bg-hover rounded-lg  border-1 border-border transition-colors duration-200 ease-in">
       <div className="flex gap-3 items-center">
@@ -20,6 +21,9 @@ const UserCard = ({ user, onFollow }: UserCardRecommendationProps) => {
           <Link href={`/${user.name}`}>
             <p className="text-sm font-semibold cursor-pointer hover:underline">
               {user.name}
+              {isMe && (
+                <span className="text-[0.6rem] text-primary-color"> (Tú)</span>
+              )}
             </p>
           </Link>
           <p className="text-xs text-text-gray">@{user.displayName}</p>
