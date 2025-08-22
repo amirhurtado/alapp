@@ -1,9 +1,11 @@
 import { FullInfoGroup } from "@/types";
 import Image from "next/image";
 import InfoMembers from "./InfoMembers";
+import CreateEventButton from "./CreateEventButton";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
+  currentUserId: string
 }
 
 const getDate = (createdAt: Date) => {
@@ -14,7 +16,7 @@ const getDate = (createdAt: Date) => {
   });
 };
 
-const InfoGroup = ({ infoGroup }: InfoGroupProps) => {
+const InfoGroup = ({ infoGroup, currentUserId }: InfoGroupProps) => {
   return (
     <div className="max-h-screen overflow-y-scroll w-full p-4 flex flex-col gap-4">
       <div className="flex flex-col items-center gap-2 relative">
@@ -37,10 +39,13 @@ const InfoGroup = ({ infoGroup }: InfoGroupProps) => {
         </div>
       </div>
 
+      <div className="relative">
+        <InfoMembers members={infoGroup.members} admin={infoGroup.admin} />
 
-      <InfoMembers members={infoGroup.members} admin={infoGroup.admin}/>
-
-      
+        <div className="absolute right-0 top-0">
+          <CreateEventButton disabled={currentUserId !== infoGroup.adminId} />
+        </div>
+      </div>
     </div>
   );
 };

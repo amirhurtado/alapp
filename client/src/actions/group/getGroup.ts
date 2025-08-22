@@ -2,22 +2,71 @@
 import { prisma } from "@/prisma";
 import { postIncludes } from "../post/constants";
 
+const includeGroup = {
+  admin: {
+    select: {
+      name: true,
+    },
+  },
+  _count: {
+    select: {
+      members: true,
+    },
+  },
+};
+
 export const getGroupsAsAdminAction = async (userId: string) => {
   return await prisma.group.findMany({
     where: {
       adminId: userId,
     },
-    include: {
-      admin: {
-        select: {
-          name: true,
+    include: includeGroup,
+  });
+};
+
+export const getGroupsAsMemberAction = async (userId: string) => {
+  return await prisma.group.findMany({
+    where: {
+      AND: {
+        members: {
+          some: {
+            userId: userId,
+          },
+        },
+        adminId: {
+          not: userId,
         },
       },
-      _count: {
-        select: {
-          members: true,
+    },
+    include: includeGroup,
+  });
+};
+
+export const getGroupsRecommendationAction = async (
+  userId: string,
+  page: number = 1
+) => {
+  const skip = (page - 1) * 3;
+  return await prisma.group.findMany({
+    where: {
+      AND: {
+        NOT: {
+          adminId: userId,
+        },
+        members: {
+          some: {
+            NOT: {
+              userId: userId,
+            },
+          },
         },
       },
+    },
+    take: 3,
+    skip,
+    include: includeGroup,
+    orderBy: {
+      createdAt: "desc",
     },
   });
 };
