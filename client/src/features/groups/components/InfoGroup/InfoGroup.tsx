@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { FullInfoGroup } from "@/types";
+import { FullInfoGroup, FullUserType } from "@/types";
 import Image from "next/image";
 import InfoMembers from "./InfoMembers";
 import CreateEventButton from "./CreateEventButton";
@@ -10,7 +10,7 @@ import { useJoinMitation } from "../../hooks/useJoinMutation";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
-  currentUserId: string
+  infoUser: FullUserType;
 }
 
 const getDate = (createdAt: Date) => {
@@ -21,18 +21,24 @@ const getDate = (createdAt: Date) => {
   });
 };
 
-const InfoGroup = ({ infoGroup : initialData, currentUserId }: InfoGroupProps) => {
+const InfoGroup = ({ infoGroup: initialData, infoUser }: InfoGroupProps) => {
+  const queryKey = ["infoGroup", { groupId: initialData.id }];
 
-  const queryKey = ["infoGroup", {groupId: initialData.id}]
-
-  const {data: infoGroup } = useQuery({
+  const { data: infoGroup } = useQuery({
     queryKey,
     queryFn: () => initialData,
     enabled: false,
-    initialData: initialData
-  })
+    initialData: initialData,
+  });
 
-   const joinMutation = useJoinMitation();
+  const joinMutation = useJoinMitation();
+
+  const infoUserForMutation = {
+    displayName: infoUser.displayName,
+    id: infoUser.id,
+    imageUrl: infoUser.imageUrl,
+    name: infoUser.name,
+  };
 
   return (
     <div className="max-h-screen overflow-y-scroll w-full p-4 flex flex-col gap-4">
@@ -56,15 +62,16 @@ const InfoGroup = ({ infoGroup : initialData, currentUserId }: InfoGroupProps) =
         </div>
       </div>
 
-        <div className="flex justify-between w-full items-center">
-          <ToggleGroupAction isMember={infoGroup.isMember} onAction={() => joinMutation.mutate({groupId: infoGroup.id, userId: currentUserId})} />
-          <CreateEventButton disabled={currentUserId !== infoGroup.adminId} />
-
-        </div>
-        <InfoMembers members={infoGroup.members} admin={infoGroup.admin} />
-
-       
- 
+      <div className="flex justify-between w-full items-center">
+        <ToggleGroupAction
+          isMember={infoGroup.isMember}
+          onAction={() =>
+            joinMutation.mutate({ groupId: infoGroup.id, infoUser: infoUserForMutation })
+          }
+        />
+        <CreateEventButton disabled={infoUser.id !== infoGroup.adminId} />
+      </div>
+      <InfoMembers members={infoGroup.members} admin={infoGroup.admin} />
     </div>
   );
 };

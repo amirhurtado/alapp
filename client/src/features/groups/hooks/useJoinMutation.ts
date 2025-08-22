@@ -1,17 +1,22 @@
 import { toggleJoinGroupAction } from "@/actions/group/interactionsGroup";
-import { FullInfoGroup } from "@/types";
+import { FullInfoGroup, UserCardType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useJoinMitation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ groupId, userId }: { groupId: number; userId: string }) => {
-      return toggleJoinGroupAction(groupId, userId);
+    mutationFn: ({
+      groupId,
+      infoUser,
+    }: {
+      groupId: number;
+      infoUser: UserCardType;
+    }) => {
+      return toggleJoinGroupAction(groupId, infoUser.id);
     },
-    onMutate: async ({ groupId, userId }) => {
+    onMutate: async ({ groupId, infoUser }) => {
       const queryKey = ["infoGroup", { groupId: groupId }];
-
       await queryClient.cancelQueries({ queryKey });
 
       const previousData = queryClient.getQueryData(queryKey);
@@ -19,8 +24,15 @@ export const useJoinMitation = () => {
       queryClient.setQueryData(queryKey, (oldData: FullInfoGroup) => {
         if (!oldData) return;
 
-        return {
+        const newMembers = {
           ...oldData,
+          members: oldData.isMember
+            ? oldData.members.filter((mem) => mem.user.id != infoUser.id)
+            : [{ user: infoUser }, ...oldData.members],
+        };
+
+        return {
+          ...newMembers,
           isMember: !oldData.isMember,
         };
       });

@@ -1,4 +1,5 @@
 import { getGroupInfoAction } from "@/actions/group/getGroup";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
 import InfoGroup from "@/features/groups/components/InfoGroup/InfoGroup";
 import { currentUser } from "@clerk/nextjs/server";
@@ -15,17 +16,19 @@ const page = async ({ params }: Props) => {
 
   if (!currUser) return;
 
-  const infoGroup = await getGroupInfoAction(
-    parseInt(groupId, 10),
-    currUser.id
-  );
+  const [infoGroup, infoUser] = await Promise.all([
+    getGroupInfoAction(parseInt(groupId, 10), currUser.id),
 
-  if (!infoGroup) return;
+    getUserbyNameAction(currUser.username!)
+  ]);
+
+  if (!infoGroup || !infoUser) return;
+
 
   return (
     <div className="h-screen flex flex-col overflow-hidden gap-6">
       <BackNavigation title={`Grupo - ${infoGroup?.name}`} />
-      <InfoGroup infoGroup={infoGroup} currentUserId={currUser.id} />
+      <InfoGroup infoGroup={infoGroup} infoUser={infoUser} />
     </div>
   );
 };
