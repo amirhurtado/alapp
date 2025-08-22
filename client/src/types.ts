@@ -75,8 +75,8 @@ export type FullInfoGroup = GroupType & {
     displayName: string;
     imageUrl: string;
   };
-  posts: FullPostType[];
   members: {
     user: UserCardType
   }[]
+  isMember: boolean
 };

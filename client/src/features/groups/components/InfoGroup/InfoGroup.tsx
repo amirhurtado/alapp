@@ -1,7 +1,12 @@
+"use client"
+
 import { FullInfoGroup } from "@/types";
 import Image from "next/image";
 import InfoMembers from "./InfoMembers";
 import CreateEventButton from "./CreateEventButton";
+import ToggleGroupAction from "./ToggleGroupAction";
+import { useQuery } from "@tanstack/react-query";
+import { useJoinMitation } from "../../hooks/useJoinMutation";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
@@ -16,7 +21,19 @@ const getDate = (createdAt: Date) => {
   });
 };
 
-const InfoGroup = ({ infoGroup, currentUserId }: InfoGroupProps) => {
+const InfoGroup = ({ infoGroup : initialData, currentUserId }: InfoGroupProps) => {
+
+  const queryKey = ["infoGroup", {groupId: initialData.id}]
+
+  const {data: infoGroup } = useQuery({
+    queryKey,
+    queryFn: () => initialData,
+    enabled: false,
+    initialData: initialData
+  })
+
+   const joinMutation = useJoinMitation();
+
   return (
     <div className="max-h-screen overflow-y-scroll w-full p-4 flex flex-col gap-4">
       <div className="flex flex-col items-center gap-2 relative">
@@ -39,13 +56,15 @@ const InfoGroup = ({ infoGroup, currentUserId }: InfoGroupProps) => {
         </div>
       </div>
 
-      <div className="relative">
+        <div className="flex justify-between w-full items-center">
+          <ToggleGroupAction isMember={infoGroup.isMember} onAction={() => joinMutation.mutate({groupId: infoGroup.id, userId: currentUserId})} />
+          <CreateEventButton disabled={currentUserId !== infoGroup.adminId} />
+
+        </div>
         <InfoMembers members={infoGroup.members} admin={infoGroup.admin} />
 
-        <div className="absolute right-0 top-0">
-          <CreateEventButton disabled={currentUserId !== infoGroup.adminId} />
-        </div>
-      </div>
+       
+ 
     </div>
   );
 };

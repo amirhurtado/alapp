@@ -32,6 +32,8 @@ model MemberGroup {
 
   groupId Int
   group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
 }
 
 model Group {
@@ -131,7 +133,6 @@ model Post {
   imageUrl    String?
 
   groupId     Int?  
-  group Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
   likesPost LikePost[]
   favorites Favorite[]

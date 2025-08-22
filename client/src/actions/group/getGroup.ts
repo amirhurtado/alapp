@@ -1,6 +1,5 @@
 "use server";
 import { prisma } from "@/prisma";
-import { postIncludes } from "../post/constants";
 
 const includeGroup = {
   admin: {
@@ -71,8 +70,8 @@ export const getGroupsRecommendationAction = async (
   });
 };
 
-export const getGroupInfoAction = async (groupId: number) => {
-  return await prisma.group.findUnique({
+export const getGroupInfoAction = async (groupId: number, currentUserId: string) => {
+  const infoGroup = await prisma.group.findUnique({
     where: {
       id: groupId,
     },
@@ -85,9 +84,7 @@ export const getGroupInfoAction = async (groupId: number) => {
           imageUrl: true,
         },
       },
-      posts: {
-        include: postIncludes,
-      },
+  
       members: {
         select: {
           user: {
@@ -102,4 +99,15 @@ export const getGroupInfoAction = async (groupId: number) => {
       },
     },
   });
+
+  if(!infoGroup) return
+
+  const isMember = infoGroup.members.some((m) => m.user.id === currentUserId)
+
+  const infoGroupWithIsMemberStatus = {
+    ...infoGroup,
+    isMember
+  }
+
+  return infoGroupWithIsMemberStatus
 };

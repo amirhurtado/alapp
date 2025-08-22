@@ -13,14 +13,19 @@ type Props = {
 const page = async ({ params }: Props) => {
   const [{ groupId }, currUser] = await Promise.all([params, currentUser()]);
 
-  const infoGroup = await getGroupInfoAction(parseInt(groupId, 10));
+  if (!currUser) return;
 
-  if(!infoGroup || !currUser) return 
+  const infoGroup = await getGroupInfoAction(
+    parseInt(groupId, 10),
+    currUser.id
+  );
+
+  if (!infoGroup) return;
 
   return (
     <div className="h-screen flex flex-col overflow-hidden gap-6">
       <BackNavigation title={`Grupo - ${infoGroup?.name}`} />
-      <InfoGroup infoGroup={infoGroup} currentUserId={currUser.id}/>
+      <InfoGroup infoGroup={infoGroup} currentUserId={currUser.id} />
     </div>
   );
 };
