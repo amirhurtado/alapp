@@ -32,8 +32,8 @@ export const getGroupsAsMemberAction = async (userId: string) => {
             userId: userId,
           },
         },
-        adminId: {
-          not: userId,
+        NOT: {
+          adminId: userId,
         },
       },
     },
@@ -49,14 +49,13 @@ export const getGroupsRecommendationAction = async (
   return await prisma.group.findMany({
     where: {
       AND: {
-        NOT: {
-          adminId: userId,
+        adminId: {
+          not: userId,
         },
+
         members: {
-          some: {
-            NOT: {
-              userId: userId,
-            },
+          none: {
+            userId: userId,
           },
         },
       },
@@ -70,7 +69,10 @@ export const getGroupsRecommendationAction = async (
   });
 };
 
-export const getGroupInfoAction = async (groupId: number, currentUserId: string) => {
+export const getGroupInfoAction = async (
+  groupId: number,
+  currentUserId: string
+) => {
   const infoGroup = await prisma.group.findUnique({
     where: {
       id: groupId,
@@ -84,7 +86,7 @@ export const getGroupInfoAction = async (groupId: number, currentUserId: string)
           imageUrl: true,
         },
       },
-  
+
       members: {
         select: {
           user: {
@@ -100,14 +102,14 @@ export const getGroupInfoAction = async (groupId: number, currentUserId: string)
     },
   });
 
-  if(!infoGroup) return
+  if (!infoGroup) return;
 
-  const isMember = infoGroup.members.some((m) => m.user.id === currentUserId)
+  const isMember = infoGroup.members.some((m) => m.user.id === currentUserId);
 
   const infoGroupWithIsMemberStatus = {
     ...infoGroup,
-    isMember
-  }
+    isMember,
+  };
 
-  return infoGroupWithIsMemberStatus
+  return infoGroupWithIsMemberStatus;
 };

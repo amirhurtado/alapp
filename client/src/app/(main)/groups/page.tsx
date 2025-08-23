@@ -1,5 +1,6 @@
 import {
   getGroupsAsAdminAction,
+  getGroupsAsMemberAction,
   getGroupsRecommendationAction,
 } from "@/actions/group/getGroup";
 import BackNavigation from "@/components/ui/BackNavigation";
@@ -12,8 +13,9 @@ const page = async () => {
 
   if (!currUser) return;
 
-  const [groupsAsAdmin, groupRecommendations] = await Promise.all([
+  const [groupsAsAdmin, groupsAsMember, groupRecommendations] = await Promise.all([
     getGroupsAsAdminAction(currUser.id),
+    getGroupsAsMemberAction(currUser.id),
     getGroupsRecommendationAction(currUser.id),
   ]);
 
@@ -23,6 +25,7 @@ const page = async () => {
       <FullGroupView
         currentUserId={currUser.id}
         groupsAsAdmin={groupsAsAdmin}
+        groupsAsMember={groupsAsMember}
         groupRecommendations={groupRecommendations}
       />
     </div>

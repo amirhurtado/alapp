@@ -3,11 +3,11 @@ import GroupCard from "../CreateGroup/GroupCard";
 import { GroupCardType } from "@/types";
 import { Search } from "lucide-react";
 
-interface ExploreGroupsProps {
+interface GroupsAsAdminProps {
   groupsAsAdmin: GroupCardType[];
 }
 
-const GroupsAsAdmin = ({ groupsAsAdmin }: ExploreGroupsProps) => {
+const GroupsAsAdmin = ({ groupsAsAdmin }: GroupsAsAdminProps) => {
   const [filter, setFilter] = useState("");
 
   const filteredGroups = groupsAsAdmin.filter((group) => {

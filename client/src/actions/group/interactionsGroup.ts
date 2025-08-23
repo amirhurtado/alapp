@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { revalidatePath } from "next/cache";
 
 export const toggleJoinGroupAction = async (
   groupId: number,
@@ -36,4 +37,6 @@ export const toggleJoinGroupAction = async (
       },
     });
   }
+
+  revalidatePath("/groups")
 };
