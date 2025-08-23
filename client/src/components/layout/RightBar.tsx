@@ -1,13 +1,20 @@
-import React from "react";
-import PopularTags from "@/features/popular/components/PopularTags";
-import Recomendations from "@/features/recomendations/components/Recommendations";
+"use server"
 
-const RightBar = ({currentUserId}: {currentUserId: string}) => {
+import React from "react";
+import PopularGroups from "@/features/popular/components/PopularGroups";
+import Recomendations from "@/features/recomendations/components/Recommendations";
+import { getGroupsRecommendationAction } from "@/actions/group/getGroup";
+
+const RightBar = async ({currentUserId}: {currentUserId: string}) => {
+
+  const [groupsRecommendations] = await Promise.all([
+    getGroupsRecommendationAction(currentUserId)
+  ])
 
   return (
     <div className="flex flex-col justify-between gap-4 h-screen py-10">
       <div className="flex flex-col gap-4">
-        <PopularTags />
+        <PopularGroups groupsRecommendations={groupsRecommendations} currentUserId={currentUserId}/>
         <Recomendations currentUserId={currentUserId} placement={"rightbar"} />
       </div>
 

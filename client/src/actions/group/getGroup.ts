@@ -45,6 +45,7 @@ export const getGroupsRecommendationAction = async (
   userId: string,
   page: number = 1
 ) => {
+
   const skip = (page - 1) * 3;
   return await prisma.group.findMany({
     where: {
@@ -115,7 +116,7 @@ export const getGroupInfoAction = async (
 };
 
 export const getGroupsByInputAction = async (formData: FormData) => {
-  const value = formData.get("nameGroup") as string
+  const value = formData.get("nameGroup") as string;
   const groups = await prisma.group.findMany({
     where: {
       name: {
@@ -125,5 +126,5 @@ export const getGroupsByInputAction = async (formData: FormData) => {
     include: includeGroup,
   });
 
-  return groups ?? []
+  return groups ?? [];
 };
