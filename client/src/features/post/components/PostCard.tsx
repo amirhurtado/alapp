@@ -13,19 +13,22 @@ import RepostIndicator from "./RepostIndicator";
 import { useLikePostMutation } from "../hooks/useLikePostMutation";
 import { useFavoriteMutation } from "../hooks/useFavoriteMutation";
 import { useRepostMutation } from "../hooks/useRepostMutation";
+import { useDeletePostMutation } from "../hooks/useDeletePostMutation";
 
 interface PostProps {
   post: FullPostType;
   currentUserId: string;
   queryKey: unknown[];
+  fromPostInfo?: boolean
 }
 
-const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {
+const PostCard = ({ post, currentUserId, queryKey, fromPostInfo }: PostProps) => {
   const isMyPost = currentUserId === post.author.id;
 
   const likeMutation = useLikePostMutation(queryKey);
     const favoriteMutation = useFavoriteMutation(queryKey);
     const repostMutation = useRepostMutation(queryKey);
+    const deleteMutation = useDeletePostMutation()
 
   return (
     <div className="p-4 border-y-1 border-border bg-[#0d0d0d] hover:bg-hover transition-colors duration-200 ease-in ">
@@ -80,7 +83,12 @@ const PostCard = ({ post, currentUserId, queryKey }: PostProps) => {
                   postId: post.id,
                   userId: currentUserId,
                 }),
+              onDelete: () => 
+                deleteMutation.mutate({
+                  postId: post.id
+                })
             }}
+            fromPostInfo={fromPostInfo}
           />
         </div>
       </div>

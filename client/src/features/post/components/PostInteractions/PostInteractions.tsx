@@ -1,11 +1,12 @@
 import { FullPostType } from "@/types";
 
-import { MessageSquare, Ellipsis } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import React from "react";
 import Favorite from "./Favorite";
 import Like from "./Like";
 import Repost from "./Repost";
 import Link from "next/link";
+import OtherOptionsPost from "./OtherOptionsPost";
 
 interface PostInteractionsProps {
   currentUserId: string;
@@ -14,14 +15,19 @@ interface PostInteractionsProps {
     onLike: () => void,
     onFavorite: () => void
     onRepost: () => void
+    onDelete: () => void
   }
+  fromPostInfo?: boolean
 }
 
 const PostInteractions = ({
   currentUserId,
   post,
-  interactions
+  interactions,
+  fromPostInfo
 }: PostInteractionsProps) => {
+
+ 
   return (
     <div className={`flex justify-between text-xs mt-6 text-text-gray`}>
       <Link
@@ -51,10 +57,7 @@ const PostInteractions = ({
             currentUserId={currentUserId}
             onFavorite={interactions.onFavorite}
           />
-          <Ellipsis
-            size={18}
-            className=" text-text-gray hover:text-primary-color cursor-pointer transition-colors duration-200 ease-in"
-          />
+          <OtherOptionsPost  onDelete={currentUserId === post.authorId ? interactions.onDelete : undefined} fromPostInfo={fromPostInfo}/>
         </div>
       </>
     </div>

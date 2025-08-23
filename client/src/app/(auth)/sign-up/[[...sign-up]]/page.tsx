@@ -25,7 +25,6 @@ const SignUpPage = () => {
                 className="w-full flex items-center justify-center md:justify-start"
               >
                 <div className="w-full md:max-w-max cursor-pointer flex items-center justify-center gap-5 py-3 md:py-3 px-3 md:px-13 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
-                  {/* Cambiamos el ícono y el texto */}
                   <Github strokeWidth={1} size={25} />
                   <p className="font-semibold text-sm md:text-lg">
                     Registrate con GitHub

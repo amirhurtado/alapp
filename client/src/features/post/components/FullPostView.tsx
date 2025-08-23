@@ -35,6 +35,8 @@ const FullPostView = ({
         post={data}
         currentUserId={currentUser.id}
         queryKey={queryKey}
+        fromPostInfo={true}
+
       />
       <CommentSection
         comments={comments}
