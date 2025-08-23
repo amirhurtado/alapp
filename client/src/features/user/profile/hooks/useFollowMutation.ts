@@ -80,6 +80,9 @@ export const useFollowMutation = () => {
         currentUserFollowCount: queryClient.getQueryData(
           keys.currentUserFollowCount
         ),
+        isFriend: queryClient.getQueryData(
+          keys.isFriend
+        )
       };
 
       queryClient.setQueriesData(
@@ -104,10 +107,11 @@ export const useFollowMutation = () => {
         keys.userProfileFollowCount,
         (oldData: Follows) => {
           if (!oldData) return;
+
           return {
             ...oldData,
-            isFriend: !oldData.isFriend,
-            followers: oldData.isFriend
+            isFriend: !previousState.isFriend,
+            followers: previousState.isFriend
               ? oldData.followers - 1
               : oldData.followers + 1,
           };
@@ -127,10 +131,12 @@ export const useFollowMutation = () => {
           .flat()
           .some((isFriend) => isFriend) ?? false;
 
+
       queryClient.setQueryData(
         keys.currentUserFollowCount,
         (oldData: Follows) => {
           if (!oldData) return;
+
 
           return {
             ...oldData,
