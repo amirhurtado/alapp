@@ -14,12 +14,10 @@ export const userExistsAction = async (user: ClerkUser) => {
   }
   const dbUser = await prisma.user.upsert({
     where: {
-      // El campo único que usamos para buscar al usuario
       id: user.id,
     },
     update: {
-      // Campos que se actualizarían si el usuario ya existe.
-      // Podemos aprovechar para actualizar su nombre si lo cambió en GitHub.
+
       name: user.username || user.id,
       displayName:
         `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
@@ -27,7 +25,6 @@ export const userExistsAction = async (user: ClerkUser) => {
         "Usuario",
     },
     create: {
-      // Datos que se usarán para crear el usuario si NO existe.
       id: user.id,
       email: email,
       name: user.username || user.id,
