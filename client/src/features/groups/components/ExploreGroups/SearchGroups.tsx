@@ -54,10 +54,10 @@ const SearchGroups = ({
   }, [hasNextPage, fetchNextPage]);
 
   return (
-    <div className="w-full border-4, border-amber-100">
+    <div className="w-full border-y-1 border-border py-4">
       <p className="text-sm text-text-gray">Explorar grupos</p>
 
-      <div className="flex gap-2  w-full overflow-x-auto py-2 items-center">
+      <div className="flex gap-2  w-full overflow-x-auto py-2 items-center pb-4">
         {groupsrecommendations.map((group) => (
           <div key={group.id}>
             <GroupCard group={group} />
