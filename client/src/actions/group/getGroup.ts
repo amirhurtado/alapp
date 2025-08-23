@@ -113,3 +113,17 @@ export const getGroupInfoAction = async (
 
   return infoGroupWithIsMemberStatus;
 };
+
+export const getGroupsByInputAction = async (formData: FormData) => {
+  const value = formData.get("nameGroup") as string
+  const groups = await prisma.group.findMany({
+    where: {
+      name: {
+        contains: value,
+      },
+    },
+    include: includeGroup,
+  });
+
+  return groups ?? []
+};

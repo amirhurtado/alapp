@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GroupCard from "../CreateGroup/GroupCard";
 import { GroupCardType } from "@/types";
-import { Search } from "lucide-react";
+import { UserLock } from "lucide-react";
 
 interface GroupsAsAdminProps {
   groupsAsAdmin: GroupCardType[];
@@ -22,7 +22,7 @@ const GroupsAsAdmin = ({ groupsAsAdmin }: GroupsAsAdminProps) => {
 
           <>
             <div className="relative w-[16rem] ">
-              <Search
+              <UserLock
                 size={19}
                 strokeWidth={1}
                 className="absolute  top-1/2 -translate-y-1/2 left-2 "

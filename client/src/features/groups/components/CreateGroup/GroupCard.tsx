@@ -9,7 +9,7 @@ interface GroupCardProps {
 
 const GroupCard = ({ group }: GroupCardProps) => {
   return (
-    <div className="flex flex-col border-border border-1 rounded-lg p-2 min-w-max">
+    <div className="flex flex-col border-border border-1 rounded-lg p-2 min-w-max max-w-max">
       <div className="flex gap-2">
         <div className="h-[3.5rem] w-[3.5rem]   relative ">
           <Image

@@ -2,18 +2,18 @@ import { getGroupsRecommendationAction } from "@/actions/group/getGroup";
 import { GroupCardType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
-import GroupCard from "../CreateGroup/GroupCard";
+import GroupCard from "../../CreateGroup/GroupCard";
 import { useEffect, useRef } from "react";
 
-interface SearchGroupsProps {
+interface GroupsRecommendationsProps {
   currentUserId: string;
   groupRecommendations: GroupCardType[];
 }
 
-const SearchGroups = ({
+const GroupsRecommendations = ({
   currentUserId,
   groupRecommendations: initialGroupRecommendations,
-}: SearchGroupsProps) => {
+}: GroupsRecommendationsProps) => {
   const queryKey = ["groupRecommendations", { site: "explore" }];
 
   const loadMore = useRef(null);
@@ -54,9 +54,9 @@ const SearchGroups = ({
   }, [hasNextPage, fetchNextPage]);
 
   return (
-    <div className="w-full border-y-1 border-border py-4">
-      <p className="text-sm text-text-gray">Explorar grupos</p>
+    <div className="w-full pl-2">
 
+      <p className="text-xs text-text-gray mt-2">Algunas recomendaciones</p>
       <div className="flex gap-2  w-full overflow-x-auto py-2 items-center pb-4">
         {groupsrecommendations.map((group) => (
           <div key={group.id}>
@@ -71,10 +71,6 @@ const SearchGroups = ({
       <div ref={loadMore} className=" shrink-0 w-[2rem]"></div>
 
       </div>
-
-
-      
-
       {groupsrecommendations.length === 0 && (
         <p className="text-xs text-text-gray">No hay recomendaciones</p>
       )}
@@ -82,4 +78,4 @@ const SearchGroups = ({
   );
 };
 
-export default SearchGroups;
+export default GroupsRecommendations;
