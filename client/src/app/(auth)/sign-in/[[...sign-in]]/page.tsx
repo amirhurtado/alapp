@@ -2,8 +2,7 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
-import { GoogleIcon } from "@/constants";
-import { AtSign, LoaderCircle, Lock } from "lucide-react";
+import { AtSign, Github, LoaderCircle, Lock } from "lucide-react";
 import Link from "next/link";
 import Separator from "@/components/ui/Separator";
 import Logo from "@/components/ui/Logo";
@@ -31,13 +30,14 @@ const SignInPage = () => {
               className="flex flex-col gap-5 items-center md:items-start"
             >
               <Clerk.Connection
-                name="google"
-                className="md:w-full flex items-center justify-center md:justify-start"
+                name="github"
+                className="w-full flex items-center justify-center md:justify-start"
               >
-                <div className="max-w-min md:max-w-max cursor-pointer flex items-center gap-5 py-3 md:py-3 px-3 md:px-11 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
-                  <GoogleIcon />
-                  <p className="hidden md:block font-semibold text-sm md:text-lg">
-                    Inicia sesion con google
+                <div className="w-full md:max-w-max cursor-pointer flex items-center justify-center gap-5 py-3 md:py-3 px-3 md:px-13 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
+                  {/* Cambiamos el ícono y el texto */}
+                  <Github strokeWidth={1} size={25} />
+                  <p className="font-semibold text-sm md:text-lg">
+                    Registrate con GitHub
                   </p>
                 </div>
               </Clerk.Connection>
