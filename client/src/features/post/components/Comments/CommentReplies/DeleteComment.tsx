@@ -67,8 +67,7 @@ const DeleteComment = ({
         <AlertDialogHeader>
           <AlertDialogTitle>¿Estás absolutamente seguro?</AlertDialogTitle>
           <AlertDialogDescription>
-            Esta acción no se puede deshacer. Esto eliminará permanentemente el
-            post de nuestros servidores.
+            Esta acción no se puede deshacer. Esto eliminará permanentemente comentario de nuestros servidores.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

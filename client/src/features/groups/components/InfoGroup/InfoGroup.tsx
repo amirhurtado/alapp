@@ -6,7 +6,9 @@ import InfoMembers from "./InfoMembers";
 import CreateEventButton from "./CreateEventButton";
 import ToggleGroupAction from "./ToggleGroupAction";
 import { useQuery } from "@tanstack/react-query";
-import { useJoinMitation } from "../../hooks/useJoinMutation";
+import { useJoinMutation } from "../../hooks/useJoinMutation";
+import DeleteGroup from "./DeleteGroup";
+import { useDeleteGroupMutation } from "../../hooks/useDeleteGroupMutation";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
@@ -31,8 +33,9 @@ const InfoGroup = ({ infoGroup: initialData, infoUser }: InfoGroupProps) => {
     initialData: initialData,
   });
 
-  const joinMutation = useJoinMitation();
-
+  const joinMutation = useJoinMutation();
+  const deleteGroupMutation = useDeleteGroupMutation()
+ 
   const infoUserForMutation = {
     displayName: infoUser.displayName,
     id: infoUser.id,
@@ -63,15 +66,27 @@ const InfoGroup = ({ infoGroup: initialData, infoUser }: InfoGroupProps) => {
       </div>
 
       <div className="flex justify-between w-full items-center">
-        <ToggleGroupAction
-          isMember={infoGroup.isMember}
-          onAction={() =>
-            joinMutation.mutate({ groupId: infoGroup.id, infoUser: infoUserForMutation })
-          }
-        />
+        {infoUser.id === infoGroup.admin.id ? (
+          <DeleteGroup onDelete={() => deleteGroupMutation.mutate({groupId: infoGroup.id })} />
+        ) : (
+          <ToggleGroupAction
+            isMember={infoGroup.isMember}
+            onJoinAction={() =>
+              joinMutation.mutate({
+                groupId: infoGroup.id,
+                infoUser: infoUserForMutation,
+              })
+            }
+          />
+        )}
+        
         <CreateEventButton disabled={infoUser.id !== infoGroup.adminId} />
       </div>
-      <InfoMembers members={infoGroup.members} admin={infoGroup.admin} currentuserId={infoUser.id} />
+      <InfoMembers
+        members={infoGroup.members}
+        admin={infoGroup.admin}
+        currentuserId={infoUser.id}
+      />
     </div>
   );
 };

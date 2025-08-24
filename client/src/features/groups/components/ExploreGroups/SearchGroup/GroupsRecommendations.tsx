@@ -57,7 +57,7 @@ const GroupsRecommendations = ({
     <div className="w-full pl-2">
 
       <p className="text-xs text-text-gray mt-2">Algunas recomendaciones</p>
-      <div className="flex gap-2  w-full overflow-x-auto py-2 items-center pb-4">
+      <div className="flex gap-2  w-full overflow-x-auto py-2 items-center">
         {groupsrecommendations.map((group) => (
           <div key={group.id}>
             <GroupCard group={group} />
@@ -72,7 +72,7 @@ const GroupsRecommendations = ({
 
       </div>
       {groupsrecommendations.length === 0 && (
-        <p className="text-xs text-text-gray">No hay recomendaciones</p>
+        <p className="text-xs text-text-gray mb-4">No hay recomendaciones</p>
       )}
     </div>
   );

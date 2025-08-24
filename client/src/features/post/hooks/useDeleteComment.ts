@@ -1,4 +1,4 @@
-import { deleteCommentServer } from "@/actions/comment/deleteComment";
+import { deleteCommentAction } from "@/actions/comment/deleteComment";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 
@@ -7,7 +7,7 @@ export const useDeleteComment = () => {
 
     return useMutation({
         mutationFn: async ({commendId} : {commendId: number}) => {
-            return deleteCommentServer(commendId);
+            return deleteCommentAction(commendId);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["commentsReply"]})

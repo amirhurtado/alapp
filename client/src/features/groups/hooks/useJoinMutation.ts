@@ -2,7 +2,7 @@ import { toggleJoinGroupAction } from "@/actions/group/interactionsGroup";
 import { FullInfoGroup, UserCardType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useJoinMitation = () => {
+export const useJoinMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
