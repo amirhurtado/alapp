@@ -1,7 +1,7 @@
 import React from "react";
 
 import { getPostByIdAction } from "@/actions/post/getPost";
-import { getCommentsAction } from "@/actions/comment";
+import { getCommentsAction } from "@/actions/comment/comment";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { getImgUrlAction } from "@/actions/user/getUser";

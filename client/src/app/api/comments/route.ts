@@ -1,4 +1,4 @@
-import { getCommentsAction } from "@/actions/comment";
+import { getCommentsAction } from "@/actions/comment/comment";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

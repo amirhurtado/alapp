@@ -3,7 +3,7 @@ import CreateCommentReply from "./CreateCommentReply";
 import CommentCard from "../CommentCard";
 import ReplyControls from "./ReplyControls";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getCommentsByParentIdAction } from "@/actions/comment";
+import { getCommentsByParentIdAction } from "@/actions/comment/comment";
 import { useState } from "react";
 import Loader from "@/components/ui/Loader";
 

@@ -1,4 +1,4 @@
-import { createCommentAction } from "@/actions/comment";
+import { createCommentAction } from "@/actions/comment/comment";
 import { FullCommentType, FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

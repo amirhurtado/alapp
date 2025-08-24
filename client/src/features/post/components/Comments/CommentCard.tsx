@@ -4,6 +4,8 @@ import CommentReplies from "./CommentReplies/CommentReplies";
 import Content from "./Content";
 import Like from "./Like";
 import { useLikeCommentMutation } from "../../hooks/useLikeCommentMutation";
+import { useDeleteComment } from "../../hooks/useDeleteComment";
+import DeleteComment from "./CommentReplies/DeleteComment";
 
 interface CommentCardProps {
   comment: FullCommentType;
@@ -20,6 +22,8 @@ export const CommentCard = ({
   const getQueryKey = commentReply ? ["commentsReply",  {parentId: comment.parentId}] : ["comments", {postId: comment.postId}]
 
   const onLike = useLikeCommentMutation(getQueryKey);
+  const onDelete = useDeleteComment();
+
   
   return (
     <div
@@ -29,11 +33,18 @@ export const CommentCard = ({
     >
       <div className="flex w-full gap-3 ">
         <Content comment={comment} currentUserId={currentUserId} />
-        <Like
+
+        <div className="flex flex-col justify-between items-end">
+          <DeleteComment onDelete={() => onDelete.mutate({commendId: comment.id})}/>
+          <Like
           likes={comment.likesComment}
           currentUserId={currentUserId}
           onLike={() => onLike.mutate({commentId: comment.id, currentUserId: currentUserId})}
         />
+
+        </div>
+        
+        
       </div>
 
       {!commentReply && (

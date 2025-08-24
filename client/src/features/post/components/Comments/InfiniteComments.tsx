@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 import CommentCard from "./CommentCard";
 import { FullCommentType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getCommentsAction } from "@/actions/comment";
+import { getCommentsAction } from "@/actions/comment/comment";
 
 interface InfiniteCommentsProps {
   comments: Array<FullCommentType>;

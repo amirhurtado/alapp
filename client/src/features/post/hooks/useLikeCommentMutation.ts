@@ -1,4 +1,4 @@
-import { toggleLikeCommentAction } from "@/actions/comment";
+import { toggleLikeCommentAction } from "@/actions/comment/comment";
 import { FullCommentType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikeCommentLogic } from "../helpers";
