@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ReactFlagsSelect from "react-flags-select";
 
 interface EditBasicInfoUserProps {
   newBio: string;
@@ -6,19 +7,36 @@ interface EditBasicInfoUserProps {
 }
 
 const EditBasicInfoUser = ({ newBio, setNewBio }: EditBasicInfoUserProps) => {
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  console.log(selectedCountry)
+
   return (
     <div className="flex flex-col gap-4 w-full md:w-[22rem] mt-2">
       <p className="text-text-gray text-sm">Información adicional</p>
 
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2">
+        <p className="text-xs text-text-gray">Ubicación</p>
+        <ReactFlagsSelect
+          selected={selectedCountry}
+          onSelect={(code) => setSelectedCountry(code)} 
+          placeholder="Selecciona tu país"
+          searchable
+          searchPlaceholder="Buscar país..."
+
+          className="flags-select-dark-theme" 
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
         <p className="text-xs text-text-gray">Biografía</p>
         <textarea
           className="border-input border-1 rounded-lg p-4 placeholder:font-poppins font-poppins text-sm"
           value={newBio}
           onChange={(e) => {
-            setNewBio(e.target.value)
+            setNewBio(e.target.value);
           }}
-          name="bio"  
+          name="bio"
         />
       </div>
     </div>

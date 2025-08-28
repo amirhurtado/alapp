@@ -107,3 +107,63 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+.flags-select-dark-theme .rfs-select,
+.flags-select-dark-theme .ReactFlagsSelect-module_flagsSelect__2pfa2 {
+  background-color: #111111 !important;
+  border: 1px solid #2d2d2d !important;
+  color: #f5f5f5 !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  height: auto !important;
+}
+
+.flags-select-dark-theme .rfs-select-arrow {
+  border-top-color: #f5f5f5 !important;
+}
+
+.flags-select-dark-theme .rfs-menu,
+.flags-select-dark-theme .ReactFlagsSelect-module_selectOptions__3LNBJ {
+  background-color: #1c1c1c !important;
+  border: 1px solid #2d2d2d !important;
+  border-radius: 0.5rem !important;
+  color: #f5f5f5 !important;
+}
+
+.flags-select-dark-theme .ReactFlagsSelect-module_filterBox__3m8EU {
+  background-color: #1c1c1c !important; 
+  padding: 0.5rem !important;
+  border-bottom: 1px solid #2d2d2d !important;
+}
+
+.flags-select-dark-theme .ReactFlagsSelect-module_filterBox__3m8EU input {
+  background-color: #111111 !important;
+  color: #f5f5f5 !important;
+  border: 1px solid #2d2d2d !important;
+  border-radius: 0.25rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.flags-select-dark-theme .rfs-search input::placeholder {
+  color: #888888 !important;
+}
+
+.flags-select-dark-theme .rfs-option,
+.flags-select-dark-theme .ReactFlagsSelect-module_option__2-5V- {
+  color: #f5f5f5 !important;
+}
+
+.flags-select-dark-theme .ReactFlagsSelect-module_selectOptionValue__vS99-:hover,
+ .ReactFlagsSelect-module_selectOptionWithlabel__2GpmM:hover{
+  background-color: #333333 !important;
+
+}
+
+.flags-select-dark-theme .rfs-option:hover,
+.flags-select-dark-theme .ReactFlagsSelect-module_option__2-5V-:hover,
+.ReactFlagsSelect-module_filterBox__3m8EU,
+.flags-select-dark-theme .rfs-option[aria-selected="true"] {
+  background-color: #333333 !important;
+}

@@ -1,0 +1,40 @@
+/* Archivo: CustomFlags.css (Versión mejorada) */
+
+.menu-flags-dark .rfs-select {
+  background-color: var(--color-input); 
+  border: 1px solid var(--color-border);
+  color: var(--color--text-gray-light);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: auto; /* Ajuste para que el padding funcione bien */
+}
+
+.menu-flags-dark .rfs-menu {
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  color: var(--color--text-gray-light);
+}
+
+.menu-flags-dark .rfs-search input {
+  background-color: var(--background); /* O un color más oscuro si prefieres */
+  color: var(--foreground);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+
+.menu-flags-dark .rfs-search input::placeholder {
+  color: var(--color-text-gray);
+}
+
+.menu-flags-dark .rfs-option {
+  color: var(--foreground);
+}
+
+.menu-flags-dark .rfs-option:hover {
+  background-color: var(--color-hover);
+}
+
+.menu-flags-dark .rfs-option[aria-selected="true"] {
+  background-color: var(--color-hover);
+}
