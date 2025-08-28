@@ -8,19 +8,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Event{
-  id  Int @id @default(autoincrement())
+model Event {
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-
   groupId Int
-  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
-
-  title String
+  title       String
   description String
 
+  date DateTime
 }
 
 model MemberGroup {
@@ -47,7 +45,7 @@ model Group {
   admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   members MemberGroup[]
-  event Event[]
+  event   Event[]
 }
 
 model Favorite {
@@ -132,7 +130,7 @@ model Post {
   description String?  @db.VarChar(255)
   imageUrl    String?
 
-  groupId     Int?  
+  groupId Int?
 
   likesPost LikePost[]
   favorites Favorite[]
@@ -186,7 +184,7 @@ model User {
   comments     Comment[]
 
   memberOfGroups MemberGroup[]
-  adminOfGroups  Group[]      
+  adminOfGroups  Group[]
 
   followers Follow[] @relation("Follower")
   following Follow[] @relation("Following")
