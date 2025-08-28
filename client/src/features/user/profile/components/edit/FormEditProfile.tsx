@@ -33,7 +33,7 @@ const FormEditProfile = ({infoUser
     (newDisplayName === infoUser.displayName ||
       newDisplayName.trim() === "") &&
     newBio === (infoUser.profile?.bio ?? "") &&
-    !media && selectedCountry === "";
+    !media && (selectedCountry === "" || selectedCountry === infoUser.profile?.location);
 
   return (
     <form

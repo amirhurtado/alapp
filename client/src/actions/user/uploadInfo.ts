@@ -18,6 +18,7 @@ export const updateInfoUserAction = async (
       profile: {
         select: {
           bio: true,
+          location: true
         },
       },
     },
@@ -27,9 +28,9 @@ export const updateInfoUserAction = async (
   const newDisplayName = formData.get("newDisplayName") as string;
   const file = formData.get("newImageUrl") as File;
   const newBio = formData.get("bio") as string;
-
+  const newLocation = formData.get("country") as string;
   const userDataToUpdate: { displayName?: string, imageUrl?: string } = {};
-  const profileDataToUpdate: { bio?: string } = {};
+  const profileDataToUpdate: { bio?: string, location?: string } = {};
   let imgUrl : string | undefined = undefined
 
   if(file && file.size > 0){
@@ -46,6 +47,10 @@ export const updateInfoUserAction = async (
 
   if ((userData.profile?.bio ?? "") !== newBio) {
     profileDataToUpdate.bio = newBio;
+  }
+
+  if(userData.profile?.location !== newLocation ){
+    profileDataToUpdate.location = newLocation
   }
 
   if (Object.keys(userDataToUpdate).length > 0) {
