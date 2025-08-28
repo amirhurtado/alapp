@@ -3,7 +3,7 @@
 import { FullInfoGroup, FullUserType } from "@/types";
 import Image from "next/image";
 import InfoMembers from "./InfoMembers";
-import CreateEventButton from "./CreateEvent/CreateEventButton";
+import CreateEventButton from "@/features/events/components/CreateEvent/CreateEventButton";
 import ToggleGroupAction from "./ToggleGroupAction";
 import { useQuery } from "@tanstack/react-query";
 import { useJoinMutation } from "../../hooks/useJoinMutation";

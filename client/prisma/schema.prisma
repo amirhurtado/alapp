@@ -19,6 +19,10 @@ model Event {
   description String
 
   date DateTime
+
+   latitude    Float
+  longitude   Float
+
 }
 
 model MemberGroup {

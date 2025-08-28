@@ -25,16 +25,14 @@ const CreateEventButton = ({ disabled }: { disabled: boolean }) => {
           <p className=" xxl:hidden text-sm">Evento</p>
         </div>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="min-w-max max-h-[80vh] overflow-y-auto ">
         <DialogHeader>
           <DialogTitle>Crea un nuevo evento</DialogTitle>
           <DialogDescription>
             Los miembros de tu grupo podran confirmar asistencia
-           
-
           </DialogDescription>
-           <CreateEventForm />
         </DialogHeader>
+        <CreateEventForm />
       </DialogContent>
     </Dialog>
   );
