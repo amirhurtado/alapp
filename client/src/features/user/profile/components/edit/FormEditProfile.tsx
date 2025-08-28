@@ -20,6 +20,8 @@ const FormEditProfile = ({infoUser
   const [media, setMedia] = useState<null | File>(null);
   const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
   const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
+  const [selectedCountry, setSelectedCountry] = useState(infoUser.profile?.location ?? "");
+
   const inputImageRef = useRef<null | HTMLInputElement>(null);
 
   const queryKey = ["postsFeed", infoUser.id, {placement: "profile"}];
@@ -31,7 +33,7 @@ const FormEditProfile = ({infoUser
     (newDisplayName === infoUser.displayName ||
       newDisplayName.trim() === "") &&
     newBio === (infoUser.profile?.bio ?? "") &&
-    !media;
+    !media && selectedCountry === "";
 
   return (
     <form
@@ -62,7 +64,7 @@ const FormEditProfile = ({infoUser
         setNewDisplayName={setNewDisplayName}
       />
 
-      <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio} />
+      <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio}  selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry}/>
 
       <div className="flex w-full md:w-[22rem] justify-end gap-3">
         <CancelButton />
