@@ -167,3 +167,23 @@ body {
 .flags-select-dark-theme .rfs-option[aria-selected="true"] {
   background-color: #333333 !important;
 }
+
+
+.ReactFlagsSelect-module_disabledBtn__3A4GF {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  height: auto !important;
+  pointer-events: none; /* Doble seguro para evitar clics */
+}
+
+
+.flags-select-display-only .ReactFlagsSelect-module_disabledBtn__3A4GF::after {
+  display: none !important;
+}
+
+
+.ReactFlagsSelect-module_label__27pw9 {
+  font-family: var(--font-poppins);
+  font-size: .9rem !important
+}
