@@ -18,7 +18,7 @@ const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
     <div className="h-full  top-0 flex flex-col gap-6 justify-between pt-2 pb-8  ">
       <div className="relative left-[-.4rem] mt-1">
         <Link href="/" aria-label="ir a principal">
-          <Image
+          <Image  
             src={"/logo.svg"}
             alt="logo"
             width={50}

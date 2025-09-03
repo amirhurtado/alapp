@@ -1,0 +1,25 @@
+import { prisma } from "@/prisma";
+
+export const createEventAction = async (formData: FormData) => {
+  const groupId = parseInt(formData.get("groupId") as string, 10);
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const date = formData.get("date") as string;
+  const latitude = parseInt(formData.get("latitude") as string, 10);
+  const longitude = parseInt(formData.get("longitude") as string, 10);
+
+  const event = await prisma.event.create({
+    data: {
+      groupId,
+      title,
+      description,
+      date,
+      latitude,
+      longitude,
+    },
+  });
+
+  console.log(event);
+
+  return;
+};

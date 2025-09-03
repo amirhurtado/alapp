@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import CreateEventForm from "./CreateEventForm";
 
-const CreateEventButton = ({ disabled }: { disabled: boolean }) => {
+const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: number }) => {
   return (
     <Dialog>
       <DialogTrigger>
@@ -32,7 +32,7 @@ const CreateEventButton = ({ disabled }: { disabled: boolean }) => {
             Los miembros de tu grupo podran confirmar asistencia
           </DialogDescription>
         </DialogHeader>
-        <CreateEventForm />
+        <CreateEventForm groupId={groupId}/>
       </DialogContent>
     </Dialog>
   );

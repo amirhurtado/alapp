@@ -20,9 +20,8 @@ model Event {
 
   date DateTime
 
-   latitude    Float
-  longitude   Float
-
+  latitude  Float
+  longitude Float
 }
 
 model MemberGroup {

@@ -5,13 +5,20 @@ import dynamic from "next/dynamic";
 import { Calendar } from "@/components/ui/calendar";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { DialogClose } from "@/components/ui/dialog";
+import { TimePicker } from "./TimePicker";
+import { createEventAction } from "@/actions/event/createEvent";
+
+interface CreateEventFormProps {
+  groupId: number;
+}
+
 
 type Location = {
   lat: number;
   lng: number;
 };
 
-const CreateEventForm = () => {
+const CreateEventForm = ({groupId} : CreateEventFormProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -29,13 +36,14 @@ const CreateEventForm = () => {
     []
   );
 
+
   return (
-    <form className="mt-4 flex flex-col gap-6 ">
+    <form className="mt-4 flex flex-col gap-6" action={(formData) => createEventAction(formData)}>
+      <input type="hidden" name="groupId" value={groupId} />
       <div className="flex items-start flex-col gap-1 ">
         <p className="text-xs">Nombre del evento</p>
         <div className="relative">
           <input
-            id="alias"
             type="text"
             name="title"
             value={title}
@@ -71,7 +79,10 @@ const CreateEventForm = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-        <div className="flex items-start flex-col gap-1">
+
+        <div>
+
+          <div className="flex items-start flex-col gap-1">
           <p className="text-xs">Fecha</p>
           <Calendar
             mode="single"
@@ -81,6 +92,10 @@ const CreateEventForm = () => {
           />
           <input type="hidden" name="date" value={date?.toISOString()} />
         </div>
+        <TimePicker date={date} setDate={setDate}/>
+
+        </div>
+        
         <div className="flex items-start flex-col gap-4">
           <p className="text-xs">Ubicación del evento</p>
           <div className="relative">

@@ -80,7 +80,7 @@ const InfoGroup = ({ infoGroup: initialData, infoUser }: InfoGroupProps) => {
           />
         )}
         
-        <CreateEventButton disabled={infoUser.id !== infoGroup.adminId} />
+        <CreateEventButton disabled={infoUser.id !== infoGroup.adminId} groupId={infoGroup.id} />
       </div>
       <InfoMembers
         members={infoGroup.members}
