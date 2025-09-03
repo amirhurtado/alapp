@@ -9,6 +9,7 @@ import Buttons from "./Buttons";
 
 interface CreateEventFormProps {
   groupId: number;
+  onSuccess: () => void;
 }
 
 type Location = {
@@ -16,7 +17,7 @@ type Location = {
   lng: number;
 };
 
-const CreateEventForm = ({ groupId }: CreateEventFormProps) => {
+const CreateEventForm = ({ groupId, onSuccess }: CreateEventFormProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -37,7 +38,10 @@ const CreateEventForm = ({ groupId }: CreateEventFormProps) => {
   return (
     <form
       className="mt-4 flex flex-col gap-6"
-      action={(formData) => createEventAction(formData)}
+      action={async (formData) => {
+        createEventAction(formData);
+        onSuccess();
+      }}
     >
       <input type="hidden" name="groupId" value={groupId} />
       <div className="flex items-start flex-col gap-1 ">
@@ -79,7 +83,7 @@ const CreateEventForm = ({ groupId }: CreateEventFormProps) => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-        <div>
+        <div className="flex flex-col gap-2">
           <div className="flex items-start flex-col gap-1">
             <p className="text-xs">Fecha</p>
             <Calendar

@@ -1,5 +1,6 @@
+"use client"
 import { Plus } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -12,8 +13,9 @@ import {
 import CreateEventForm from "./CreateEventForm";
 
 const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: number }) => {
+    const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <div
           className={`bg-icon-green cursor-pointer ${
@@ -32,7 +34,7 @@ const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: 
             Los miembros de tu grupo podran confirmar asistencia
           </DialogDescription>
         </DialogHeader>
-        <CreateEventForm groupId={groupId}/>
+        <CreateEventForm groupId={groupId} onSuccess={() => setOpen(false)}/>
       </DialogContent>
     </Dialog>
   );
