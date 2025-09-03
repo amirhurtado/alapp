@@ -3,22 +3,20 @@ import { Captions, Info, MapPin } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { Calendar } from "@/components/ui/calendar";
-import { SubmitButton } from "@/components/ui/SubmitButton";
-import { DialogClose } from "@/components/ui/dialog";
 import { TimePicker } from "./TimePicker";
 import { createEventAction } from "@/actions/event/createEvent";
+import Buttons from "./Buttons";
 
 interface CreateEventFormProps {
   groupId: number;
 }
-
 
 type Location = {
   lat: number;
   lng: number;
 };
 
-const CreateEventForm = ({groupId} : CreateEventFormProps) => {
+const CreateEventForm = ({ groupId }: CreateEventFormProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -36,9 +34,11 @@ const CreateEventForm = ({groupId} : CreateEventFormProps) => {
     []
   );
 
-
   return (
-    <form className="mt-4 flex flex-col gap-6" action={(formData) => createEventAction(formData)}>
+    <form
+      className="mt-4 flex flex-col gap-6"
+      action={(formData) => createEventAction(formData)}
+    >
       <input type="hidden" name="groupId" value={groupId} />
       <div className="flex items-start flex-col gap-1 ">
         <p className="text-xs">Nombre del evento</p>
@@ -79,24 +79,25 @@ const CreateEventForm = ({groupId} : CreateEventFormProps) => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-
         <div>
-
           <div className="flex items-start flex-col gap-1">
-          <p className="text-xs">Fecha</p>
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="rounded-lg border"
-             disabled={(date) => date < new Date()}
-          />
-          <input type="hidden" name="date" value={date?.toISOString()} />
+            <p className="text-xs">Fecha</p>
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-lg border"
+              disabled={(date) => date < new Date()}
+            />
+            <input
+              type="hidden"
+              name="date"
+              value={date ? date.toISOString() : ""}
+            />
+          </div>
+          <TimePicker date={date} setDate={setDate} />
         </div>
-        <TimePicker date={date} setDate={setDate}/>
 
-        </div>
-        
         <div className="flex items-start flex-col gap-4">
           <p className="text-xs">Ubicación del evento</p>
           <div className="relative">
@@ -131,27 +132,15 @@ const CreateEventForm = ({groupId} : CreateEventFormProps) => {
         </div>
       </div>
 
-      <div className="flex gap-3">
-        <DialogClose asChild>
-          <button
-            type="button" // 👈 importantísimo
-            className="max-w-max text-center cursor-pointer bg-red-400 py-1 px-3 rounded-lg text-md transition-transform active:scale-[0.95]"
-          >
-            Cancelar
-          </button>
-        </DialogClose>
-
-        <SubmitButton
-          text="Crear evento"
-          disabled={
-            title === "" ||
-            description === "" ||
-            !date ||
-            !location?.lat ||
-            !location?.lng
-          }
-        />
-      </div>
+      <Buttons
+        disabled={
+          title === "" ||
+          description === "" ||
+          !date ||
+          !location?.lat ||
+          !location?.lng
+        }
+      />
     </form>
   );
 };
