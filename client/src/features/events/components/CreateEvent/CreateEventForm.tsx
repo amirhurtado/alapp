@@ -89,6 +89,7 @@ const CreateEventForm = ({groupId} : CreateEventFormProps) => {
             selected={date}
             onSelect={setDate}
             className="rounded-lg border"
+             disabled={(date) => date < new Date()}
           />
           <input type="hidden" name="date" value={date?.toISOString()} />
         </div>
