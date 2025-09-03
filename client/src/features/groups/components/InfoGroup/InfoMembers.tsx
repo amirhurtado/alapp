@@ -24,7 +24,7 @@ const InfoMembers = ({members, admin, currentuserId} : InfoMembersProps ) => {
 
   return (
     <div className="flex flex-col gap-4">
-        <div className="max-w-max">
+        <div className="max-w-max  flex flex-col gap-2">
           <p className="text-xs text-text-gray">Administrador:</p>
 
           <UserCard user={admin} isMe={currentuserId === admin.id} />

@@ -37,7 +37,7 @@ const CreateEventForm = ({ groupId, onSuccess }: CreateEventFormProps) => {
 
   return (
     <form
-      className="mt-4 flex flex-col gap-6"
+      className="mt-4 flex flex-col gap-6 !z-[1000000000000000]"
       action={async (formData) => {
         createEventAction(formData);
         onSuccess();

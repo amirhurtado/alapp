@@ -80,3 +80,5 @@ export type FullInfoGroup = GroupType & {
   }[]
   isMember: boolean
 };
+
+

@@ -15,7 +15,7 @@ import CreateEventForm from "./CreateEventForm";
 const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: number }) => {
     const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger>
         <div
           className={`bg-icon-green cursor-pointer ${

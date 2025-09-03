@@ -1,3 +1,4 @@
+import { getEventsAction } from "@/actions/event/getEvent";
 import { getGroupInfoAction } from "@/actions/group/getGroup";
 import { getUserbyNameAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
@@ -16,10 +17,10 @@ const page = async ({ params }: Props) => {
 
   if (!currUser) return;
 
-  const [infoGroup, infoUser] = await Promise.all([
+  const [infoGroup, infoUser, events] = await Promise.all([
     getGroupInfoAction(parseInt(groupId, 10), currUser.id),
-
-    getUserbyNameAction(currUser.username!)
+    getUserbyNameAction(currUser.username!),
+    getEventsAction(parseInt(groupId, 10))
   ]);
 
   if (!infoGroup || !infoUser) return;
@@ -28,7 +29,7 @@ const page = async ({ params }: Props) => {
   return (
     <div className="h-screen flex flex-col overflow-hidden gap-6">
       <BackNavigation title={`Grupo - ${infoGroup?.name}`} />
-      <InfoGroup infoGroup={infoGroup} infoUser={infoUser} />
+      <InfoGroup infoGroup={infoGroup} infoUser={infoUser} events={events}/>
     </div>
   );
 };
