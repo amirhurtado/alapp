@@ -5,6 +5,7 @@ import React, { useMemo } from "react";
 import dynamic from 'next/dynamic';     
 import { Event as EventType } from "@/generated/prisma";
 import { MapPinCheckInside, Dot } from "lucide-react";
+import TimeAgo from "@/components/ui/TimeAgo";
 
 interface EventCardProps {
   event: EventType;
@@ -62,6 +63,13 @@ const EventCard = ({ event }: EventCardProps) => {
 
         </div>
         
+      </div>
+
+      <div className="flex justify-end mt-3">
+
+      <TimeAgo createdAt={event.createdAt} />
+
+
       </div>
     </div>
   );

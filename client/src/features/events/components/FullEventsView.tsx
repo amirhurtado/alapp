@@ -1,10 +1,10 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import { Event as EventType } from "@/generated/prisma";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getEventsAction } from "@/actions/event/getEvent";
 import EventCard from "./EventCard";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, LoaderCircle } from "lucide-react";
 
 interface FullEventsViewProps {
   events: EventType[];
@@ -16,6 +16,8 @@ const FullEventsView = ({
   groupId,
 }: FullEventsViewProps) => {
   const queryKey = ["events", { groupId: groupId }];
+
+  const loadmoreRef = useRef(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -37,13 +39,28 @@ const FullEventsView = ({
 
   const events = data.pages.flatMap((page) => page);
 
+  useEffect(() => {
+    if (!loadmoreRef.current || !hasNextPage) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage)
+        fetchNextPage();
+    });
+
+    observer.observe(loadmoreRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-1 items-center mt-5 text-text-gray">
         <CalendarDays size={20} />
         <p className="text-md  font-poppins mt-1  ">Eventos del grupo :</p>
       </div>
-      
+
       <div className="flex flex-col gap-4">
         {events.map((event, index) => (
           <div key={index}>
@@ -51,7 +68,23 @@ const FullEventsView = ({
           </div>
         ))}
       </div>
+      <div
+        ref={loadmoreRef}
+        className="h-[2rem] flex items-center justify-center py-8"
+      >
+        {isFetchingNextPage && (
+          <LoaderCircle
+            className="animate-spin mx-auto text-primary-color "
+            size={24}
+          />
+        )}
 
+        {!hasNextPage && (
+          <p className="text-center text-text-gray text-sm">
+            No hay más eventos.
+          </p>
+        )}
+      </div>
       {events.length === 0 && (
         <p className="text-xs text-text-gray">No se han creado eventos</p>
       )}
