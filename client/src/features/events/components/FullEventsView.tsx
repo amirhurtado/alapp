@@ -4,6 +4,7 @@ import { Event as EventType } from "@/generated/prisma";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getEventsAction } from "@/actions/event/getEvent";
 import EventCard from "./EventCard";
+import { CalendarDays } from "lucide-react";
 
 interface FullEventsViewProps {
   events: EventType[];
@@ -38,8 +39,12 @@ const FullEventsView = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm mt-1 ">Eventos del grupo</p>
-      <div className="flex flex-col gap-3">
+      <div className="flex gap-1 items-center mt-5 text-text-gray">
+        <CalendarDays size={20} />
+        <p className="text-md  font-poppins mt-1  ">Eventos del grupo :</p>
+      </div>
+      
+      <div className="flex flex-col gap-4">
         {events.map((event, index) => (
           <div key={index}>
             <EventCard event={event} />

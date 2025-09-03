@@ -4,6 +4,7 @@
 import React, { useMemo } from "react"; 
 import dynamic from 'next/dynamic';     
 import { Event as EventType } from "@/generated/prisma";
+import { MapPinCheckInside, Dot } from "lucide-react";
 
 interface EventCardProps {
   event: EventType;
@@ -37,17 +38,30 @@ const EventCard = ({ event }: EventCardProps) => {
     : null;
 
   return (
-    <div className="border-border border-1 rounded-lg p-2">
+    <div className="border-border border-1 rounded-lg px-3 py-4 bg-hover">
       <div className="flex flex-col gap-1">
-        <p className="text-sm font-medium">{event.title}</p>
+        <div className="flex items-center gap-2">
+          <Dot  size={18}/>
+          <p className="text-sm font-medium">{event.title}</p>
+        </div>
+        
         <p className="text-sm text-text-gray">{event.description}</p>
-        <p className="text-xs text-primary-color font-semibold pt-1">{formattedDate}</p>
+        <p className="text-xs text-primary-color font-semibold pt-3"><span className="text-xs text-text-gray">Para: </span>{formattedDate}</p>
 
-        {position && (
+        <div className="flex flex-col gap-1 mt-2">
+            <div className="flex gap-1 ">
+                <MapPinCheckInside size={18} />
+                <p className="text-xs text-text-gray">Lugar de encuentro:</p>
+
+            </div>
+            {position && (
           <div className="h-40 w-full z-0 rounded-lg overflow-hidden mt-2 border">
             <EventMapDisplay position={position} />
           </div>
         )}
+
+        </div>
+        
       </div>
     </div>
   );

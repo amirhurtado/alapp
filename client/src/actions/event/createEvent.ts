@@ -10,7 +10,6 @@ export const createEventAction = async (formData: FormData) => {
   const latitude = parseFloat(formData.get("latitude") as string);
   const longitude = parseFloat(formData.get("longitude") as string);
 
-  console.log("desde action",latitude, longitude)
 
   const event = await prisma.event.create({
     data: {
@@ -23,7 +22,6 @@ export const createEventAction = async (formData: FormData) => {
     },
   });
 
-  console.log(event);
 
-  return;
+  return event;
 };

@@ -8,10 +8,12 @@ export const useCreatePostMutation = (currenUserId: string | undefined) => {
   return useMutation({
     mutationFn: ({ formData }: { formData: FormData }) =>
       createPostAction(formData),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
 
 
       const queryKeyFeed = ["postsFeed", currenUserId, {placement: "mainFeed"}]
+      await queryClient.cancelQueries({ queryKey: queryKeyFeed });
+
 
       queryClient.setQueryData(queryKeyFeed, (oldData: any) => {
 

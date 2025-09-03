@@ -4,8 +4,8 @@ import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "./TimePicker";
-import { createEventAction } from "@/actions/event/createEvent";
 import Buttons from "./Buttons";
+import { useCreateEventMutation } from "../../hooks/useCreateEventMutation";
 
 interface CreateEventFormProps {
   groupId: number;
@@ -23,6 +23,9 @@ const CreateEventForm = ({ groupId, onSuccess }: CreateEventFormProps) => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [location, setLocation] = useState<Location | null>(null);
 
+
+  const onCreate = useCreateEventMutation(groupId);
+
   const MapPicker = useMemo(
     () =>
       dynamic(
@@ -37,9 +40,9 @@ const CreateEventForm = ({ groupId, onSuccess }: CreateEventFormProps) => {
 
   return (
     <form
-      className="mt-4 flex flex-col gap-6 !z-[1000000000000000]"
+      className="mt-4 flex flex-col gap-6 "
       action={async (formData) => {
-        createEventAction(formData);
+        onCreate.mutate({formData})
         onSuccess();
       }}
     >
