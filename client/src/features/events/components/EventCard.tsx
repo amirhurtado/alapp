@@ -7,6 +7,7 @@ import { MapPinCheckInside, Dot } from "lucide-react";
 import TimeAgo from "@/components/ui/TimeAgo";
 import { DeleteEvent } from "./DeleteEvent";
 import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
+import { EventAction } from "./EventAction";
 
 interface EventCardProps {
   event: EventType;
@@ -47,7 +48,8 @@ const EventCard = ({ event, imAdmin }: EventCardProps) => {
   return (
     <div className="border-border border-1 rounded-lg px-3 py-4 bg-hover">
       <div className="flex justify-end ">
-        {imAdmin && <DeleteEvent onDelete={() => onDelete.mutate({eventId: event.id})}/>}
+      
+        {imAdmin ? <DeleteEvent onDelete={() => onDelete.mutate({eventId: event.id})}/> : <EventAction />} 
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">

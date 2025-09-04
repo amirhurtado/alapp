@@ -15,7 +15,7 @@ import FullEventsView from "@/features/events/components/FullEventsView";
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
   infoUser: FullUserType;
-  events: EventType[]
+  events: EventType[];
 }
 
 const getDate = (createdAt: Date) => {
@@ -26,7 +26,11 @@ const getDate = (createdAt: Date) => {
   });
 };
 
-const InfoGroup = ({ infoGroup: initialData, infoUser, events }: InfoGroupProps) => {
+const InfoGroup = ({
+  infoGroup: initialData,
+  infoUser,
+  events,
+}: InfoGroupProps) => {
   const queryKey = ["infoGroup", { groupId: initialData.id }];
 
   const { data: infoGroup } = useQuery({
@@ -37,8 +41,8 @@ const InfoGroup = ({ infoGroup: initialData, infoUser, events }: InfoGroupProps)
   });
 
   const joinMutation = useJoinMutation();
-  const deleteGroupMutation = useDeleteGroupMutation()
- 
+  const deleteGroupMutation = useDeleteGroupMutation();
+
   const infoUserForMutation = {
     displayName: infoUser.displayName,
     id: infoUser.id,
@@ -70,20 +74,28 @@ const InfoGroup = ({ infoGroup: initialData, infoUser, events }: InfoGroupProps)
 
       <div className="flex justify-between w-full items-center">
         {infoUser.id === infoGroup.admin.id ? (
-          <DeleteGroup onDelete={() => deleteGroupMutation.mutate({groupId: infoGroup.id })} />
-        ) : (
-          <ToggleGroupAction
-            isMember={infoGroup.isMember}
-            onJoinAction={() =>
-              joinMutation.mutate({
-                groupId: infoGroup.id,
-                infoUser: infoUserForMutation,
-              })
+          <DeleteGroup
+            onDelete={() =>
+              deleteGroupMutation.mutate({ groupId: infoGroup.id })
             }
           />
+        ) : (
+          <div className="flex justify-end w-full ">
+            <ToggleGroupAction
+              isMember={infoGroup.isMember}
+              onJoinAction={() =>
+                joinMutation.mutate({
+                  groupId: infoGroup.id,
+                  infoUser: infoUserForMutation,
+                })
+              }
+            />
+          </div>
         )}
-        
-      <CreateEventButton disabled={infoUser.id !== infoGroup.adminId} groupId={infoGroup.id} />
+
+        {infoUser.id === infoGroup.adminId && (
+          <CreateEventButton groupId={infoGroup.id} />
+        )}
       </div>
       <InfoMembers
         members={infoGroup.members}
@@ -91,7 +103,11 @@ const InfoGroup = ({ infoGroup: initialData, infoUser, events }: InfoGroupProps)
         currentuserId={infoUser.id}
       />
 
-      <FullEventsView events={events} groupId={infoGroup.id} imAdmin={infoGroup.adminId === infoUser.id} />
+      <FullEventsView
+        events={events}
+        groupId={infoGroup.id}
+        imAdmin={infoGroup.adminId === infoUser.id}
+      />
     </div>
   );
 };

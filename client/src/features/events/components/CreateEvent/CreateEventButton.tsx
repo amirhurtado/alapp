@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
@@ -12,15 +12,15 @@ import {
 } from "@/components/ui/dialog";
 import CreateEventForm from "./CreateEventForm";
 
-const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: number }) => {
-    const [open, setOpen] = useState(false);
+const CreateEventButton = ({ groupId }: { groupId: number }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <div
-          className={`bg-icon-green cursor-pointer ${
-            disabled && "opacity-[0.2]"
-          } text-black text-center rounded-lg max-w-mas px-2 py-2  xxl:h-auto flex items-center gap-2 md:gap-3  `}
+          className={`bg-icon-green cursor-pointer 
+           
+           text-black text-center rounded-lg max-w-mas px-2 py-2  xxl:h-auto flex items-center gap-2 md:gap-3  `}
         >
           <Plus size={19} />
           <p className="hidden xxl:block ">Crear evento</p>
@@ -34,7 +34,7 @@ const CreateEventButton = ({ disabled, groupId }: { disabled: boolean, groupId: 
             Los miembros de tu grupo podran confirmar asistencia
           </DialogDescription>
         </DialogHeader>
-        <CreateEventForm groupId={groupId} onSuccess={() => setOpen(false)}/>
+        <CreateEventForm groupId={groupId} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

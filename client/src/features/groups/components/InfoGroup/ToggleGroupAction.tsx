@@ -7,7 +7,7 @@ interface ToggleGroupActionprops {
 
 const ToggleGroupAction = ({ isMember, onJoinAction }: ToggleGroupActionprops) => {
   return (
-    <div>
+    <div >
       {isMember ? (
         <div className=" hover:text-white px-3 rounded-lg h-8 flex items-center cursor-pointer bg-red-400 active:scale-[0.95] transition-all duration-200 ease-in">
           <button onClick={onJoinAction} aria-label="Unirte" className="text-sm  cursor-pointer ">
