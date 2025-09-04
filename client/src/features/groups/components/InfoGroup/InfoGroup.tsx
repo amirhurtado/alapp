@@ -91,7 +91,7 @@ const InfoGroup = ({ infoGroup: initialData, infoUser, events }: InfoGroupProps)
         currentuserId={infoUser.id}
       />
 
-      <FullEventsView events={events} groupId={infoGroup.id} />
+      <FullEventsView events={events} groupId={infoGroup.id} imAdmin={infoGroup.adminId === infoUser.id} />
     </div>
   );
 };

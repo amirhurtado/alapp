@@ -4,7 +4,7 @@ import CommentReplies from "./CommentReplies/CommentReplies";
 import Content from "./Content";
 import Like from "./Like";
 import { useLikeCommentMutation } from "../../hooks/useLikeCommentMutation";
-import { useDeleteComment } from "../../hooks/useDeleteComment";
+import { useDeleteCommentMutation } from "../../hooks/useDeleteCommentMutation";
 import DeleteComment from "./CommentReplies/DeleteComment";
 
 interface CommentCardProps {
@@ -22,7 +22,7 @@ export const CommentCard = ({
   const getQueryKey = commentReply ? ["commentsReply",  {parentId: comment.parentId}] : ["comments", {postId: comment.postId}]
 
   const onLike = useLikeCommentMutation(getQueryKey);
-  const onDelete = useDeleteComment();
+  const onDelete = useDeleteCommentMutation();
 
   
   return (

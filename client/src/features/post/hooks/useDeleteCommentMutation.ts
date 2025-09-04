@@ -2,7 +2,7 @@ import { deleteCommentAction } from "@/actions/comment/deleteComment";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 
-export const useDeleteComment = () => {
+export const useDeleteCommentMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({

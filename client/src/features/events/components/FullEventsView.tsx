@@ -9,11 +9,13 @@ import { CalendarDays, LoaderCircle } from "lucide-react";
 interface FullEventsViewProps {
   events: EventType[];
   groupId: number;
+  imAdmin: boolean;
 }
 
 const FullEventsView = ({
   events: initialEvents,
   groupId,
+  imAdmin,
 }: FullEventsViewProps) => {
   const queryKey = ["events", { groupId: groupId }];
 
@@ -64,7 +66,7 @@ const FullEventsView = ({
       <div className="flex flex-col gap-4">
         {events.map((event, index) => (
           <div key={index}>
-            <EventCard event={event} />
+            <EventCard event={event} imAdmin={imAdmin} />
           </div>
         ))}
       </div>
@@ -85,9 +87,7 @@ const FullEventsView = ({
           </p>
         )}
       </div>
-      {events.length === 0 && (
-        <p className="text-xs text-text-gray">No se han creado eventos</p>
-      )}
+      
     </div>
   );
 };
