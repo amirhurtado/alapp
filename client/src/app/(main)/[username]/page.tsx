@@ -36,7 +36,7 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <div className="h-screen flex flex-col overflow-x-hidden overflow-y-auto ">
-      <BackNavigation title={nameProfile()} subtitle={`${posts.length} posts`} />
+      <BackNavigation title={nameProfile()} subtitle={`Aqui encuentras información personal`} />
       <HeaderProfiler
         userProfileInfo={userProfile}
         currentUserId={currUser.id}
