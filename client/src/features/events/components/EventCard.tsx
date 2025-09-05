@@ -8,6 +8,7 @@ import TimeAgo from "@/components/ui/TimeAgo";
 import { DeleteEvent } from "./DeleteEvent";
 import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
 import { EventAction } from "./EventAction";
+import { useToggleAssistance } from "../hooks/useToggleAssistance";
 
 interface EventCardProps {
   event: FullEventType;
@@ -26,7 +27,7 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
     hour12: true,
   });
 
-  const onDelete =  useDeleteEventMutation(event.groupId)
+  const onDelete = useDeleteEventMutation(event.groupId);
 
   const EventMapDisplay = useMemo(
     () =>
@@ -46,10 +47,25 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
       ? { lat: event.latitude, lng: event.longitude }
       : null;
 
+  const onAction = useToggleAssistance(event.groupId);
+
   return (
     <div className="border-border border-1 rounded-lg px-3 py-4 bg-hover">
       <div className="flex justify-end ">
-        {imAdmin ? <DeleteEvent onDelete={() => onDelete.mutate({eventId: event.id})}/> : <EventAction confirmed={event.usersConfirm.some(user => user.userId === currentUserId)} />} 
+        {imAdmin ? (
+          <DeleteEvent
+            onDelete={() => onDelete.mutate({ eventId: event.id })}
+          />
+        ) : (
+          <EventAction
+            confirmed={event.usersConfirm.some(
+              (user) => user.userId === currentUserId
+            )}
+            onAction={() =>
+              onAction.mutate({ eventId: event.id, userId: currentUserId })
+            }
+          />
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
@@ -77,9 +93,9 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
       </div>
 
       <div className="flex justify-end mt-3 items-center gap-3">
-        
-
-        <p className="text-xs text-text-gray">Confirmados: {event.usersConfirm.length}</p>
+        <p className="text-xs text-text-gray">
+          Confirmados: {event.usersConfirm.length}
+        </p>
         <TimeAgo createdAt={event.createdAt} />
       </div>
     </div>
