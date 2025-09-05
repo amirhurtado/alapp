@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { Event as EventType } from "@/generated/prisma";
+import { FullEventType } from "@/types";
 import { MapPinCheckInside, Dot } from "lucide-react";
 import TimeAgo from "@/components/ui/TimeAgo";
 import { DeleteEvent } from "./DeleteEvent";
@@ -10,11 +10,12 @@ import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
 import { EventAction } from "./EventAction";
 
 interface EventCardProps {
-  event: EventType;
+  event: FullEventType;
   imAdmin: boolean;
+  currentUserId: string;
 }
 
-const EventCard = ({ event, imAdmin }: EventCardProps) => {
+const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleString("es-CO", {
     weekday: "long",
@@ -48,8 +49,7 @@ const EventCard = ({ event, imAdmin }: EventCardProps) => {
   return (
     <div className="border-border border-1 rounded-lg px-3 py-4 bg-hover">
       <div className="flex justify-end ">
-      
-        {imAdmin ? <DeleteEvent onDelete={() => onDelete.mutate({eventId: event.id})}/> : <EventAction />} 
+        {imAdmin ? <DeleteEvent onDelete={() => onDelete.mutate({eventId: event.id})}/> : <EventAction confirmed={event.usersConfirm.some(user => user.userId === currentUserId)} />} 
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
@@ -76,7 +76,10 @@ const EventCard = ({ event, imAdmin }: EventCardProps) => {
         </div>
       </div>
 
-      <div className="flex justify-end mt-3">
+      <div className="flex justify-end mt-3 items-center gap-3">
+        
+
+        <p className="text-xs text-text-gray">Confirmados: {event.usersConfirm.length}</p>
         <TimeAgo createdAt={event.createdAt} />
       </div>
     </div>

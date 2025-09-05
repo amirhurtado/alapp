@@ -2,6 +2,7 @@ import { User as UserType } from "@/generated/prisma";
 import { Post as PostType } from "@/generated/prisma";
 import { Comment as CommentType } from "@/generated/prisma";
 import { Group as GroupType } from "@/generated/prisma";
+import { Event as EventType } from "@/generated/prisma";
 
 export type FullUserType = UserType & {
   profile: InfoProfile | null;
@@ -82,3 +83,10 @@ export type FullInfoGroup = GroupType & {
 };
 
 
+
+
+export type FullEventType = EventType & {
+  usersConfirm: {
+    userId: string;
+  }[];
+}

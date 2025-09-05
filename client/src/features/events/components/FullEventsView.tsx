@@ -1,21 +1,23 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Event as EventType } from "@/generated/prisma";
+import { FullEventType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getEventsAction } from "@/actions/event/getEvent";
 import EventCard from "./EventCard";
 import { CalendarDays, LoaderCircle } from "lucide-react";
 
 interface FullEventsViewProps {
-  events: EventType[];
+  events: FullEventType[];
   groupId: number;
   imAdmin: boolean;
+  currentUserId: string;
 }
 
 const FullEventsView = ({
   events: initialEvents,
   groupId,
   imAdmin,
+  currentUserId,
 }: FullEventsViewProps) => {
   const queryKey = ["events", { groupId: groupId }];
 
@@ -66,7 +68,7 @@ const FullEventsView = ({
       <div className="flex flex-col gap-4">
         {events.map((event, index) => (
           <div key={index}>
-            <EventCard event={event} imAdmin={imAdmin} />
+            <EventCard event={event} imAdmin={imAdmin} currentUserId={currentUserId} />
           </div>
         ))}
       </div>

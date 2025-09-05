@@ -9,13 +9,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useJoinMutation } from "../../hooks/useJoinMutation";
 import DeleteGroup from "./DeleteGroup";
 import { useDeleteGroupMutation } from "../../hooks/useDeleteGroupMutation";
-import { Event as EventType } from "@/generated/prisma";
+import { FullEventType} from "@/types";
 import FullEventsView from "@/features/events/components/FullEventsView";
 
 interface InfoGroupProps {
   infoGroup: FullInfoGroup;
   infoUser: FullUserType;
-  events: EventType[];
+  events: FullEventType[];
 }
 
 const getDate = (createdAt: Date) => {
@@ -107,6 +107,7 @@ const InfoGroup = ({
         events={events}
         groupId={infoGroup.id}
         imAdmin={infoGroup.adminId === infoUser.id}
+        currentUserId={infoUser.id}
       />
     </div>
   );
