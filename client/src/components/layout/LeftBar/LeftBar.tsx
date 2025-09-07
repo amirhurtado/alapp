@@ -8,6 +8,7 @@ import ModalCreatePost from "@/features/post/components/CreatePost/ModalCreatePo
 import { User as UserType } from "@/generated/prisma";
 
 import UserProfiletab from "./UserProfiletab";
+import Socket from "@/components/Socket";
 
 const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
 
@@ -43,6 +44,7 @@ const LeftBar = ({ currentUser }: { currentUser: UserType }) => {
       </div>
 
       <UserProfiletab currentUser={currentUser} />
+      <Socket />
     </div>
   );
 };

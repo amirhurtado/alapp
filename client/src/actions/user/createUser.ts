@@ -6,7 +6,6 @@ import { currentUser } from "@clerk/nextjs/server";
 type ClerkUser = NonNullable<Awaited<ReturnType<typeof currentUser>>>;
 
 export const userExistsAction = async (user: ClerkUser) => {
-  console.log("Sincronizando usuario con la base de datos:", user);
 
   const email = user.emailAddresses[0]?.emailAddress;
   if (!email) {
@@ -35,6 +34,5 @@ export const userExistsAction = async (user: ClerkUser) => {
     },
   });
 
-  console.log("Usuario sincronizado correctamente:", dbUser.id);
   return dbUser;
 };
