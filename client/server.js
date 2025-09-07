@@ -32,13 +32,12 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
     socket.on("newUser", (username) => {
-        addUser(username, socket.id)
-    })
-  });
+      addUser(username, socket.id);
+    });
 
-
-  io.on("disconnect", (socket) => {
-    removeUser(socket.id);
+    socket.on("disconnect", () => {
+      removeUser(socket.id);
+    });
   });
 
   httpServer
