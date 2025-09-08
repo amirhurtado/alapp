@@ -11,6 +11,8 @@ const page = async () => {
 
   const notifications = await getNoticationsAction(currUser.id)
 
+  console.log(notifications);
+
 
   return <div>
     <BackNavigation title="Notificaciones" subtitle="Aqui encuentras todas tus notificaciones" />

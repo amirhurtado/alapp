@@ -42,8 +42,8 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
       receiverId: post.authorId,
       senderId: userId,
       link: `${post.authorId}/post/${postId}`,
+      message: "le dió me gusta a tu publicación",
     };
-
     createNotificationAction(data);
   }
 

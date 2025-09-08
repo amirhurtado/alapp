@@ -2,13 +2,14 @@
 "use client"
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
-import { Notification as NotificationType } from "@/generated/prisma";
+import { fullNotificationType } from '@/types';
+
 import { getNoticationsAction } from "@/actions/notification/getNotification";
 import NotificationCard from "./NotificationCard";
 import { LoaderCircle } from "lucide-react";
 
 interface FullNotificationsViewProps {
-  notifications: NotificationType[];
+  notifications: fullNotificationType[];
   currentUserId: string;
 }
 
@@ -52,11 +53,12 @@ const FullNotificationsView = ({
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+
   const notifications = data?.pages.flatMap((page) => page) ?? [];
 
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-4">
       {notifications.map((notification, index) => (
         <div key={index}>
           <NotificationCard notification={notification} />

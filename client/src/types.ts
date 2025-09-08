@@ -4,6 +4,8 @@ import { Comment as CommentType } from "@/generated/prisma";
 import { Group as GroupType } from "@/generated/prisma";
 import { Event as EventType } from "@/generated/prisma";
 
+import { Notification as NotificationType } from "@/generated/prisma";
+
 export type FullUserType = UserType & {
   profile: InfoProfile | null;
   _count: {
@@ -71,22 +73,28 @@ export type GroupCardType = GroupType & {
 
 export type FullInfoGroup = GroupType & {
   admin: {
-    id: string
+    id: string;
     name: string;
     displayName: string;
     imageUrl: string;
   };
   members: {
-    user: UserCardType
-  }[]
-  isMember: boolean
+    user: UserCardType;
+  }[];
+  isMember: boolean;
 };
-
-
-
 
 export type FullEventType = EventType & {
   usersConfirm: {
     userId: string;
   }[];
-}
+};
+
+export type fullNotificationType = NotificationType & {
+  sender: {
+    displayName: string;
+    id: string;
+    imageUrl: string;
+    name: string;
+  };
+};
