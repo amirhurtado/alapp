@@ -2,7 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { postIncludes } from "./constants";
-import { socket } from "@/socket";
+import { createNotificationAction } from "../notification/createNotification";
 
 export const toggleLikePostAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
@@ -37,38 +37,14 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
   });
 
   if (post && post.authorId !== userId) {
-    const notification = await prisma.notification.create({
-      data: {
-        type: "like",
-        receiverId: post.authorId,
-        senderId: userId,
-        link: `${post.authorId}/post/${postId}`,
-      },
-      include: {
-        sender: {
-          select: {
-            id: true,
-            name: true,
-            displayName: true,
-            imageUrl: true,
-          },
-        },
-      },
-    });
+    const data = {
+      type: "like",
+      receiverId: post.authorId,
+      senderId: userId,
+      link: `${post.authorId}/post/${postId}`,
+    };
 
-    socket.emit("sendNotification", {
-      receiverUserId: post.authorId,
-      data: {
-        sender: {
-          id: notification.sender.id,
-          name: notification.sender.name,
-          displayName: notification.sender.displayName,
-          imageUrl: notification.sender.imageUrl,
-        },
-        type: "likePost",
-        link: `${post.authorId}/post/${postId}`,
-      },
-    });
+    createNotificationAction(data);
   }
 
   return post;

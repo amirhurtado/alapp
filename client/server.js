@@ -2,7 +2,6 @@ import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
 
-import { v4 as uuidv4 } from "uuid"
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
@@ -44,10 +43,7 @@ app.prepare().then(() => {
 
     socket.on("sendNotificacion", ({receiveruserId, data}) => {
         const receiver = getUser(receiveruserId);
-        io.to(receiver.socketId).emit("getNotification", {
-            id: uuidv4(),
-            ...data
-        });
+        io.to(receiver.socketId).emit("getNotification", data);
     })
 
     socket.on("disconnect", () => {
