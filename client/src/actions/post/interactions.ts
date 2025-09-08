@@ -51,14 +51,22 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {
-  const existFavorite = await prisma.favorite.findUnique({
-    where: {
-      userId_postId: {
-        userId,
-        postId,
+  const [existFavorite, post] = await Promise.all([
+    prisma.favorite.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
       },
-    },
-  });
+    }),
+    prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+      include: postIncludes,
+    }),
+  ]);
 
   if (existFavorite) {
     await prisma.favorite.delete({
@@ -74,18 +82,40 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
       },
     });
   }
+
+  if (post && post.authorId !== userId) {
+    const data = {
+      type: "like",
+      receiverId: post.authorId,
+      senderId: userId,
+      link: `${post.authorId}/post/${postId}`,
+      message: "agregó a favoritos tu publicación",
+    };
+    createNotificationAction(data);
+  }
+
   return;
 };
 
 export const toggleRepostAction = async (postId: number, userId: string) => {
-  const existRepost = await prisma.repost.findUnique({
-    where: {
-      userId_postId: {
-        userId,
-        postId,
+  const [existRepost, post] = await Promise.all([
+    prisma.repost.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
       },
-    },
-  });
+    }),
+    prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+      include: postIncludes,
+    }),
+  ]);
+
+ 
 
   if (existRepost) {
     await prisma.repost.delete({
@@ -100,6 +130,17 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
         postId,
       },
     });
+  }
+
+  if (post && post.authorId !== userId) {
+    const data = {
+      type: "repost",
+      receiverId: post.authorId,
+      senderId: userId,
+      link: `${post.authorId}/post/${postId}`,
+      message: "compartió tu publicación",
+    };
+    createNotificationAction(data);
   }
 };
 
