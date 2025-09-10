@@ -1,4 +1,4 @@
-import { ImagePlus, Video, MapPinPlus, Smile } from "lucide-react";
+import { ImagePlus, Video, Smile } from "lucide-react";
 
 interface MediaOptionsProps {
   imageInputId: string;
@@ -7,6 +7,7 @@ interface MediaOptionsProps {
   videoInputId: string;
   handleVideoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   videoInputRef: React.RefObject<HTMLInputElement | null>;
+  onSmileClick: () => void; // <-- 1. AÑADIMOS LA NUEVA PROP
 }
 
 const MediaOptions = ({
@@ -16,9 +17,11 @@ const MediaOptions = ({
   videoInputId,
   handleVideoChange,
   videoInputRef,
+  onSmileClick, // <-- Recibimos la prop
 }: MediaOptionsProps) => {
   return (
     <div className="flex gap-3 text-primary-color">
+      {/* Input de Imagen (sin cambios) */}
       <div>
         <input
           type="file"
@@ -34,6 +37,7 @@ const MediaOptions = ({
         </label>
       </div>
 
+      {/* Input de Video (sin cambios) */}
       <div>
         <input
           type="file"
@@ -49,8 +53,10 @@ const MediaOptions = ({
         </label>
       </div>
 
-      <MapPinPlus size={20} />
-      <Smile size={20} />
+      {/* 2. CONVERTIMOS EL ÍCONO EN UN BOTÓN */}
+      <button type="button" onClick={onSmileClick} className="cursor-pointer">
+        <Smile size={20} />
+      </button>
     </div>
   );
 };

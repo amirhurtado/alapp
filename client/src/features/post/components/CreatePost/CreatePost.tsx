@@ -4,9 +4,11 @@ import React, { useState, useId, useRef } from "react";
 import Avatar from "@/components/ui/Avatar";
 import { BadgeAlert } from "lucide-react";
 import { SubmitButton } from "@/components/ui/SubmitButton";
-import PreviewMedia from "./PreviewMedia"; 
+import PreviewMedia from "./PreviewMedia";
 import MediaOptions from "./MediaOptions";
 import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
+import Picker, { Theme } from "emoji-picker-react";
+import { useOnClickOutside } from "@/features/post/hooks/useOnClickOutside";
 
 interface CreatePostProps {
   modal?: boolean;
@@ -26,11 +28,15 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
 
   const [description, setDescription] = useState<string>("");
   const [media, setMedia] = useState<MediaState | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const imageInputId = useId();
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputId = useId();
   const videoInputRef = useRef<HTMLInputElement>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(pickerRef, () => setShowEmojiPicker(false));
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -43,7 +49,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Limpiamos el otro input
       if (imageInputRef.current) imageInputRef.current.value = "";
       setMedia({ file, type: "video" });
     }
@@ -55,9 +60,13 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setMedia(null);
   };
 
+  const handleEmojiClick = (emojiObject: { emoji: string }) => {
+    setDescription((prevDescription) => prevDescription + emojiObject.emoji);
+  };
+
   return (
     <div className={`${!modal && "p-4 md:mt-2"}`}>
-      <div className="flex w-full gap-3">
+      <div className="relative flex w-full gap-3">
         {!modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
 
         <form
@@ -107,6 +116,7 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
                 videoInputId={videoInputId}
                 handleVideoChange={handleVideoChange}
                 videoInputRef={videoInputRef}
+                onSmileClick={() => setShowEmojiPicker(!showEmojiPicker)}
               />
 
               <SubmitButton
@@ -116,6 +126,23 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
             </div>
           </div>
         </form>
+
+        {showEmojiPicker && (
+          <div ref={pickerRef} className="absolute top-full left-0 z-10 mt-2">
+            <Picker
+              onEmojiClick={handleEmojiClick}
+              theme={Theme.DARK}
+              height={300}
+              width="100%"
+              searchDisabled
+              
+              previewConfig={{
+                showPreview: false,
+              }}
+              
+            />
+          </div>
+        )}
       </div>
     </div>
   );

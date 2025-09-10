@@ -187,3 +187,16 @@ body {
   font-family: var(--font-poppins);
   font-size: .9rem !important
 }
+
+/* Quita el círculo del botón activo */
+.epr-category-nav .epr-btn.epr-active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+
+
+.epr-emoji-category-label {
+  font-size: 12px !important; /* ajusta según lo que quieras */
+}
