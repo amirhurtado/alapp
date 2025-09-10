@@ -52,6 +52,7 @@ export type InfoProfile = {
   bio: string | null;
   location: string | null;
   website: string | null;
+  bg: string | null;
 };
 
 export type UserCardType = {

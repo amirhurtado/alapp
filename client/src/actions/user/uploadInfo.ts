@@ -18,7 +18,8 @@ export const updateInfoUserAction = async (
       profile: {
         select: {
           bio: true,
-          location: true
+          location: true,
+          bg: true
         },
       },
     },
@@ -29,8 +30,10 @@ export const updateInfoUserAction = async (
   const file = formData.get("newImageUrl") as File;
   const newBio = formData.get("bio") as string;
   const newLocation = formData.get("country") as string;
+  const newBg = formData.get("bg") as string;
+
   const userDataToUpdate: { displayName?: string, imageUrl?: string } = {};
-  const profileDataToUpdate: { bio?: string, location?: string } = {};
+  const profileDataToUpdate: { bio?: string, location?: string, bg?: string } = {};
   let imgUrl : string | undefined = undefined
 
   if(file && file.size > 0){
@@ -49,9 +52,18 @@ export const updateInfoUserAction = async (
     profileDataToUpdate.bio = newBio;
   }
 
-  if(userData.profile?.location ?? "" !== newLocation ){
+  if((userData.profile?.location ?? "") !== newLocation ){
     profileDataToUpdate.location = newLocation
   }
+
+  console.log("NEWWWWBG ES ", newBg)
+
+  if ((userData.profile?.bg ?? "") !== newBg) { 
+    profileDataToUpdate.bg = newBg;
+  }
+
+
+  console.log("nuevo",profileDataToUpdate.bg)
 
 
   if (Object.keys(userDataToUpdate).length > 0) {
@@ -61,6 +73,8 @@ export const updateInfoUserAction = async (
     });
   }
   if (Object.keys(profileDataToUpdate).length > 0) {
+
+    console.log("ACA ENTRO", profileDataToUpdate)
     await prisma.profile.upsert({
       where: { userId },
       update: profileDataToUpdate,
@@ -68,7 +82,9 @@ export const updateInfoUserAction = async (
       create: {
         userId,
         bio: profileDataToUpdate.bio,
-        location: profileDataToUpdate.location
+        location: profileDataToUpdate.location,
+        bg: profileDataToUpdate.bg
+        
       },
     });
   }

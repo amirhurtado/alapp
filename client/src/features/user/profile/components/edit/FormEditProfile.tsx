@@ -10,43 +10,57 @@ import { SubmitButton } from "@/components/ui/SubmitButton";
 import CancelButton from "@/components/ui/CancelButton";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+
 interface FormEditProfileProps {
   infoUser: FullUserType;
-  
 }
 
-const FormEditProfile = ({infoUser
-}: FormEditProfileProps) => {
+const FormEditProfile = ({ infoUser }: FormEditProfileProps) => {
   const [media, setMedia] = useState<null | File>(null);
   const [newDisplayName, setNewDisplayName] = useState(infoUser.displayName);
   const [newBio, setNewBio] = useState(infoUser.profile?.bio ?? "");
-  const [selectedCountry, setSelectedCountry] = useState(infoUser.profile?.location ?? "");
+  const [selectedCountry, setSelectedCountry] = useState(
+    infoUser.profile?.location ?? ""
+  );
+  const [selectedBg, setSelectedBg] = useState(infoUser.profile?.bg ?? "");
 
   const inputImageRef = useRef<null | HTMLInputElement>(null);
-
-  const queryKey = ["postsFeed", infoUser.id, {placement: "profile"}];
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const queryKey = ["postsFeed", infoUser.id, { placement: "profile" }];
 
-  const router = useRouter()
+
+  const originalBio = infoUser.profile?.bio ?? "";
+  const originalLocation = infoUser.profile?.location ?? "";
+  const originalBg = infoUser.profile?.bg ?? "";
+  const defaultBg = "blue-purple"; 
+
+  const displayNameIsUnchanged =
+    newDisplayName === infoUser.displayName || newDisplayName.trim() === "";
+  const bioIsUnchanged = newBio === originalBio;
+  const locationIsUnchanged = selectedCountry === originalLocation;
+  const imageIsUnchanged = !media;
+
+  const bgIsUnchanged =
+    selectedBg === originalBg || (originalBg === "" && selectedBg === defaultBg);
 
   const disabledSubmit =
-    (newDisplayName === infoUser.displayName ||
-      newDisplayName.trim() === "") &&
-    newBio === (infoUser.profile?.bio ?? "") &&
-    !media && (selectedCountry === "" || selectedCountry === infoUser.profile?.location);
+    displayNameIsUnchanged &&
+    bioIsUnchanged &&
+    locationIsUnchanged &&
+    imageIsUnchanged &&
+    bgIsUnchanged;
+
 
   return (
     <form
       className="flex flex-col p-4 gap-8 max-h-screen overflow-y-auto "
       action={async (formData) => {
         await updateInfoUserAction(formData, infoUser.id);
-        queryClient.invalidateQueries({queryKey})
-
-        router.push(`/${infoUser.name}`)
-
+        queryClient.invalidateQueries({ queryKey });
+        router.push(`/${infoUser.name}`);
       }}
     >
-
       <EditImageProfile
         imageUrl={infoUser.imageUrl}
         media={media}
@@ -64,7 +78,14 @@ const FormEditProfile = ({infoUser
         setNewDisplayName={setNewDisplayName}
       />
 
-      <EditBasicInfoUser newBio={newBio} setNewBio={setNewBio}  selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry}/>
+      <EditBasicInfoUser
+        newBio={newBio}
+        setNewBio={setNewBio}
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}
+        selectedBg={selectedBg}
+        setSelectedBg={setSelectedBg}
+      />
 
       <div className="flex w-full md:w-[22rem] justify-end gap-3">
         <CancelButton />

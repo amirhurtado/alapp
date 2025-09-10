@@ -193,6 +193,7 @@ model Profile {
   bio      String?
   location String?
   website  String?
+  bg       String?
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

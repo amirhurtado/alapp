@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Profile` ADD COLUMN `bg` VARCHAR(191) NULL;

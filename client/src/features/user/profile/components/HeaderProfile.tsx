@@ -22,7 +22,7 @@ const HeaderProfiler = ({
       <div className="relative flex flex-col mb-6 ">
         {/* Profile Header */}
 
-        <HeroProfile imgurl={userProfileInfo.imageUrl} />
+        <HeroProfile imgurl={userProfileInfo.imageUrl}  bg={userProfileInfo.profile?.bg ?? ""}/>
 
         <ProfileActions
           currentUserId={currentUserId}
