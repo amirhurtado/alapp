@@ -13,7 +13,6 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
       },
     },
   });
-
   if (existLike) {
     await prisma.likePost.delete({
       where: {

@@ -49,9 +49,10 @@ export const updateInfoUserAction = async (
     profileDataToUpdate.bio = newBio;
   }
 
-  if(userData.profile?.location !== newLocation ){
+  if(userData.profile?.location ?? "" !== newLocation ){
     profileDataToUpdate.location = newLocation
   }
+
 
   if (Object.keys(userDataToUpdate).length > 0) {
     await prisma.user.update({
@@ -67,6 +68,7 @@ export const updateInfoUserAction = async (
       create: {
         userId,
         bio: profileDataToUpdate.bio,
+        location: profileDataToUpdate.location
       },
     });
   }
