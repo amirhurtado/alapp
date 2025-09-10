@@ -64,7 +64,8 @@ const PostCard = ({ post, currentUserId, queryKey, fromPostInfo }: PostProps) =>
 
           <Body
             postDescription={post.description}
-            postImageUrl={post.imageUrl}
+            postMediaUrl={post.mediaUrl}
+            postMediaType={post.mediaType}
           />
 
           <PostInteractions

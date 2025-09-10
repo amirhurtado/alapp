@@ -1,6 +1,5 @@
 "use server"
 
-
 import { prisma } from "@/prisma";
 import { uploadFile } from "../constants";
 import { postIncludes } from "./constants";
@@ -10,18 +9,26 @@ export const createPostAction = async (formData: FormData) => {
     const authorId = formData.get("authorId") as string;
     const description = formData.get("description") as string;
     const image = formData.get("image") as File;
+    const video = formData.get("video") as File; 
 
-    let urlImage: string | undefined = undefined;
+    let mediaUrl: string | undefined = undefined;
+    let mediaType: string | undefined = undefined;
 
+    // Decidimos qué archivo subir
     if (image && image.size > 0) {
-      urlImage = await uploadFile(image, "/posts");
+      mediaUrl = await uploadFile(image, "/posts");
+      mediaType = "IMAGE";
+    } else if (video && video.size > 0) {
+      mediaUrl = await uploadFile(video, "/posts");
+      mediaType = "VIDEO";
     }
 
     const post = await prisma.post.create({
       data: {
         authorId,
         description,
-        imageUrl: urlImage,
+        mediaUrl: mediaUrl,   
+        mediaType: mediaType, 
       },
       include: postIncludes,
     });
