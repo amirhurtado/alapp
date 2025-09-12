@@ -23,3 +23,32 @@ export const createNotificationAction = async (
   });
   return notification;
 };
+
+
+
+
+
+export async function handlePostNotification(
+  post: { authorId: string } | null, 
+  userId: string,
+  postId: number,
+  notificationType: "like" | "favorite" | "repost",
+  notificationMessage: string
+) {
+  if (post && post.authorId !== userId) {
+    
+    const data = {
+      type: notificationType,
+      receiverId: post.authorId,
+      senderId: userId,
+      link: `${post.authorId}/post/${postId}`, 
+      message: notificationMessage,
+    };
+
+    await createNotificationAction(data);
+
+    return post.authorId;
+  }
+
+  return;
+}

@@ -2,6 +2,7 @@ import { toggleRepostAction } from "@/actions/post/interactions";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleRepostLogic } from "../helpers";
+import { socket } from "@/socket";
 
 export const useRepostMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
@@ -38,6 +39,12 @@ export const useRepostMutation = (queryKey: any[]) => {
 
       return { previousData };
     },
+
+    onSuccess: (receiverNotificationId) => {
+          if (receiverNotificationId) {
+            socket.emit("sendNotification", receiverNotificationId);
+          }
+        },
 
     onError: (err, variables, context) => {
       queryClient.setQueryData(queryKey, context?.previousData);

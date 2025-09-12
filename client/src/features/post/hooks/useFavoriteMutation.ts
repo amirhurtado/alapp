@@ -8,13 +8,7 @@ export const useFavoriteMutation = (queryKey: unknown[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      postId,
-      userId,
-    }: {
-      postId: number;
-      userId: string;
-    }) => {
+    mutationFn: ({ postId, userId }: { postId: number; userId: string }) => {
       return toggleFavoriteAction(postId, userId);
     },
     onMutate: async ({ postId, userId }) => {
@@ -24,33 +18,29 @@ export const useFavoriteMutation = (queryKey: unknown[]) => {
       queryClient.setQueryData(queryKey, (oldData: any) => {
         if (!oldData) return;
 
-        if(oldData.pages){
-           return {
-          ...oldData,
-          pages: oldData.pages.map((page: FullPostType[]) =>
-            page.map((post) => {
-              if (post.id === postId) {
-                return toggleFavoriteLogic(post, userId)
-              }
-              return post;
-            })
-          ),
-        };
-        }else{
+        if (oldData.pages) {
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page: FullPostType[]) =>
+              page.map((post) => {
+                if (post.id === postId) {
+                  return toggleFavoriteLogic(post, userId);
+                }
+                return post;
+              })
+            ),
+          };
+        } else {
           return toggleFavoriteLogic(oldData, userId);
         }
-       
       });
 
       return { previousData };
     },
-    onSuccess :(receiverNotificationId) => {
-
-      if(receiverNotificationId){
-        socket.emit("sendNotification", receiverNotificationId)
+    onSuccess: (receiverNotificationId) => {
+      if (receiverNotificationId) {
+        socket.emit("sendNotification", receiverNotificationId);
       }
-
-
     },
     onError: (err, variables, context) => {
       queryClient.setQueryData(queryKey, context?.previousData);

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { postIncludes } from "./constants";
-import { createNotificationAction } from "../notification/createNotification";
+import { handlePostNotification } from "../notification/createNotification";
 
 export const toggleLikePostAction = async (postId: number, userId: string) => {
   const existLike = await prisma.likePost.findUnique({
@@ -36,18 +36,13 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
     ]);
 
     //NOTIFICATION
-    if (post && post.authorId !== userId) {
-      const data = {
-        type: "like",
-        receiverId: post.authorId,
-        senderId: userId,
-        link: `${post.authorId}/post/${postId}`,
-        message: "le dió me gusta a tu publicación",
-      };
-      createNotificationAction(data);
-
-      return post.authorId;
-    }
+    return handlePostNotification(
+      post,
+      userId,
+      postId,
+      "like",
+      "le dió me gusta a tu publicación"
+    );
   }
 
   return;
@@ -88,25 +83,20 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
     ]);
 
     //NOTIFICATION
-    if (post && post.authorId !== userId) {
-      const data = {
-        type: "favorite",
-        receiverId: post.authorId,
-        senderId: userId,
-        link: `${post.authorId}/post/${postId}`,
-        message: "agregó a favoritos tu publicación",
-      };
-      createNotificationAction(data);
-
-      return post.authorId
-    }
+    return handlePostNotification(
+      post,
+      userId,
+      postId,
+      "favorite",
+      "agregó a favoritos tu publicación"
+    );
   }
 
   return;
 };
 
 export const toggleRepostAction = async (postId: number, userId: string) => {
-  const [existRepost, post] = await Promise.all([
+  const [existRepost] = await Promise.all([
     prisma.repost.findUnique({
       where: {
         userId_postId: {
@@ -114,12 +104,6 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
           postId,
         },
       },
-    }),
-    prisma.post.findUnique({
-      where: {
-        id: postId,
-      },
-      include: postIncludes,
     }),
   ]);
 
@@ -130,23 +114,29 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
       },
     });
   } else {
-    await prisma.repost.create({
-      data: {
-        userId,
-        postId,
-      },
-    });
-  }
+    const [, post] = await Promise.all([
+      await prisma.repost.create({
+        data: {
+          userId,
+          postId,
+        },
+      }),
 
-  if (post && post.authorId !== userId) {
-    const data = {
-      type: "repost",
-      receiverId: post.authorId,
-      senderId: userId,
-      link: `${post.authorId}/post/${postId}`,
-      message: "compartió tu publicación",
-    };
-    createNotificationAction(data);
+      prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+        include: postIncludes,
+      }),
+    ]);
+
+    return handlePostNotification(
+      post,
+      userId,
+      postId,
+      "repost",
+      "compartió tu publicación"
+    );
   }
 };
 
