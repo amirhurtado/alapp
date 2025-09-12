@@ -85,19 +85,25 @@ export const createCommentAction = async (formData: FormData) => {
     }),
   ]);
 
+
+
   if (post && userId !== post?.authorId) {
+
     const data = {
       type: "commment",
       receiverId: post.authorId,
       senderId: userId,
       link: `${post.authorId}/post/${postId}`,
-      message: "comentó tu publicacion",
+      message: parentId ? "respondió un comentario en tu publicación" : "comentó tu publicacion"
     };
 
     createNotificationAction(data);
   }
 
-  return comment;
+  return {
+  data: comment,
+  receiverNotificationId: userId !== post?.authorId ? post?.authorId : null
+};
 };
 
 export const toggleLikeCommentAction = async (

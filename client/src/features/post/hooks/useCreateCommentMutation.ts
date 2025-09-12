@@ -1,4 +1,5 @@
 import { createCommentAction } from "@/actions/comment/comment";
+import { socket } from "@/socket";
 import { FullCommentType, FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -9,7 +10,8 @@ export const useCreateCommentMutation = (postId: number) => {
     mutationFn: ({ formData }: { formData: FormData }) => {
       return createCommentAction(formData);
     },
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+        const { data, receiverNotificationId } = response;
       const postIdQueryKey = ["post", { id: postId }];
       const commentsQueryKey = ["comments", { postId: postId }];
 
@@ -34,6 +36,11 @@ export const useCreateCommentMutation = (postId: number) => {
           _count: { comments: oldData._count.comments + 1 },
         };
       });
+
+
+      if(receiverNotificationId){
+        socket.emit("sendNotification", receiverNotificationId )
+      }
     },
   });
 };
