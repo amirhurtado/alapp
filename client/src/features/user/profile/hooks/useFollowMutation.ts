@@ -1,4 +1,5 @@
 import { toggleFollowAction } from "@/actions/follow/follow";
+import { socket } from "@/socket";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type InfoUser = {
@@ -149,5 +150,16 @@ export const useFollowMutation = () => {
 
       return {};
     },
+
+    onSuccess: (userNotificationId) => {
+
+
+
+      if(userNotificationId){
+
+        socket.emit("sendNotification", userNotificationId )
+      }
+
+    }
   });
 };

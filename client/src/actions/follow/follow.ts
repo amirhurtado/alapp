@@ -40,6 +40,8 @@ export const toggleFollowAction = async (
         followingId: userFollowingId,
       },
     });
+
+    return userFollowingId
   }
 };
 
