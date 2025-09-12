@@ -20,33 +20,37 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
       },
     });
   } else {
-    await prisma.likePost.create({
-      data: {
-        postId,
-        userId,
-      },
-    });
+    const [, post] = await Promise.all([
+      prisma.likePost.create({
+        data: {
+          postId,
+          userId,
+        },
+      }),
+      prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+        include: postIncludes,
+      }),
+    ]);
+
+    //NOTIFICATION
+    if (post && post.authorId !== userId) {
+      const data = {
+        type: "like",
+        receiverId: post.authorId,
+        senderId: userId,
+        link: `${post.authorId}/post/${postId}`,
+        message: "le dió me gusta a tu publicación",
+      };
+      createNotificationAction(data);
+
+      return post.authorId;
+    }
   }
 
-  const post = await prisma.post.findUnique({
-    where: {
-      id: postId,
-    },
-    include: postIncludes,
-  });
-
-  if (post && post.authorId !== userId) {
-    const data = {
-      type: "like",
-      receiverId: post.authorId,
-      senderId: userId,
-      link: `${post.authorId}/post/${postId}`,
-      message: "le dió me gusta a tu publicación",
-    };
-    createNotificationAction(data);
-  }
-
-  return post;
+  return;
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {
@@ -113,8 +117,6 @@ export const toggleRepostAction = async (postId: number, userId: string) => {
       include: postIncludes,
     }),
   ]);
-
- 
 
   if (existRepost) {
     await prisma.repost.delete({

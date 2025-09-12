@@ -56,14 +56,12 @@ export const updateInfoUserAction = async (
     profileDataToUpdate.location = newLocation
   }
 
-  console.log("NEWWWWBG ES ", newBg)
 
   if ((userData.profile?.bg ?? "") !== newBg) { 
     profileDataToUpdate.bg = newBg;
   }
 
 
-  console.log("nuevo",profileDataToUpdate.bg)
 
 
   if (Object.keys(userDataToUpdate).length > 0) {
@@ -74,7 +72,6 @@ export const updateInfoUserAction = async (
   }
   if (Object.keys(profileDataToUpdate).length > 0) {
 
-    console.log("ACA ENTRO", profileDataToUpdate)
     await prisma.profile.upsert({
       where: { userId },
       update: profileDataToUpdate,

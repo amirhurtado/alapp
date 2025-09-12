@@ -14,7 +14,7 @@ let onlineUsers = [];
 
 
 const getUser = (userId) => {
-    return onlineUsers.find((user) => user.id === userId);
+    return onlineUsers.find((user) => user.userId === userId);
 }
 
 const addUser = (userId, socketId) => {
@@ -41,9 +41,10 @@ app.prepare().then(() => {
       addUser(userId, socket.id);
     });
 
-    socket.on("sendNotificacion", ({receiveruserId, data}) => {
+    socket.on("sendNotification", (receiveruserId) => {
         const receiver = getUser(receiveruserId);
-        io.to(receiver.socketId).emit("getNotification", data);
+        if(receiver) io.to(receiver.socketId).emit("getNotification", receiveruserId);
+        
     })
 
     socket.on("disconnect", () => {

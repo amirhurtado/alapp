@@ -1,12 +1,13 @@
+"use client";
 
-"use client"
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query"; 
 import React, { useEffect, useRef } from "react";
-import { fullNotificationType } from '@/types';
-
+import { fullNotificationType } from "@/types";
 import { getNoticationsAction } from "@/actions/notification/getNotification";
 import NotificationCard from "./NotificationCard";
 import { LoaderCircle } from "lucide-react";
+import { useNotificationCount } from "@/store/useNotification";
+
 
 interface FullNotificationsViewProps {
   notifications: fullNotificationType[];
@@ -17,25 +18,41 @@ const FullNotificationsView = ({
   notifications: initialNotifications,
   currentUserId,
 }: FullNotificationsViewProps) => {
-  const queryKey = ["notifications", { currentUserId: currentUserId }];
+  const countNotifications = useNotificationCount((state) => state.count);
+  const resetCountNotifications = useNotificationCount((state) => state.reset);
+  const incrementCount = useNotificationCount((state) => state.increment);
 
+  const queryKey = ["notifications", { currentUserId: currentUserId }];
   const loadmoreRef = useRef(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: queryKey,
-      queryFn: async ({ pageParam = 1 }) => {
-        return getNoticationsAction(currentUserId, pageParam);
-      },
-      getNextPageParam: (lastPage, allPages) => {
-        return lastPage.length === 10 ? allPages.length + 1 : undefined;
-      },
-      initialPageParam: 1,
-      initialData: {
-        pages: [initialNotifications],
-        pageParams: [1],
-      },
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      return getNoticationsAction(currentUserId, pageParam);
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 10 ? allPages.length + 1 : undefined;
+    },
+    initialPageParam: 1,
+    initialData: {
+      pages: [initialNotifications],
+      pageParams: [1],
+    },
+    refetchOnMount: true,
+  });
+
+  useEffect(() => {
+    if (countNotifications > 0) {
+      resetCountNotifications();
+    }
+  }, []);
+
+  useEffect(() => {}, [incrementCount]);
 
   useEffect(() => {
     if (!loadmoreRef.current) return;
@@ -53,18 +70,15 @@ const FullNotificationsView = ({
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-
-  const notifications = data?.pages.flatMap((page) => page) ?? [];
-
-
+  const notifications =
+    data?.pages.flatMap((page) => page) ?? initialNotifications;
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col max-h-screen gap-4 p-4 overflow-y-auto ">
       {notifications.map((notification, index) => (
         <div key={index}>
           <NotificationCard notification={notification} />
         </div>
       ))}
-
 
       <div
         ref={loadmoreRef}

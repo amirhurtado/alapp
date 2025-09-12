@@ -4,6 +4,7 @@ import { toggleLikePostAction } from "@/actions/post/interactions";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikePostLogic } from "../helpers";
+import { socket } from "@/socket";
 
 export const useLikePostMutation = (queryKey: unknown[]) => {
   const queryClient = useQueryClient();
@@ -41,6 +42,14 @@ export const useLikePostMutation = (queryKey: unknown[]) => {
       });
 
       return { previousData };
+    },
+    onSuccess: (receiverNotificationId) => {
+      if(receiverNotificationId){
+      console.log("ACA ENTRO CLIENTE")
+
+        socket.emit("sendNotification", receiverNotificationId)
+      }
+
     },
 
     onError: (err, variables, context) => {

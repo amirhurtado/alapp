@@ -9,15 +9,20 @@ const page = async () => {
 
   if (!currUser) return;
 
-  const notifications = await getNoticationsAction(currUser.id)
+  const notifications = await getNoticationsAction(currUser.id);
 
-  console.log(notifications);
-
-
-  return <div>
-    <BackNavigation title="Notificaciones" subtitle="Aqui encuentras todas tus notificaciones" />
-    <FullNotificationsView notifications={notifications} currentUserId={currUser.id} />
-  </div>;
+  return (
+    <div className="flex flex-col h-screen overflow-hidden ">
+      <BackNavigation
+        title="Notificaciones"
+        subtitle="Aqui encuentras todas tus notificaciones"
+      />
+      <FullNotificationsView
+        notifications={notifications}
+        currentUserId={currUser.id}
+      />
+    </div>
+  );
 };
 
 export default page;
