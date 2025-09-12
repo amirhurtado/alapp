@@ -84,7 +84,7 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
 
   if (post && post.authorId !== userId) {
     const data = {
-      type: "like",
+      type: "favorite",
       receiverId: post.authorId,
       senderId: userId,
       link: `${post.authorId}/post/${postId}`,

@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/prisma";
+import { createNotificationAction } from "../notification/createNotification";
 
 const includeFullComment = {
   user: {
@@ -38,23 +39,24 @@ export const getCommentsAction = async (postId: number, page: number = 1) => {
   });
 };
 
-export const getCommentsByParentIdAction = async(parentId: number, request: number) => {
-  const skip = (request-1) * 3
+export const getCommentsByParentIdAction = async (
+  parentId: number,
+  request: number
+) => {
+  const skip = (request - 1) * 3;
 
   return await prisma.comment.findMany({
     where: {
-      parentId
+      parentId,
     },
     include: includeFullComment,
     take: 3,
-     orderBy: {
+    orderBy: {
       createdAt: "desc",
     },
-    skip
-  })
-
-}
-
+    skip,
+  });
+};
 
 export const createCommentAction = async (formData: FormData) => {
   const content = formData.get("content") as string;
@@ -66,15 +68,34 @@ export const createCommentAction = async (formData: FormData) => {
   const intPostId = parseInt(postId, 10);
   const intParentId = parentId ? parseInt(parentId, 10) : null;
 
-  const comment = prisma.comment.create({
-    data: {
-      content: content,
-      postId: intPostId,
-      userId: userId,
-      parentId: intParentId,
-    },
-    include: includeFullComment
-  });
+  const [comment, post] = await Promise.all([
+    prisma.comment.create({
+      data: {
+        content: content,
+        postId: intPostId,
+        userId: userId,
+        parentId: intParentId,
+      },
+      include: includeFullComment,
+    }),
+    prisma.post.findUnique({
+      where: {
+        id: intPostId,
+      },
+    }),
+  ]);
+
+  if (post && userId !== post?.authorId) {
+    const data = {
+      type: "commment",
+      receiverId: post.authorId,
+      senderId: userId,
+      link: `${post.authorId}/post/${postId}`,
+      message: "comentó tu publicacion",
+    };
+
+    createNotificationAction(data);
+  }
 
   return comment;
 };
