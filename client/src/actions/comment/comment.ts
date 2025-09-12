@@ -85,25 +85,24 @@ export const createCommentAction = async (formData: FormData) => {
     }),
   ]);
 
-
-
   if (post && userId !== post?.authorId) {
-
     const data = {
       type: "commment",
       receiverId: post.authorId,
       senderId: userId,
       link: `${post.authorId}/post/${postId}`,
-      message: parentId ? "respondió un comentario en tu publicación" : "comentó tu publicacion"
+      message: parentId
+        ? "respondió un comentario en tu publicación."
+        : "comentó tu publicacion.",
     };
 
     createNotificationAction(data);
   }
 
   return {
-  data: comment,
-  receiverNotificationId: userId !== post?.authorId ? post?.authorId : null
-};
+    data: comment,
+    receiverNotificationId: userId !== post?.authorId ? post?.authorId : null,
+  };
 };
 
 export const toggleLikeCommentAction = async (
@@ -126,12 +125,42 @@ export const toggleLikeCommentAction = async (
       },
     });
   } else {
-    await prisma.likeComment.create({
-      data: {
-        userId,
-        commentId,
-      },
-    });
+    const [, comment] = await Promise.all([
+      prisma.likeComment.create({
+        data: {
+          userId,
+          commentId,
+        },
+      }),
+      prisma.comment.findUnique({
+        where: {
+          id: commentId,
+        },
+        include: {
+          post: {
+            select: {
+              id: true,
+              authorId: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    if (comment && userId !== comment?.userId) {
+      const data = {
+        type: "like",
+        receiverId: comment.userId,
+        senderId: userId,
+        link: `${comment.post.authorId}/post/${comment.post.id}`,
+        message: "Le dio like a tu comentario.",
+      };
+
+      createNotificationAction(data);
+
+
+      return comment.userId
+    }
   }
 
   return;

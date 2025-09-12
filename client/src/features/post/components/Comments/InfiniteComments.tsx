@@ -34,7 +34,6 @@ const InfiniteComments = ({
         pages: [initialComments],
         pageParams: [1],
       },
-      staleTime: Infinity
     });
 
   const comments = data.pages?.flatMap((page) => page) ?? initialComments;

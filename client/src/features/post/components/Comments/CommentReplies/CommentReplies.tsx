@@ -40,7 +40,6 @@ const CommentReplies = ({
           ? undefined
           : allPages.length + 1;
       },
-      staleTime: Infinity
     });
 
   if (isLoading) {

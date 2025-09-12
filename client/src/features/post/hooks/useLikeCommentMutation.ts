@@ -2,6 +2,7 @@ import { toggleLikeCommentAction } from "@/actions/comment/comment";
 import { FullCommentType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLikeCommentLogic } from "../helpers";
+import { socket } from "@/socket";
 
 export const useLikeCommentMutation = (queryKey: any[]) => {
   const queryClient = useQueryClient();
@@ -40,6 +41,13 @@ export const useLikeCommentMutation = (queryKey: any[]) => {
       });
 
       return { previousData };
+    },
+    onSuccess : (receiverNotificationId) => {
+
+      if(receiverNotificationId){
+        socket.emit("sendNotification", receiverNotificationId)
+      }
+
     },
     onError: (err, variables, context) => {
       if (context) {

@@ -20,12 +20,12 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
         <Avatar src={notification.sender.imageUrl} />
         <div className="flex items-center gap-2">
           {notification.type === "like" ? (
-            <Heart   className=" min-w-[18px] min-h-[18px] text-icon-pink"/>
+            <Heart   className=" w-[1.2rem] h-[1.2rem] flex-shrink-0   text-icon-pink"/>
           ) : notification.type === "favorite" ? (
-            <Star    className=" min-w-[18px] min-h-[18px] text-icon-yellow"/>
+            <Star    className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-yellow"/>
           ) : notification.type === "repost" ?  (
-            <Repeat2    className=" min-w-[18px] min-h-[18px] text-icon-green"/>
-           ) : notification.type === "commment" ?  <MessageSquare  size={18}  className=" min-w-[18px] min-h-[18px] text-primary-color"/>
+            <Repeat2    className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-green"/>
+           ) : notification.type === "commment" ?  <MessageSquare  size={18}  className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-primary-color"/>
            : <h1></h1>
 
           }
