@@ -63,6 +63,7 @@ const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
       </div>
 
       <FollowStats
+        username={userProfileInfo.name}
         followings={follows?.following ?? 0}
         followers={follows?.followers ?? 0}
       />
