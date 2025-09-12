@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageSquare, SquarePen } from "lucide-react";
-import FollowButton from "./FollowButton";
+import FollowButton from "../../../follows/FollowButton";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { isFriendAction } from "@/actions/follow/follow";

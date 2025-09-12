@@ -1,6 +1,6 @@
 import React from "react";
 
-import FollowButton from "@/features/user/profile/components/FollowButton";
+import FollowButton from "@/features/follows/FollowButton";
 import Link from "next/link";
 import Avatar from "@/components/ui/Avatar";
 import { UserCardType } from "@/types";

@@ -1,4 +1,5 @@
 import BackNavigation from "@/components/ui/BackNavigation";
+import FullFollowView from "@/features/follows/FullFollowView";
 import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {
@@ -20,9 +21,11 @@ const page = async ({ params, searchParams }: Props) => {
   if (!currUser) return;
 
 
+
   return (
     <div>
       <BackNavigation title="Follows" subtitle={username === currUser.username ? "Tú información" : "Su información"} />
+      <FullFollowView query={query ?? "following"} currentUserId={currUser.id} />
     </div>
   );
 };

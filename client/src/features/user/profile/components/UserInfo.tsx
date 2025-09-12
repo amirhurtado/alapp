@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarX } from "lucide-react"; // Quité MapPin porque la bandera lo reemplaza
-import FollowStats from "./FollowStats";
+import FollowStats from "../../../follows/FollowStats";
 import { FullUserType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { getFollowsActions } from "@/actions/follow/follow";
