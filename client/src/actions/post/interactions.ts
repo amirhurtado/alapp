@@ -54,7 +54,7 @@ export const toggleLikePostAction = async (postId: number, userId: string) => {
 };
 
 export const toggleFavoriteAction = async (postId: number, userId: string) => {
-  const [existFavorite, post] = await Promise.all([
+  const [existFavorite] = await Promise.all([
     prisma.favorite.findUnique({
       where: {
         userId_postId: {
@@ -62,12 +62,6 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
           postId,
         },
       },
-    }),
-    prisma.post.findUnique({
-      where: {
-        id: postId,
-      },
-      include: postIncludes,
     }),
   ]);
 
@@ -78,23 +72,34 @@ export const toggleFavoriteAction = async (postId: number, userId: string) => {
       },
     });
   } else {
-    await prisma.favorite.create({
-      data: {
-        postId,
-        userId,
-      },
-    });
-  }
+    const [, post] = await Promise.all([
+      prisma.favorite.create({
+        data: {
+          postId,
+          userId,
+        },
+      }),
+      prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+        include: postIncludes,
+      }),
+    ]);
 
-  if (post && post.authorId !== userId) {
-    const data = {
-      type: "favorite",
-      receiverId: post.authorId,
-      senderId: userId,
-      link: `${post.authorId}/post/${postId}`,
-      message: "agregó a favoritos tu publicación",
-    };
-    createNotificationAction(data);
+    //NOTIFICATION
+    if (post && post.authorId !== userId) {
+      const data = {
+        type: "favorite",
+        receiverId: post.authorId,
+        senderId: userId,
+        link: `${post.authorId}/post/${postId}`,
+        message: "agregó a favoritos tu publicación",
+      };
+      createNotificationAction(data);
+
+      return post.authorId
+    }
   }
 
   return;

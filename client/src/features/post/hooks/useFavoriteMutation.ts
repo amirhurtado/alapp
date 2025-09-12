@@ -2,8 +2,9 @@ import { toggleFavoriteAction } from "@/actions/post/interactions";
 import { FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleFavoriteLogic } from "../helpers";
+import { socket } from "@/socket";
 
-export const useFavoriteMutation = (queryKey: any[]) => {
+export const useFavoriteMutation = (queryKey: unknown[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -42,6 +43,14 @@ export const useFavoriteMutation = (queryKey: any[]) => {
       });
 
       return { previousData };
+    },
+    onSuccess :(receiverNotificationId) => {
+
+      if(receiverNotificationId){
+        socket.emit("sendNotification", receiverNotificationId)
+      }
+
+
     },
     onError: (err, variables, context) => {
       queryClient.setQueryData(queryKey, context?.previousData);
