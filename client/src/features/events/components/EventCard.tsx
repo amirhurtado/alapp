@@ -94,7 +94,7 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
 
       <div className="flex justify-end mt-3 items-center gap-3">
         <p className="text-xs text-text-gray">
-          Confirmados: {event.usersConfirm.length}
+          Confirmados: {event.usersConfirm?.length ?? 0}
         </p>
         <TimeAgo createdAt={event.createdAt} />
       </div>

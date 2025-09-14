@@ -2,7 +2,6 @@ import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
 
-
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 const port = 3000;
@@ -12,10 +11,9 @@ const handler = app.getRequestHandler();
 
 let onlineUsers = [];
 
-
 const getUser = (userId) => {
-    return onlineUsers.find((user) => user.userId === userId);
-}
+  return onlineUsers.find((user) => user.userId === userId);
+};
 
 const addUser = (userId, socketId) => {
   const isExist = onlineUsers.find((user) => user.socketId === socketId);
@@ -42,10 +40,22 @@ app.prepare().then(() => {
     });
 
     socket.on("sendNotification", (receiveruserId) => {
+      const receiver = getUser(receiveruserId);
+      if (receiver)
+        io.to(receiver.socketId).emit("getNotification", receiveruserId);
+    });
+
+    socket.on("sendGroupNotification", (receiversUserId) => {
+      console.log("PASO 3", receiversUserId);
+
+      receiversUserId.map((receiveruserId) => {
         const receiver = getUser(receiveruserId);
-        if(receiver) io.to(receiver.socketId).emit("getNotification", receiveruserId);
-        
-    })
+
+        if (receiver)
+          console.log("PASOOOO 4")
+          io.to(receiver.socketId).emit("getNotification", receiveruserId);
+      });
+    });
 
     socket.on("disconnect", () => {
       removeUser(socket.id);

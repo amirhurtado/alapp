@@ -4,6 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 import TimeAgo from "@/components/ui/TimeAgo";
 import {
+  CalendarPlus2,
   Heart,
   MessageSquare,
   Repeat2,
@@ -37,12 +38,16 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
               className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-primary-color"
             />
           ) : (
-            notification.type === "follow" && (
+            notification.type === "follow" ? (
               <UserRoundPlus
                 size={18}
-                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-orange"
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
               />
-            )
+            ) :
+            notification.type === "createEvent" && <CalendarPlus2
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
+              />
           )}
 
           <p className="font-semibold text-xs md:text-sm ">
