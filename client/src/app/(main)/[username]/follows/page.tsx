@@ -1,3 +1,5 @@
+import { getFollowingsAction } from "@/actions/follow/follow";
+import { getUserbyNameAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
 import FullFollowView from "@/features/follows/FullFollowView";
 import { currentUser } from "@clerk/nextjs/server";
@@ -7,7 +9,7 @@ type Props = {
     username: string;
   };
   searchParams: {
-    query?: string;
+    query?: "followings" | "followers";
   };
 };
 
@@ -18,14 +20,31 @@ const page = async ({ params, searchParams }: Props) => {
     currentUser(),
   ]);
 
-  if (!currUser) return;
+  if (!currUser || !username) return;
 
+  const [followings, infoUserProfile] = await Promise.all([
+    getFollowingsAction(currUser.id),
+    getUserbyNameAction(username),
+  ]);
 
+  if (!infoUserProfile) return;
 
   return (
-    <div>
-      <BackNavigation title="Follows" subtitle={username === currUser.username ? "Tú información" : "Su información"} />
-      <FullFollowView query={query ?? "following"} currentUserId={currUser.id} />
+    <div className="flex flex-col h-screen overflow-hidden">
+      <BackNavigation
+        title="Follows"
+        subtitle={
+          username === currUser.username ? "Tú información" : "Su información"
+        }
+      />
+      <FullFollowView
+        query={query ?? "followings"}
+        infoUserProfile={{
+          username: infoUserProfile.name,
+          id: infoUserProfile.id,
+        }}
+        followings={followings}
+      />
     </div>
   );
 };

@@ -9,7 +9,7 @@ interface FollowStastsProps {
 const FollowStats = ({username, followings, followers  }: FollowStastsProps) => {
   return (
     <div className="flex gap-5 mt-3">
-      <Link href={`/${username}/follows?query=following`} className="flex items-end gap-1 hover:underline cursor-pointer">
+      <Link href={`/${username}/follows?query=followings`} className="flex items-end gap-1 hover:underline cursor-pointer">
         <p className="text-sm">{followings}</p>
         <span className="text-text-gray text-xs">Siguiendo</span>
       </Link>
