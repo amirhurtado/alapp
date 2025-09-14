@@ -4,6 +4,7 @@ import { getUserbyNameAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
 import InfoGroup from "@/features/groups/components/InfoGroup/InfoGroup";
 import { currentUser } from "@clerk/nextjs/server";
+import { notFound } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -23,7 +24,7 @@ const page = async ({ params }: Props) => {
     getEventsAction(parseInt(groupId, 10))
   ]);
 
-  if (!infoGroup || !infoUser) return;
+  if (!infoGroup || !infoUser) return  notFound()
 
 
   return (

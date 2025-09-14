@@ -4,6 +4,7 @@ import { getPostsAction } from "@/actions/post/getPost";
 import HeaderProfiler from "@/features/user/profile/components/HeaderProfile";
 import InfiniteFeed from "@/features/feed/components/InfiniteFeed";
 import BackNavigation from "@/components/ui/BackNavigation";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -21,7 +22,7 @@ export default async function UserPage({ params }: Props) {
   ]);
 
   if (!userProfile || !currUser) {
-    return <h1>No encontrado</h1>;
+    return  notFound()
   }
   
   const posts = await getPostsAction(userProfile.id, "profile");
