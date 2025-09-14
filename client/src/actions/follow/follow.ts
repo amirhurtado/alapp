@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/prisma";
+import { createNotificationAction } from "../notification/createNotification";
 
 export const isFriendAction = async (
   userFollowerId: string,
@@ -34,18 +35,40 @@ export const toggleFollowAction = async (
       },
     });
   } else {
-    await prisma.follow.create({
+    const [, receiverUsername] = await Promise.all([
+      prisma.follow.create({
       data: {
         followerId: userFollowerId,
         followingId: userFollowingId,
       },
-    });
+    }),
+    prisma.user.findUnique({
+      where: {
+        id: userFollowingId
+      },
+      select: {
+        name: true
+      }
+    })
+
+    ]) 
+
+    const data = {
+      type: "follow",
+      receiverId: userFollowingId,
+      senderId: userFollowerId,
+      link: `/${receiverUsername?.name}/follows?query=followers`, 
+      message: "te ha seguido",
+    }
+
+    createNotificationAction(data)
+
 
     return userFollowingId;
   }
 };
 
-export const getFollowsActions = async (
+export const getFollowsCountActions = async (
   userId: string,
   currentUserId: string
 ) => {

@@ -153,7 +153,7 @@ export const toggleLikeCommentAction = async (
         receiverId: comment.userId,
         senderId: userId,
         link: `${comment.post.authorId}/post/${comment.post.id}`,
-        message: "Le dio like a tu comentario.",
+        message: "Le dio like a tu comentario",
       };
 
       createNotificationAction(data);

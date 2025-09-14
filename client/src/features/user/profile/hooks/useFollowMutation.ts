@@ -27,6 +27,7 @@ const getFollowQueries = (currentUserId: string, userProfileId: string) => ({
   userProfileFollowCount: ["InfoFollowUser", userProfileId],
   currentUserFollowCount: ["InfoFollowUser", currentUserId],
   isFriend: ["isFriend", userProfileId],
+  followings: ["followings"]
 });
 
 const toggleIsFriendRecommendations = (
@@ -92,6 +93,7 @@ export const useFollowMutation = () => {
           return toggleIsFriendRecommendations(userProfileId, oldData);
         }
       );
+
 
       queryClient.setQueriesData(
         { queryKey: ["usersInSearch"] },

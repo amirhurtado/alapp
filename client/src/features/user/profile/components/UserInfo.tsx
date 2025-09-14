@@ -4,7 +4,7 @@ import { CalendarX } from "lucide-react"; // Quité MapPin porque la bandera lo 
 import FollowStats from "../../../follows/FollowStats";
 import { FullUserType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { getFollowsActions } from "@/actions/follow/follow";
+import { getFollowsCountActions } from "@/actions/follow/follow";
 import Link from "next/link";
 import ReactFlagsSelect from "react-flags-select"; // <-- 1. Importa la librería
 
@@ -19,7 +19,7 @@ const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
   const { data: follows } = useQuery({
     queryKey,
     queryFn: () => {
-      return getFollowsActions(userProfileInfo.id, currentUserId);
+      return getFollowsCountActions(userProfileInfo.id, currentUserId);
     },
   });
 

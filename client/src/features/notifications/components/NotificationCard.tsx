@@ -3,7 +3,13 @@ import { fullNotificationType } from "@/types";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 import TimeAgo from "@/components/ui/TimeAgo";
-import { Heart, MessageSquare, Repeat2, Star } from "lucide-react";
+import {
+  Heart,
+  MessageSquare,
+  Repeat2,
+  Star,
+  UserRoundPlus,
+} from "lucide-react";
 
 interface NotificationCardProps {
   // Define the props for NotificationCard here
@@ -20,15 +26,24 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
         <Avatar src={notification.sender.imageUrl} />
         <div className="flex items-center gap-2">
           {notification.type === "like" ? (
-            <Heart   className=" w-[1.2rem] h-[1.2rem] flex-shrink-0   text-icon-pink"/>
+            <Heart className=" w-[1.2rem] h-[1.2rem] flex-shrink-0   text-icon-pink" />
           ) : notification.type === "favorite" ? (
-            <Star    className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-yellow"/>
-          ) : notification.type === "repost" ?  (
-            <Repeat2    className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-green"/>
-           ) : notification.type === "commment" ?  <MessageSquare  size={18}  className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-primary-color"/>
-           : <h1></h1>
-
-          }
+            <Star className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-yellow" />
+          ) : notification.type === "repost" ? (
+            <Repeat2 className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-green" />
+          ) : notification.type === "commment" ? (
+            <MessageSquare
+              size={18}
+              className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-primary-color"
+            />
+          ) : (
+            notification.type === "follow" && (
+              <UserRoundPlus
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-icon-orange"
+              />
+            )
+          )}
 
           <p className="font-semibold text-xs md:text-sm ">
             <span className="text-xs text-primary-color">
