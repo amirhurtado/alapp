@@ -2,12 +2,15 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
-import { AtSign, Github, LoaderCircle, Lock } from "lucide-react";
+import { AtSign, Github, LoaderCircle, Lock, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import Separator from "@/components/ui/Separator";
 import Logo from "@/components/ui/Logo";
+import { useState } from "react";
 
 const SignInPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="h-screen  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
       <Logo />
@@ -34,7 +37,6 @@ const SignInPage = () => {
                 className="w-full flex items-center justify-center md:justify-start"
               >
                 <div className="w-full md:max-w-max cursor-pointer flex items-center justify-center gap-5 py-3 md:py-3 px-3 md:px-13 rounded-xl border-1 border-white  hover:bg-white hover:text-black transition-all duration-300 ease-in">
-                  {/* Cambiamos el ícono y el texto */}
                   <Github strokeWidth={1} size={25} />
                   <p className="font-semibold text-sm md:text-lg">
                     Registrate con GitHub
@@ -49,43 +51,45 @@ const SignInPage = () => {
                   name="identifier"
                   className="w-full md:w-[21rem] md:p-0 "
                 >
-
-
                   <div className="relative w-full">
                     <AtSign
-                    strokeWidth={1}
-                    size={20}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green "
-                  />
-                  <Clerk.Input
-                    className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
-                    placeholder="Email o nombre de usuario"
-                  />
-
+                      strokeWidth={1}
+                      size={20}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green "
+                    />
+                    <Clerk.Input
+                      className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
+                      placeholder="Email o nombre de usuario"
+                    />
                   </div>
-                  
-                  <Clerk.FieldError  className="text-red-500 text-xs mt-1" />
-                </Clerk.Field>
 
+                  <Clerk.FieldError className="text-red-500 text-xs mt-1" />
+                </Clerk.Field>
 
                 <Clerk.Field
                   name="password"
                   className=" w-full md:w-[21rem]  md:p-0 "
                 >
-
                   <div className="relative w-full">
                     <Lock
-                    strokeWidth={1}
-                    size={20}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green"
-                  />
-                  <Clerk.Input
-                    className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
-                    placeholder="Contraseña "
-                  />
-
+                      strokeWidth={1}
+                      size={20}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green"
+                    />
+                    <Clerk.Input
+                      type={showPassword ? "text" : "password"}
+                      className="border-1 border-border py-2 md:py-3 pl-12 pr-10 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
+                      placeholder="Contraseña "
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-icon-green"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
                   </div>
-                  
+
                   <Clerk.FieldError className="text-red-500 text-xs mt-1" />
                 </Clerk.Field>
               </div>
@@ -111,7 +115,9 @@ const SignInPage = () => {
         <p className="text-sm">
           ¿Primera vez?{" "}
           <span className="underline text-primary-color">
-            <Link aria-label="ir a crear cuenta" href={"/sign-up"}>Crea una cuenta</Link>
+            <Link aria-label="ir a crear cuenta" href={"/sign-up"}>
+              Crea una cuenta
+            </Link>
           </span>
         </p>
       </div>

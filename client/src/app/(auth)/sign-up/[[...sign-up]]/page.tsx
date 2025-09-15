@@ -2,13 +2,15 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignUp from "@clerk/elements/sign-up";
-import { Mail, User, Lock, LoaderCircle, Github } from "lucide-react";
+import { Mail, User, Lock, LoaderCircle, Github, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import Separator from "@/components/ui/Separator";
 import Logo from "@/components/ui/Logo";
+import { useState } from "react";
 
 const SignUpPage = () => {
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="h-screen  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
       <Logo />
@@ -83,9 +85,17 @@ const SignUpPage = () => {
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-icon-green"
                     />
                     <Clerk.Input
-                      className="border-1 border-border py-2 md:py-3 pl-12 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
+                      type={showPassword ? "text" : "password"}
+                      className="border-1 border-border py-2 md:py-3 pl-12 pr-10 rounded-xl bg-input w-full placeholder:font-poppins placeholder:text-sm "
                       placeholder="Contraseña "
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-icon-green"
+                    >
+                      {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </button>
                   </div>
                   <Clerk.FieldError className="text-red-500 text-xs mt-1" />
                 </Clerk.Field>
