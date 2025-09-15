@@ -38,9 +38,9 @@ const DeleteGroup = ({ onDelete }: DeleteGroupProps) => {
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <Settings
-              size={29}
+              size={24}
               strokeWidth={1}
-              className="text-text-gray hover:text-primary-color cursor-pointer transition-colors duration-200 ease-in"
+              className="text-text-gray hover:text-white cursor-pointer transition-colors duration-200 ease-in"
             />
           </PopoverTrigger>
           <PopoverContent className="w-auto p-2">

@@ -31,7 +31,6 @@ const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
     });
   };
 
-  // Guardamos la ubicación para que el código sea más limpio
   const locationCode = userProfileInfo.profile?.location;
 
   return (
@@ -48,10 +47,10 @@ const UserInfo = ({ userProfileInfo, currentUserId }: UserInfoProps) => {
         {locationCode && (
           <div className="flex items-center">
             <ReactFlagsSelect
-              selected={locationCode} // Muestra la bandera según el código (CO, AF, etc.)
+              selected={locationCode} 
               onSelect={() => console.log("bandera seleccionada")}
-              disabled={true} // <-- 3. Hace que no se pueda seleccionar
-              className="flags-select-display-only" // <-- 4. Clase para estilos de solo lectura
+              disabled={true} 
+              className="flags-select-display-only" 
             />
           </div>
         )}

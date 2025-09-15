@@ -200,3 +200,21 @@ body {
 .epr-emoji-category-label {
   font-size: 12px !important; /* ajusta según lo que quieras */
 }
+
+
+/* Oculta el ícono de "mostrar contraseña" en Microsoft Edge */
+input[type="password"]::-ms-reveal {
+  display: none;
+}
+
+/* Oculta el ícono de "mostrar contraseña" en Chrome, Safari, etc. (WebKit) */
+input[type="password"]::-webkit-revelation-button { /* A veces funciona con este nombre */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Oculta el medidor de contraseñas de WebKit que a veces interfiere */
+input::-webkit-password-meter {
+  -webkit-appearance: none;
+  appearance: none;
+}
