@@ -40,7 +40,7 @@ const ProfileActions = ({
             <p className="text-xs">Editar perfil</p>
           </Link>
 
-          <div className="absolute bottom-[-1.6rem] right-0">
+          <div className="absolute bottom-[-1.9rem] right-0">
           <SettingsProfileButton />
 
 

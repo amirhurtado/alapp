@@ -1,5 +1,5 @@
 import BackNavigation from "@/components/ui/BackNavigation";
-import FullSettingsView from "@/features/user/FullSettingsView"
+import FullSettingsView from "@/features/user/Settings/FullSettingsView"
 import { currentUser } from "@clerk/nextjs/server"
 import { notFound } from "next/navigation";
 
@@ -11,7 +11,7 @@ const page = async () => {
     <div className="flex flex-col h-screen overflow-y-hidden">
        <BackNavigation title="Configuración" />
 
-        <FullSettingsView currentUserId={currUser.id} />
+        <FullSettingsView  />
       
     </div>
   )
