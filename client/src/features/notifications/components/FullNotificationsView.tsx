@@ -25,6 +25,7 @@ const FullNotificationsView = ({
   const queryKey = ["notifications", { currentUserId: currentUserId }];
   const loadmoreRef = useRef(null);
 
+
   const {
     data,
     fetchNextPage,
