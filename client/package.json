@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@mermaid-js/mermaid-cli": "^11.10.1",
     "@tailwindcss/postcss": "^4",
     "@types/leaflet": "^1.9.20",
     "@types/node": "^20",
@@ -53,6 +54,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
+    "prisma-erd-generator": "^2.1.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"

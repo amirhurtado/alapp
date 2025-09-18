@@ -8,6 +8,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+
+
+model Messages {
+  id Int @id @default(autoincrement())
+
+
+  type String @default("text")
+
+  senderId  String
+  sender    User     @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId String
+  receiver   User   @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  
+}
+
 model Notification {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -225,4 +245,8 @@ model User {
 
   receivedNotifications Notification[] @relation("Receiver")
   sentNotifications     Notification[] @relation("Sender")
+
+
+  receivedMessages Messages[] @relation("Receiver")
+  sentMessages     Messages[] @relation("Sender")
 }
