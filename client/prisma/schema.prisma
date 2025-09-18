@@ -14,18 +14,39 @@ generator erd {
 
 
 
+
 model Messages {
-  id Int @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  type         String   @default("text")
+
+  content      String   @db.Text 
+
+  senderId     String
+  sender       User     @relation("Sender", fields: [senderId], references: [id])
+
+  receiverId   String
+  receiver     User     @relation("Receiver", fields: [receiverId], references: [id])
+
+  conversationId Int?
+  conversation   Conversation? @relation("ConversationMessages", fields: [conversationId], references: [id])
+
+  isLastOf Conversation? @relation("LastMessage")
+}
 
 
-  type String @default("text")
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  userAId   String
+  userA     User      @relation("UserA", fields: [userAId], references: [id])
 
-  senderId  String
-  sender    User     @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+  userBId   String
+  userB     User      @relation("UserB", fields: [userBId], references: [id])
 
-  receiverId String
-  receiver   User   @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
-  
+  lastMsgId Int?  @unique
+  lastMsg   Messages? @relation("LastMessage", fields: [lastMsgId], references: [id])
+
+  messages  Messages[] @relation("ConversationMessages")
 }
 
 model Notification {
@@ -249,4 +270,7 @@ model User {
 
   receivedMessages Messages[] @relation("Receiver")
   sentMessages     Messages[] @relation("Sender")
+
+  conversationsA Conversation[] @relation("UserA")
+  conversationsB Conversation[] @relation("UserB")
 }

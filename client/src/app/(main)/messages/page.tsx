@@ -1,3 +1,5 @@
+import { getFollowingsAction } from "@/actions/follow/follow";
+import { getChatsAction } from "@/actions/messages/getChats";
 import BackNavigation from "@/components/ui/BackNavigation";
 import FullMessagesView from "@/features/messages/components/FullMessagesView";
 import { currentUser } from "@clerk/nextjs/server"
@@ -8,10 +10,15 @@ const page = async () => {
 
     if(!currUser) return notFound();
 
+    const [chats, followings] = await Promise.all ([
+        getChatsAction(currUser.id),
+        getFollowingsAction(currUser.id)
+    ]) 
+
   return (
     <div>
         <BackNavigation title="Tús mensajes" />
-        <FullMessagesView />
+        <FullMessagesView chats={chats} followings={followings} currentUserId={currUser.id} />
     </div>
   )
 }
