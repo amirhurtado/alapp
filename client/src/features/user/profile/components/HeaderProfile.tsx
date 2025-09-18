@@ -26,7 +26,7 @@ const HeaderProfiler = ({
 
         <ProfileActions
           currentUserId={currentUserId}
-          userProfileInfoId={userProfileInfo.id}
+          userProfileInfo={{id: userProfileInfo.id, username: userProfileInfo.name}}
         />
 
         {/* Profile Info */}

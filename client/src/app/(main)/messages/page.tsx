@@ -16,7 +16,7 @@ const page = async () => {
     ]) 
 
   return (
-    <div>
+    <div className="flex flex-col h-screen overflow-hidden ">
         <BackNavigation title="Tús mensajes" />
         <FullMessagesView chats={chats} followings={followings} currentUserId={currUser.id} />
     </div>

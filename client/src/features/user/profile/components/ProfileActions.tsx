@@ -10,19 +10,22 @@ import { useFollowMutation } from "../hooks/useFollowMutation";
 
 interface ProfileActionsProps {
   currentUserId: string;
-  userProfileInfoId: string;
+  userProfileInfo: {
+    id: string,
+    username: string
+  }
 }
 
 const ProfileActions = ({
   currentUserId,
-  userProfileInfoId,
+  userProfileInfo,
 }: ProfileActionsProps) => {
-  const queryKey = ["isFriend", userProfileInfoId];
-  const isMyProfile = currentUserId === userProfileInfoId;
+  const queryKey = ["isFriend", userProfileInfo.id];
+  const isMyProfile = currentUserId === userProfileInfo.id;
 
   const { data: isFriend } = useQuery({
     queryKey,
-    queryFn: () => isFriendAction(currentUserId, userProfileInfoId),
+    queryFn: () => isFriendAction(currentUserId, userProfileInfo.id),
     enabled: !isMyProfile,
   });
 
@@ -48,18 +51,17 @@ const ProfileActions = ({
         </div>
       ) : (
         <div className="flex gap-4 items-center">
-          <button
-            aria-label="Enviar mensaje"
+          <Link href={`/messages/chat/${userProfileInfo.username}`}
             className="border-1 border-border rounded-full w-10 h-10 flex items-center justify-center"
           >
             <MessageSquare size={20} className="" />
-          </button>
+          </Link>
           <FollowButton
             isFriend={isFriend ?? false}
             onFollow={() =>
               followMutation.mutate({
                 currentUserId,
-                userProfileId: userProfileInfoId,
+                userProfileId: userProfileInfo.id,
               })
             }
             fromProfile={true}

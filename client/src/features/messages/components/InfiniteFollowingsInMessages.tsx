@@ -3,6 +3,7 @@ import { UserCardType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 
 interface InfiniteFollowingsInMessagesProps {
@@ -64,14 +65,14 @@ const InfiniteFollowingsInMessages = ({
       </p>
       <div className="flex gap-6 overflow-x-auto">
         {followings.map(user => (
-          <div key={user.id} className="flex flex-col justify-center gap-2">
+          <Link href={`/messages/chat/${user.name}`} key={user.id} className="flex flex-col justify-center gap-2">
             <Image src={user.imageUrl} alt="imgUser" width={40} height={40} className="rounded-full" />
             <div className="flex flex-col items-center text-xs">
               <p className="">{user.name}</p>
               <p className=" text-text-gray">{user.displayName}</p>
             </div>
 
-          </div>
+          </Link>
         ))}
 
 
