@@ -32,5 +32,5 @@ export const getMessagesWithUserAction = async (
     skip
   });
 
-  return messages.reverse();
+  return messages;
 };

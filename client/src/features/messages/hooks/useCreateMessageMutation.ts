@@ -1,10 +1,18 @@
 "use client"
 
 import { createMessageAction } from "@/actions/messages/createMessages";
+import { MessageType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 
-export const useCreateMessageMutation = () => {
+
+type oldDataType = {
+    pages: MessageType[][]
+
+}
+
+
+export const useCreateMessageMutation = (queryKey: unknown[]) => {
 
     const queryClient = useQueryClient();
 
@@ -16,7 +24,25 @@ export const useCreateMessageMutation = () => {
             const {success, message} = response
 
 
-            console.log("HOLA", success, message)
+            if(success){
+                queryClient.setQueryData(queryKey, (oldData : oldDataType ) => {
+                    console.log(oldData)
+                    if(!oldData) return
+
+
+                    return {
+                        ...oldData,
+                        pages: oldData.pages.map((page, index) => {
+                            if(index === 0){
+                                return [message, ...page]
+                            }else
+                                return page
+                        })
+                    }
+                })
+            }
+
+            queryClient.setQueryData(["scrollFlag", queryKey], true);
         }
     })
 

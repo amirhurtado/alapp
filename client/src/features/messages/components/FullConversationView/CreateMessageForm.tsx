@@ -8,19 +8,21 @@ import { SubmitButton } from '@/components/ui/SubmitButton'
 interface CreateMessageFormProps{
   currentUserid: string
   otheruserId: string,
+  queryKey: unknown[]
 }
 
-const CreateMessageForm = ({currentUserid, otheruserId } : CreateMessageFormProps) => {
+const CreateMessageForm = ({currentUserid, otheruserId, queryKey } : CreateMessageFormProps) => {
 
   const [textContent, setTextContent] = useState("")
 
 
-  const onSubmit = useCreateMessageMutation()
+  const onSubmit = useCreateMessageMutation(queryKey)
 
   return (
     <div className="flex bg-hover mb-4">
         <form className="p-4 flex gap-3 items-center justify-between w-full" action={async (formData) => {
           await onSubmit.mutate({formData})
+          setTextContent("")
         }}>
           <Paperclip size={22} />
           <input type="hidden" name="senderId"  value={currentUserid}/>
@@ -36,8 +38,7 @@ const CreateMessageForm = ({currentUserid, otheruserId } : CreateMessageFormProp
             />
             <SubmitButton disabled={textContent === ""} />
 
-      
-
+    
             
           </div>
         </form>
