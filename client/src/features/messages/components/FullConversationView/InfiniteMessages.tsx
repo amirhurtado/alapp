@@ -2,6 +2,7 @@ import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
 import { MessageType } from "@/types";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
+import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 
 interface InfiniteMessagesProps {
@@ -89,13 +90,25 @@ const InfiniteMessages = ({
           className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
         >
           <div
-            className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-1 bg-hover border-1 ${
+            className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
               isCurrentUser
                 ? " rounded-br-none  items-end"
                 : "  rounded-bl-none"
             }`}
           >
+
+            <div className={`flex flex-col gap-4 ${
+              isCurrentUser
+                ? " rounded-br-none  items-end"
+                : "  rounded-bl-none"
+            }`}>
+
+               {message.imageUrl && (<Image src={message.imageUrl} alt="image" width={180} height={180} className="rounded-lg mt-1" />) }
+            
             <p className="text-sm">{message.content}</p>
+
+            </div>
+           
             <p
               className={`text-[.6rem] mt-1 ${
                 isCurrentUser ? "text-blue-100" : "text-gray-500"

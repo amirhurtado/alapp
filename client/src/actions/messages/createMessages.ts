@@ -1,12 +1,13 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { uploadFile } from "../constants";
 
 
 export const createMessageAction = async (formData: FormData) => {
   // 1. Extraer y validar los datos del FormData
   const content = formData.get("content") as string | null;
-  const imageUrl = formData.get("imageUrl") as string | null; 
+  const media = formData.get("media") as File | null
   const senderId = formData.get("senderId") as string;
   const receiverId = formData.get("receiverId") as string; 
 
@@ -33,6 +34,13 @@ export const createMessageAction = async (formData: FormData) => {
     }
 
     const conversationId = conversation.id;
+
+
+    let imageUrl : string;
+
+    if(media && media.size > 0){
+      imageUrl = await uploadFile(media, "/messages")
+    }
 
     const newMessage = await prisma.$transaction(async (tx) => {
       const createdMessage = await tx.messages.create({
