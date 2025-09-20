@@ -3,17 +3,17 @@ import { SimpleChat, UserCardType } from "@/types";
 import React from "react";
 import InfiniteFollowingsInMessages from "./InfiniteFollowingsInMessages";
 
-interface FullMessagesViewProps {
+interface FullChatsViewProps {
   chats: SimpleChat[];
   followings: UserCardType[];
   currentUserId: string;
 }
 
-const FullMessagesView = ({
+const FullChatsView = ({
   chats,
   followings,
   currentUserId,
-}: FullMessagesViewProps) => {
+}: FullChatsViewProps) => {
   console.log("CHATS", chats);
 
   return (
@@ -22,10 +22,12 @@ const FullMessagesView = ({
         followings={followings}
         currentUserId={currentUserId}
       />
+
+      
      
 
     </div>
   );
 };
 
-export default FullMessagesView;
+export default FullChatsView;

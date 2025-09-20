@@ -1,7 +1,7 @@
 import { getFollowingsAction } from "@/actions/follow/follow";
 import { getChatsAction } from "@/actions/messages/getChats";
 import BackNavigation from "@/components/ui/BackNavigation";
-import FullMessagesView from "@/features/messages/components/FullMessagesView";
+import FullChatsView from "@/features/messages/components/FullChatsView";
 import { currentUser } from "@clerk/nextjs/server"
 import { notFound } from "next/navigation";
 
@@ -18,7 +18,7 @@ const page = async () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden ">
         <BackNavigation title="Tús mensajes" />
-        <FullMessagesView chats={chats} followings={followings} currentUserId={currUser.id} />
+        <FullChatsView chats={chats} followings={followings} currentUserId={currUser.id} />
     </div>
   )
 }

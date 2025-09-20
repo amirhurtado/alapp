@@ -4,7 +4,6 @@ import { Comment as CommentType } from "@/generated/prisma";
 import { Group as GroupType } from "@/generated/prisma";
 import { Event as EventType } from "@/generated/prisma";
 
-
 import { Notification as NotificationType } from "@/generated/prisma";
 
 export type FullUserType = UserType & {
@@ -101,7 +100,6 @@ export type fullNotificationType = NotificationType & {
   };
 };
 
-
 export type SimpleChat = {
   conversationId: number;
   otherUser: {
@@ -110,7 +108,15 @@ export type SimpleChat = {
     imageUrl: string;
   };
   lastMessage: {
-    text: string; 
+    text: string;
     createdAt: Date;
-  } | null; 
+  } | null;
+};
+
+export type MessageType = {
+  id: number;
+  content: string;
+  createdAt: Date;
+  senderId: string;
+  receiverId: string;
 };
