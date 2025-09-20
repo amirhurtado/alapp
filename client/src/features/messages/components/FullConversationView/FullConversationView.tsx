@@ -27,9 +27,6 @@ const FullConversationView = ({
 
   return (
 
-
-
-
     <div className="flex flex-col justify-between h-full  max-h-screen overflow-hidden" >
 
       <div className="flex flex-col flex-1 justify-end p-4 overflow-hidden  ">
