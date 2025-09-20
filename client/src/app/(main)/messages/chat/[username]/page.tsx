@@ -29,9 +29,9 @@ const page =  async ({params} : Props) => {
 
 
   return (
-    <div>
-      <BackNavigation title={`Chat con ${username}` } subtitle='Sé amable'/>
-      <FullConversationView  messages={messages} infoOtherUser={{id:infoOtherUser.id, username: infoOtherUser.name, displayName: infoOtherUser.displayName, imageUrl: infoOtherUser.imageUrl}}/>
+    <div className='flex flex-col h-screen overflow-hidden'>
+      <BackNavigation title={`Chat con ${username} (${infoOtherUser.displayName})` } subtitle='Sé amable'/>
+      <FullConversationView  messages={messages} currentUserId={currUser.id} infoOtherUser={{id:infoOtherUser.id, username: infoOtherUser.name, displayName: infoOtherUser.displayName, imageUrl: infoOtherUser.imageUrl}}/>
       
     </div>
   )
