@@ -89,10 +89,10 @@ const InfiniteMessages = ({
           className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
         >
           <div
-            className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-1 ${
+            className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-1 bg-hover border-1 rounded-br-none ${
               isCurrentUser
-                ? "bg-hover border-1 text-white rounded-br-none items-end"
-                : "bg-gray-200 text-gray-800 rounded-bl-none"
+                ? "  items-end"
+                : ""
             }`}
           >
             <p className="text-sm">{message.content}</p>
