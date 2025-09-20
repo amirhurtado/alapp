@@ -55,6 +55,15 @@ export type InfoProfile = {
   bg: string | null;
 };
 
+
+export type InfoUserType = {
+  id: string;
+  name: string;
+  displayName: string;
+  imageUrl: string;
+  isFriend: boolean,
+};
+
 export type UserCardType = {
   id: string;
   name: string;

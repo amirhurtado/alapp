@@ -5,17 +5,12 @@ import { getRecomentationsAction } from "@/actions/user/getUser";
 import UserCard from "@/features/user/UserCard";
 import { LoaderCircle } from "lucide-react";
 import { useFollowMutation } from "@/features/user/profile/hooks/useFollowMutation"; 
+import { InfoUserType } from "@/types";
 
-type InfoUser = {
-  id: string;
-  name: string;
-  displayName: string;
-  imageUrl: string;
-  isFriend: boolean,
-};
+
 
 interface InfiniteRecommendationsProps {
-  initialRecommendations: InfoUser[];
+  initialRecommendations: InfoUserType[];
   currentUserId: string;
   placement: "rightbar" | "explore"
 }
@@ -54,13 +49,16 @@ const InfiniteRecommendations = ({
 
 
   return (
-    <div className="flex flex-col gap-3 overflow-y-auto ">
+    <div className="flex flex-col gap-3 overflow-y-auto">
       {recomendations &&
         recomendations.map((user, index) => (
             <div key={index}>
                 <UserCard user={user}  onFollow={() => followMutation.mutate({currentUserId, userProfileId: user.id})}  />
             </div>
         ))}
+
+
+      
 
       {hasNextPage ? (
         <button onClick={() => fetchNextPage()} className="text-primary-color text-sm cursor-pointer text-start">Ver más</button>

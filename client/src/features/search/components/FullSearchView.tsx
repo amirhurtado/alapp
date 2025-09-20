@@ -1,28 +1,33 @@
-'use client'
+"use client";
 
 import React, { useEffect, useRef } from "react";
 import SearchInput from "./SearchInput";
-import { UserCardType } from "@/types";
+import { InfoUserType, UserCardType } from "@/types";
 import UserCard from "@/features/user/UserCard";
 import LoadingAndEndMessage from "@/components/ui/LoadingAndEndMessage";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getUsersInSearchAction } from "@/actions/user/getUser";
 import { useFollowMutation } from "@/features/user/profile/hooks/useFollowMutation";
+import InfiniteRecommendations from "@/features/recomendations/components/InfiniteRecommendations";
 
 interface FullSearchViewProps {
-    query: string | undefined
-    usersFind: UserCardType[]
-    currentUserId: string
+  query: string | undefined;
+  usersFind: UserCardType[];
+  currentUserId: string;
+  recommendations: InfoUserType[];
 }
 
-const FullSearchView = ({query, usersFind : initialUsersFind, currentUserId} : FullSearchViewProps) => {
-
-  const queryKey = ["usersInSearch", {query: query}];
+const FullSearchView = ({
+  query,
+  usersFind: initialUsersFind,
+  currentUserId,
+  recommendations,
+}: FullSearchViewProps) => {
+  const queryKey = ["usersInSearch", { query: query }];
 
   const loadmoreRef = useRef(null);
 
-  const followMutation = useFollowMutation()
-
+  const followMutation = useFollowMutation();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -38,7 +43,7 @@ const FullSearchView = ({query, usersFind : initialUsersFind, currentUserId} : F
         pages: [initialUsersFind],
         pageParams: [1],
       },
-      staleTime: Infinity
+      staleTime: Infinity,
     });
 
   const usersFind = data.pages?.flatMap((page) => page) ?? initialUsersFind;
@@ -59,22 +64,40 @@ const FullSearchView = ({query, usersFind : initialUsersFind, currentUserId} : F
     };
   }, [fetchNextPage, hasNextPage]);
 
-   
   return (
-    <div className="p-4 flex flex-col max-h-screen gap-5">
-      <SearchInput  />
-      <div ref={loadmoreRef} className="mt-2 flex flex-col overflow-y-auto gap-3">
-      {usersFind.map((user, index) => (
-        <div key={index}>
-          <UserCard
-            user={user}
-            onFollow={() => followMutation.mutate({currentUserId: currentUserId, userProfileId: user.id})}
-          />
-        </div>
-      ))}
+    <div className="p-4 flex flex-col max-h-screen gap-5  ">
+      <SearchInput />
+      <div
+        ref={loadmoreRef}
+        className="mt-2 flex flex-col overflow-y-auto gap-3"
+      >
+        {usersFind.map((user, index) => (
+          <div key={index}>
+            <UserCard
+              user={user}
+              onFollow={() =>
+                followMutation.mutate({
+                  currentUserId: currentUserId,
+                  userProfileId: user.id,
+                })
+              }
+            />
+          </div>
+        ))}
 
-       <LoadingAndEndMessage isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} />
-    </div>
+        {query ? (
+          <LoadingAndEndMessage
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+          />
+        ) : (
+          <InfiniteRecommendations
+            initialRecommendations={recommendations}
+            currentUserId={currentUserId}
+            placement={"explore"}
+          />
+        )}
+      </div>
     </div>
   );
 };
