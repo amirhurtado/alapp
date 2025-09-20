@@ -62,6 +62,7 @@ const UsersWithLike = ({
         <div key={index}>
           <UserCard
             user={user}
+            isMe={user.id === currentUserId}
           />
         </div>
       ))}
