@@ -124,7 +124,8 @@ export type SimpleChat = {
 
 export type MessageType = {
   id: number;
-  content: string;
+  content: string | null;
+  imageUrl: string | null;
   createdAt: Date;
   senderId: string;
   receiverId: string;

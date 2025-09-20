@@ -1,40 +1,50 @@
-import { getMessagesWithUserAction } from '@/actions/messages/getMessages'
-import { getUserbyNameAction } from '@/actions/user/getUser'
-import BackNavigation from '@/components/ui/BackNavigation'
-import FullConversationView from '@/features/messages/components/FullConversationView'
-import { currentUser } from '@clerk/nextjs/server'
-import React from 'react'
+import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
+import { getUserbyNameAction } from "@/actions/user/getUser";
+import BackNavigation from "@/components/ui/BackNavigation";
+import FullConversationView from "@/features/messages/components/FullConversationView/FullConversationView";
+import { currentUser } from "@clerk/nextjs/server";
+import React from "react";
 
 type Props = {
-    params: {
-        username: string
-    }
-}
+  params: {
+    username: string;
+  };
+};
 
-const page =  async ({params} : Props) => {
+const page = async ({ params }: Props) => {
+  const { username } = await params;
 
-    const [currUser,{username}] = await Promise.all ([
-      currentUser(),
-        params,
-    ])
+  const [currUser, infoOtherUser] = await Promise.all([
+    currentUser(),
+    getUserbyNameAction(username),
+  ]);
 
-    if(!currUser) return
+  if (!currUser || !infoOtherUser) return;
 
-    const [messages, infoOtherUser] = await Promise.all ([
-      getMessagesWithUserAction(currUser.id, username),
-      getUserbyNameAction(username)
-    ]) 
+  const [messages] = await Promise.all([
+    getMessagesWithUserAction(currUser.id, infoOtherUser.id),
+  ]);
 
-    if(!infoOtherUser) return
-
+  if (!infoOtherUser) return;
 
   return (
-    <div className='flex flex-col h-screen overflow-hidden'>
-      <BackNavigation title={`Chat con ${username} (${infoOtherUser.displayName})` } subtitle='Sé amable'/>
-      <FullConversationView  messages={messages} currentUserId={currUser.id} infoOtherUser={{id:infoOtherUser.id, username: infoOtherUser.name, displayName: infoOtherUser.displayName, imageUrl: infoOtherUser.imageUrl}}/>
-      
+    <div className="flex flex-col h-screen overflow-hidden">
+      <BackNavigation
+        title={`Chat con ${username} (${infoOtherUser.displayName})`}
+        subtitle="Sé amable"
+      />
+      <FullConversationView
+        messages={messages}
+        currentUserId={currUser.id}
+        infoOtherUser={{
+          id: infoOtherUser.id,
+          username: infoOtherUser.name,
+          displayName: infoOtherUser.displayName,
+          imageUrl: infoOtherUser.imageUrl,
+        }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

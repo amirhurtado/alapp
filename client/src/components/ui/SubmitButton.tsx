@@ -1,11 +1,11 @@
 "use client";
 import { useFormStatus } from "react-dom";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, SendHorizontal } from "lucide-react";
 
 
 interface SubmitButtonProps {
   disabled: boolean
-  text: string; 
+  text?: string; 
   className?: string; 
 }
 
@@ -29,7 +29,7 @@ export function SubmitButton({ disabled, text, className = "base"}: SubmitButton
         (disabled || pending) && "opacity-50" 
       }`}
     >
-      {pending ? <LoaderCircle className="animate-spin" /> : text}
+      {pending ? <LoaderCircle className="animate-spin" /> : text ? text :  <SendHorizontal size={22} className="text-white"/>}
     </button>
   );
 }

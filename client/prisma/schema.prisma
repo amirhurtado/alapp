@@ -18,9 +18,9 @@ generator erd {
 model Messages {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
-  type         String   @default("text")
 
-  content      String   @db.Text 
+  content      String?   @db.Text 
+  imageUrl     String?
 
   senderId     String
   sender       User     @relation("Sender", fields: [senderId], references: [id])
