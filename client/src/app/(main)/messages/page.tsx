@@ -15,6 +15,9 @@ const page = async () => {
         getFollowingsAction(currUser.id)
     ]) 
 
+
+
+
   return (
     <div className="flex flex-col h-screen overflow-hidden ">
         <BackNavigation title="Tús mensajes" />
