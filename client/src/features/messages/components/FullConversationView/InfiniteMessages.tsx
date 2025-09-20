@@ -1,5 +1,5 @@
 import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
-import { useFormatDateLabel } from "@/features/messages/hooks/useFormatDateLabel"
+import { useFormatDateLabel } from "@/features/messages/hooks/useFormatDateLabel";
 import { MessageType } from "@/types";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
@@ -28,6 +28,33 @@ const InfiniteMessages = ({
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const formatDateLabel = useFormatDateLabel();
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+
+    const containerTop = scrollContainerRef.current.getBoundingClientRect().top;
+    let topMessageDate = null;
+
+    const messageElements = scrollContainerRef.current.querySelectorAll(".message-item");
+    for (const messageEl of messageElements) {
+      if (messageEl.getBoundingClientRect().top >= containerTop) {
+        topMessageDate = (messageEl as HTMLElement).dataset.date;
+        break;
+      }
+    }
+
+    if (topMessageDate) {
+      setFloatingDate({
+        visible: true,
+        date: formatDateLabel(topMessageDate),
+      });
+    }
+
+    hideTimeoutRef.current = setTimeout(() => {
+      setFloatingDate((prev) => ({ ...prev, visible: false }));
+    }, 1500);
+  };
   // --- Fin de la Lógica del Label Flotante ---
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
@@ -69,47 +96,78 @@ const InfiniteMessages = ({
     }
   }, [data, queryClient, queryKey]);
 
-  // --- Lógica del Label Flotante ---
-  const handleScroll = () => {
-    if (!scrollContainerRef.current) return;
+  // --- Lógica para procesar y renderizar mensajes con separadores fijos ---
+  const elementsToRender: React.ReactNode[] = [];
 
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
+  messages.forEach((message, index) => {
+    const isCurrentUser = message.senderId === currentUserId;
+    // 1. Añade el componente del mensaje
+    elementsToRender.push(
+      <div
+        key={message.id}
+        className={`message-item flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
+        data-date={message.createdAt.toString()}
+      >
+        <div
+          className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
+            isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
+          }`}
+        >
+          <div
+            className={`flex flex-col gap-4 ${
+              isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
+            }`}
+          >
+            {message.imageUrl && (
+              <Image
+                src={message.imageUrl}
+                alt="image"
+                width={180}
+                height={180}
+                className="rounded-lg mt-1"
+              />
+            )}
+            <p className="text-sm">{message.content}</p>
+          </div>
+          <p
+            className={`text-[.6rem] mt-1 ${
+              isCurrentUser ? "text-blue-100" : "text-gray-500"
+            } text-right`}
+          >
+            {new Date(message.createdAt).toLocaleTimeString("es-CO", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>
+      </div>
+    );
+
+    // 2. Comprueba si se debe añadir un separador de fecha fijo
+    const currentMessageDate = new Date(message.createdAt).toDateString();
+    const nextMessage = messages[index + 1];
+    const nextMessageDate = nextMessage ? new Date(nextMessage.createdAt).toDateString() : null;
+
+    if (currentMessageDate !== nextMessageDate) {
+      elementsToRender.push(
+        <div key={`date-separator-${currentMessageDate}`} className="flex justify-center ">
+          <span className="bg-input text-xs font-semibold px-3  rounded-full">
+            {formatDateLabel(message.createdAt)}
+          </span>
+        </div>
+      );
     }
-
-    const containerTop = scrollContainerRef.current.getBoundingClientRect().top;
-    let topMessageDate = null;
-
-    const messageElements = scrollContainerRef.current.querySelectorAll(".message-item");
-    for (const messageEl of messageElements) {
-      if (messageEl.getBoundingClientRect().top >= containerTop) {
-        topMessageDate = (messageEl as HTMLElement).dataset.date;
-        break;
-      }
-    }
-
-    if (topMessageDate) {
-      setFloatingDate({
-        visible: true,
-        date: formatDateLabel(topMessageDate),
-      });
-    }
-
-    hideTimeoutRef.current = setTimeout(() => {
-      setFloatingDate((prev) => ({ ...prev, visible: false }));
-    }, 1500); // El label desaparecerá después de 1.5s de inactividad
-  };
-  // --- Fin de la Lógica del Label Flotante ---
+  });
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full ">
       {/* Label de Fecha Flotante */}
       <div
-        className={`absolute top-4 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300 ${
+        className={`absolute top-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300 ${
           floatingDate.visible ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <span className="bg-input  text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+        <span className="bg-input text-xs font-semibold px-3 py-1 rounded-full shadow-md">
           {floatingDate.date}
         </span>
       </div>
@@ -122,49 +180,8 @@ const InfiniteMessages = ({
       >
         <div ref={bottomRef} />
 
-        {messages.map((message) => {
-          const isCurrentUser = message.senderId === currentUserId;
-          return (
-            <div
-              key={message.id}
-              className={`message-item flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
-              data-date={message.createdAt.toString()} // Atributo para leer la fecha
-            >
-              <div
-                className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
-                  isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
-                }`}
-              >
-                <div
-                  className={`flex flex-col gap-4 ${
-                    isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
-                  }`}
-                >
-                  {message.imageUrl && (
-                    <Image
-                      src={message.imageUrl}
-                      alt="image"
-                      width={180}
-                      height={180}
-                      className="rounded-lg mt-1"
-                    />
-                  )}
-                  <p className="text-sm">{message.content}</p>
-                </div>
-                <p
-                  className={`text-[.6rem] mt-1 ${
-                    isCurrentUser ? "text-blue-100" : "text-gray-500"
-                  } text-right`}
-                >
-                  {new Date(message.createdAt).toLocaleTimeString("es-CO", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+        {/* Renderiza el array que contiene mensajes y separadores fijos */}
+        {elementsToRender}
 
         <div className="h-[1rem] flex items-center justify-center py-1" ref={loadmoreRef}>
           {isFetchingNextPage && (
