@@ -33,7 +33,7 @@ export const getChatsAction = async (currentUserId: string) => {
         imageUrl: otherUser.imageUrl,
       },
       lastMessage: conv.lastMsg ? {
-        text: conv.lastMsg.content,
+        text: conv.lastMsg.content ?? "",
         createdAt: conv.lastMsg.createdAt,
       } : null
     };
