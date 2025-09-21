@@ -2,6 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { uploadFile } from "../constants";
+import { revalidatePath } from "next/cache";
 
 
 export const createMessageAction = async (formData: FormData) => {
@@ -67,6 +68,7 @@ export const createMessageAction = async (formData: FormData) => {
     
    
 
+    revalidatePath("/messages")
     return { success: true, message: newMessage };
 
   } catch (error) {

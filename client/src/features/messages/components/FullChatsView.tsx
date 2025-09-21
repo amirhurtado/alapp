@@ -6,6 +6,7 @@ import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
 import TimeAgo from "@/components/ui/TimeAgo";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
 interface FullChatsViewProps {
   chats: SimpleChat[];
@@ -14,10 +15,18 @@ interface FullChatsViewProps {
 }
 
 const FullChatsView = ({
-  chats,
+  chats: initialData,
   followings,
   currentUserId,
 }: FullChatsViewProps) => {
+  const queryKey = ["chatsWithConversation"];
+
+  const { data: chats } = useQuery({
+    queryKey,
+    queryFn: () => initialData,
+    initialData: initialData,
+  });
+
   return (
     <div className="flex flex-col gap-10 p-4 max-h-screen overflow-y-auto">
       <InfiniteFollowingsInMessages
@@ -31,7 +40,8 @@ const FullChatsView = ({
         <div className="flex flex-col">
           {chats.length > 0 ? (
             chats.map((chat, index) => (
-              <Link href={`/messages/chat/${chat.otherUser.username}`}
+              <Link
+                href={`/messages/chat/${chat.otherUser.username}`}
                 key={index}
                 className="w-full border-y-1 border-boder flex justify-between p-4 bg-hover "
               >

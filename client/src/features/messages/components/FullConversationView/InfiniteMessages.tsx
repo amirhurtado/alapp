@@ -12,10 +12,10 @@ interface InfiniteMessagesProps {
   messages: MessageType[];
   currentUserId: string;
   otherUser: {
-    id: string,
-    imageUrl: string,
-    username: string
-  }
+    id: string;
+    imageUrl: string;
+    username: string;
+  };
   queryKey: unknown[];
 }
 
@@ -30,7 +30,10 @@ const InfiniteMessages = ({
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   // --- Lógica del Label Flotante ---
-  const [floatingDate, setFloatingDate] = useState({ visible: false, date: "" });
+  const [floatingDate, setFloatingDate] = useState({
+    visible: false,
+    date: "",
+  });
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const formatDateLabel = useFormatDateLabel();
@@ -42,7 +45,8 @@ const InfiniteMessages = ({
     const containerTop = scrollContainerRef.current.getBoundingClientRect().top;
     let topMessageDate = null;
 
-    const messageElements = scrollContainerRef.current.querySelectorAll(".message-item");
+    const messageElements =
+      scrollContainerRef.current.querySelectorAll(".message-item");
     for (const messageEl of messageElements) {
       if (messageEl.getBoundingClientRect().top >= containerTop) {
         topMessageDate = (messageEl as HTMLElement).dataset.date;
@@ -95,7 +99,10 @@ const InfiniteMessages = ({
 
   // useEffect para el scroll inicial al fondo
   useEffect(() => {
-    const shouldScroll = queryClient.getQueryData<boolean>([ "scrollFlag", queryKey ]);
+    const shouldScroll = queryClient.getQueryData<boolean>([
+      "scrollFlag",
+      queryKey,
+    ]);
     if (shouldScroll) {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
       queryClient.setQueryData(["scrollFlag", queryKey], false);
@@ -111,10 +118,16 @@ const InfiniteMessages = ({
     elementsToRender.push(
       <div
         key={message.id}
-        className={`message-item flex gap-2 items-end ${isCurrentUser ? "justify-end" : "justify-start"}`}
+        className={`message-item flex gap-2 items-end ${
+          isCurrentUser ? "justify-end" : "justify-start"
+        }`}
         data-date={new Date(message.createdAt).toISOString()}
       >
-          {message.senderId === otherUser.id && <Link href={`/${otherUser.username}`}><Avatar src={otherUser.imageUrl} /></Link> }
+        {message.senderId === otherUser.id && (
+          <Link href={`/${otherUser.username}`}>
+            <Avatar src={otherUser.imageUrl} />
+          </Link>
+        )}
 
         <div
           className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
@@ -138,28 +151,32 @@ const InfiniteMessages = ({
             <p className="text-sm">{message.content}</p>
           </div>
           <p
-  suppressHydrationWarning // <--- AÑADE ESTA LÍNEA
-  className={`text-[.6rem] mt-1 ${
-    isCurrentUser ? "text-blue-100" : "text-gray-500"
-  } text-right`}
->
-  {new Date(message.createdAt).toLocaleTimeString("es-CO", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}
-</p>
+            suppressHydrationWarning // <--- AÑADE ESTA LÍNEA
+            className={`text-[.6rem] mt-1 ${
+              isCurrentUser ? "text-blue-100" : "text-gray-500"
+            } text-right`}
+          >
+            {new Date(message.createdAt).toLocaleTimeString("es-CO", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
         </div>
       </div>
     );
 
     const currentMessageDate = new Date(message.createdAt).toDateString();
     const nextMessage = messages[index + 1];
-    const nextMessageDate = nextMessage ? new Date(nextMessage.createdAt).toDateString() : null;
+    const nextMessageDate = nextMessage
+      ? new Date(nextMessage.createdAt).toDateString()
+      : null;
 
     if (currentMessageDate !== nextMessageDate) {
       elementsToRender.push(
-        <div key={`date-separator-${currentMessageDate}`} className="flex justify-center ">
-          
+        <div
+          key={`date-separator-${currentMessageDate}`}
+          className="flex justify-center "
+        >
           <span className="bg-input text-xs font-semibold px-3  rounded-full">
             {formatDateLabel(message.createdAt)}
           </span>
@@ -192,7 +209,10 @@ const InfiniteMessages = ({
         {/* Renderiza el array que contiene mensajes y separadores fijos */}
         {elementsToRender}
 
-        <div className="h-[1rem] flex items-center justify-center py-1" ref={loadmoreRef}>
+        <div
+          className="h-[1rem] flex items-center justify-center py-1"
+          ref={loadmoreRef}
+        >
           {isFetchingNextPage && (
             <LoaderCircle className="animate-spin mx-auto text-primary-color min-w-[1.5rem] min-h-[1.5rem]" />
           )}
