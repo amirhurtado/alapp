@@ -29,7 +29,7 @@ model Messages {
   receiver     User     @relation("Receiver", fields: [receiverId], references: [id])
 
   conversationId Int?
-  conversation   Conversation? @relation("ConversationMessages", fields: [conversationId], references: [id])
+  conversation   Conversation? @relation("ConversationMessages", fields: [conversationId], references: [id], onDelete: Cascade)
 
   isLastOf Conversation? @relation("LastMessage")
 }
@@ -44,7 +44,7 @@ model Conversation {
   userB     User      @relation("UserB", fields: [userBId], references: [id])
 
   lastMsgId Int?  @unique
-  lastMsg   Messages? @relation("LastMessage", fields: [lastMsgId], references: [id])
+  lastMsg   Messages? @relation("LastMessage", fields: [lastMsgId], references: [id], onDelete: Cascade)
 
   messages  Messages[] @relation("ConversationMessages")
 }
@@ -154,10 +154,10 @@ model Comment {
   content String @db.VarChar(255)
 
   postId Int
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   likesComment LikeComment[]
 

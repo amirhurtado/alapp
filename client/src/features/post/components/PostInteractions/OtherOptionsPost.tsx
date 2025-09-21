@@ -20,15 +20,18 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface OtherOptionsPostProps {
   onDelete?: () => void;
   fromPostInfo?: boolean;
+  postId: number;
 }
 
 const OtherOptionsPost = ({
   onDelete,
   fromPostInfo,
+  postId,
 }: OtherOptionsPostProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const router = useRouter();
@@ -47,7 +50,14 @@ const OtherOptionsPost = ({
             className="text-text-gray hover:text-primary-color cursor-pointer transition-colors duration-200 ease-in"
           />
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-2">
+        <PopoverContent className="w-auto p-2 flex flex-col gap-2">
+          <Link
+            href={`/edit-post/${postId}`}
+            className="w-full text-center cursor-pointer border-1 border-border text-white py-1 px-4 rounded-md text-sm font-medium transition-colors active:scale-[0.98]"
+          >
+            Editar
+          </Link>
+
           {onDelete ? (
             <AlertDialogTrigger asChild>
               <button
@@ -55,12 +65,14 @@ const OtherOptionsPost = ({
                 onClick={() => {
                   setPopoverOpen(false);
                 }}
-                className="w-full text-center cursor-pointer bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md text-sm font-medium transition-colors active:scale-[0.98]"
+                className="w-full text-center cursor-pointer !border-none !outline-none focus:outline-none  bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md text-sm font-medium transition-colors active:scale-[0.98]"
               >
                 Borrar
               </button>
             </AlertDialogTrigger>
-          ) : (<p className="text-xs text-text-gray">No eres el autor</p>)}
+          ) : (
+            <p className="text-xs text-text-gray">No eres el autor</p>
+          )}
         </PopoverContent>
       </Popover>
 

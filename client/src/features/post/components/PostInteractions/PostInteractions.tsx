@@ -57,7 +57,7 @@ const PostInteractions = ({
             currentUserId={currentUserId}
             onFavorite={interactions.onFavorite}
           />
-          <OtherOptionsPost  onDelete={currentUserId === post.authorId ? interactions.onDelete : undefined} fromPostInfo={fromPostInfo}/>
+          <OtherOptionsPost  onDelete={currentUserId === post.authorId ? interactions.onDelete : undefined} fromPostInfo={fromPostInfo} postId={post.id}/>
         </div>
       </>
     </div>
