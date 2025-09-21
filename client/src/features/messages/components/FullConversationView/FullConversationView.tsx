@@ -31,7 +31,7 @@ const FullConversationView = ({
 
       <div className="flex flex-col flex-1 justify-end p-4 overflow-hidden  ">
 
-       <InfiniteMessages messages={messages} currentUserId={currentUserId} otherUserId={infoOtherUser.id} queryKey={queryKey} />
+       <InfiniteMessages messages={messages} currentUserId={currentUserId} otherUser={{id: infoOtherUser.id, imageUrl: infoOtherUser.imageUrl, username: infoOtherUser.username}} queryKey={queryKey} />
 
         {messages.length === 0 && (
           <WithOutMessages

@@ -1,22 +1,28 @@
 import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
+import Avatar from "@/components/ui/Avatar";
 import { useFormatDateLabel } from "@/features/messages/hooks/useFormatDateLabel";
 import { MessageType } from "@/types";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
 interface InfiniteMessagesProps {
   messages: MessageType[];
   currentUserId: string;
-  otherUserId: string;
+  otherUser: {
+    id: string,
+    imageUrl: string,
+    username: string
+  }
   queryKey: unknown[];
 }
 
 const InfiniteMessages = ({
   messages: initialMessages,
   currentUserId,
-  otherUserId,
+  otherUser,
   queryKey,
 }: InfiniteMessagesProps) => {
   const queryClient = useQueryClient();
@@ -61,7 +67,7 @@ const InfiniteMessages = ({
     useInfiniteQuery({
       queryKey,
       queryFn: ({ pageParam = 1 }) =>
-        getMessagesWithUserAction(currentUserId, otherUserId, pageParam),
+        getMessagesWithUserAction(currentUserId, otherUser.id, pageParam),
       getNextPageParam: (lastPage, allPages) =>
         lastPage.length === 15 ? allPages.length + 1 : undefined,
       initialPageParam: 1,
@@ -105,9 +111,11 @@ const InfiniteMessages = ({
     elementsToRender.push(
       <div
         key={message.id}
-        className={`message-item flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
-        data-date={message.createdAt.toString()}
+        className={`message-item flex gap-2 items-end ${isCurrentUser ? "justify-end" : "justify-start"}`}
+        data-date={new Date(message.createdAt).toISOString()}
       >
+          {message.senderId === otherUser.id && <Link href={`/${otherUser.username}`}><Avatar src={otherUser.imageUrl} /></Link> }
+
         <div
           className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
             isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
@@ -130,20 +138,20 @@ const InfiniteMessages = ({
             <p className="text-sm">{message.content}</p>
           </div>
           <p
-            className={`text-[.6rem] mt-1 ${
-              isCurrentUser ? "text-blue-100" : "text-gray-500"
-            } text-right`}
-          >
-            {new Date(message.createdAt).toLocaleTimeString("es-CO", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
+  suppressHydrationWarning // <--- AÑADE ESTA LÍNEA
+  className={`text-[.6rem] mt-1 ${
+    isCurrentUser ? "text-blue-100" : "text-gray-500"
+  } text-right`}
+>
+  {new Date(message.createdAt).toLocaleTimeString("es-CO", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}
+</p>
         </div>
       </div>
     );
 
-    // 2. Comprueba si se debe añadir un separador de fecha fijo
     const currentMessageDate = new Date(message.createdAt).toDateString();
     const nextMessage = messages[index + 1];
     const nextMessageDate = nextMessage ? new Date(nextMessage.createdAt).toDateString() : null;
@@ -151,6 +159,7 @@ const InfiniteMessages = ({
     if (currentMessageDate !== nextMessageDate) {
       elementsToRender.push(
         <div key={`date-separator-${currentMessageDate}`} className="flex justify-center ">
+          
           <span className="bg-input text-xs font-semibold px-3  rounded-full">
             {formatDateLabel(message.createdAt)}
           </span>
@@ -160,10 +169,10 @@ const InfiniteMessages = ({
   });
 
   return (
-    <div className="relative h-full w-full ">
+    <div className="relative h-full w-full  ">
       {/* Label de Fecha Flotante */}
       <div
-        className={`absolute top-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300 ${
+        className={`absolute top-4 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300  ${
           floatingDate.visible ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -176,7 +185,7 @@ const InfiniteMessages = ({
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex flex-col-reverse gap-4 overflow-y-auto p-4 h-full"
+        className="flex flex-col-reverse gap-4 overflow-y-auto h-full "
       >
         <div ref={bottomRef} />
 
