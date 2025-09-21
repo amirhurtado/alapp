@@ -119,6 +119,7 @@ export type SimpleChat = {
   lastMessage: {
     text: string;
     createdAt: Date;
+    sentByMe: boolean
   } | null;
 };
 

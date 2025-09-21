@@ -58,7 +58,9 @@ const FullChatsView = ({
                 <div className="flex gap-2">
                   <div className="flex flex-col justify-center items-end">
                     {chat.lastMessage?.text && (
+
                       <p className="text-text-gray text-xs">
+                        <span className="text-primary-color">{chat.lastMessage.sentByMe ? "Tú: " : `${chat.otherUser.username}: `}</span>
                         {chat.lastMessage?.text.length > 23
                           ? chat.lastMessage.text.slice(0, 23) + "..."
                           : chat.lastMessage?.text}
