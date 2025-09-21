@@ -64,7 +64,7 @@ const InfiniteFollows = ({
       <div className="flex flex-col">
         {follows.map((user, index) => (
           <div key={index}>
-            <UserCard user={user} />
+            <UserCard user={user} visitProfile={true}/>
           </div>
         ))}
       </div>

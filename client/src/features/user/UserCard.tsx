@@ -8,10 +8,16 @@ import { UserCardType } from "@/types";
 interface UserCardRecommendationProps {
   user: UserCardType;
   onFollow?: () => void;
-  isMe?: boolean
+  isMe?: boolean;
+  visitProfile?: boolean;
 }
 
-const UserCard = ({ user, onFollow, isMe }: UserCardRecommendationProps) => {
+const UserCard = ({
+  user,
+  onFollow,
+  isMe,
+  visitProfile = false,
+}: UserCardRecommendationProps) => {
   return (
     <div className="flex justify-between p-2 hover:bg-hover rounded-lg  border-1 border-border transition-colors duration-200 ease-in">
       <div className="flex gap-3 items-center">
@@ -30,18 +36,27 @@ const UserCard = ({ user, onFollow, isMe }: UserCardRecommendationProps) => {
         </div>
       </div>
 
-      {onFollow ? (
-        <FollowButton
-          isFriend={user.isFriend}
-          onFollow={onFollow}
-          fromProfile={false}
-        />
-      ) : (
-        <>
-        {user.isFriend && (<p className="text-primary-color text-xs flex items-center">Es tu amigo</p>)}
+      <div className="flex flex-col justify-center pr-2">
+        {onFollow ? (
+          <FollowButton
+            isFriend={user.isFriend}
+            onFollow={onFollow}
+            fromProfile={false}
+          />
+        ) : (
+          <>
+            {user.isFriend && (
+              <p className="text-primary-color text-sm hover:underline flex items-center">
+                Es tu amigo
+              </p>
+            )}
+          </>
+        )}
 
-        </>
-      )}
+        {visitProfile && <Link href={`/${user.displayName}`} >
+          <p className="text-primary-color text-sm">Visitar perfil</p>
+        </Link>}
+      </div>
     </div>
   );
 };
