@@ -64,6 +64,22 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setDescription((prevDescription) => prevDescription + emojiObject.emoji);
   };
 
+  // NUEVO: El manejador de cambios para la descripción
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDescription = e.target.value;
+    setDescription(newDescription);
+
+    // Usamos una expresión regular para encontrar si el texto termina con un "@"
+    // seguido de uno o más caracteres de palabra (letras, números, guion bajo).
+    const mentionMatch = newDescription.match(/@(\w+)$/);
+
+    if (mentionMatch) {
+      // Si hay una coincidencia, `mentionMatch[0]` es "@texto" y `mentionMatch[1]` es solo "texto".
+      const searchTerm = mentionMatch[1];
+      console.log(`✅ Detectado @. Se buscará por: "${searchTerm}"`);
+    }
+  };
+
   return (
     <div className={`${!modal && "p-4 md:mt-2"}`}>
       <div className="relative flex w-full gap-3">
@@ -92,10 +108,13 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
                   modal && "pb-12 mt-1"
                 }`}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                // NUEVO: Usamos el nuevo manejador de cambios
+                onChange={handleDescriptionChange}
                 placeholder="Cuentanos lo que piensas!"
                 type="text"
                 name="description"
+                // NUEVO: Desactivamos el autocompletado del navegador para que no interfiera
+                autoComplete="off"
               />
             </div>
 
@@ -135,11 +154,9 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
               height={300}
               width="100%"
               searchDisabled
-              
               previewConfig={{
                 showPreview: false,
               }}
-              
             />
           </div>
         )}

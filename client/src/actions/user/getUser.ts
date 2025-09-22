@@ -114,3 +114,74 @@ export const getUsersInSearchAction = async (
 };
 
 
+
+
+
+export type MentionableUser = {
+  id: string;
+  name: string; // En tu esquema es 'name', no 'username'
+  displayName: string;
+  imageUrl: string;
+  isFollowedByYou: boolean; // La propiedad clave que necesitamos
+};
+
+export const getMentionableUsersAction = async (
+  query: string | undefined,
+  currentUserId: string
+): Promise<MentionableUser[]> => {
+  // 1. Si no hay consulta o es muy corta, no devolvemos nada.
+  if (!query || query.trim().length < 1) {
+    return [];
+  }
+
+  try {
+    const [usersFound, yourFollowers] = await Promise.all([
+      prisma.user.findMany({
+        where: {
+          name: {
+            contains: query,
+          },
+          NOT: {
+            id: currentUserId,
+          },
+        },
+        take: 25, 
+        select: {
+          id: true,
+          name: true,
+          displayName: true,
+          imageUrl: true,
+        },
+      }),
+      prisma.follow.findMany({
+        where: {
+          followingId: currentUserId,
+        },
+        select: {
+          followerId: true, // Solo necesitamos el ID de quien nos sigue.
+        },
+      }),
+    ]);
+
+    // 3. Para una búsqueda rápida, creamos un Set con los IDs de nuestros seguidores.
+    // Un Set es mucho más rápido que un Array.includes() para verificar si un elemento existe.
+    const yourFollowerIds = new Set(
+      yourFollowers.map((follower) => follower.followerId)
+    );
+
+    // 4. Mapeamos los resultados para añadir la propiedad `isFollowedByYou`.
+    const usersWithFollowStatus = usersFound.map((user) => {
+      return {
+        ...user,
+        // Verificamos si el ID de este usuario está en nuestro Set de seguidores.
+        isFollowedByYou: yourFollowerIds.has(user.id),
+      };
+    });
+
+    return usersWithFollowStatus;
+  } catch (error) {
+    console.error("Error en getMentionableUsersAction:", error);
+    // En caso de error, devolvemos un array vacío para no romper el frontend.
+    return [];
+  }
+};
