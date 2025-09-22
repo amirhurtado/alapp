@@ -39,6 +39,8 @@ export const createEventAction = async (formData: FormData) => {
   ]);
 
   membersOfGroup.map((member) => {
+
+    if(member.userId === adminId!.adminId) return
     const data = {
       type: "createEvent",
       receiverId: member.userId,
@@ -50,8 +52,7 @@ export const createEventAction = async (formData: FormData) => {
     return createNotificationAction(data);
   });
 
-  const membersIdOfGroup = membersOfGroup.map((member) => member.userId)
+  const membersIdOfGroup = membersOfGroup.map((member) => member.userId);
 
-
-  return {event, membersIdOfGroup };
+  return { event, membersIdOfGroup };
 };

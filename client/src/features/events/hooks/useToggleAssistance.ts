@@ -1,4 +1,5 @@
 import { toggleAssistanceEventAction } from "@/actions/event/toggleAssistanceEvent";
+import { socket } from "@/socket";
 import { FullEventType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -35,8 +36,15 @@ export const useToggleAssistance = (groupId: number) => {
                     }))
                 }
             })
-
-        }
+        },
+         onSuccess: (userNotificationId) => {
+        
+              if(userNotificationId){
+        
+                socket.emit("sendNotification", userNotificationId )
+              }
+        
+            }
     })
         
 }

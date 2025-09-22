@@ -1,5 +1,5 @@
 // NUEVO CÓDIGO - A PRUEBA DE FALLOS
-"use client"
+"use client";
 import React from "react";
 import { fullNotificationType } from "@/types";
 import Avatar from "@/components/ui/Avatar";
@@ -23,7 +23,6 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
   return (
     // 1. El contenedor principal ahora es un DIV con posición RELATIVA. Ya no es un Link.
     <div className="border-border border-1 rounded-lg p-2 md:p-4 bg-hover relative">
-      
       {/* 2. El contenido visual se pone en otro DIV con z-index para que esté por encima del link. */}
       <div className="relative z-20 flex flex-col gap-2">
         <div className="flex gap-3 items-center">
@@ -40,17 +39,18 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
                 size={18}
                 className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-primary-color"
               />
+            ) : notification.type === "follow" ? (
+              <UserRoundPlus
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
+              />
             ) : (
-              notification.type === "follow" ? (
-                <UserRoundPlus
+              notification.type === "createEvent" && (
+                <CalendarPlus2
                   size={18}
                   className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
                 />
-              ) :
-              notification.type === "createEvent" && <CalendarPlus2
-                  size={18}
-                  className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
-                />
+              )
             )}
             <p className="font-semibold text-xs md:text-sm ">
               <span className="text-xs text-primary-color">
@@ -60,17 +60,14 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
             </p>
           </div>
         </div>
-        <div className="flex gap-2 justify-end items-center">
-          {/* DeleteNotification AHORA ESTÁ AQUÍ, seguro y por encima del link */}
+        <div className="flex gap-2 justify-end items-end w-full ">
           <DeleteNotification notificationId={notification.id} />
           <TimeAgo createdAt={notification.createdAt} />
+          <Link href={notification.link} className="flex text-xs underline ">
+            <span >Ver más</span>
+          </Link>
         </div>
       </div>
-
-      {/* 3. El Link ahora es una "capa fantasma" que ocupa todo el espacio pero está POR DEBAJO (z-index 10). */}
-      <Link href={notification.link} className="absolute inset-0 z-10">
-        <span className="sr-only">Ver notificación</span>
-      </Link>
     </div>
   );
 };
