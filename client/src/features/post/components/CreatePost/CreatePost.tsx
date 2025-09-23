@@ -85,16 +85,27 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setDescription((prevDescription) => prevDescription + emojiObject.emoji);
   };
 
+  // MODIFICADO: Esta función ahora controla la visibilidad de las sugerencias
   const debouncedFetchUsers = useCallback(
     debounce(async (searchTerm: string) => {
+      // 1. Inicia la carga y muestra el contenedor (para el loader)
       setIsMentionLoading(true);
+      setShowSuggestions(true);
+
       const users = await getMentionableUsersAction(searchTerm, currentUser.id);
+      
       setMentionSuggestions(users);
       setIsMentionLoading(false);
+
+      // 2. Si después de buscar no hay usuarios, oculta el contenedor.
+      if (users.length === 0) {
+        setShowSuggestions(false);
+      }
     }, 300),
     [currentUser.id]
   );
 
+  // MODIFICADO: Esta función ya no controla la visibilidad directamente
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
     const cursorPosition = e.target.selectionStart || 0;
@@ -105,9 +116,10 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
       const searchTerm = mentionMatch[1];
       const startIndex = mentionMatch.index || 0;
       setActiveMention({ term: searchTerm, startIndex });
-      setShowSuggestions(true);
+      // Ya NO ponemos setShowSuggestions(true) aquí
       debouncedFetchUsers(searchTerm);
     } else {
+      // Si el usuario borra la @, sí queremos ocultar todo inmediatamente
       setShowSuggestions(false);
       setActiveMention(null);
     }
