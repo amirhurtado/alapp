@@ -53,6 +53,7 @@ export const getChatsAction = async (currentUserId: string) => {
         createdAt: conv.lastMsg.createdAt,
         sentByMe: sentByMe,  
         senderId: conv.lastMsg.senderId, 
+        isDeleted: conv.lastMsg.isDeleted ?? false
       }
     };
   });

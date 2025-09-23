@@ -57,21 +57,28 @@ const FullChatsView = ({
 
                 <div className="flex gap-2">
                   <div className="flex flex-col justify-center items-end">
-                    {chat.lastMessage?.text && (
+                    {chat.lastMessage && (
+                      <>
+                        <p
+                          className={`text-text-gray text-xs ${
+                            chat.lastMessage.isDeleted ? "italic" : ""
+                          }`}
+                        >
+                          {/* CORRECCIÓN: El <span> con el prefijo ahora está fuera del condicional */}
+                          <span className="text-primary-color">{chat.lastMessage.sentByMe ? "Tú: " : `${chat.otherUser.username}: `}</span>
+                          
+                          {chat.lastMessage.text.length > 23
+                            ? chat.lastMessage.text.slice(0, 23) + "..."
+                            : chat.lastMessage.text}
+                        </p>
 
-                      <p className="text-text-gray text-xs">
-                        <span className="text-primary-color">{chat.lastMessage.sentByMe ? "Tú: " : `${chat.otherUser.username}: `}</span>
-                        {chat.lastMessage?.text.length > 23
-                          ? chat.lastMessage.text.slice(0, 23) + "..."
-                          : chat.lastMessage?.text}
-                      </p>
+                        <TimeAgo
+                          createdAt={chat.lastMessage.createdAt}
+                          withOutDot={true}
+                          textxs={true}
+                        />
+                      </>
                     )}
-
-                    <TimeAgo
-                      createdAt={chat.lastMessage!.createdAt}
-                      withOutDot={true}
-                      textxs={true}
-                    />
                   </div>
                 </div>
               </Link>
