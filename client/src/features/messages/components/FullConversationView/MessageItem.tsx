@@ -1,11 +1,16 @@
 // src/components/messages/MessageItem.tsx
-import React from "react";
+import React, { useState } from "react"; // 1. Importar useState
 import Link from "next/link";
 import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
-import { MessageType } from "@/types"; // Asegúrate de importar tu tipo de mensaje
+import { MessageType } from "@/types";
+import { Ellipsis } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"; // 2. Importar componentes de Popover
 
-// Definimos las props que necesita nuestro nuevo componente
 interface MessageItemProps {
   message: MessageType;
   isCurrentUser: boolean;
@@ -20,24 +25,55 @@ const MessageItem = ({
   isCurrentUser,
   otherUser,
 }: MessageItemProps) => {
+  // 3. Añadir estado para controlar la visibilidad del Popover
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    console.log(`Borrar mensaje con id: ${message.id}`);
+    setPopoverOpen(false); // Cierra el popover después de hacer clic
+  };
+
   return (
     <div
-      className={`message-item flex gap-2 items-end ${
+      className={`message-item group flex gap-2 items-end ${
         isCurrentUser ? "justify-end" : "justify-start"
       }`}
-      // El dataset se usa para la lógica del label flotante en el componente padre
       data-date={new Date(message.createdAt).toISOString()}
     >
-      {/* Muestra el avatar solo si el mensaje no es del usuario actual */}
       {!isCurrentUser && (
         <Link href={`/${otherUser.username}`}>
           <Avatar src={otherUser.imageUrl} />
         </Link>
       )}
 
+      {/* 4. Si es el usuario actual, mostramos el popover de opciones al hacer hover */}
+      {isCurrentUser && (
+        <div className="flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+            <PopoverTrigger asChild>
+              <button className="p-1 rounded-full hover:bg-hover">
+                <Ellipsis
+                  size={14}
+                  className="text-text-gray cursor-pointer"
+                />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-1">
+              <button
+                type="button"
+                onClick={handleDeleteClick}
+                className="w-full text-center cursor-pointer bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md text-sm font-medium transition-colors active:scale-[0.98]"
+              >
+                Borrar
+              </button>
+            </PopoverContent>
+          </Popover>
+        </div>
+      )}
+
       <div
         className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
-          isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
+          isCurrentUser ? "rounded-br-none" : "rounded-bl-none"
         }`}
       >
         <div
@@ -45,7 +81,6 @@ const MessageItem = ({
             isCurrentUser ? "items-end" : "items-start"
           }`}
         >
-          {/* Renderiza la imagen si existe */}
           {message.imageUrl && (
             <Image
               src={message.imageUrl}
@@ -55,10 +90,9 @@ const MessageItem = ({
               className="rounded-lg mt-1"
             />
           )}
-          {/* Renderiza el contenido del texto */}
           <p className="text-sm">{message.content}</p>
         </div>
-        {/* Muestra la hora del mensaje */}
+
         <p
           suppressHydrationWarning
           className="text-[.6rem] mt-1 text-text-gray text-right"
@@ -73,5 +107,4 @@ const MessageItem = ({
   );
 };
 
-// Usamos React.memo para optimizar, evitando re-renders si las props no cambian.
 export default React.memo(MessageItem);
