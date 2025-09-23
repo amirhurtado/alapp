@@ -13,8 +13,8 @@ import { debounce } from "lodash-es";
 import {
   getMentionableUsersAction,
   MentionableUser,
-} from "@/actions/user/getUser"; // Ajusta la ruta a tu action
-import MentionSuggestions from "./MentionSuggestions"; // Ajusta la ruta a tu componente
+} from "@/actions/user/getUser";
+import MentionSuggestions from "./MentionSuggestions";
 
 interface CreatePostProps {
   modal?: boolean;
@@ -46,9 +46,7 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const [isMentionLoading, setIsMentionLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Estado para guardar la lista de usuarios mencionados oficialmente.
   const [mentionedUsers, setMentionedUsers] = useState<MentionableUser[]>([]);
-
   const [activeMention, setActiveMention] = useState<MentionQuery | null>(null);
 
   const imageInputId = useId();
@@ -100,18 +98,12 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
     const cursorPosition = e.target.selectionStart || 0;
-
-    // 1. Analizamos el texto solo hasta la posición del cursor
     const textUpToCursor = newDescription.substring(0, cursorPosition);
-
-    // 2. Buscamos una mención al final de ESE texto parcial
     const mentionMatch = textUpToCursor.match(/@(\w+)$/);
 
     if (mentionMatch) {
       const searchTerm = mentionMatch[1];
       const startIndex = mentionMatch.index || 0;
-
-      // 3. Guardamos la información de la mención activa
       setActiveMention({ term: searchTerm, startIndex });
       setShowSuggestions(true);
       debouncedFetchUsers(searchTerm);
@@ -123,47 +115,50 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setDescription(newDescription);
   };
 
-  // MODIFICADO: Lógica de reemplazo inteligente.
   const handleMentionSelect = (user: MentionableUser) => {
     if (!activeMention) return;
-
-    // 1. Añadimos al usuario a la lista de menciones confirmadas
     setMentionedUsers((prev) => {
       if (prev.some((u) => u.id === user.id)) return prev;
-      const updatedUsers = [...prev, user];
-      return updatedUsers;
+      return [...prev, user];
     });
-
-    // 2. Construimos el nuevo texto reemplazando la mención en su lugar
     const textBeforeMention = description.substring(
       0,
       activeMention.startIndex
     );
     const textAfterMention = description.substring(
       activeMention.startIndex + activeMention.term.length + 1
-    ); // +1 por el '@'
-
+    );
     const newDescription = `${textBeforeMention}@${user.name} ${textAfterMention}`;
-
     setDescription(newDescription);
     setShowSuggestions(false);
     setMentionSuggestions([]);
     setActiveMention(null);
   };
 
-  // Hook que sincroniza el estado `mentionedUsers` con el texto del input.
   useEffect(() => {
     const usernamesInText = description.match(/@(\w+)/g) || [];
     const cleanUsernames = usernamesInText.map((u) => u.substring(1));
-
-    setMentionedUsers((prev) => {
-      const updatedMentions = prev.filter((user) =>
-        cleanUsernames.includes(user.name)
-      );
-
-      return updatedMentions;
-    });
+    setMentionedUsers((prev) =>
+      prev.filter((user) => cleanUsernames.includes(user.name))
+    );
   }, [description]);
+
+  const renderStyledDescription = () => {
+    if (!description) return null;
+    const confirmedUsernames = new Set(mentionedUsers.map((u) => u.name));
+    const parts = description.split(/(@\w+)/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith("@") && confirmedUsernames.has(part.substring(1))) {
+        return (
+          <span key={index} className="text-primary-color">
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
 
   return (
     <div
@@ -177,8 +172,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
           action={async (formData) => {
             const finalMentionedIds = mentionedUsers.map((u) => u.id).join(",");
             formData.append("mentionedUserIds", finalMentionedIds);
-            console.log("ENVIANDO IDs:", finalMentionedIds);
-
             onCreate.mutate({ formData });
             setDescription("");
             setMentionedUsers([]);
@@ -199,17 +192,35 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
           <div>
             <div className="flex gap-4">
               {modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
-              <input
-                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${
-                  modal && "pb-12 mt-1"
-                }`}
-                value={description}
-                onChange={handleDescriptionChange}
-                placeholder="Cuentanos lo que piensas!"
-                type="text"
-                name="description"
-                autoComplete="off"
-              />
+              <div className="relative grid w-full items-center">
+                
+                {/* MODIFICADO: Capa del Placeholder (sólo visible si no hay texto) */}
+                {!description && (
+                   <div 
+                     className="text-md md:text-lg text-gray-500 font-poppins [grid-area:1/1/2/2] pointer-events-none"
+                     aria-hidden="true"
+                   >
+                     Cuentanos lo que piensas!
+                   </div>
+                )}
+                
+                {/* MODIFICADO: Capa Visual. Le añadimos `text-white` para el color por defecto */}
+                <div
+                  className="text-md md:text-lg font-poppins w-full outline-none border-none text-white [grid-area:1/1/2/2] whitespace-pre-wrap break-words p-0 m-0"
+                  aria-hidden="true"
+                >
+                  {renderStyledDescription()}
+                </div>
+
+                {/* MODIFICADO: El Input real. Le quitamos el placeholder. */}
+                <input
+                  className="text-md md:text-lg font-poppins w-full outline-none border-none bg-transparent text-transparent caret-white [grid-area:1/1/2/2] p-0 m-0"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  name="description"
+                  autoComplete="off"
+                />
+              </div>
             </div>
             <PreviewMedia media={media} onRemove={removeMedia} />
           </div>

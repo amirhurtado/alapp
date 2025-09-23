@@ -31,44 +31,63 @@ const PostBody = ({
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  // 3. Añadir el estado y la referencia para el picker
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
-  // 4. Hook para cerrar el picker al hacer clic afuera
   useOnClickOutside(pickerRef, () => setShowEmojiPicker(false));
 
-  // 5. Función para manejar la selección de un emoji
   const handleEmojiClick = (emojiObject: { emoji: string }) => {
-    // Añade el emoji al texto existente (manejando el caso de que sea null)
     setEditValue((prev) => (prev || "") + emojiObject.emoji);
+  };
+
+  // NUEVO: Función para analizar el texto y colorear las menciones
+  const renderDescriptionWithMentions = (text: string | null) => {
+    if (!text) {
+      return null;
+    }
+
+    // Usamos una expresión regular para dividir el texto por las menciones,
+    // pero manteniendo las menciones en el array resultante.
+    const parts = text.split(/(@\w+)/g);
+
+    return parts.map((part, index) => {
+      // Si la parte del texto es una mención (empieza con @),
+      // la envolvemos en un <span> con el color primario.
+      if (part.startsWith("@")) {
+        return (
+          <span key={index} className="text-primary-color">
+            {part}
+          </span>
+        );
+      }
+      // Si no, devolvemos el texto normal.
+      return part;
+    });
   };
 
   return (
     <div className="mt-1">
       {edit?.edit ? (
         <form
-          className="relative flex flex-col gap-4" // Se cambió a gap-4 y se añadió relative
+          className="relative flex flex-col gap-4"
           action={async (formData) => {
             await editPostAction(formData);
-            setShowEmojiPicker(false); // Ocultar picker al enviar
+            setShowEmojiPicker(false);
             router.back();
             queryClient.invalidateQueries({ queryKey: ["post"], exact: false });
             queryClient.invalidateQueries({ queryKey: ["postsFeed"], exact: false });
           }}
         >
+          {/* El modo de edición no cambia */}
           <input name="postId" type="hidden" value={edit.postId} />
-          
-          {/* Contenedor para el input y el ícono de emoji */}
           <div className="relative w-full">
             <input
               name="newDescription"
-              value={editValue || ""} // Usamos 'value' en lugar de 'defaultValue' para controlarlo con el estado
+              value={editValue || ""}
               className="w-full bg-input text-[0.85rem] text-gray-300 border-1 border-border rounded-lg p-2 pr-10 resize-none focus:outline-none"
               placeholder="Edita tu descripción."
               onChange={(e) => setEditValue(e.target.value)}
             />
-            {/* Ícono para abrir/cerrar el picker */}
             <button
                 type="button"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -77,8 +96,6 @@ const PostBody = ({
                 <Smile size={20} />
             </button>
           </div>
-          
-          {/* 6. Renderizado condicional del Picker */}
           {showEmojiPicker && (
               <div ref={pickerRef} className="absolute top-14 left-0 z-20">
                   <Picker
@@ -91,9 +108,7 @@ const PostBody = ({
                   />
               </div>
           )}
-
           <PostMedia mediaUrl={postMediaUrl} mediaType={postMediaType} />
-
           <div className="flex gap-2 justify-end mt-4">
             <CancelButton />
             <SubmitButton
@@ -105,8 +120,9 @@ const PostBody = ({
       ) : (
         <>
           {postDescription && (
+            // MODIFICADO: Usamos la nueva función para renderizar la descripción
             <p className="text-[0.85rem] text-gray-300 whitespace-pre-wrap">
-              {postDescription}
+              {renderDescriptionWithMentions(postDescription)}
             </p>
           )}
 
