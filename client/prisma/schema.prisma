@@ -19,6 +19,8 @@ model Messages {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
 
+  isDeleted    Boolean? @default(false)
+
   content      String?   @db.Text 
   imageUrl     String?
 

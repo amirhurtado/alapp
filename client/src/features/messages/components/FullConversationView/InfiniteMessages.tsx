@@ -125,6 +125,7 @@ const InfiniteMessages = ({
           username: otherUser.username,
           imageUrl: otherUser.imageUrl,
         }}
+        queryKey={queryKey}
       />
     );
 

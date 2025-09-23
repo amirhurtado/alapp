@@ -126,6 +126,7 @@ export type SimpleChat = {
 export type MessageType = {
   id: number;
   content: string | null;
+  isDeleted: boolean | null
   imageUrl: string | null;
   createdAt: Date;
   senderId: string;

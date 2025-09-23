@@ -20,6 +20,7 @@ export const getMessagesWithUserAction = async (
     select: {
       id: true,
       content: true,
+      isDeleted: true,
       imageUrl: true,
       createdAt: true,
       senderId: true,
