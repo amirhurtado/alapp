@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useId, useRef, useCallback } from "react";
+import React, { useState, useId, useRef, useCallback, useEffect } from "react";
 import Avatar from "@/components/ui/Avatar";
 import { BadgeAlert } from "lucide-react";
 import { SubmitButton } from "@/components/ui/SubmitButton";
@@ -10,8 +10,8 @@ import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
 import Picker, { Theme } from "emoji-picker-react";
 import { useOnClickOutside } from "@/features/post/hooks/useOnClickOutside";
 import { debounce } from "lodash-es";
-import { getMentionableUsersAction, MentionableUser } from "@/actions/user/getUser";
-import MentionSuggestions from "./MentionSuggestions"; // Ajusta la ruta al componente de sugerencias
+import { getMentionableUsersAction, MentionableUser } from "@/actions/user/getUser"; // Ajusta la ruta a tu action
+import MentionSuggestions from "./MentionSuggestions"; // Ajusta la ruta a tu componente
 
 interface CreatePostProps {
   modal?: boolean;
@@ -35,6 +35,9 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const [mentionSuggestions, setMentionSuggestions] = useState<MentionableUser[]>([]);
   const [isMentionLoading, setIsMentionLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // Estado para guardar la lista de usuarios mencionados oficialmente.
+  const [mentionedUsers, setMentionedUsers] = useState<MentionableUser[]>([]);
 
   const imageInputId = useId();
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -43,7 +46,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const pickerRef = useRef<HTMLDivElement>(null);
   const suggestionsContainerRef = useRef<HTMLDivElement>(null);
 
-  // Hooks para cerrar popovers al hacer clic fuera
   useOnClickOutside(suggestionsContainerRef, () => setShowSuggestions(false));
   useOnClickOutside(pickerRef, () => setShowEmojiPicker(false));
 
@@ -73,7 +75,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setDescription((prevDescription) => prevDescription + emojiObject.emoji);
   };
 
-  // Función debounced para llamar a la server action y buscar usuarios
   const debouncedFetchUsers = useCallback(
     debounce(async (searchTerm: string) => {
       setIsMentionLoading(true);
@@ -84,7 +85,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     [currentUser.id]
   );
 
-  // Manejador de cambios del input que activa la búsqueda de menciones
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
     setDescription(newDescription);
@@ -100,13 +100,38 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     }
   };
 
-  // Manejador para cuando se selecciona un usuario de la lista
-  const handleMentionSelect = (username: string) => {
-    const newDescription = description.replace(/@(\w+)$/, `@${username} `);
+  const handleMentionSelect = (user: MentionableUser) => {
+    setMentionedUsers((prev) => {
+      if (prev.some(u => u.id === user.id)) {
+        return prev;
+      }
+      const updatedUsers = [...prev, user];
+      console.log(`✅ AÑADIDO: ${user.name}. IDs actuales:`, updatedUsers.map(u => u.id));
+      return updatedUsers;
+    });
+
+    const newDescription = description.replace(/@(\w+)$/, `@${user.name} `);
     setDescription(newDescription);
     setShowSuggestions(false);
     setMentionSuggestions([]);
   };
+
+  // Hook que sincroniza el estado `mentionedUsers` con el texto del input.
+  useEffect(() => {
+    const usernamesInText = description.match(/@(\w+)/g) || [];
+    const cleanUsernames = usernamesInText.map(u => u.substring(1));
+
+    setMentionedUsers((prev) => {
+      const updatedMentions = prev.filter(user => cleanUsernames.includes(user.name));
+      
+      if (prev.length !== updatedMentions.length) {
+        console.log(`❌ BORRADO. IDs actuales:`, updatedMentions.map(u => u.id));
+      }
+      
+      return updatedMentions;
+    });
+
+  }, [description]);
 
   return (
     <div className={`${!modal && "p-4 md:mt-2"} relative`} ref={suggestionsContainerRef}>
@@ -115,25 +140,22 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
         <form
           className="w-full"
           action={async (formData) => {
+            const finalMentionedIds = mentionedUsers.map(u => u.id).join(',');
+            formData.append('mentionedUserIds', finalMentionedIds);
+            console.log('ENVIANDO IDs:', finalMentionedIds);
+            
             onCreate.mutate({ formData });
             setDescription("");
+            setMentionedUsers([]);
             removeMedia();
           }}
         >
-          <input
-            type="hidden"
-            readOnly
-            name="authorId"
-            value={currentUser.id}
-          />
-
+          <input type="hidden" readOnly name="authorId" value={currentUser.id}/>
           <div>
             <div className="flex gap-4">
               {modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
               <input
-                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${
-                  modal && "pb-12 mt-1"
-                }`}
+                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${ modal && "pb-12 mt-1" }`}
                 value={description}
                 onChange={handleDescriptionChange}
                 placeholder="Cuentanos lo que piensas!"
@@ -142,16 +164,13 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
                 autoComplete="off"
               />
             </div>
-
             <PreviewMedia media={media} onRemove={removeMedia} />
           </div>
-
           <div className="flex flex-col">
             <div className="text-primary-color flex items-center gap-1 mt-4 pl-1 border-b-2 border-border pb-4">
               <BadgeAlert size={16} />
               <p className="text-[.8rem] font-bold">Todos pueden responder</p>
             </div>
-
             <div className="flex justify-between items-center mt-6">
               <MediaOptions
                 imageInputId={imageInputId}
@@ -162,7 +181,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
                 videoInputRef={videoInputRef}
                 onSmileClick={() => setShowEmojiPicker(!showEmojiPicker)}
               />
-
               <SubmitButton
                 disabled={!description && !media}
                 text={"Publicar"}
@@ -172,7 +190,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
         </form>
       </div>
 
-      {/* Renderizado condicional del popover de sugerencias */}
       {showSuggestions && (
         <MentionSuggestions
           isLoading={isMentionLoading}
@@ -181,7 +198,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
         />
       )}
       
-      {/* Renderizado condicional del popover de emojis */}
       {showEmojiPicker && (
         <div ref={pickerRef} className="absolute top-full left-0 z-10 mt-2">
           <Picker

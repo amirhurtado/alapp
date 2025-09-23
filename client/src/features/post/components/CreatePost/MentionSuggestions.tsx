@@ -1,14 +1,13 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Lock } from "lucide-react";
-import type { MentionableUser } from "@/actions/user/getUser"; 
+import type { MentionableUser } from "@/actions/user/getUser"; // Asegúrate que la ruta sea correcta
 import Avatar from "@/components/ui/Avatar";
 
 interface MentionSuggestionsProps {
   suggestions: MentionableUser[];
   isLoading: boolean;
-  onSelect: (username: string) => void;
+  onSelect: (user: MentionableUser) => void;
 }
 
 const MentionSuggestions = ({ suggestions, isLoading, onSelect }: MentionSuggestionsProps) => {
@@ -25,7 +24,7 @@ const MentionSuggestions = ({ suggestions, isLoading, onSelect }: MentionSuggest
   }
 
   if (suggestions.length === 0) {
-    return null; // No mostrar nada si no hay sugerencias
+    return null;
   }
 
   return (
@@ -37,7 +36,7 @@ const MentionSuggestions = ({ suggestions, isLoading, onSelect }: MentionSuggest
             <li key={user.id}>
               <button
                 type="button"
-                onClick={() => user.isFollowedByYou && onSelect(user.name)}
+                onClick={() => user.isFollowedByYou && onSelect(user)}
                 disabled={!user.isFollowedByYou}
                 className="w-full text-left p-4 flex items-center gap-3 rounded-md transition-colors hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
               >
