@@ -1,12 +1,11 @@
+// Tu componente original, ahora refactorizado
 import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
-import Avatar from "@/components/ui/Avatar";
 import { useFormatDateLabel } from "@/features/messages/hooks/useFormatDateLabel";
 import { MessageType } from "@/types";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import MessageItem from "./MessageItem"; // <-- 1. Importamos el nuevo componente
 
 interface InfiniteMessagesProps {
   messages: MessageType[];
@@ -29,7 +28,7 @@ const InfiniteMessages = ({
   const loadmoreRef = useRef(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  // --- Lógica del Label Flotante ---
+  // --- Lógica del Label Flotante (sin cambios) ---
   const [floatingDate, setFloatingDate] = useState({
     visible: false,
     date: "",
@@ -83,7 +82,7 @@ const InfiniteMessages = ({
 
   const messages = data.pages?.flatMap((page) => page) ?? [];
 
-  // useEffect para el scroll infinito (Intersection Observer)
+  // useEffect para el scroll infinito (sin cambios)
   useEffect(() => {
     if (!loadmoreRef.current || !hasNextPage) return;
     const observer = new IntersectionObserver((entries) => {
@@ -97,7 +96,7 @@ const InfiniteMessages = ({
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // useEffect para el scroll inicial al fondo
+  // useEffect para el scroll inicial al fondo (sin cambios)
   useEffect(() => {
     const shouldScroll = queryClient.getQueryData<boolean>([
       "scrollFlag",
@@ -109,62 +108,27 @@ const InfiniteMessages = ({
     }
   }, [data, queryClient, queryKey]);
 
-  // --- Lógica para procesar y renderizar mensajes con separadores fijos ---
+  // --- Lógica para procesar y renderizar mensajes (AHORA REFACTORIZADA) ---
   const elementsToRender: React.ReactNode[] = [];
 
   messages.forEach((message, index) => {
     const isCurrentUser = message.senderId === currentUserId;
-    // 1. Añade el componente del mensaje
-    elementsToRender.push(
-      <div
-        key={message.id}
-        className={`message-item flex gap-2 items-end ${
-          isCurrentUser ? "justify-end" : "justify-start"
-        }`}
-        data-date={new Date(message.createdAt).toISOString()}
-      >
-        {message.senderId === otherUser.id && (
-          <Link href={`/${otherUser.username}`}>
-            <Avatar src={otherUser.imageUrl} />
-          </Link>
-        )}
 
-        <div
-          className={`max-w-xs md:max-w-md flex flex-col rounded-lg px-4 py-2 bg-hover border-1 ${
-            isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
-          }`}
-        >
-          <div
-            className={`flex flex-col gap-4 ${
-              isCurrentUser ? "rounded-br-none items-end" : "rounded-bl-none"
-            }`}
-          >
-            {message.imageUrl && (
-              <Image
-                src={message.imageUrl}
-                alt="image"
-                width={180}
-                height={180}
-                className="rounded-lg mt-1"
-              />
-            )}
-            <p className="text-sm">{message.content}</p>
-          </div>
-          <p
-            suppressHydrationWarning // <--- AÑADE ESTA LÍNEA
-            className={`text-[.6rem] mt-1 ${
-              isCurrentUser ? "text-blue-100" : "text-gray-500"
-            } text-right`}
-          >
-            {new Date(message.createdAt).toLocaleTimeString("es-CO", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
-        </div>
-      </div>
+    // 2. Usamos el nuevo componente en lugar del JSX en línea.
+    // La lógica es la misma, pero ahora está encapsulada.
+    elementsToRender.push(
+      <MessageItem
+        key={message.id}
+        message={message}
+        isCurrentUser={isCurrentUser}
+        otherUser={{
+          username: otherUser.username,
+          imageUrl: otherUser.imageUrl,
+        }}
+      />
     );
 
+    // La lógica para los separadores de fecha no cambia.
     const currentMessageDate = new Date(message.createdAt).toDateString();
     const nextMessage = messages[index + 1];
     const nextMessageDate = nextMessage
@@ -175,9 +139,9 @@ const InfiniteMessages = ({
       elementsToRender.push(
         <div
           key={`date-separator-${currentMessageDate}`}
-          className="flex justify-center "
+          className="flex justify-center"
         >
-          <span className="bg-input text-xs font-semibold px-3  rounded-full">
+          <span className="bg-input text-xs font-semibold px-3 rounded-full">
             {formatDateLabel(message.createdAt)}
           </span>
         </div>
@@ -186,10 +150,10 @@ const InfiniteMessages = ({
   });
 
   return (
-    <div className="relative h-full w-full  ">
-      {/* Label de Fecha Flotante */}
+    <div className="relative h-full w-full">
+      {/* Label de Fecha Flotante (sin cambios) */}
       <div
-        className={`absolute top-4 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300  ${
+        className={`absolute top-4 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-300 ${
           floatingDate.visible ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -198,15 +162,14 @@ const InfiniteMessages = ({
         </span>
       </div>
 
-      {/* Contenedor de Mensajes con Scroll */}
+      {/* Contenedor de Mensajes con Scroll (sin cambios) */}
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex flex-col-reverse gap-4 overflow-y-auto h-full "
+        className="flex flex-col-reverse gap-4 overflow-y-auto h-full"
       >
         <div ref={bottomRef} />
 
-        {/* Renderiza el array que contiene mensajes y separadores fijos */}
         {elementsToRender}
 
         <div
