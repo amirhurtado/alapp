@@ -10,7 +10,10 @@ import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
 import Picker, { Theme } from "emoji-picker-react";
 import { useOnClickOutside } from "@/features/post/hooks/useOnClickOutside";
 import { debounce } from "lodash-es";
-import { getMentionableUsersAction, MentionableUser } from "@/actions/user/getUser"; // Ajusta la ruta a tu action
+import {
+  getMentionableUsersAction,
+  MentionableUser,
+} from "@/actions/user/getUser"; // Ajusta la ruta a tu action
 import MentionSuggestions from "./MentionSuggestions"; // Ajusta la ruta a tu componente
 
 interface CreatePostProps {
@@ -37,10 +40,12 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const [media, setMedia] = useState<MediaState | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const [mentionSuggestions, setMentionSuggestions] = useState<MentionableUser[]>([]);
+  const [mentionSuggestions, setMentionSuggestions] = useState<
+    MentionableUser[]
+  >([]);
   const [isMentionLoading, setIsMentionLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
+
   // Estado para guardar la lista de usuarios mencionados oficialmente.
   const [mentionedUsers, setMentionedUsers] = useState<MentionableUser[]>([]);
 
@@ -95,10 +100,10 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
     const cursorPosition = e.target.selectionStart || 0;
-    
+
     // 1. Analizamos el texto solo hasta la posición del cursor
     const textUpToCursor = newDescription.substring(0, cursorPosition);
-    
+
     // 2. Buscamos una mención al final de ESE texto parcial
     const mentionMatch = textUpToCursor.match(/@(\w+)$/);
 
@@ -114,7 +119,7 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
       setShowSuggestions(false);
       setActiveMention(null);
     }
-    
+
     setDescription(newDescription);
   };
 
@@ -124,17 +129,22 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
 
     // 1. Añadimos al usuario a la lista de menciones confirmadas
     setMentionedUsers((prev) => {
-      if (prev.some(u => u.id === user.id)) return prev;
+      if (prev.some((u) => u.id === user.id)) return prev;
       const updatedUsers = [...prev, user];
       return updatedUsers;
     });
 
     // 2. Construimos el nuevo texto reemplazando la mención en su lugar
-    const textBeforeMention = description.substring(0, activeMention.startIndex);
-    const textAfterMention = description.substring(activeMention.startIndex + activeMention.term.length + 1); // +1 por el '@'
+    const textBeforeMention = description.substring(
+      0,
+      activeMention.startIndex
+    );
+    const textAfterMention = description.substring(
+      activeMention.startIndex + activeMention.term.length + 1
+    ); // +1 por el '@'
 
     const newDescription = `${textBeforeMention}@${user.name} ${textAfterMention}`;
-    
+
     setDescription(newDescription);
     setShowSuggestions(false);
     setMentionSuggestions([]);
@@ -144,41 +154,55 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   // Hook que sincroniza el estado `mentionedUsers` con el texto del input.
   useEffect(() => {
     const usernamesInText = description.match(/@(\w+)/g) || [];
-    const cleanUsernames = usernamesInText.map(u => u.substring(1));
+    const cleanUsernames = usernamesInText.map((u) => u.substring(1));
 
     setMentionedUsers((prev) => {
-      const updatedMentions = prev.filter(user => cleanUsernames.includes(user.name));
-      
- 
-      
+      const updatedMentions = prev.filter((user) =>
+        cleanUsernames.includes(user.name)
+      );
+
       return updatedMentions;
     });
-
   }, [description]);
 
   return (
-    <div className={`${!modal && "p-4 md:mt-2"} relative`} ref={suggestionsContainerRef}>
+    <div
+      className={`${!modal && "p-4 md:mt-2"} relative`}
+      ref={suggestionsContainerRef}
+    >
       <div className="flex w-full gap-3">
         {!modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
         <form
           className="w-full"
           action={async (formData) => {
-            const finalMentionedIds = mentionedUsers.map(u => u.id).join(',');
-            formData.append('mentionedUserIds', finalMentionedIds);
-            console.log('ENVIANDO IDs:', finalMentionedIds);
-            
+            const finalMentionedIds = mentionedUsers.map((u) => u.id).join(",");
+            formData.append("mentionedUserIds", finalMentionedIds);
+            console.log("ENVIANDO IDs:", finalMentionedIds);
+
             onCreate.mutate({ formData });
             setDescription("");
             setMentionedUsers([]);
             removeMedia();
           }}
         >
-          <input type="hidden" readOnly name="authorId" value={currentUser.id}/>
+          <input
+            type="hidden"
+            readOnly
+            name="authorId"
+            value={currentUser.id}
+          />
+          <input
+            type="hidden"
+            name="mentionedUserIds"
+            value={mentionedUsers.map((u) => u.id).join(",")}
+          />
           <div>
             <div className="flex gap-4">
               {modal && <Avatar src={currentUser.imgUrl || "user-default"} />}
               <input
-                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${ modal && "pb-12 mt-1" }`}
+                className={`text-md md:text-lg placeholder:text-sm placeholder:md:text-lg placeholder-text-gray font-poppins w-full outline-none border-none ${
+                  modal && "pb-12 mt-1"
+                }`}
                 value={description}
                 onChange={handleDescriptionChange}
                 placeholder="Cuentanos lo que piensas!"
@@ -220,7 +244,7 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
           onSelect={handleMentionSelect}
         />
       )}
-      
+
       {showEmojiPicker && (
         <div ref={pickerRef} className="absolute top-full left-0 z-10 mt-2">
           <Picker

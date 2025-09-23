@@ -7,6 +7,8 @@ import Link from "next/link";
 import TimeAgo from "@/components/ui/TimeAgo";
 import {
   CalendarPlus2,
+  Handshake,
+  Hash,
   Heart,
   MessageSquare,
   Repeat2,
@@ -44,14 +46,27 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
                 size={18}
                 className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
               />
-            ) : (
-              notification.type === "createEvent" && (
-                <CalendarPlus2
-                  size={18}
-                  className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
-                />
-              )
-            )}
+            ) : notification.type === "createEvent" ? (
+              <CalendarPlus2
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
+              />
+            ) : notification.type === "assist" ? (
+              <Handshake
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
+              />
+            ) : notification.type === "label" ? (
+              <Hash
+                size={18}
+                className=" w-[1.2rem] h-[1.2rem] flex-shrink-0  text-white"
+              />
+            ) : <p></p>}
+
+
+
+
+
             <p className="font-semibold text-xs md:text-sm ">
               <span className="text-xs text-primary-color">
                 @{notification.sender.name}{" "}
@@ -64,7 +79,7 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
           <DeleteNotification notificationId={notification.id} />
           <TimeAgo createdAt={notification.createdAt} />
           <Link href={notification.link} className="flex text-xs underline ">
-            <span >Ver más</span>
+            <span>Ver más</span>
           </Link>
         </div>
       </div>
