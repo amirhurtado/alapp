@@ -145,7 +145,7 @@ export const getMentionableUsersAction = async (
             id: currentUserId,
           },
         },
-        take: 25, 
+        take: 5,
         select: {
           id: true,
           name: true,
