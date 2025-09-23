@@ -1,7 +1,6 @@
 "use server"
 
 import { prisma } from "@/prisma"
-import { revalidatePath } from "next/cache";
 
 export const deleteMessageAction = async (messageId: number) => {
   try {
@@ -25,7 +24,6 @@ export const deleteMessageAction = async (messageId: number) => {
     },
     });
 
-    revalidatePath("/messages")
 
     return {newMessage: updatedMessage };
   } catch (error) {
