@@ -26,6 +26,11 @@ interface MediaState {
   type: "image" | "video";
 }
 
+interface MentionQuery {
+  term: string;
+  startIndex: number;
+}
+
 const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   const onCreate = useCreatePostMutation(currentUser.id);
   const [description, setDescription] = useState<string>("");
@@ -38,6 +43,8 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
   
   // Estado para guardar la lista de usuarios mencionados oficialmente.
   const [mentionedUsers, setMentionedUsers] = useState<MentionableUser[]>([]);
+
+  const [activeMention, setActiveMention] = useState<MentionQuery | null>(null);
 
   const imageInputId = useId();
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -87,33 +94,52 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
-    setDescription(newDescription);
+    const cursorPosition = e.target.selectionStart || 0;
+    
+    // 1. Analizamos el texto solo hasta la posición del cursor
+    const textUpToCursor = newDescription.substring(0, cursorPosition);
+    
+    // 2. Buscamos una mención al final de ESE texto parcial
+    const mentionMatch = textUpToCursor.match(/@(\w+)$/);
 
-    const mentionMatch = newDescription.match(/@(\w+)$/);
     if (mentionMatch) {
       const searchTerm = mentionMatch[1];
+      const startIndex = mentionMatch.index || 0;
+
+      // 3. Guardamos la información de la mención activa
+      setActiveMention({ term: searchTerm, startIndex });
       setShowSuggestions(true);
       debouncedFetchUsers(searchTerm);
     } else {
       setShowSuggestions(false);
-      setMentionSuggestions([]);
+      setActiveMention(null);
     }
+    
+    setDescription(newDescription);
   };
 
+  // MODIFICADO: Lógica de reemplazo inteligente.
   const handleMentionSelect = (user: MentionableUser) => {
+    if (!activeMention) return;
+
+    // 1. Añadimos al usuario a la lista de menciones confirmadas
     setMentionedUsers((prev) => {
-      if (prev.some(u => u.id === user.id)) {
-        return prev;
-      }
+      if (prev.some(u => u.id === user.id)) return prev;
       const updatedUsers = [...prev, user];
       console.log(`✅ AÑADIDO: ${user.name}. IDs actuales:`, updatedUsers.map(u => u.id));
       return updatedUsers;
     });
 
-    const newDescription = description.replace(/@(\w+)$/, `@${user.name} `);
+    // 2. Construimos el nuevo texto reemplazando la mención en su lugar
+    const textBeforeMention = description.substring(0, activeMention.startIndex);
+    const textAfterMention = description.substring(activeMention.startIndex + activeMention.term.length + 1); // +1 por el '@'
+
+    const newDescription = `${textBeforeMention}@${user.name} ${textAfterMention}`;
+    
     setDescription(newDescription);
     setShowSuggestions(false);
     setMentionSuggestions([]);
+    setActiveMention(null);
   };
 
   // Hook que sincroniza el estado `mentionedUsers` con el texto del input.
