@@ -126,7 +126,6 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setMentionedUsers((prev) => {
       if (prev.some(u => u.id === user.id)) return prev;
       const updatedUsers = [...prev, user];
-      console.log(`✅ AÑADIDO: ${user.name}. IDs actuales:`, updatedUsers.map(u => u.id));
       return updatedUsers;
     });
 
@@ -150,9 +149,7 @@ const CreatePost = ({ modal = false, currentUser }: CreatePostProps) => {
     setMentionedUsers((prev) => {
       const updatedMentions = prev.filter(user => cleanUsernames.includes(user.name));
       
-      if (prev.length !== updatedMentions.length) {
-        console.log(`❌ BORRADO. IDs actuales:`, updatedMentions.map(u => u.id));
-      }
+ 
       
       return updatedMentions;
     });
