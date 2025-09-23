@@ -10,6 +10,7 @@ import { Smile } from "lucide-react";
 
 import Picker, { Theme } from "emoji-picker-react";
 import { useOnClickOutside } from "@/features/post/hooks/useOnClickOutside"; 
+import Link from "next/link";
 
 interface PostBodyProps {
   postDescription: string | null;
@@ -40,27 +41,26 @@ const PostBody = ({
     setEditValue((prev) => (prev || "") + emojiObject.emoji);
   };
 
-  // NUEVO: Función para analizar el texto y colorear las menciones
   const renderDescriptionWithMentions = (text: string | null) => {
     if (!text) {
       return null;
     }
 
-    // Usamos una expresión regular para dividir el texto por las menciones,
-    // pero manteniendo las menciones en el array resultante.
     const parts = text.split(/(@\w+)/g);
 
     return parts.map((part, index) => {
-      // Si la parte del texto es una mención (empieza con @),
-      // la envolvemos en un <span> con el color primario.
       if (part.startsWith("@")) {
+        const username = part.substring(1);
         return (
-          <span key={index} className="text-primary-color">
+          <Link 
+            key={index} 
+            href={`/${username}`}
+            className="text-primary-color hover:underline"
+          >
             {part}
-          </span>
+          </Link>
         );
       }
-      // Si no, devolvemos el texto normal.
       return part;
     });
   };
@@ -78,7 +78,6 @@ const PostBody = ({
             queryClient.invalidateQueries({ queryKey: ["postsFeed"], exact: false });
           }}
         >
-          {/* El modo de edición no cambia */}
           <input name="postId" type="hidden" value={edit.postId} />
           <div className="relative w-full">
             <input
@@ -120,7 +119,6 @@ const PostBody = ({
       ) : (
         <>
           {postDescription && (
-            // MODIFICADO: Usamos la nueva función para renderizar la descripción
             <p className="text-[0.85rem] text-gray-300 whitespace-pre-wrap">
               {renderDescriptionWithMentions(postDescription)}
             </p>
