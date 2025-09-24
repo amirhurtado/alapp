@@ -4,15 +4,12 @@ import { prisma } from "@/prisma";
 import { uploadFile } from "../constants";
 import { revalidatePath } from "next/cache";
 
-
 export const createMessageAction = async (formData: FormData) => {
   // 1. Extraer y validar los datos del FormData
   const content = formData.get("content") as string | null;
-  const media = formData.get("media") as File | null
+  const media = formData.get("media") as File | null;
   const senderId = formData.get("senderId") as string;
-  const receiverId = formData.get("receiverId") as string; 
-
-  
+  const receiverId = formData.get("receiverId") as string;
 
   try {
     // 2. Buscar si ya existe una conversación entre los dos usuarios
@@ -36,11 +33,10 @@ export const createMessageAction = async (formData: FormData) => {
 
     const conversationId = conversation.id;
 
+    let imageUrl: string;
 
-    let imageUrl : string;
-
-    if(media && media.size > 0){
-      imageUrl = await uploadFile(media, "/messages")
+    if (media && media.size > 0) {
+      imageUrl = await uploadFile(media, "/messages");
     }
 
     const newMessage = await prisma.$transaction(async (tx) => {
@@ -60,17 +56,21 @@ export const createMessageAction = async (formData: FormData) => {
         },
         data: {
           lastMsgId: createdMessage.id,
+          ...(conversation.userAId === receiverId && {
+            userAUnreadCount: { increment: 1 },
+          }),
+          ...(conversation.userBId === receiverId && {
+            userBUnreadCount: { increment: 1 },
+          }),
+          // -----------------------------
         },
       });
 
       return createdMessage;
     });
-    
-   
 
-    revalidatePath("/messages")
+    revalidatePath("/messages");
     return { success: true, message: newMessage };
-
   } catch (error) {
     console.error("Error al crear el mensaje:", error);
     return { error: "No se pudo enviar el mensaje." };

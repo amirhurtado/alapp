@@ -111,6 +111,7 @@ export type fullNotificationType = NotificationType & {
 
 export type SimpleChat = {
   conversationId: number;
+  unreadCount: number
   otherUser: {
     username: string;
     displayName: string;

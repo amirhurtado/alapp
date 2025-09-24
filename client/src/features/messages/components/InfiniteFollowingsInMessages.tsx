@@ -94,7 +94,7 @@ const InfiniteFollowingsInMessages = ({
 
       (<Link href={"/search"} >
         <p className="text-xs text-text-gray">No sigues a nadie aún.</p>
-      <p className="text-sm text-primary-color underline">Ve y busca usuarios y escribeles!</p></Link>)}
+      <p className="text-xs text-primary-color underline">Ve y busca usuarios y escribeles!</p></Link>)}
     </>
   );
 };

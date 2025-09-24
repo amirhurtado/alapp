@@ -45,6 +45,9 @@ model Conversation {
   userBId   String
   userB     User      @relation("UserB", fields: [userBId], references: [id])
 
+  userAUnreadCount Int @default(0)
+  userBUnreadCount Int @default(0)
+
   lastMsgId Int?  @unique
   lastMsg   Messages? @relation("LastMessage", fields: [lastMsgId], references: [id], onDelete: Cascade)
 

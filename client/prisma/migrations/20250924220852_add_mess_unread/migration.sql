@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Conversation` ADD COLUMN `userAUnreadCount` INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN `userBUnreadCount` INTEGER NOT NULL DEFAULT 0;
