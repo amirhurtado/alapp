@@ -1,9 +1,8 @@
 "use client";
-// 1. Importamos lo necesario
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChatsAction } from "@/actions/messages/getChats";
-import { socket } from "@/socket"; // <-- Importa tu socket
+import { socket } from "@/socket"; 
 
 import { SimpleChat, UserCardType } from "@/types";
 import React from "react";
@@ -12,6 +11,9 @@ import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
 import TimeAgo from "@/components/ui/TimeAgo";
 import Link from "next/link";
+
+const chatsQueryKey = ["chatsWithConversation"];
+
 
 interface FullChatsViewProps {
   chats: SimpleChat[];
@@ -24,26 +26,18 @@ const FullChatsView = ({
   followings,
   currentUserId,
 }: FullChatsViewProps) => {
-  const queryKey = ["chatsWithConversation"];
-  // 2. Obtenemos el cliente para poder invalidar
   const queryClient = useQueryClient();
 
-  // 3. CORRECCIÓN: La query ahora sabe cómo pedir datos nuevos al servidor
   const { data: chats } = useQuery({
-    queryKey,
-    // La función ahora llama a tu server action para obtener datos frescos
+    queryKey: chatsQueryKey,
     queryFn: () => getChatsAction(currentUserId),
-    // `initialData` se usa solo para la primera carga, evitando un parpadeo
     initialData: initialData,
   });
 
-  // 4. AÑADIDO: El useEffect que escucha los nuevos mensajes
   useEffect(() => {
     const onNewMessage = () => {
-      // Cuando llega CUALQUIER mensaje nuevo, invalidamos la lista de chats
-      // para que se actualice el "último mensaje" y el contador de no leídos.
-      console.log("Nuevo mensaje recibido, invalidando lista de chats...");
-      queryClient.invalidateQueries({ queryKey: queryKey });
+
+      queryClient.invalidateQueries({ queryKey: chatsQueryKey });
     };
 
     socket.on("newMessage", onNewMessage);
@@ -51,11 +45,10 @@ const FullChatsView = ({
     return () => {
       socket.off("newMessage", onNewMessage);
     };
-  }, [queryClient, queryKey]);
+  }, [queryClient]);
 
   return (
     <div className="flex flex-col gap-10 p-4 max-h-screen overflow-y-auto">
-      {/* ... Tu JSX no cambia en absoluto ... */}
       <InfiniteFollowingsInMessages
         followings={followings}
         currentUserId={currentUserId}
