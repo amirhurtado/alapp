@@ -8,8 +8,7 @@ import { useNotificationCount } from "@/store/useNotification";
 export default function Socket() {
   const { user } = useUser();
 
-
-  const increment = useNotificationCount((state) => state.increment)
+  const increment = useNotificationCount((state) => state.increment);
 
   useEffect(() => {
     if (socket.connected) {
@@ -30,9 +29,17 @@ export default function Socket() {
       }
     }
 
+    function onNewMessage(senderUserId: string) {
+      console.log(
+        "ME DEBIO LLEGAR UN NUEVO MENSAJE DE SENDERUSERID",
+        senderUserId
+      );
+    }
+
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("getNotification", onNotification);
+    socket.on("newMessage", onNewMessage);
 
     return () => {
       socket.off("connect", onConnect);

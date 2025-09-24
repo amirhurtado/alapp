@@ -1,49 +1,43 @@
-"use client"
+"use client";
 
 import { createMessageAction } from "@/actions/messages/createMessages";
+import { socket } from "@/socket";
 import { MessageType } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type oldDataType = {
-    pages: MessageType[][]
-
-}
-
+  pages: MessageType[][];
+};
 
 export const useCreateMessageMutation = (queryKey: unknown[]) => {
+  const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ formData }: { formData: FormData }) => {
+      return createMessageAction(formData);
+    },
+    onSuccess: (response) => {
+      const { success, message } = response;
 
-    return useMutation({
-        mutationFn: ({formData} : {formData: FormData}) => {
-            return createMessageAction(formData)
-        },
-        onSuccess: (response) => {
-            const {success, message} = response
+      if (success) {
+        queryClient.setQueryData(queryKey, (oldData: oldDataType) => {
+          console.log(oldData);
+          if (!oldData) return;
 
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page, index) => {
+              if (index === 0) {
+                return [message, ...page];
+              } else return page;
+            }),
+          };
+        });
+      }
 
-            if(success){
-                queryClient.setQueryData(queryKey, (oldData : oldDataType ) => {
-                    console.log(oldData)
-                    if(!oldData) return
+      queryClient.setQueryData(["scrollFlag", queryKey], true);
 
-
-                    return {
-                        ...oldData,
-                        pages: oldData.pages.map((page, index) => {
-                            if(index === 0){
-                                return [message, ...page]
-                            }else
-                                return page
-                        })
-                    }
-                })
-            }
-
-            queryClient.setQueryData(["scrollFlag", queryKey], true);
-        }
-    })
-
-}
+      socket.emit("newMessageServer", message?.senderId, message?.receiverId)
+    },
+  });
+};

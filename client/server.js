@@ -46,20 +46,28 @@ app.prepare().then(() => {
     });
 
     socket.on("sendGroupNotification", (receiversUserId) => {
-      console.log("PASO 3", receiversUserId);
 
       receiversUserId.map((receiveruserId) => {
         const receiver = getUser(receiveruserId);
 
         if (receiver)
-          console.log("PASOOOO 4")
           io.to(receiver.socketId).emit("getNotification", receiveruserId);
       });
     });
 
+
+    socket.on("newMessageServer", (senderUserId,receiverUserId) => {
+      const receiver = getUser(receiverUserId)
+
+      if(receiver){
+        io.to(receiver.socketId).emit("newMessage", senderUserId )
+      }
+    })
+
     socket.on("disconnect", () => {
       removeUser(socket.id);
     });
+
   });
 
   httpServer
