@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChatsAction } from "@/actions/messages/getChats";
-import { socket } from "@/socket"; 
+import { socket } from "@/socket";
 
 import { SimpleChat, UserCardType } from "@/types";
 import React from "react";
@@ -13,7 +13,6 @@ import TimeAgo from "@/components/ui/TimeAgo";
 import Link from "next/link";
 
 const chatsQueryKey = ["chatsWithConversation"];
-
 
 interface FullChatsViewProps {
   chats: SimpleChat[];
@@ -36,7 +35,6 @@ const FullChatsView = ({
 
   useEffect(() => {
     const onNewMessage = () => {
-
       queryClient.invalidateQueries({ queryKey: chatsQueryKey });
     };
 
@@ -92,9 +90,15 @@ const FullChatsView = ({
                           <span className="text-primary-color">
                             {chat.lastMessage.sentByMe ? "Tú: " : ""}
                           </span>
-                          {chat.lastMessage.text.length > 23
-                            ? chat.lastMessage.text.slice(0, 23) + "..."
-                            : chat.lastMessage.text}
+                          {chat.lastMessage.text ? (
+                            chat.lastMessage.text.length > 23 ? (
+                              chat.lastMessage.text.slice(0, 23) + "..."
+                            ) : (
+                              chat.lastMessage.text
+                            )
+                          ) : (
+                            <i>imagen</i>
+                          )}
                         </p>
                         <TimeAgo
                           createdAt={chat.lastMessage.createdAt}
