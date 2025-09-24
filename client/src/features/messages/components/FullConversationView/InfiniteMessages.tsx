@@ -1,11 +1,13 @@
-// Tu componente original, ahora refactorizado
+"use client"; 
+
 import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
 import { useFormatDateLabel } from "@/features/messages/hooks/useFormatDateLabel";
 import { MessageType } from "@/types";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import MessageItem from "./MessageItem"; // <-- 1. Importamos el nuevo componente
+import MessageItem from "./MessageItem";
+import { socket } from "@/socket"; // Importamos el socket
 
 interface InfiniteMessagesProps {
   messages: MessageType[];
@@ -64,7 +66,21 @@ const InfiniteMessages = ({
       setFloatingDate((prev) => ({ ...prev, visible: false }));
     }, 1500);
   };
-  // --- Fin de la Lógica del Label Flotante ---
+
+
+  useEffect(() => {
+    const onNewMessage = (senderUserId: string) => {
+      if (senderUserId === otherUser.id) {
+        queryClient.invalidateQueries({ queryKey });
+      }
+    };
+
+    socket.on("newMessage", onNewMessage);
+
+    return () => {
+      socket.off("newMessage", onNewMessage);
+    };
+  }, [queryClient, queryKey, otherUser.id]);
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery({
@@ -108,14 +124,12 @@ const InfiniteMessages = ({
     }
   }, [data, queryClient, queryKey]);
 
-  // --- Lógica para procesar y renderizar mensajes (AHORA REFACTORIZADA) ---
+  // --- Lógica para procesar y renderizar mensajes (sin cambios) ---
   const elementsToRender: React.ReactNode[] = [];
 
   messages.forEach((message, index) => {
     const isCurrentUser = message.senderId === currentUserId;
 
-    // 2. Usamos el nuevo componente en lugar del JSX en línea.
-    // La lógica es la misma, pero ahora está encapsulada.
     elementsToRender.push(
       <MessageItem
         key={message.id}
@@ -125,11 +139,10 @@ const InfiniteMessages = ({
           username: otherUser.username,
           imageUrl: otherUser.imageUrl,
         }}
-        queryKey={queryKey}
+        queryKey={queryKey} // Tu prop original está aquí, sin cambios
       />
     );
 
-    // La lógica para los separadores de fecha no cambia.
     const currentMessageDate = new Date(message.createdAt).toDateString();
     const nextMessage = messages[index + 1];
     const nextMessageDate = nextMessage

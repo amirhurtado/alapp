@@ -2,7 +2,6 @@
 
 import { prisma } from "@/prisma";
 import { uploadFile } from "../constants";
-import { revalidatePath } from "next/cache";
 
 export const createMessageAction = async (formData: FormData) => {
   // 1. Extraer y validar los datos del FormData
@@ -69,7 +68,6 @@ export const createMessageAction = async (formData: FormData) => {
       return createdMessage;
     });
 
-    revalidatePath("/messages");
     return { success: true, message: newMessage };
   } catch (error) {
     console.error("Error al crear el mensaje:", error);

@@ -1,45 +1,51 @@
-"use client"
+"use client";
 import { deleteMessageAction } from "@/actions/messages/deleteMessage";
+import { socket } from "@/socket";
 import { MessageType } from "@/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type oldData = {
-    pages: MessageType[][]
-}
+  pages: MessageType[][];
+};
 
-export const useDeleteMessageMutation = (queryKey : unknown[]) => {
-    const queryClient = useQueryClient();
+export const useDeleteMessageMutation = (queryKey: unknown[]) => {
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: async ({messageId}: {messageId : number}) => {
-            return deleteMessageAction(messageId)
-        },
-        onSuccess: async (response) => {
-            const {newMessage} = response
+  return useMutation({
+    mutationFn: async ({ messageId }: { messageId: number }) => {
+      return deleteMessageAction(messageId);
+    },
+    onSuccess: async (response) => {
+      const { newMessage } = response;
 
-            queryClient.invalidateQueries({queryKey: ["chatsWithConversation"]})
+      queryClient.invalidateQueries({ queryKey: ["chatsWithConversation"] });
 
-            if(!newMessage) return
+      if (!newMessage) return;
 
-            await queryClient.cancelQueries({queryKey: queryKey})
+      await queryClient.cancelQueries({ queryKey: queryKey });
 
-            queryClient.setQueryData(queryKey, (oldData : oldData ) => {
-                if(!oldData) return
+      queryClient.setQueryData(queryKey, (oldData: oldData) => {
+        if (!oldData) return;
 
-                return {
-                    ...oldData,
-                    pages: oldData.pages.map(page => 
-                            page.map((message) => {
-                                if(message.id === newMessage.id){
-                                    return newMessage
-                                }
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) =>
+            page.map((message) => {
+              if (message.id === newMessage.id) {
+                return newMessage;
+              }
 
-                                return message
-                            })
-                    )
-                }
+              return message;
             })
+          ),
+        };
+      });
 
-        }
-    })
-}
+      socket.emit(
+        "newMessageServer",
+        newMessage?.senderId,
+        newMessage?.receiverId
+      );
+    },
+  });
+};
