@@ -1,4 +1,5 @@
 import { getMessagesWithUserAction } from "@/actions/messages/getMessages";
+import { markConversationAsReadAction } from "@/actions/messages/resetUnreadsMessage";
 import { getUserbyNameAction } from "@/actions/user/getUser";
 import BackNavigation from "@/components/ui/BackNavigation";
 import FullConversationView from "@/features/messages/components/FullConversationView/FullConversationView";
@@ -23,6 +24,7 @@ const page = async ({ params }: Props) => {
 
   const [messages] = await Promise.all([
     getMessagesWithUserAction(currUser.id, infoOtherUser.id),
+    markConversationAsReadAction(currUser.id, infoOtherUser.id)
   ]);
 
   if (!infoOtherUser) return;

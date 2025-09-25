@@ -8,6 +8,7 @@ import { LoaderCircle } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import MessageItem from "./MessageItem";
 import { socket } from "@/socket"; // Importamos el socket
+import { markConversationAsReadAction } from "@/actions/messages/resetUnreadsMessage";
 
 interface InfiniteMessagesProps {
   messages: MessageType[];
@@ -71,6 +72,7 @@ const InfiniteMessages = ({
   useEffect(() => {
     const onNewMessage = (senderUserId: string) => {
       if (senderUserId === otherUser.id) {
+        markConversationAsReadAction(currentUserId, otherUser.id);
         queryClient.invalidateQueries({ queryKey });
       }
     };
