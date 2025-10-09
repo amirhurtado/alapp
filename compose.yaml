@@ -1,45 +1,35 @@
+
+version: '3.8'
+
 services:
   web:
     build:
-      context: ./client
+      context: ./client # Asegúrate que esta es la carpeta de tu app Next.js
       dockerfile: Dockerfile
-    image: amirhurtado/next-image:latest
     container_name: next-container
-
-    environment:
-      DATABASE_URL: "mysql://root:Limon1040@db:3306/mydb"
-      NODE_ENV: development
-      
-
+    restart: always
+    # Carga todas las variables del archivo .env directamente en el contenedor
+    env_file:
+      - .env
     ports:
       - "3000:3000"
-
     volumes:
       - ./client:/app
       - /app/node_modules
-
-    command: npm run dev
-
+      - /app/.next
     depends_on:
       - db
 
-  
   db:
     image: mysql:latest
-
     container_name: mysql-container
-
     restart: always
-
     environment:
-      MYSQL_ROOT_PASSWORD: Limon1040
-      MYSQL_DATABASE: mydb
-
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "55000:3306"
-
     volumes:
-      # Esto es MUY importante para que los datos de tu DB no se borren
       - mysql-data:/var/lib/mysql
 
 volumes:
