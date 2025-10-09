@@ -1,0 +1,46 @@
+services:
+  web:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: amirhurtado/next-image:latest
+    container_name: next-container
+
+    environment:
+      DATABASE_URL: "mysql://root:Limon1040@db:3306/mydb"
+      NODE_ENV: development
+      
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+    command: npm run dev
+
+    depends_on:
+      - db
+
+  
+  db:
+    image: mysql:latest
+
+    container_name: mysql-container
+
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: Limon1040
+      MYSQL_DATABASE: mydb
+
+    ports:
+      - "55000:3306"
+
+    volumes:
+      # Esto es MUY importante para que los datos de tu DB no se borren
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
