@@ -5,9 +5,9 @@ import { InfoUserType } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     query?: string;
-  };
+  }>;
 };
 
 const page = async ({ searchParams }: Props) => {

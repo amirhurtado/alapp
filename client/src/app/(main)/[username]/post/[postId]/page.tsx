@@ -9,9 +9,9 @@ import BackNavigation from "@/components/ui/BackNavigation";
 import FullPostView from "@/features/post/components/FullPostView";
 
 type Props = {
-  params: {
+  params: Promise< {
     postId: string;
-  };
+  }>;
 };
 
 const page = async ({ params }: Props) => {

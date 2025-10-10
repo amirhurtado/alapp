@@ -4,9 +4,9 @@ import FullPostInteractionsView from "@/features/interactions/components/post/Fu
 import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {
-  params: {
+  params: Promise<{
     postId: string;
-  };
+  }>;
 };
 
 const page = async ({ params }: Props) => {

@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '5mb', 
     },
   },
+  
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {

@@ -8,9 +8,9 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     groupId: string;
-  };
+  }>;
 };
 
 const page = async ({ params }: Props) => {

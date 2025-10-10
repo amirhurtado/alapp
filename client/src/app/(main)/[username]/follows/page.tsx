@@ -5,12 +5,12 @@ import FullFollowView from "@/features/follows/FullFollowView";
 import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     query?: "followings" | "followers";
-  };
+  }>;
 };
 
 const page = async ({ params, searchParams }: Props) => {

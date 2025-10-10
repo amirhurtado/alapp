@@ -7,9 +7,9 @@ import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 };
 
 const page = async ({ params }: Props) => {

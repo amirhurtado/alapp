@@ -7,9 +7,9 @@ import BackNavigation from "@/components/ui/BackNavigation";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 };
 
 export default async function UserPage({ params }: Props) {

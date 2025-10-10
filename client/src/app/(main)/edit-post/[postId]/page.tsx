@@ -5,9 +5,9 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     postId: string;
-  };
+  }>;
 };
 
 const page = async ({ params }: Props) => {
