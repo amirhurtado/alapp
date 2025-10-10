@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE `Post` ADD COLUMN `groupId` INTEGER NULL;
-
--- AddForeignKey
-ALTER TABLE `Post` ADD CONSTRAINT `Post_groupId_fkey` FOREIGN KEY (`groupId`) REFERENCES `Group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

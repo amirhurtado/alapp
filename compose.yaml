@@ -7,7 +7,7 @@ services:
     container_name: next-container
 
     env_file:
-      - ./client/.env
+      - .env
       
     ports:
       - "3000:3000"
@@ -23,21 +23,23 @@ services:
 
   
   db:
-    image: mysql:latest
+    image: postgres:latest
 
-    container_name: mysql-container
+    container_name: postgres-container
 
     restart: always
 
     environment:
-      MYSQL_DATABASE: mydb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
 
     ports:
-      - "55000:3306"
+      - "55000:5432"
 
     volumes:
       # Esto es MUY importante para que los datos de tu DB no se borren
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  mysql-data:
+  postgres-data:
