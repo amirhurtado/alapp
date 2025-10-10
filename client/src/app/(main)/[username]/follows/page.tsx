@@ -9,28 +9,25 @@ type Props = {
     username: string;
   };
   searchParams: {
-    [key: string]: string | string[] | undefined;
+    query?: "followings" | "followers";
   };
 };
 
-const FollowsPage = async ({ params, searchParams }: Props) => {
+const page = async ({ params, searchParams }: Props) => {
+  const [{ username }, { query }, currUser] = await Promise.all([
+    params,
+    searchParams,
+    currentUser(),
+  ]);
 
-  const { username } = params;
-  const query = searchParams?.query;
-  const currUser = await currentUser(); 
-
-  if (!currUser || !username) {
-    return null; 
-  }
+  if (!currUser || !username) return;
 
   const [followings, infoUserProfile] = await Promise.all([
     getFollowingsAction(currUser.id),
     getUserbyNameAction(username),
   ]);
 
-  if (!infoUserProfile) {
-    return null; 
-  }
+  if (!infoUserProfile) return;
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
@@ -41,8 +38,7 @@ const FollowsPage = async ({ params, searchParams }: Props) => {
         }
       />
       <FullFollowView
-        // Nos aseguramos de que 'query' sea un string para evitar errores
-        query={query === "followers" ? "followers" : "followings"}
+        query={query ?? "followings"}
         infoUserProfile={{
           username: infoUserProfile.name,
           id: infoUserProfile.id,
@@ -53,4 +49,4 @@ const FollowsPage = async ({ params, searchParams }: Props) => {
   );
 };
 
-export default FollowsPage;
+export default page;
