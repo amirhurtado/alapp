@@ -6,6 +6,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
+    "postinstall": "prisma generate",
     "lint": "next lint"
   },
   "dependencies": {
@@ -62,4 +63,5 @@
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   }
+  
 }
