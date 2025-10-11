@@ -74,7 +74,7 @@ const FullChatsView = ({
                 <div className="flex gap-3 items-center">
                   {/* Solo mostrar el contador si es mayor que cero */}
                   {chat.unreadCount > 0 && (
-                    <p className="flex items-center justify-center w-4 h-4 md:w-5 md:w-5 text-xs md:text-sm bg-icon-green text-white rounded-full">
+                    <p className="flex items-center justify-center w-4 h-4 md:w-5 md:h-5 text-xs md:text-sm bg-icon-green text-white rounded-full">
                       {chat.unreadCount}
                     </p>
                   )}
