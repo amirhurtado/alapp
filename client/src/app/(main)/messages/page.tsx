@@ -19,7 +19,7 @@ const page = async () => {
 
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-hidden">
         <BackNavigation title="Tús mensajes" />
         <FullChatsView chats={chats} followings={followings} currentUserId={currUser.id} />
     </div>

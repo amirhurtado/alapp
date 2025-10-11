@@ -54,7 +54,7 @@ const FormEditProfile = ({ infoUser }: FormEditProfileProps) => {
 
   return (
     <form
-      className="flex flex-col p-4 gap-8 max-h-screen overflow-y-auto "
+      className="flex flex-col p-4 gap-8 max-h-[100dvh] overflow-y-auto "
       action={async (formData) => {
         await updateInfoUserAction(formData, infoUser.id);
         queryClient.invalidateQueries({ queryKey });

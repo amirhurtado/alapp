@@ -8,7 +8,7 @@ const page = async () => {
 
     if(!currUser) return notFound();
   return (
-    <div className="flex flex-col h-screen overflow-y-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-y-hidden">
        <BackNavigation title="Configuración" />
 
         <FullSettingsView  />

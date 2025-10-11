@@ -30,7 +30,7 @@ const page = async ({ params }: Props) => {
   if (!userInteractionInfo) return;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-hidden">
       <BackNavigation title={title} />
       <FullUserInteractionsView
         likePosts={likePosts}

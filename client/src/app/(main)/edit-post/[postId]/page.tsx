@@ -20,7 +20,7 @@ const page = async ({ params }: Props) => {
   if(!post) return notFound()
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-hidden">
       <BackNavigation title="Editar post" />
       <FullEditPostView post={post} />
     </div>

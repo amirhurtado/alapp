@@ -34,7 +34,7 @@ export default async function ProtectedLayout({
           {children}{" "}
         </div>
         <div
-          className=" h-screen px-2
+          className=" h-[100dvh] px-2
            hidden lg:flex ml-2  lg:ml-6 max-w-[370px]"
         >
           <RightBar currentUserId={infoUserDb.id} />

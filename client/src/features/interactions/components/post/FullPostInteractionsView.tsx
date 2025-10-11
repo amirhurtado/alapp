@@ -21,7 +21,7 @@ const FullPostInteractionsView = ({
   >("likes");
 
   return (
-    <div className=" max-h-screen overflow-hidden flex flex-col">
+    <div className=" max-h-[100dvh] overflow-hidden flex flex-col">
       <TabInteractions
         selectInteraction={selectInteraction}
         setSelectInteraction={setSelectInteraction}

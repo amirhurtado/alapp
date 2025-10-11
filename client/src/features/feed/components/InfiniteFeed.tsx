@@ -65,7 +65,7 @@ const InfiniteFeed = ({
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="flex flex-col  max-h-screen">
+    <div className="flex flex-col  max-h-[100dvh]">
       <ContainerInfinitePosts currentUserId={currentUserId} posts={posts} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} queryKey={queryKey} loadMoreRef={loadMoreRef}/>
 
       <NoPost postLength={posts.length} />

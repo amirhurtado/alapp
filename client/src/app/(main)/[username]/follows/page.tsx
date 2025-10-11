@@ -30,7 +30,7 @@ const page = async ({ params, searchParams }: Props) => {
   if (!infoUserProfile) return;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-hidden">
       <BackNavigation
         title="Follows"
         subtitle={

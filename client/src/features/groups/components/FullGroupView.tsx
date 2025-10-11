@@ -23,7 +23,7 @@ const FullGroupView = ({
     "createGroup" | "exploreGroups"
   >("exploreGroups");
   return (
-    <div className="flex flex-col max-h-screen gap-8 p-4 overflow-y-auto">
+    <div className="flex flex-col max-h-[100dvh] gap-8 p-4 overflow-y-auto">
       <GroupTab
         selectSection={selectSection}
         setSelectSection={setSelectSection}

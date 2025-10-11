@@ -74,7 +74,7 @@ const FullNotificationsView = ({
   const notifications =
     data?.pages.flatMap((page) => page) ?? initialNotifications;
   return (
-    <div className="flex flex-col max-h-screen gap-4 p-4 overflow-y-auto ">
+    <div className="flex flex-col max-h-[100dvh] gap-4 p-4 overflow-y-auto ">
       {notifications.map((notification, index) => (
         <div key={index}>
           <NotificationCard notification={notification} />

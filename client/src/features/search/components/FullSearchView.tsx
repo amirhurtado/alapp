@@ -65,7 +65,7 @@ const FullSearchView = ({
   }, [fetchNextPage, hasNextPage]);
 
   return (
-    <div className="p-4 flex flex-col max-h-screen gap-5  ">
+    <div className="p-4 flex flex-col max-h-[100dvh] gap-5  ">
       <SearchInput />
       <div
         ref={loadmoreRef}

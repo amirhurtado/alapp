@@ -51,7 +51,7 @@ const InfoGroup = ({
   };
 
   return (
-    <div className="max-h-screen overflow-y-scroll w-full p-4 flex flex-col gap-4">
+    <div className="max-h-[100dvh] overflow-y-scroll w-full p-4 flex flex-col gap-4">
       <div className="flex flex-col items-center gap-2 relative">
         <div className="w-[6rem] h-[6rem]  relative">
           <Image

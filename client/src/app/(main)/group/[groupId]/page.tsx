@@ -28,7 +28,7 @@ const page = async ({ params }: Props) => {
 
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden gap-6">
+    <div className="h-[100dvh] flex flex-col overflow-hidden gap-6">
       <BackNavigation title={`Grupo - ${infoGroup?.name}`} />
       <InfoGroup infoGroup={infoGroup} infoUser={infoUser} events={events}/>
     </div>

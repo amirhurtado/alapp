@@ -54,7 +54,7 @@ const UsersWithRepost = ({
   }, [fetchNextPage, hasNextPage]);
 
   return (
-    <div ref={loadmoreRef} className="mt-2 p-4 flex flex-col max-h-screen overflow-y-auto gap-3">
+    <div ref={loadmoreRef} className="mt-2 p-4 flex flex-col max-h-[100dvh] overflow-y-auto gap-3">
       {usersRepostInPost.map((user, index) => (
         <div key={index}>
           <UserCard

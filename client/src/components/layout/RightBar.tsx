@@ -12,7 +12,7 @@ const RightBar = async ({currentUserId}: {currentUserId: string}) => {
   ])
 
   return (
-    <div className="flex flex-col justify-between gap-4 h-screen py-10">
+    <div className="flex flex-col justify-between gap-4 h-[100dvh] py-10">
       <div className="flex flex-col gap-4">
         <PopularGroups groupsRecommendations={groupsRecommendations} currentUserId={currentUserId}/>
         <Recomendations currentUserId={currentUserId} placement={"rightbar"} />

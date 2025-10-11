@@ -23,7 +23,7 @@ const FullUserInteractionsView = ({
     "likes" | "reposts" | "favorites"
   >("likes");
   return (
-    <div className="flex flex-col max-h-screen  overflow-hidden ">
+    <div className="flex flex-col max-h-[100dvh]  overflow-hidden ">
       <InteractionsTab
         selectInteraction={selectInteraction}
         setSelectInteraction={setSelectInteraction}

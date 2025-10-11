@@ -18,7 +18,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-[100dvh] flex flex-col overflow-hidden">
       <FeedSection 
         posts={posts} 
         currentUser={{id: userData.id, imgUrl: userData.imageUrl}} 

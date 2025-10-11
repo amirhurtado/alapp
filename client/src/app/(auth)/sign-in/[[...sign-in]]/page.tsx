@@ -12,7 +12,7 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="h-screen  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
+    <div className="h-[100dvh]  flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-between p-4 overflow-y-auto overflow-x-hidden  ">
       <Logo />
 
       <div className="w-full flex flex-col gap-8 md:gap-13 justify-center items-center md:items-start">

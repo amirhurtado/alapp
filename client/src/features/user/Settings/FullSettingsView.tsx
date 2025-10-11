@@ -7,7 +7,7 @@ import DeleteAccount from './DeleteAccount'
 
 const FullSettingsView = () => {
   return (
-    <div className='p-4 flex flex-col max-h-screen overflow-y-auto  gap-8 md:gap-12   '>
+    <div className='p-4 flex flex-col max-h-[100dvh] overflow-y-auto  gap-8 md:gap-12   '>
 
         <ChangePasswordForm />
         <DeleteAccount />

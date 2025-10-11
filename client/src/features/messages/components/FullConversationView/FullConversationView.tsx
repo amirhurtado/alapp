@@ -38,7 +38,7 @@ const FullConversationView = ({
   const queryKey = ["messages", { otherUserId: infoOtherUser.id }];
 
   return (
-    <div className="flex flex-col justify-between h-full max-h-screen overflow-hidden">
+    <div className="flex flex-col justify-between h-full max-h-[100dvh] overflow-hidden">
       <div className="flex flex-col flex-1 justify-end p-4 overflow-hidden">
         <InfiniteMessages
           messages={messages}

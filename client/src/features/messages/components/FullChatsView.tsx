@@ -46,7 +46,7 @@ const FullChatsView = ({
   }, [queryClient]);
 
   return (
-    <div className="flex flex-col gap-10 p-4 max-h-screen overflow-y-auto">
+    <div className="flex flex-col gap-10 p-4 max-h-[100dvh] overflow-y-auto">
       <InfiniteFollowingsInMessages
         followings={followings}
         currentUserId={currentUserId}

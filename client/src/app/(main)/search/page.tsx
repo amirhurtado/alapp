@@ -27,7 +27,7 @@ const page = async ({ searchParams }: Props) => {
 
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-[100dvh] overflow-hidden">
       <BackNavigation title="Buscar" />
 
       <FullSearchView query={query} usersFind={usersFind} currentUserId={currUser.id} recommendations={recommendations}/>

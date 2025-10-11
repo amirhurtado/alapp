@@ -15,10 +15,10 @@ interface FeedSectionProps {
 
 const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
   return (
-    <div className="flex flex-col h-screen ">
+    <div className="flex flex-col h-[100dvh] ">
       <FeedTab placement={placement} />
 
-      <div className="flex flex-col max-h-screen  overflow-y-auto ">
+      <div className="flex flex-col max-h-[100dvh]  overflow-y-auto ">
         {placement === "mainFeed" && <CreatePost currentUser={currentUser} />}
 
         {placement === "exploreFeed" && (
