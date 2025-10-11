@@ -22,7 +22,7 @@ const page = async ({ params }: Props) => {
 
   if (!currUser || !infoOtherUser) return;
 
-  const [messages] = await Promise.all([
+  const [messages, unreadCount] = await Promise.all([
     getMessagesWithUserAction(currUser.id, infoOtherUser.id),
     markConversationAsReadAction(currUser.id, infoOtherUser.id)
   ]);
@@ -37,6 +37,7 @@ const page = async ({ params }: Props) => {
       />
       <FullConversationView
         messages={messages}
+        unreadCount={unreadCount}
         currentUserId={currUser.id}
         infoOtherUser={{
           id: infoOtherUser.id,

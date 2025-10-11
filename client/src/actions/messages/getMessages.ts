@@ -35,3 +35,32 @@ export const getMessagesWithUserAction = async (
 
   return messages;
 };
+
+
+export const getTotalUnreadCountAction = async (userId: string) => {
+
+  
+    const conversations = await prisma.conversation.findMany({
+      where: {
+        OR: [{ userAId: userId }, { userBId: userId }],
+      },
+      select: {
+        userAId: true,
+        userAUnreadCount: true,
+        userBUnreadCount: true,
+      },
+    });
+
+
+    const totalUnreadCount = conversations.reduce((total, convo) => {
+      if (convo.userAId === userId) {
+        return total + convo.userAUnreadCount;
+      } else {
+        return total + convo.userBUnreadCount;
+      }
+    }, 0); 
+
+    return totalUnreadCount;
+  }
+  
+  

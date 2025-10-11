@@ -4,6 +4,7 @@ import RightBar from "@/components/layout/RightBar";
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserbyNameAction } from "@/actions/user/getUser";
 import Providers from "./Providers";
+import { getTotalUnreadCountAction } from "@/actions/messages/getMessages";
 
 export default async function ProtectedLayout({
   children,
@@ -14,15 +15,20 @@ export default async function ProtectedLayout({
 
   if (!currUser) return;
 
-  const infoUserDb = await getUserbyNameAction(currUser.username as string);
+  const [infoUserDb, unreadMessageCount] = await Promise.all([
+    getUserbyNameAction(currUser.username as string),
+    getTotalUnreadCountAction(currUser.id)
+  ]);
 
   if (!infoUserDb) return;
+
+  
 
   return (
     <Providers>
       <div className="flex justify-between lg:justify-center h-[100%] mx-auto max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl xxl:max-w-screen-xxl">
         <div className="px-2 xsm:px-4 xxl:px-8 h-full">
-          <LeftBar currentUser={infoUserDb} />
+          <LeftBar currentUser={infoUserDb} unreadMessageCount={unreadMessageCount as number} />
         </div>
         <div className=" h-full flex-1 lg:max-w-[600px] border-x-[1px] border-border">
           {children}{" "}

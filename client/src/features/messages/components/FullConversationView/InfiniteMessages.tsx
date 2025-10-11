@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import MessageItem from "./MessageItem";
 import { socket } from "@/socket"; // Importamos el socket
 import { markConversationAsReadAction } from "@/actions/messages/resetUnreadsMessage";
+import { useGlobalMessageUnreadCount } from "@/store/GlobalMessageUnreadCountStore";
 
 interface InfiniteMessagesProps {
   messages: MessageType[];
@@ -30,6 +31,7 @@ const InfiniteMessages = ({
   const queryClient = useQueryClient();
   const loadmoreRef = useRef(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const { decrement: decrementUnreadMessages } = useGlobalMessageUnreadCount()
 
   // --- Lógica del Label Flotante (sin cambios) ---
   const [floatingDate, setFloatingDate] = useState({
@@ -74,6 +76,7 @@ const InfiniteMessages = ({
       if (senderUserId === otherUser.id) {
         markConversationAsReadAction(currentUserId, otherUser.id);
         queryClient.invalidateQueries({ queryKey });
+        decrementUnreadMessages(1);
       }
     };
 
