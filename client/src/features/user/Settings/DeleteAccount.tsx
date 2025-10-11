@@ -3,8 +3,7 @@
 "use client";
 
 import React, { useState } from "react";
-// 1. Importamos el hook 'useSignIn' que es el que necesitamos
-import { useUser, useClerk, useSignIn } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2, Trash2 } from "lucide-react";
@@ -20,19 +19,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteAccountAction } from "@/actions/user/deleteUser";
+import { deleteAccountAction } from "@/actions/user/deleteUser"; // Asegúrate que la ruta sea correcta
 import InputPassword from "./InputPassword";
 
-
-interface ClerkError {
-  errors: { longMessage: string }[];
-}
-
 const DeleteAccount = () => {
-  const { user } = useUser();
   const { signOut } = useClerk();
-  // 2. Obtenemos la instancia de 'signIn' y su estado de carga
-  const { signIn, isLoaded: isSignInLoaded } = useSignIn();
   const router = useRouter();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,45 +34,33 @@ const DeleteAccount = () => {
   const handleDeleteAccount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // Verificamos que todo esté cargado antes de proceder
-    if (!isSignInLoaded || !user) {
-      toast.error("El servicio no está listo, por favor espera un momento.");
-      return;
-    }
     if (!password) {
       toast.error("Por favor, ingresa tu contraseña para confirmar.");
       return;
     }
 
     setIsSubmitting(true);
+
     try {
+      // 1. Llamamos a la Server Action segura con la contraseña del usuario.
+      const result = await deleteAccountAction(password);
 
-      const identifier = user.primaryEmailAddress?.emailAddress;
-      if (!identifier) {
-        throw new Error("No se pudo encontrar el email del usuario.");
+      // 2. Verificamos el resultado que nos devolvió la acción.
+      if (result.success) {
+        toast.success("Tu cuenta ha sido eliminada permanentemente.");
+        // 3. Cerramos la sesión del cliente y lo redirigimos al inicio.
+        await signOut(() => router.push("/"));
+      } else {
+        // Si la acción devolvió un error (ej. contraseña incorrecta), lo mostramos.
+        toast.error(result.error || "Ocurrió un error inesperado.");
       }
-
-      await signIn.create({
-        identifier,
-        password,
-        strategy: "password", 
-      });
-
-      await user.delete();
-      await deleteAccountAction(user.id);
-
-      toast.success("Tu cuenta ha sido eliminada permanentemente.");
-      await signOut(() => router.push("/"));
-
-    } catch (err: unknown) {
-      let errorMessage = "Ocurrió un error. Inténtalo de nuevo.";
-      const clerkError = err as ClerkError;
-      if (clerkError.errors && clerkError.errors.length > 0) {
-        errorMessage = clerkError.errors[0].longMessage;
-      }
-      toast.error(errorMessage);
+    } catch {
+      // Este catch es para errores de red o si la acción falla por completo.
+      toast.error("No se pudo conectar con el servidor. Inténtalo de nuevo.");
     } finally {
       setIsSubmitting(false);
+      // Limpiamos la contraseña solo si la eliminación no fue exitosa.
+      // Si fue exitosa, el componente se desmontará de todos modos.
       setPassword("");
     }
   };
@@ -95,11 +74,10 @@ const DeleteAccount = () => {
       </p>
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogTrigger asChild>
-          <button className="mt-4 bg-red-400  text-black py-1 px-3 rounded-lg text-md  inline-flex items-center gap-2 transition-colors cursor-pointer hover:bg-red-500 ease-in duration-200">
+          <button className="mt-4 bg-red-400 text-black py-1 px-3 rounded-lg text-md inline-flex items-center gap-2 transition-colors cursor-pointer hover:bg-red-500 ease-in duration-200">
             <Trash2 size={16} />
             Eliminar mi cuenta
           </button>
-
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -128,7 +106,7 @@ const DeleteAccount = () => {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteAccount}
-              disabled={isSubmitting}
+              disabled={!password || isSubmitting}
               className="bg-red-400 hover:bg-red-500"
             >
               {isSubmitting ? (

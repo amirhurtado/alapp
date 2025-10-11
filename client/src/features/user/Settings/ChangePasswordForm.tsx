@@ -50,7 +50,7 @@ export const ChangePasswordForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <h3 className="text-md font-semibold text-white">Seguridad</h3>
+      <h3 className="text-md font-semibold text-white">Cambiar contraseña</h3>
 
       {InputPassword(
         "current-password",
