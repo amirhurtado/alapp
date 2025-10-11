@@ -62,6 +62,9 @@ export const useCreateReplyCommentMutation = (
         };
       });
 
+      queryClient.invalidateQueries({queryKey: ["postsFeed"]});
+
+
       if (receiverNotificationId) {
         socket.emit("sendNotification", receiverNotificationId);
       }

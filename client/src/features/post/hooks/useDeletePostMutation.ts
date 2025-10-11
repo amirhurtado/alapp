@@ -9,7 +9,6 @@ export const useDeletePostMutation = () => {
       return await deletePostAction(postId);
     },
     onSuccess: () => {
-    
       queryClient.invalidateQueries({ queryKey: ["postsFeed"] });
     },
   });

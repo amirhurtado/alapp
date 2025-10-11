@@ -3,6 +3,12 @@ import { socket } from "@/socket";
 import { FullCommentType, FullPostType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+
+type oldDataType = {
+  pages: FullCommentType[][];
+  pageParams: unknown[];
+};
+
 export const useCreateCommentMutation = (postId: number) => {
   const queryClient = useQueryClient();
 
@@ -15,7 +21,7 @@ export const useCreateCommentMutation = (postId: number) => {
       const postIdQueryKey = ["post", { id: postId }];
       const commentsQueryKey = ["comments", { postId: postId }];
 
-      queryClient.setQueryData(commentsQueryKey, (oldData: any) => {
+      queryClient.setQueryData(commentsQueryKey, (oldData: oldDataType) => {
         if (!oldData) return;
         return {
           ...oldData,
@@ -36,6 +42,8 @@ export const useCreateCommentMutation = (postId: number) => {
           _count: { comments: oldData._count.comments + 1 },
         };
       });
+
+      queryClient.invalidateQueries({queryKey: ["postsFeed"]});
 
 
       if(receiverNotificationId){
