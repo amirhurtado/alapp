@@ -1,14 +1,12 @@
-
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import InputPassword from "./InputPassword";
+import { changePasswordAction } from "@/actions/user/changePassword";
 
 export const ChangePasswordForm = () => {
-  const { user } = useUser();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,20 +29,24 @@ export const ChangePasswordForm = () => {
     }
 
     setIsSubmitting(true);
-    try {
-      await user?.updatePassword({
-        currentPassword,
-        newPassword,
-      });
+    
+    // 👇 2. Llama a la Server Action. ¡Así de simple!
+    const result = await changePasswordAction({
+      currentPassword,
+      newPassword,
+    });
+
+    // 👇 3. Muestra el resultado de la acción
+    if (result.success) {
       toast.success("¡Contraseña actualizada exitosamente!");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    } catch {
-      toast.error("Contraseña actual incorrecta");
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      toast.error(result.error);
     }
+    
+    setIsSubmitting(false);
   };
 
 
