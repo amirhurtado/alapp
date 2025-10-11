@@ -218,3 +218,22 @@ input::-webkit-password-meter {
   -webkit-appearance: none;
   appearance: none;
 }
+
+
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Para Firefox */
+/* Firefox tiene una propiedad específica para esto */
+* {
+  scrollbar-width: none;
+}
+
+/* (Opcional) Para Internet Explorer / Edge antiguo */
+/* Aunque es menos común, es bueno tenerlo por si acaso */
+* {
+  -ms-overflow-style: none;
+}
