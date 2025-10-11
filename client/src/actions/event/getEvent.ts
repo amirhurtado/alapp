@@ -16,9 +16,16 @@ export const getEventsAction = async (groupId: number, page: number = 1) => {
     take: 3,
     include: {
       usersConfirm: {
-        select: {
-          userId: true,
-        }
+        include: {
+          user: {
+            select: {
+              id: true,       
+              name: true,
+              displayName: true,
+              imageUrl: true,
+            },
+          },
+        },
       },
     },
   });

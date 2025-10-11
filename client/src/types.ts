@@ -96,7 +96,12 @@ export type FullInfoGroup = GroupType & {
 
 export type FullEventType = EventType & {
   usersConfirm: {
-    userId: string;
+    user: {
+      id: string;
+      name: string | null;
+      displayName: string | null, 
+      imageUrl: string;
+    };
   }[];
 };
 

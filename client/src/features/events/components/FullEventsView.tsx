@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { FullEventType } from "@/types";
+import { FullEventType, FullUserType } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getEventsAction } from "@/actions/event/getEvent";
 import EventCard from "./EventCard";
@@ -10,14 +10,14 @@ interface FullEventsViewProps {
   events: FullEventType[];
   groupId: number;
   imAdmin: boolean;
-  currentUserId: string;
+  infoCurrentUser: FullUserType;
 }
 
 const FullEventsView = ({
   events: initialEvents,
   groupId,
   imAdmin,
-  currentUserId,
+  infoCurrentUser,
 }: FullEventsViewProps) => {
   const queryKey = ["events", { groupId: groupId }];
 
@@ -68,7 +68,7 @@ const FullEventsView = ({
       <div className="flex flex-col gap-4">
         {events.map((event, index) => (
           <div key={index}>
-            <EventCard event={event} imAdmin={imAdmin} currentUserId={currentUserId} />
+            <EventCard event={event} imAdmin={imAdmin} infoCurrentUser={infoCurrentUser} />
           </div>
         ))}
       </div>

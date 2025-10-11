@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { FullEventType } from "@/types";
+import { FullEventType, FullUserType } from "@/types";
 import { MapPinCheckInside, Dot } from "lucide-react";
 import TimeAgo from "@/components/ui/TimeAgo";
 import { DeleteEvent } from "./DeleteEvent";
@@ -10,13 +10,15 @@ import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
 import { EventAction } from "./EventAction";
 import { useToggleAssistance } from "../hooks/useToggleAssistance";
 
+import { ConfirmedUsersTooltip } from "./ConfirmedUsersTooltip";
+
 interface EventCardProps {
   event: FullEventType;
   imAdmin: boolean;
-  currentUserId: string;
+  infoCurrentUser: FullUserType;
 }
 
-const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
+const EventCard = ({ event, imAdmin, infoCurrentUser }: EventCardProps) => {
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleString("es-CO", {
     weekday: "long",
@@ -49,6 +51,12 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
 
   const onAction = useToggleAssistance(event.groupId);
 
+  // -> 1. (Opcional pero recomendado) Creamos una función manejadora para más claridad
+  const handleToggleAssistance = () => {
+    // -> 2. Llamamos a la mutación con el objeto de usuario COMPLETO
+    onAction.mutate({ eventId: event.id, user: infoCurrentUser });
+  };
+
   return (
     <div className="border-border border-1 rounded-lg px-3 py-4 bg-hover">
       <div className="flex justify-end ">
@@ -59,11 +67,10 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
         ) : (
           <EventAction
             confirmed={event.usersConfirm.some(
-              (user) => user.userId === currentUserId
+              (confirmation) => confirmation.user.id === infoCurrentUser.id
             )}
-            onAction={() =>
-              onAction.mutate({ eventId: event.id, userId: currentUserId })
-            }
+            // -> 3. Pasamos la nueva función al onAction
+            onAction={handleToggleAssistance}
           />
         )}
       </div>
@@ -93,9 +100,8 @@ const EventCard = ({ event, imAdmin, currentUserId }: EventCardProps) => {
       </div>
 
       <div className="flex justify-end mt-3 items-center gap-3">
-        <p className="text-xs text-text-gray">
-          Confirmados: {event.usersConfirm?.length ?? 0}
-        </p>
+        <ConfirmedUsersTooltip confirmations={event.usersConfirm} />
+
         <TimeAgo createdAt={event.createdAt} />
       </div>
     </div>

@@ -107,7 +107,7 @@ const InfoGroup = ({
         events={events}
         groupId={infoGroup.id}
         imAdmin={infoGroup.adminId === infoUser.id}
-        currentUserId={infoUser.id}
+        infoCurrentUser={infoUser}
       />
     </div>
   );
