@@ -71,8 +71,9 @@ const InfiniteFollowingsInMessages = ({
                   alt="imgUser"
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-full object-cover aspect-square"
                 />
+
                 <div className="flex flex-col items-center text-xs">
                   <p className="">{user.name}</p>
                   <p className=" text-text-gray">{user.displayName}</p>
@@ -90,11 +91,14 @@ const InfiniteFollowingsInMessages = ({
             </div>
           </div>
         </div>
-      ) : 
-
-      (<Link href={"/search"} >
-        <p className="text-xs text-text-gray">No sigues a nadie aún.</p>
-      <p className="text-xs text-primary-color underline">Ve y busca usuarios y escribeles!</p></Link>)}
+      ) : (
+        <Link href={"/search"}>
+          <p className="text-xs text-text-gray">No sigues a nadie aún.</p>
+          <p className="text-xs text-primary-color underline">
+            Ve y busca usuarios y escribeles!
+          </p>
+        </Link>
+      )}
     </>
   );
 };
