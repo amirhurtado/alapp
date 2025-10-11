@@ -31,7 +31,7 @@ export const ConfirmedUsersTooltip = ({
               Usuarios confirmados:
             </p>
 
-            {confirmations.length > 0 ? (
+            {(confirmations && confirmations.length > 0) ? (
               // -> 1. A este div le aplicamos las clases para el scroll
               <div className="max-h-[240px] overflow-y-auto flex flex-col gap-2 pr-2">
                 {confirmations.map((confirmation) => (
