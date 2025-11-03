@@ -31,6 +31,9 @@ export type FullPostType = PostType & {
   _count: {
     comments: number;
   };
+  metadata?: {
+    recommendedByIA?: boolean;
+  };
 };
 
 export type FullCommentType = CommentType & {

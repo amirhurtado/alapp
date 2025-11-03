@@ -1,3 +1,4 @@
+"use client"
 import { FullPostType } from "@/types";
 
 import PostInteractions from "./PostInteractions/PostInteractions";

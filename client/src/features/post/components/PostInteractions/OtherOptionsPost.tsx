@@ -23,12 +23,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface OtherOptionsPostProps {
+  isMyPost:boolean
   onDelete?: () => void;
   fromPostInfo?: boolean;
   postId: number;
 }
 
 const OtherOptionsPost = ({
+  isMyPost,
   onDelete,
   fromPostInfo,
   postId,
@@ -51,12 +53,13 @@ const OtherOptionsPost = ({
           />
         </PopoverTrigger>
         <PopoverContent className="w-auto p-2 flex flex-col gap-2">
-          <Link
+          {isMyPost && (<Link
             href={`/edit-post/${postId}`}
             className="w-full text-center cursor-pointer border-1 border-border text-white py-1 px-4 rounded-md text-sm font-medium transition-colors active:scale-[0.98]"
           >
             Editar
-          </Link>
+          </Link>)}
+         
 
           {onDelete ? (
             <AlertDialogTrigger asChild>

@@ -3,29 +3,39 @@ import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import { FullPostType } from "@/types";
 import FeedTab from "./FeedTab";
 import Recomendations from "@/features/recomendations/components/Recommendations";
+import IARecomentation from "@/features/recomendations/components/IARecomendation";
 
 interface FeedSectionProps {
   posts: Array<FullPostType>;
   currentUser: {
     id: string;
-    imgUrl: string
-  }
+    imgUrl: string;
+  };
   placement: "mainFeed" | "exploreFeed";
+  IARecomendation?: {
+    message: string,
+    post?: FullPostType
+  }
 }
 
-const FeedSection = ({ posts, currentUser, placement }: FeedSectionProps) => {
+const FeedSection = ({ posts, currentUser, placement, IARecomendation }: FeedSectionProps) => {
+
+
+
   return (
-    <div className="flex flex-col h-[100dvh] ">
+    <div className="flex flex-col h-[100dvh]">
       <FeedTab placement={placement} />
 
-      <div className="flex flex-col max-h-[100dvh]  overflow-y-auto ">
+      <div className="flex flex-col max-h-[100dvh] overflow-y-auto">
         {placement === "mainFeed" && <CreatePost currentUser={currentUser} />}
 
         {placement === "exploreFeed" && (
-          <div className="h-full">
-          <Recomendations currentUserId={currentUser.id} placement="explore" />
-
-
+          <div className="h-full flex flex-col gap-4">
+            <IARecomentation currentUserId={currentUser.id} iARecomendation={IARecomendation}  />
+            <Recomendations
+              currentUserId={currentUser.id}
+              placement="explore"
+            />
           </div>
         )}
 

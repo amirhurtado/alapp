@@ -45,7 +45,6 @@ export const useLikePostMutation = (queryKey: unknown[]) => {
     },
     onSuccess: (receiverNotificationId) => {
       if(receiverNotificationId){
-      console.log("ACA ENTRO CLIENTE")
 
         socket.emit("sendNotification", receiverNotificationId)
       }

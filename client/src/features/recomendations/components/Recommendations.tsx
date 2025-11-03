@@ -13,8 +13,8 @@ const Recommendations = async ({ currentUserId, placement }: RecommendationsProp
 
 
   return (
-    <div className="flex flex-col gap-4 border-1 border-border rounded-xl p-4 max-h-[19rem] overflow-hidden">
-      <p  className={`${placement === "explore" && "mt-3 md:mt-0"} text-md font-bold`}>Recomendaciones para ti</p>
+    <div className={`${placement === "explore" && "mb-5"} flex flex-col gap-4 border-1 border-border rounded-xl p-4 max-h-[19rem] overflow-hidden`}>
+      <p  className={`${placement === "explore" && "mt-3 md:mt-0"} text-md font-bold`}>Te recomendamos estos usuarios:</p>
 
       <InfiniteRecommendations
         initialRecommendations={recommendations}
