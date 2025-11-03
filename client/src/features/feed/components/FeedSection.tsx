@@ -3,7 +3,7 @@ import CreatePost from "@/features/post/components/CreatePost/CreatePost";
 import { FullPostType } from "@/types";
 import FeedTab from "./FeedTab";
 import Recomendations from "@/features/recomendations/components/Recommendations";
-import IARecomentation from "@/features/recomendations/components/IARecomendation";
+import IARecommentation from "@/features/recomendations/components/IARecommendation";
 
 interface FeedSectionProps {
   posts: Array<FullPostType>;
@@ -31,7 +31,7 @@ const FeedSection = ({ posts, currentUser, placement, IARecomendation }: FeedSec
 
         {placement === "exploreFeed" && (
           <div className="h-full flex flex-col gap-4">
-            <IARecomentation currentUserId={currentUser.id} iARecomendation={IARecomendation}  />
+            <IARecommentation currentUserId={currentUser.id} iARecomendation={IARecomendation}  />
             <Recomendations
               currentUserId={currentUser.id}
               placement="explore"

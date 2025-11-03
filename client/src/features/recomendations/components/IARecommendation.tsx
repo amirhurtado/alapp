@@ -13,7 +13,7 @@ interface IARecomentationProps {
   };
 }
 
-const IARecomentation = ({
+const IARecommentation = ({
   currentUserId,
   iARecomendation,
 }: IARecomentationProps) => {
@@ -56,4 +56,4 @@ const IARecomentation = ({
   );
 };
 
-export default IARecomentation;
+export default IARecommentation;
